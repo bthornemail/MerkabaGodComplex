@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merkaba-Native USE (Training Layer)</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 90%; /* Fluid width for mobile */
+            padding: 1.5rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: 960px; /* Wider for desktop to show more details */
+            }
+        }
+        .encoding-card {
+            background-color: #2d3748; /* Darker gray for individual word encoding */
+            border: 1px solid #4a5568;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .encoding-card:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 to-blue-900 min-h-screen text-gray-100 flex items-center justify-center py-8">
+    <div class="container bg-gray-800 p-8 rounded-xl shadow-2xl border border-indigo-700">
+        <h1 class="text-4xl font-bold text-center text-indigo-300 mb-6 tracking-wide">
+            Merkaba-Native Universal Sentence Encoder
+        </h1>
+        <p class="text-xl font-medium text-indigo-200 text-center mb-6">
+            (Binary ArrayBuffer Training Layer - Semantic Encoding)
+        </p>
+
+        <div class="mb-6 bg-gray-700 p-6 rounded-lg border border-gray-600">
+            <p class="text-sm text-indigo-200 mb-3">
+                This layer conceptualizes how the MerkabaGodComplex encodes "the word, in all forms," directly
+                treating words and sentences as entities mapped into a multi-modal "Point" space. It uses Pascal's
+                Triangle, a conceptual Vector Clock, and the `tan` lambda function to generate semantic embeddings.
+            </p>
+            <label for="sentenceInput" class="block text-lg font-medium text-indigo-100 mb-2">
+                Enter a Sentence (e.g., "I am Alpha and Omega"):
+            </label>
+            <textarea
+                id="sentenceInput"
+                rows="3"
+                class="w-full p-3 rounded-lg bg-gray-600 text-white border border-indigo-500 focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-200"
+                placeholder="Enter text to encode..."
+                aria-label="Enter sentence for encoding"
+            >I = A/M</textarea>
+        </div>
+
+        <button
+            id="encodeButton"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 active:scale-95 border border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
+            aria-live="polite"
+        >
+            Encode Sentence
+        </button>
+
+        <div id="encodedResults" class="mt-8 bg-gray-700 p-6 rounded-lg border border-gray-600 hidden">
+            <h2 class="text-2xl font-semibold text-indigo-300 mb-4">Encoded Words (Conceptual ArrayBuffers):</h2>
+            <div id="wordEncodings" class="space-y-4">
+                <!-- Word encodings will be dynamically inserted here -->
+            </div>
+            <p class="text-md text-indigo-200 mt-6">
+                **Overall Sentence Context Vector (Conceptual):**
+                <span id="sentenceEmbedding" class="font-mono text-sm text-green-300 break-words ml-2">...</span>
+            </p>
+            <p class="text-sm text-gray-400 mt-2">
+                (This represents the final semantic encoding of the entire sentence as a collective `ArrayBuffer` for distributed training.)
+            </p>
+        </div>
+
+        <div id="messageBox" class="mt-6 p-4 rounded-lg text-center hidden" role="alert"></div>
+
+    </div>
+
+    <script>
+        // --- Utility Functions (from previous steps, adapted for this layer) ---
+
+        // Simulates Pascal's Triangle values C(n, k)
+        function pascalValue(n, k) {
+            if (k < 0 || k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            if (k > n / 2) k = n - k;
+            let res = 1;
+            for (let i = 1; i <= k; i++) {
+                res = res * (n - i + 1) / i;
+            }
+            return Math.round(res);
+        }
+
+        // Simple hash function for conceptual Ethers Address generation (for entities)
+        async function generateConceptualEthersAddress(inputString) {
+            const textEncoder = new TextEncoder();
+            const data = textEncoder.encode(inputString);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hexHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return '0x' + hexHash.substring(0, 40);
+        }
+
+        // --- Merkaba-Native USE Specific Functions ---
+
+        // Conceptual "tan" lambda function
+        // Takes features (pascal values, clock component) and outputs a "semantic embedding" component.
+        // This is a simplified mathematical representation of the core transform.
+        function tanLambdaTransform(featureVector, clockComponent) {
+            // FeatureVector: [pascal0, pascal1, pascal2]
+            // clockComponent: a numerical value from the Vector Clock
+            const [p0, p1, p2] = featureVector;
+
+            // Conceptual 'arcsin' and 'arccos' aggregation
+            // We'll use simple ratios of combined features, scaled by the clock.
+            // The idea is that the clock's 'reduction' influences the 'angle'
+            // or relationship derived from the raw data.
+            const conceptualY = (p2 + p1) / (clockComponent + 1); // Represents a 'y' component or 'opposite' side
+            const conceptualX = (p0 + p1) / (clockComponent + 1); // Represents an 'x' component or 'adjacent' side
+
+            if (conceptualX === 0 && conceptualY === 0) return 0; // Undefined in real tan, but for embedding, a neutral point
+            if (conceptualX === 0) return conceptualY > 0 ? Math.PI / 2 : -Math.PI / 2; // Represents vertical axis (infinity for tan)
+
+            // The core tan = y/x transformation, representing the derived relationship/embedding
+            return conceptualY / conceptualX;
+        }
+
+        // Function to conceptually encode a single word entity
+        async function encodeWordEntity(word, currentStep, clockValue) {
+            // 1. Derive conceptual 'n' (step/attention value) for the word
+            // Using a simple hash or length for concept; in reality, more complex mapping.
+            const wordHash = word.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const n_word = Math.min(50, Math.max(0, word.length + (wordHash % 10))); // Simple mapping
+
+            // 2. Get Pascal's Triangle values for this word-entity's 'n_word'
+            const p0 = pascalValue(n_word, 0); // God Context / Potential (1)
+            const p1 = pascalValue(n_word, 1); // Word's Step Counter (n_word)
+            const p2 = pascalValue(n_word, 2); // Word's Identity / Form (Triangular Number)
+
+            const pascalFeatureVector = [p0, p1, p2];
+
+            // 3. Apply the 'tan' lambda transformation to get a semantic embedding component
+            const semanticEmbeddingComponent = tanLambdaTransform(pascalFeatureVector, clockValue);
+
+            // 4. Conceptual Vector Clock for the word (simplified for demo)
+            // In a full system, this would be a vector, here a single value representing depth.
+            const conceptualVectorClock = clockValue;
+
+            // 5. Generate a conceptual Ethers Address for the word entity
+            const entityIdentifier = `${word}-${n_word}-${conceptualVectorClock}`;
+            const ethersAddress = await generateConceptualEthersAddress(entityIdentifier);
+
+            // 6. Form a conceptual "Binary ArrayBuffer" (represented as a Float32Array for demo)
+            // This would ultimately be serialized to a raw binary ArrayBuffer
+            const conceptualArrayBuffer = new Float32Array([
+                p0, // God Context
+                p1, // Step Counter
+                p2, // Identity Form
+                semanticEmbeddingComponent, // Semantic Value
+                conceptualVectorClock // Causal Depth
+            ]);
+
+            return {
+                word: word,
+                n_value: n_word,
+                pascal: pascalFeatureVector,
+                semanticEmbedding: semanticEmbeddingComponent,
+                ethersAddress: ethersAddress,
+                arrayBuffer: conceptualArrayBuffer
+            };
+        }
+
+        // --- DOM Elements and Event Listener ---
+        const sentenceInput = document.getElementById('sentenceInput');
+        const encodeButton = document.getElementById('encodeButton');
+        const encodedResultsDiv = document.getElementById('encodedResults');
+        const wordEncodingsDiv = document.getElementById('wordEncodings');
+        const sentenceEmbeddingDiv = document.getElementById('sentenceEmbedding');
+        const messageBox = document.getElementById('messageBox');
+
+        // Function to display messages
+        function showMessage(message, type = 'info') {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-500', 'bg-green-500', 'bg-blue-500');
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-500');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-500');
+            } else {
+                messageBox.classList.add('bg-blue-500');
+            }
+            messageBox.classList.add('block');
+        }
+
+        encodeButton.addEventListener('click', async () => {
+            const sentence = sentenceInput.value.trim();
+            if (!sentence) {
+                showMessage('Please enter a sentence to encode.', 'error');
+                return;
+            }
+
+            showMessage('Encoding sentence using Merkaba-Native USE...', 'info');
+            wordEncodingsDiv.innerHTML = ''; // Clear previous results
+            encodedResultsDiv.classList.remove('hidden');
+
+            const words = sentence.split(/\s+/).filter(word => word.length > 0);
+            let globalClock = 0; // Represents a conceptual global clock for this sentence's processing
+
+            const wordEmbeddings = [];
+
+            for (const word of words) {
+                globalClock++; // Increment conceptual clock for each word processed
+                const encoded = await encodeWordEntity(word, globalClock, globalClock); // Pass globalClock as word's clock value
+
+                wordEmbeddings.push(encoded.semanticEmbedding); // Collect semantic embeddings for sentence aggregation
+
+                const card = document.createElement('div');
+                card.className = 'encoding-card';
+                card.innerHTML = `
+                    <p class="text-xl font-bold text-yellow-300 mb-2">Word: "${encoded.word}"</p>
+                    <p><strong class="text-indigo-200">Conceptual N-Value:</strong> <span class="font-mono text-green-300">${encoded.n_value}</span></p>
+                    <p><strong class="text-indigo-200">Pascal Values [0,1,2]:</strong> <span class="font-mono text-green-300">[${encoded.pascal.join(', ')}]</span></p>
+                    <p><strong class="text-indigo-200">Conceptual Vector Clock:</strong> <span class="font-mono text-green-300">${encoded.conceptualVectorClock}</span></p>
+                    <p><strong class="text-indigo-200">Semantic Embedding Component (tan lambda):</strong> <span class="font-mono text-green-300">${encoded.semanticEmbedding.toFixed(6)}</span></p>
+                    <p><strong class="text-indigo-200">Conceptual Ethers Address:</strong> <span class="font-mono text-sm text-gray-400 break-words">${encoded.ethersAddress}</span></p>
+                    <p><strong class="text-indigo-200">Conceptual Binary ArrayBuffer (Float32):</strong> <span class="font-mono text-sm text-gray-400 break-words">[${Array.from(encoded.arrayBuffer).map(val => val.toFixed(4)).join(', ')}]</span></p>
+                `;
+                wordEncodingsDiv.appendChild(card);
+            }
+
+            // Conceptual aggregation for the overall sentence embedding
+            // In a real USE, this would involve a complex neural network layer.
+            // Here, we'll average the word embeddings as a simple representation.
+            let overallSentenceEmbedding = 0;
+            if (wordEmbeddings.length > 0) {
+                overallSentenceEmbedding = wordEmbeddings.reduce((sum, val) => sum + val, 0) / wordEmbeddings.length;
+            }
+            sentenceEmbeddingDiv.textContent = overallSentenceEmbedding.toFixed(6);
+
+
+            showMessage('Sentence encoded successfully into conceptual ArrayBuffers!', 'success');
+        });
+
+        // Initial encoding on load with default sentence
+        window.onload = () => {
+            encodeButton.click();
+        };
+
+    </script>
+</body>
+</html>
