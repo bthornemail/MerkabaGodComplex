@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "ethers": "^6.14.4"
+    "ethers": "^6.14.4",
+    "wordnet": "^2.0.0"
   }
 }
