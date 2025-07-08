@@ -26,6 +26,7 @@ function App() {
     // }, [wallet])
     return (<div>
         <Header />
+        <hr />
         <Nav />
         <Wallet />
         {/* <div ref={containerRef} ></div> */}
