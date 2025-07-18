@@ -1,0 +1,83 @@
+import { HDNodeWallet } from 'ethers';
+
+class SparseTrieNode {
+    address: string;
+    path: string;
+    edges: Map<string, SparseTrieNode> = new Map();
+    constructor(address: string, path: string) {
+        this.address = address;
+        this.path = path
+    }
+}
+class QuadTrieNode {
+    address: string;
+    path: string;
+    edges: (QuadTrieEdge | null)[] = [null, null, null, null];
+
+    constructor(address: string, path: string) {
+        this.address = address
+        this.path = path;
+    }
+
+    addEdge(evt: string, to: QuadTrieNode): boolean {
+        if (this.path === to.path) return false; // Enforce bipartite
+        for (let i = 0; i < 4; i++) {
+            if (this.edges[i] === null) {
+                this.edges[i] = { evt, to };
+                return true;
+            }
+        }
+        return false; // No available slot (max 4)
+    }
+
+    getEdge(evt: string): QuadTrieEdge | null {
+        return this.edges.find(edge => edge?.evt === evt) || null;
+    }
+}
+
+type QuadTrieEdge = {
+    evt: string;
+    to: QuadTrieNode;
+};
+
+class BipartiteQuadTrie {
+    root: QuadTrieNode;
+
+    constructor(mnemonic?: string) {
+        this.root = new QuadTrieNode("/", (mnemonic
+            ? HDNodeWallet.fromPhrase(mnemonic)
+            : HDNodeWallet.createRandom(undefined, "m")).address);
+    }
+
+    insert(path: string[]): void {
+        let current = this.root;
+        //        let type: NodeType = "V"; // root is "U", so first child is "V"
+        for (const part of path) {
+            let edge = current.getEdge(part);
+            if (edge) {
+                current = edge.to;
+                path = current.path === "U" ? "V" : "U";
+                continue;
+            }
+
+            const newNode = new QuadTrieNode(part, type);
+            const added = current.addEdge(part, newNode);
+
+            if (!added) throw new Error(`Node '${current.id}' has no room for more edges`);
+            current = newNode;
+            type = type === "U" ? "V" : "U"; // alternate
+        }
+    }
+
+    search(path: string[]): boolean {
+        let current = this.root;
+
+        for (const part of path) {
+            const edge = current.getEdge(part);
+            if (!edge) return false;
+            current = edge.to;
+        }
+
+        return true;
+    }
+}
