@@ -7,48 +7,31 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: rgba(0, 0, 0, .75);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-body {
-  background-color: #242424;
-
-}
-html,
-body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
 * {
   box-sizing: border-box;
-}
-/* 
-html,
-body,
-#root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-} */
+} 
+
 textarea {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
 }
+
 html {
-  background-size: cover;
+  background-position: center;
+  background-size: contain;
   background-image: url("background.webp");
 }
 
-html,
+/* html, */
 body,
 dialog {
   background-position: center;
