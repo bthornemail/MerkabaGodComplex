@@ -9,7 +9,7 @@ import ZeroGraph, { NodeType } from './components/ZeroGraph';
 import Home from './components/Home';
 import Wallet from './components/Wallet';
 // import { SceneContext } from './hooks/useScene';
-
+import Universal42DModel from './Universal42DModel'
 function App() {
     const { wallet } = usePeer({});
     const { error, starting } = useContext(Libp2pContext);
@@ -24,12 +24,14 @@ function App() {
     // useEffect(() => {
     //     add(wallet)
     // }, [wallet])
-    return (<div>
+    return (<div className='root'>
         <Header />
         <hr />
         <Nav />
         <Wallet />
         {/* <div ref={containerRef} ></div> */}
+        
+        <Universal42DModel/>
         {wallet ? <ZeroGraph /> : <Home />}
         <Footer />
     </div>);

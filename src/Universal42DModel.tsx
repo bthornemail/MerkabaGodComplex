@@ -556,11 +556,11 @@ const QuadrantInput: React.FC<QuadrantInputProps> = ({
 
 
 // Main React App Component
-const App: React.FC = () => {
+const Universal42DModel: React.FC = () => {
   const [quadrantInputs, setQuadrantInputs] = useState<QuadrantState[]>([
     { id: 1, type: 'text', text: '(lambda (x) (principle "freedom" x))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'Freedom' },
     { id: 2, type: 'text', text: '(lambda (x) (principle "autonomy" x))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'Autonomy' },
-    { id: 3, type: 'text', text: '(lambda (x) (principle "reciprocity" x))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'Reciprocity' },
+    { id: 3, 'text': '(lambda (x) (principle "reciprocity" x))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'Reciprocity' },
     { id: 4, type: 'text', text: '(lambda (x) (principle "sovereignty" x))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'Sovereignty' },
     { id: 5, type: 'text', text: '(lambda (doc) (document-meta doc "UBHP Spec" "1.0"))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'DOCUMENT' },
     { id: 6, type: 'text', text: '(lambda (entity) (entity-id entity "key-123" "root-abc"))', file: null, fileType: null, buffer: null, signature: null, fixedDimensionRay: null, ubhpType: 'ENTITY' },
@@ -662,7 +662,7 @@ const App: React.FC = () => {
     ];
   }, []);
 
-  // Helper to harmonize a string for High/Low Phase
+  // Helper to get harmonic 'h' value from a string for Name/Reference
   const getHarmonicH = useCallback((input: string): number => {
     const encoder = new CanonicalSExprEncoder();
     encoder.encodeString(input);
@@ -1411,17 +1411,17 @@ const App: React.FC = () => {
 
   // Merkaba Layer 1: Base Universe (7D)
   const handleDeriveBaseUniverseMerkaba = useCallback(() => {
-    if (!foundationalPrinciples4D || !documentVector5D || !entityVector6D || !baseUniverseIdentity7D) {
-      setError("Please derive 7D Base Universe Identity Vector first.");
+    if (!quadrantInputs[0].signature || !quadrantInputs[4].signature || !quadrantInputs[5].signature || !quadrantInputs[6].signature) {
+      setError("Please ensure Freedom (Q1), Document (Q5), Entity (Q6), and Identity (Q7) have valid, processed inputs.");
       setBaseUniverseMerkaba7D(null);
       return;
     }
     try {
-      const p1 = foundationalPrinciples4D[0]; // h of Freedom
-      const p2 = documentVector5D[4];     // h of Document
-      const p3 = entityVector6D[5];        // h of Entity
-      const p4 = baseUniverseIdentity7D[6]; // h of Identity
-      const p5 = quadrantInputs.find(q => q.id === 7)?.signature?.sin || 0; // sin of Identity
+      const p1 = quadrantInputs[0].signature.h; // h of Freedom (Q1)
+      const p2 = quadrantInputs[4].signature.h; // h of Document (Q5)
+      const p3 = quadrantInputs[5].signature.h; // h of Entity (Q6)
+      const p4 = quadrantInputs[6].signature.h; // h of Identity (Q7)
+      const p5 = quadrantInputs[6].signature.sin; // sin of Identity (Q7) for a 5th point
 
       const highPhaseH = getHarmonicH("COSMOS_HIGH_PHASE_BASE_UNIVERSE");
       const lowPhaseH = getHarmonicH("PLANK_SCALE_LOW_PHASE_BASE_UNIVERSE");
@@ -1440,7 +1440,7 @@ const App: React.FC = () => {
       setError(`Error deriving Base Universe Merkaba: ${e.message}`);
       setBaseUniverseMerkaba7D(null);
     }
-  }, [foundationalPrinciples4D, documentVector5D, entityVector6D, baseUniverseIdentity7D, quadrantInputs, getHarmonicH]);
+  }, [quadrantInputs, getHarmonicH]);
 
   // Merkaba Layer 2: Domain Register (7D)
   const handleDeriveDomainRegisterMerkaba = useCallback(() => {
@@ -1665,12 +1665,12 @@ const App: React.FC = () => {
         vmStatusVector7D,
         sharedActionMacroCentroid5D,
         sharedActionMacroVector7D,
-        baseUniverseMerkaba7D, // NEW
-        domainRegisterMerkaba7D, // NEW
-        discreetModelLayerMerkaba7D, // NEW
-        userTransactionMerkaba7D, // NEW
-        vmStatusMerkaba7D, // NEW
-        sharedActionMacroMerkaba7D, // NEW
+        baseUniverseMerkaba7D,
+        domainRegisterMerkaba7D,
+        discreetModelLayerMerkaba7D,
+        userTransactionMerkaba7D,
+        vmStatusMerkaba7D,
+        sharedActionMacroMerkaba7D,
         universalModelHarmony42D,
       };
 
@@ -1705,7 +1705,7 @@ const App: React.FC = () => {
         const signature = harmonize(buffer);
         pointsToRender.push({ ...getPointData(signature, 'User Transaction Vector 7D') });
       }
-      if (userTransactionMerkaba7D) { // NEW
+      if (userTransactionMerkaba7D) {
         const encoder = new CanonicalSExprEncoder();
         encoder.encodeString(JSON.stringify(userTransactionMerkaba7D));
         const buffer = encoder.getBuffer();
@@ -1733,7 +1733,7 @@ const App: React.FC = () => {
         const signature = harmonize(buffer);
         pointsToRender.push({ ...getPointData(signature, 'VM Status Vector 7D') });
       }
-      if (vmStatusMerkaba7D) { // NEW
+      if (vmStatusMerkaba7D) {
         const encoder = new CanonicalSExprEncoder();
         encoder.encodeString(JSON.stringify(vmStatusMerkaba7D));
         const buffer = encoder.getBuffer();
@@ -1761,7 +1761,7 @@ const App: React.FC = () => {
         const signature = harmonize(buffer);
         pointsToRender.push({ ...getPointData(signature, 'Shared Action Macro Vector 7D') });
       }
-      if (sharedActionMacroMerkaba7D) { // NEW
+      if (sharedActionMacroMerkaba7D) {
         const encoder = new CanonicalSExprEncoder();
         encoder.encodeString(JSON.stringify(sharedActionMacroMerkaba7D));
         const buffer = encoder.getBuffer();
@@ -1840,9 +1840,10 @@ const App: React.FC = () => {
         UBHP 42D Universal Model Harmony: Tetrahedral 6x7 Merkaba Construction
       </h1>
       <p className="text-gray-400 text-lg mb-8 text-center max-w-3xl">
-        Witness the construction of a **42-dimensional fractal tetrahedron (Merkaba)**, where each of the
-        six 7D layers forms a **self-dual tetrahedral merkaba** through the interplay of 5 foundational points,
-        and their "High" (Name) and "Low" (Reference) phases. This unifies computation and cosmology.
+        This demonstrator illustrates the construction of a **42-dimensional fractal tetrahedron (Merkaba)**,
+        where the Universal Binary Hypergraph Protocol (UBHP) unifies computation with cosmological principles.
+        Each of the six 7D layers forms a **self-dual tetrahedral merkaba**, built from 5 foundational points
+        and their "High" (Name) and "Low" (Reference) phases.
       </p>
 
       {error && (
@@ -1855,7 +1856,7 @@ const App: React.FC = () => {
       {/* Base Universe Foundational Principles (Freedom, Autonomy, Reciprocity, Sovereignty) */}
       <h2 className="text-3xl font-semibold mb-6 text-teal-400">Base Universe Foundational Principles (5D Lambda Rays)</h2>
       <p className="text-gray-400 text-lg mb-8 text-center max-w-3xl">
-        Each input now represents the source code of a lambda function, whose canonical binary S-expression is harmonized.
+        Each input represents the source code of a lambda function, whose canonical binary S-expression is harmonized.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mb-8">
         {quadrantInputs.filter(q => q.id >= 1 && q.id <= 4).map(quadrant => (
@@ -2721,5 +2722,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
-
+export default Universal42DModel;

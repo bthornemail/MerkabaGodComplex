@@ -32,6 +32,14 @@ html {
 }
 
 /* html, */
+body {
+  min-height: fit-content;
+  min-width: fit-content;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 body,
 dialog {
   background-position: center;
