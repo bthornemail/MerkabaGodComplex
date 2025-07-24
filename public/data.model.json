@@ -1,0 +1,132 @@
+[{
+                                                        title: "Model", nodes: [
+                                                            {
+                                                                title: "Features", nodes: [
+                                                                    {
+                                                                        title: 'Angle', nodes: [
+                                                                            {
+                                                                                title: 'Vertex', nodes: []
+                                                                            },
+                                                                            {
+                                                                                title: 'Arms', nodes: [
+                                                                                    { title: 'Common' },
+                                                                                    { title: 'Adjecent' }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                            },
+                                                            {
+                                                                title: "Weights", nodes: [
+                                                                    {
+                                                                        title: "Object4D", nodes: [
+                                                                            {
+                                                                                title: 'Index', nodes: [
+                                                                                    { title: 'Uint16Array' }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                title: 'Attributes', nodes: [
+                                                                                    { title: 'Position', },
+                                                                                    { title: "Scale" },
+                                                                                    { title: "Rotation" },
+                                                                                    { title: "Matrix" }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                title: 'Refrences', nodes: [
+                                                                                    {
+                                                                                        title: 'Children', nodes: [
+                                                                                            { title: "Distance" },
+                                                                                            { title: "Matrix" }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                title: 'Parameters', nodes: [
+                                                                                    {
+                                                                                        title: 'Matrix', nodes: [
+                                                                                            { title: 'Uint16Array' }
+                                                                                        ]
+                                                                                    },
+                                                                                ]
+                                                                            },
+
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "Biases", nodes: [
+                                                                    {
+                                                                        title: 'Ray', nodes: [
+                                                                            { title: 'Origin' },
+                                                                            { title: 'Destination' },
+                                                                            { title: 'Near', nodes: [{ title: "Distance", nodes: [{ title: "Number" }] }] },
+                                                                            { title: 'Far', nodes: [{ title: "Distance", nodes: [{ title: "Number" }] }] }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: 'Layer', nodes: [
+                                                                    {
+                                                                        title: "Neuron", nodes: [
+                                                                            { title: "Input" },
+                                                                            { title: "Output" },
+                                                                            { title: "Delta" } //delta: number; // Error term for backpropagation
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        title: "Activation", nodes: [ //this might be a transform // used to be Transform
+                                                                            {
+                                                                                title: "Function", nodes: [
+                                                                                    {
+                                                                                        title: "Derive", nodes: [
+                                                                                            { title: "sigmoid", nodes: [{ title: "extendedKey" }, { title: "sharedSignature" }] },
+                                                                                            { title: "tanh", nodes: [{ title: "preSharedKey" }] },
+                                                                                            { title: "relu", nodes: [{ title: "publicKey" }] },
+                                                                                            { title: "linear", nodes: [{ title: "publicKey" }] },
+                                                                                        ]
+                                                                                    },
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        title: "Resolve", nodes: [
+                                                                            {
+                                                                                title: "Results", nodes: [
+                                                                                    {
+                                                                                        title: "Token", nodes: [
+
+                                                                                            { title: "Value", nodes: [] },
+                                                                                        ]
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                title: "Error", nodes: [
+
+                                                                                    {
+                                                                                        title: "Loss", nodes: [
+                                                                                            { title: "Graidents" },
+                                                                                        ]
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        title: "Learning", nodes: [
+                                                                            { title: "Activte", nodes: [] },
+                                                                            { title: "Rate", nodes: [] }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+
+                                                        ]
+                                                    }]

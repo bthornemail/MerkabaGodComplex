@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Sandboxed Wallet</title>
+  <link rel='stylesheet' href='modules/bootstrap/bootstrap.min.css'>
+  <script src='modules/ethers/ethers.umd.min.js'></script>
+  <script src='modules/merkletree/merkletree.js'></script>
+</head>
+<style>
+  html,
+  body,
+  section {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<body class='p-3'>
+  <section id="login" class='container'>
+    <div id="qrcode">
+      <img src="src/images/http.wallet.png" id="get-qrcode"></img>
+    </div>
+    <hr>
+    <button id='createWalletBtn' class='btn btn-primary'>Create Wallet</button>
+  </section>
+  <section id="sign" class='container' style="display: flex;flex-direction: column;" hidden>
+    <textarea class="form-control">Ethers.js Operations</textarea>
+    <div class='btn-group'>
+      <button id='signMessageBtn' class='btn btn-secondary'>Sign Message</button>
+      <button id='verifyMessageBtn' class='btn btn-success'>Verify Message</button>
+    </div>
+  </section>
+  <section id="block" class='container' style="display: flex;flex-direction: column;align-items: center;" hidden>
+    <!-- MerkleTree.js Section -->
+    <h4>Verify Block</h4>
+    <div class='btn-group' style="width: fit-content;">
+      <input id='root' class='form-control form-control-sm' placeholder='root'></input>
+      <input id='hash' class='form-control form-control-sm' placeholder='hash'></input>
+      <input id='key' class='form-control form-control-sm' placeholder='key'></input>
+      <input id='signature' class='form-control form-control-sm' placeholder='signature'></input>
+    </div>
+    <hr>
+    <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+    <hr>
+    <input id='entity' class='form-control form-control-sm' placeholder='entity'></input>
+    <hr>
+    <button id='verifyProofBtn' class='btn btn-primary btn-sm'>Verify</button>
+  </section>
+  <section id="transaction" class='container' style="display: flex;flex-direction: column;align-items: center;" hidden>
+    <div id='title-input' class='card-title'>Title</div>
+    <div id='body-input' class='card-body'>
+      <p id='text-input' class='card-text'>Text</p>
+    </div>
+    <div id='footer-input' class='card-footer'>
+      <button id='card-action' class='btn btn-primary btn-sm'>Verify</button>
+      <button id='card-anti-action' class='btn btn-primary btn-sm'>Verify</button>
+    </div>
+  </section>
+  <script src="modules/qrcode/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script>
+  <script src="modules/html5-qrcode/html5-qrcode.min.js"></script>
+  <script>
+    document.getElementById("login").setAttribute("hidden", "hidden");
+    document.getElementById("sign").setAttribute("hidden", "hidden");
+    document.getElementById("block").setAttribute("hidden", "hidden");
+    document.getElementById("transaction").removeAttribute("hidden");
+    
+    document.getElementById("get-qrcode").addEventListener("click", () => {
+      const scanner = new Html5QrcodeScanner("qrcode", { fps: 10, qrbox: { width: 250, height: 250 } })
+      scanner.render((decodedText, decodedResult) => {
+        console.log({ decodedText, decodedResult });
+        // document.getElementById("qrcode").innerHTML = ""
+        // var qrcode = new QRCode(document.getElementById("qrcode"), {
+        //   text: decodedText,
+        //   width: 128,
+        //   height: 128,
+        //   colorDark: "#000000",
+        //   colorLight: "#ffffff",
+        //   correctLevel: QRCode.CorrectLevel.H
+        // });
+        document.getElementById("login").setAttribute("hidden", "hidden");
+        document.getElementById("sign").removeAttribute("hidden");
+      }, (err) => { console.error(err) });
+    });
+    // Ethers.js Example: Create Wallet
+    document.getElementById('createWalletBtn').addEventListener('click', async () => {
+      const wallet = ethers.HDNodeWallet.createRandom();
+      // console.log(wallet)
+      // parent.postMessage({ type: 'walletCreated', address: wallet.address });
+      parent.postMessage({ type: 'walletCreated', address: wallet.address }, "*");
+      // parent.postMessage({ type: 'walletCreated', address: wallet.address }, 'http://127.0.0.1:38537');
+    });
+
+    // Ethers.js Example: Sign Message
+    document.getElementById('signMessageBtn').addEventListener('click', async () => {
+      const wallet = ethers.Wallet.createRandom();
+      const message = 'Hello, blockchain!';
+      const signature = await wallet.signMessage(message);
+      parent.postMessage({ type: 'messageSigned', signature }, '*');
+    });
+
+    // Ethers.js Example: Verify Message
+    document.getElementById('verifyMessageBtn').addEventListener('click', async () => {
+      const message = 'Hello, blockchain!';
+      const wallet = ethers.Wallet.createRandom();
+      const signature = await wallet.signMessage(message);
+      const recoveredAddress = ethers.utils.verifyMessage(message, signature);
+      parent.postMessage({ type: 'messageVerified', address: recoveredAddress }, '*');
+    });
+
+    // MerkleTree.js Example: Verify Proof
+    document.getElementById('verifyProofBtn').addEventListener('click', () => {
+      const proofInput = document.getElementById('merkleProofInput').value;
+      const proof = JSON.parse(proofInput || '[]');
+      const tree = new MerkleTree(['a', 'b', 'c'], ethers.utils.keccak256);
+      const root = tree.getRoot().toString('hex');
+      const isValid = tree.verify(proof, 'a', root);
+      parent.postMessage({ type: 'proofVerified', valid: isValid }, '*');
+    });
+  </script>
+</body>
+
+</html>

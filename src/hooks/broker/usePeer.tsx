@@ -1,0 +1,499 @@
+/* eslint-disable no-console */
+
+import { HDNodeVoidWallet, verifyMessage } from "ethers";
+import * as openpgp from 'openpgp';
+import PropTypes from 'prop-types'
+import {
+    useEffect,
+    useState,
+    createContext,
+    useContext,
+    useCallback,
+} from 'react'
+import { HDNodeWallet } from 'ethers'
+import { peerIdFromPrivateKey } from '@libp2p/peer-id'
+import { generateKeyPair, privateKeyFromRaw } from '@libp2p/crypto/keys'
+import type { PeerId, PrivateKey } from '@libp2p/interface'
+import { id } from 'ethers';
+
+interface PublicKeyCredentialCreationOptionsJSON {
+    challenge: string;
+    rp: {
+        name: string;
+        id?: string;
+    };
+    user: {
+        id: string;
+        name: string;
+        displayName: string;
+    };
+    pubKeyCredParams: Array<{
+        type: 'public-key';
+        alg: number;
+    }>;
+    timeout?: number;
+    attestation?: 'direct' | 'indirect' | 'none';
+    excludeCredentials?: Array<{
+        type: 'public-key';
+        id: string;
+    }>;
+    authenticatorSelection?: {
+        authenticatorAttachment?: 'platform' | 'cross-platform';
+        requireResidentKey?: boolean;
+        userVerification?: 'required' | 'preferred' | 'discouraged';
+    };
+}
+interface PublicKeyCredentialRequestOptionsJSON {
+    challenge: string;
+    timeout?: number;
+    rpId?: string;
+    allowCredentials?: Array<{
+        type: 'public-key';
+        id: string;
+        transports?: Array<'usb' | 'nfc' | 'ble' | 'internal'>;
+    }>;
+    userVerification?: 'required' | 'preferred' | 'discouraged';
+}
+export const PeerContext: any = createContext({
+    privateKey: null, wallet: null, peerId: null, keyPair: null, generate: null, encrypt: null, decrypt: null, unlock: null, update: null,
+    auto: null, register: null, authenticate: null, status: null, error: null, ws: null,
+})
+export const PeerProvider = ({ children }: any) => {
+    const context = usePeer(PeerContext)
+    return (
+        <PeerContext.Provider
+            value={context}
+        >{children}</PeerContext.Provider>
+    )
+}
+
+// PeerProvider.propTypes = {
+//     children: PropTypes.any
+// }
+export const usePeer = ({ key }: { key?: Uint8Array } & any) => {
+    const [entity, setEntity] = useState<string>()
+    const [identity, setIdentity] = useState<string>()
+    const [privateKey, setPrivateKey] = useState<Uint8Array>()
+    const [wallet, setWallet] = useState<HDNodeVoidWallet>()
+    const [keyPair, setKeyPair] = useState<PrivateKey>()
+    const [peerId, setPeerId] = useState<PeerId>()
+    // const helia = await createHelia() as any
+    const [error, setError] = useState<string | null>(null);
+    const [status, setStatus] = useState<'idle' | 'registering' | 'authenticating' | 'success' | 'error'>('idle');
+    const [ws, setWs] = useState<WebSocket | null>(null);
+    const [connectionId, setConnectionId] = useState<string | null>(null);
+
+
+    useEffect(() => {
+        const privateKey = new Uint8Array(key ?? [43, 113, 166, 153, 182, 29, 81, 196, 180, 199, 80, 148, 252, 247, 141, 112, 204, 29, 139, 221, 167, 186, 219, 141, 238, 217, 93, 124, 254, 23, 91, 65])
+        // const wallet = HDNodeWallet.fromSeed(privateKey)
+        const keyPair: PrivateKey = privateKeyFromRaw(privateKey)
+        // const peerId: PeerId = peerIdFromPrivateKey(keyPair);
+        setPrivateKey(privateKey);
+        setWallet(HDNodeWallet.fromSeed(privateKey).neuter())
+        setKeyPair(privateKeyFromRaw(privateKey))
+        setPeerId(peerIdFromPrivateKey(keyPair))
+    }, [key])
+
+    // Generate a stable connection ID
+    const generateConnectionId = useCallback(() => {
+        if (!entity || !identity) return null;
+        const now = Date.now();
+        const input = `${entity}-${identity}-${now}`;
+        // Use ethers.utils.id which is more forgiving than sha256 for strings
+        return id(input);
+    }, [entity, identity]);
+
+    // Initialize WebSocket connection
+    useEffect(() => {
+        if (!entity || !identity) {
+            setError('Entity and identity must be provided');
+            return;
+        }
+
+        const connId = generateConnectionId();
+        if (!connId) {
+            setError('Failed to generate connection ID');
+            return;
+        }
+        setConnectionId(connId);
+
+        try {
+            const websocket = new WebSocket(`ws://localhost:8000?entity=${encodeURIComponent(entity)}&identity=${encodeURIComponent(identity)}`);
+            setWs(websocket);
+
+            return () => {
+                websocket.close();
+            };
+        } catch (err) {
+            setError('Failed to establish WebSocket connection');
+        }
+    }, [entity, identity, generateConnectionId]);
+
+    async function generate() {
+        const keyPair = (await generateKeyPair('secp256k1'))
+        setPrivateKey(keyPair.raw);
+        return keyPair.raw
+    }
+
+    // Convert challenge/base64 to ArrayBuffer
+    const bufferDecode = useCallback((value: string) =>
+        Uint8Array.from(atob(value), c => c.charCodeAt(0)), []);
+
+    // Convert ArrayBuffer to base64
+    const bufferEncode = useCallback((value: ArrayBuffer) =>
+        btoa(String.fromCharCode(...new Uint8Array(value))), []);
+
+    // const sendWebSocketMessage = useCallback((type: string, payload: any) => {
+    //     if (!ws || !connectionId) return Promise.reject('WebSocket not connected');
+
+    //     return new Promise((resolve, reject) => {
+    //         const messageId = Math.random().toString(36).substring(2, 9);
+
+    //         const handleMessage = (event: MessageEvent) => {
+    //             try {
+    //                 const data = JSON.parse(event.data);
+    //                 if (data.messageId === messageId) {
+    //                     ws.removeEventListener('message', handleMessage);
+    //                     if (data.error) {
+    //                         reject(data.error);
+    //                     } else {
+    //                         resolve(data.payload);
+    //                     }
+    //                 }
+    //             } catch (err) {
+    //                 reject('Invalid server response');
+    //             }
+    //         };
+
+    //         ws.addEventListener('message', handleMessage);
+
+    //         ws.send(JSON.stringify({
+    //             type,
+    //             messageId,
+    //             payload,
+    //             connectionId
+    //         }));
+    //     });
+    // }, [ws, connectionId]);
+
+    // const registerAuth = useCallback(async () => {
+    //     try {
+    //         if (!connectionId) {
+    //             throw new Error('Not connected to server');
+    //         }
+
+    //         setStatus('registering');
+    //         setError(null);
+
+    //         // Request registration options from server
+    //         const optionsFromServer = await sendWebSocketMessage(
+    //             'webauthn-register-request',
+    //             { entity, identity }
+    //         ) as PublicKeyCredentialCreationOptionsJSON;
+
+    //         if (!optionsFromServer) {
+    //             throw new Error('Failed to get registration options from server');
+    //         }
+
+    //         // Convert options for browser API
+    //         const publicKey: PublicKeyCredentialCreationOptions = {
+    //             ...optionsFromServer,
+    //             challenge: bufferDecode(optionsFromServer.challenge),
+    //             user: {
+    //                 ...optionsFromServer.user,
+    //                 id: bufferDecode(optionsFromServer.user.id)
+    //             }
+    //         };
+
+    //         // Create credential
+    //         const credential = await navigator.credentials.create({ publicKey }) as PublicKeyCredential;
+
+    //         if (!credential) {
+    //             throw new Error('Credential creation failed');
+    //         }
+
+    //         const attestationResponse = credential.response as AuthenticatorAttestationResponse;
+
+    //         // Prepare response for server
+    //         const registrationResponse = {
+    //             id: credential.id,
+    //             rawId: bufferEncode(credential.rawId),
+    //             type: credential.type,
+    //             response: {
+    //                 attestationObject: bufferEncode(attestationResponse.attestationObject),
+    //                 clientDataJSON: bufferEncode(attestationResponse.clientDataJSON)
+    //             }
+    //         };
+
+    //         // Send response to server
+    //         const verificationResult = await sendWebSocketMessage(
+    //             'webauthn-register-response',
+    //             registrationResponse
+    //         );
+
+    //         if (!verificationResult?.success) {
+    //             throw new Error(verificationResult?.error || 'Registration verification failed');
+    //         }
+
+    //         setStatus('success');
+    //         return credential;
+    //     } catch (err) {
+    //         console.error(err);
+    //         setError(err instanceof Error ? err.message : 'Registration failed');
+    //         setStatus('error');
+    //         return null;
+    //     }
+    // }, [bufferDecode, bufferEncode, entity, identity, sendWebSocketMessage, connectionId]);
+
+    // const authenticateAuth = useCallback(async () => {
+    //     try {
+    //         if (!connectionId) {
+    //             throw new Error('Not connected to server');
+    //         }
+
+    //         setStatus('authenticating');
+    //         setError(null);
+
+    //         // Request authentication options from server
+    //         const optionsFromServer = await sendWebSocketMessage(
+    //             'webauthn-authenticate-request',
+    //             { entity, identity }
+    //         ) as PublicKeyCredentialRequestOptionsJSON;
+
+    //         if (!optionsFromServer) {
+    //             throw new Error('Failed to get authentication options from server');
+    //         }
+
+    //         // Convert options for browser API
+    //         const publicKey: PublicKeyCredentialRequestOptions = {
+    //             ...optionsFromServer,
+    //             challenge: bufferDecode(optionsFromServer.challenge),
+    //             allowCredentials: optionsFromServer.allowCredentials?.map(cred => ({
+    //                 ...cred,
+    //                 id: bufferDecode(cred.id)
+    //             }))
+    //         };
+
+    //         // Get assertion
+    //         const assertion = await navigator.credentials.get({ publicKey }) as PublicKeyCredential;
+
+    //         if (!assertion) {
+    //             throw new Error('Authentication failed');
+    //         }
+
+    //         const assertionResponse = assertion.response as AuthenticatorAssertionResponse;
+
+    //         // Prepare response for server
+    //         const authenticationResponse = {
+    //             id: assertion.id,
+    //             rawId: bufferEncode(assertion.rawId),
+    //             type: assertion.type,
+    //             response: {
+    //                 authenticatorData: bufferEncode(assertionResponse.authenticatorData),
+    //                 clientDataJSON: bufferEncode(assertionResponse.clientDataJSON),
+    //                 signature: bufferEncode(assertionResponse.signature),
+    //                 userHandle: assertionResponse.userHandle ? bufferEncode(assertionResponse.userHandle) : null
+    //             }
+    //         };
+
+    //         // Send response to server
+    //         const verificationResult = await sendWebSocketMessage(
+    //             'webauthn-authenticate-response',
+    //             authenticationResponse
+    //         );
+
+    //         if (!verificationResult?.success) {
+    //             throw new Error(verificationResult?.error || 'Authentication verification failed');
+    //         }
+
+    //         setStatus('success');
+    //         return assertion;
+    //     } catch (err) {
+    //         console.error(err);
+    //         setError(err instanceof Error ? err.message : 'Authentication failed');
+    //         setStatus('error');
+    //         return null;
+    //     }
+    // }, [bufferDecode, bufferEncode, entity, identity, sendWebSocketMessage, connectionId]);
+
+    async function encrypt(binary: Uint8Array, passwords: string[]) {
+        const message = await openpgp.createMessage({ binary });
+        const encrypted = await openpgp.encrypt({
+            message, // input as Message object
+            passwords, // multiple passwords possible
+            format: 'binary' // don't ASCII armor (for Uint8Array output)
+        });
+        return encrypted;
+        console.log(encrypted); // Uint8Array
+    }
+    async function decrypt(encrypted: Uint8Array, passwords: string[]) {
+        const encryptedMessage = await openpgp.readMessage({
+            binaryMessage: encrypted // parse encrypted bytes
+        });
+        const { data: decrypted } = await openpgp.decrypt({
+            message: encryptedMessage,
+            passwords: passwords, // decrypt with password
+            format: 'binary' // output as Uint8Array
+        });
+        return decrypted;
+        console.log(decrypted); // Uint8Array([0x01, 0x01, 0x01])
+    }
+
+    function unlock({ key, extendedKey, signature }: any) {
+        if (extendedKey) {
+            setWallet(HDNodeWallet.fromExtendedKey(extendedKey) as HDNodeVoidWallet)
+            return;
+        }
+        if (key && signature) {
+            const wallet = HDNodeWallet.fromExtendedKey(key) as HDNodeVoidWallet;
+            if (wallet?.address !== verifyMessage(new TextEncoder().encode(key), signature)) throw new Error("Signature not verified");
+            setWallet(wallet);
+            return;
+        }
+        const wallet = HDNodeWallet.createRandom("", "m");
+        console.log("Created Random Wallet ", JSON.stringify({
+            extendedKey: wallet.extendedKey,
+            mnemonic: wallet.mnemonic?.phrase,
+            privateKey: wallet.privateKey,
+            signingKey: wallet.signingKey.privateKey,
+        }, null, 2))
+        setWallet(wallet.neuter());
+    }
+
+    async function update({ entity, identity, data, timestamp }: any) {
+        console.log(entity, { identity, data, timestamp });
+    }
+    const register = async (optionsFromServer: PublicKeyCredentialCreationOptionsJSON) => {
+        try {
+            setStatus('registering')
+            setError(null)
+
+            const publicKey: PublicKeyCredentialCreationOptions = {
+                ...optionsFromServer,
+                challenge: bufferDecode(optionsFromServer.challenge),
+                user: {
+                    ...optionsFromServer.user,
+                    id: bufferDecode(optionsFromServer.user.id)
+                }
+            }
+
+            const credential = await navigator.credentials.create({ publicKey }) as PublicKeyCredential
+            setStatus('success')
+            return credential
+        } catch (err) {
+            console.error(err)
+            setError('Registration failed')
+            setStatus('error')
+            return null
+        }
+    }
+
+    const authenticate = async (optionsFromServer: PublicKeyCredentialRequestOptionsJSON) => {
+        try {
+            setStatus('authenticating')
+            setError(null)
+
+            const publicKey: PublicKeyCredentialRequestOptions = {
+                ...optionsFromServer,
+                challenge: bufferDecode(optionsFromServer.challenge),
+                allowCredentials: optionsFromServer.allowCredentials?.map(cred => ({
+                    ...cred,
+                    id: bufferDecode(cred.id)
+                }))
+            }
+
+            const assertion = await navigator.credentials.get({ publicKey }) as PublicKeyCredential
+            setStatus('success')
+            return assertion
+        } catch (err) {
+            console.error(err)
+            setError('Authentication failed')
+            setStatus('error')
+            return null
+        }
+    }
+    const create = async () => {
+        let credential = await navigator.credentials.create({
+            publicKey: {
+                challenge: new Uint8Array([117, 61, 252, 231, 191, 241 /* … */]),
+                rp: { id: "localhost", name: "ACME Corporation" },
+                user: {
+                    id: new Uint8Array([79, 252, 83, 72, 214, 7, 89, 26]),
+                    name: "jamiedoe",
+                    displayName: "Jamie Doe",
+                },
+                pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -8 }, { type: "public-key", alg: -257 }],
+            },
+        });
+    }
+    const auto = () => {
+        // sample arguments for registration
+        const createCredentialDefaultArgs = {
+            publicKey: {
+                // Relying Party (a.k.a. - Service):
+                rp: { id: "localhost", name: "Univere 2D" },
+                // User:
+                user: {
+                    id: new Uint8Array(16),
+                    name: "contact@bthorne.org",
+                    displayName: "Brian Thorne",
+                },
+                pubKeyCredParams: [
+                    { type: "public-key", alg: -7 }, { type: "public-key", alg: -8 }, { type: "public-key", alg: -257 }
+                ],
+                attestation: "direct",
+                timeout: 60000,
+                challenge: new Uint8Array([
+                    // must be a cryptographically random number sent from a server
+                    0x8c, 0x0a, 0x26, 0xff, 0x22, 0x91, 0xc1, 0xe9, 0xb9, 0x4e, 0x2e, 0x17,
+                    0x1a, 0x98, 0x6a, 0x73, 0x71, 0x9d, 0x43, 0x48, 0xd5, 0xa7, 0x6a, 0x15,
+                    0x7e, 0x38, 0x94, 0x52, 0x77, 0x97, 0x0f, 0xef,
+                ]).buffer,
+            },
+        };
+
+        // sample arguments for login
+        const getCredentialDefaultArgs = {
+            publicKey: {
+                timeout: 60000,
+                // allowCredentials: [newCredential] // see below
+                challenge: new Uint8Array([
+                    // must be a cryptographically random number sent from a server
+                    0x79, 0x50, 0x68, 0x71, 0xda, 0xee, 0xee, 0xb9, 0x94, 0xc3, 0xc2, 0x15,
+                    0x67, 0x65, 0x26, 0x22, 0xe3, 0xf3, 0xab, 0x3b, 0x78, 0x2e, 0xd5, 0x6f,
+                    0x81, 0x26, 0xe2, 0xa6, 0x01, 0x7d, 0x74, 0x50,
+                ]).buffer,
+            },
+        };
+
+        // register / create a new credential
+        navigator.credentials
+            .create(createCredentialDefaultArgs)
+            .then((cred) => {
+                console.log("NEW CREDENTIAL", cred);
+                // normally the credential IDs available for an account would come from a server
+                // but we can just copy them from above…
+                const idList = [
+                    {
+                        id: cred.rawId,
+                        transports: ["usb", "nfc", "ble"],
+                        type: "public-key",
+                    },
+                ];
+                getCredentialDefaultArgs.publicKey.allowCredentials = idList;
+                return navigator.credentials.get(getCredentialDefaultArgs);
+            })
+            .then((assertion) => {
+                console.log("ASSERTION", assertion);
+            })
+            .catch((err) => {
+                console.log("ERROR", err);
+            });
+
+    }
+    return {
+        privateKey, wallet, keyPair, peerId, generate, encrypt, decrypt, unlock, update,
+        auto, register, authenticate, status, error, ws
+    }
+}
