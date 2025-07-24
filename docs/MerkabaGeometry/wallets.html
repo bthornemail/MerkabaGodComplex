@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBHP Live Dictaphone & MQTT/WebRTC Broadcaster (Ethers.js)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <!-- Ethers.js CDN -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Lightest Blue */
+            color: #1e293b; /* Dark text for readability */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded */
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 90%;
+            width: 768px; /* Max width for readability */
+            box-sizing: border-box;
+        }
+        .section-heading {
+            font-size: 1.75rem; /* Slightly smaller for sections */
+            line-height: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #004c6d; /* Primary Blue */
+        }
+        .btn-primary {
+            background-color: #004c6d; /* Primary Blue */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded */
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            background-color: #00334d; /* Darker Primary Blue */
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background-color: #dc2626; /* Red */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-danger:hover {
+            background-color: #b91c1c; /* Darker Red */
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: #5b8ba7; /* Accent Blue 2 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary:hover {
+            background-color: #477791; /* Darker Accent Blue 2 */
+            transform: translateY(-2px);
+        }
+        .status-message {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        .status-success {
+            background-color: #d1fae5; /* Green 100 */
+            color: #065f46; /* Green 800 */
+        }
+        .status-error {
+            background-color: #fee2e2; /* Red 100 */
+            color: #991b1b; /* Red 800 */
+        }
+        .status-info {
+            background-color: #e0f2fe; /* Blue 100 */
+            color: #0369a1; /* Blue 800 */
+        }
+        .log-area {
+            background-color: #f8faff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #475569;
+        }
+        .log-item {
+            margin-bottom: 0.5rem;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 0.5rem;
+            cursor: pointer; /* Make log items clickable */
+        }
+        .log-item:hover {
+            background-color: #eef2f8; /* Light hover effect */
+        }
+        .log-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .container-card {
+                padding: 1.5rem;
+                margin: 1rem auto;
+            }
+            .section-heading {
+                font-size: 1.5rem;
+            }
+            .btn-group {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container-card">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight gradient-text">UBHP Live Dictaphone & MQTT/WebRTC Broadcaster</h1>
+            <p class="text-md text-slate-600">Broadcast Harmonized References & Request Data Peer-to-Peer with Ethers.js</p>
+        </header>
+
+        <!-- Wallet/Auth Section -->
+        <section class="mb-8 p-6 bg-blue-50 rounded-xl shadow-inner">
+            <h2 class="section-heading">1. Ethers.js Wallet Identity</h2>
+            <p class="text-slate-600 text-center mb-4">Generate a new cryptographic wallet. Its address will be your client ID for broadcasting and WebRTC.</p>
+            <div class="flex justify-center">
+                <button id="authButton" class="btn-primary">Generate Wallet & Login</button>
+            </div>
+            <div id="authStatus" class="status-message status-info hidden"></div>
+            <div id="clientDetails" class="mt-4 text-sm text-slate-700 hidden">
+                <p><strong>Your Wallet Address:</strong> <span id="displayWalletAddress" class="font-semibold text-sky-700 break-all"></span></p>
+                <p><strong>Device:</strong> <span id="displayUserAgent" class="font-semibold text-sky-700"></span></p>
+            </div>
+        </section>
+
+        <!-- Live Broadcast Section -->
+        <section class="mb-8 p-6 bg-blue-50 rounded-xl shadow-inner">
+            <h2 class="section-heading">2. Live Broadcast Controls (via MQTT References)</h2>
+            <p class="text-slate-600 text-center mb-4">Start broadcasting harmonized audio references in real-time. Chunks are buffered locally with a 5-min TTL.</p>
+            <div class="flex justify-center items-center space-x-4 mb-4 btn-group">
+                <button id="startLiveBroadcastButton" class="btn-primary" disabled>Start Live Broadcast</button>
+                <button id="stopLiveBroadcastButton" class="btn-danger" disabled>Stop Live Broadcast</button>
+            </div>
+            <div id="liveBroadcastStatus" class="status-message status-info hidden"></div>
+        </section>
+
+        <!-- WebRTC Data Request Section -->
+        <section class="mb-8 p-6 bg-blue-50 rounded-xl shadow-inner">
+            <h2 class="section-heading">3. WebRTC Data Request (Peer-to-Peer)</h2>
+            <p class="text-slate-600 text-center mb-4">Request a specific audio chunk from another peer using its content address (hash) and wallet address.</p>
+            <div class="mb-4">
+                <label for="requestContentAddress" class="block text-sm font-medium text-slate-700 mb-1">Content Address (Hash):</label>
+                <input type="text" id="requestContentAddress" placeholder="e.g., 2d4a7b..." class="w-full p-2 border border-gray-300 rounded-lg focus:ring-sky-500 focus:border-sky-500 text-slate-800">
+            </div>
+            <div class="mb-4">
+                <label for="requestBroadcasterClientId" class="block text-sm font-medium text-slate-700 mb-1">Broadcaster Wallet Address:</label>
+                <input type="text" id="requestBroadcasterClientId" placeholder="e.g., 0xAbC123..." class="w-full p-2 border border-gray-300 rounded-lg focus:ring-sky-500 focus:border-sky-500 text-slate-800">
+            </div>
+            <div class="flex justify-center">
+                <button id="requestWebRTCButton" class="btn-secondary" disabled>Request Audio Chunk via WebRTC</button>
+            </div>
+            <div id="webrtcStatus" class="status-message status-info hidden"></div>
+            <audio id="receivedAudioPlayback" controls class="w-full mt-4 rounded-lg shadow-sm hidden"></audio>
+        </section>
+
+        <!-- Broadcast Log Section -->
+        <section class="p-6 bg-blue-50 rounded-xl shadow-inner">
+            <h2 class="section-heading">4. Broadcast Log (Click to Request)</h2>
+            <div id="broadcastLog" class="log-area">
+                <p class="text-center text-slate-500">No live broadcasts yet.</p>
+            </div>
+            <h2 class="section-heading mt-8">5. WebRTC Log</h2>
+            <div id="webrtcLog" class="log-area">
+                <p class="text-center text-slate-500">No WebRTC activity yet.</p>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-500 text-sm mt-12">
+            <p>Built with Universal Binary Axioms principles.</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        // Global variables provided by Canvas environment (not directly used for auth anymore)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // --- Ethers.js Wallet Identity ---
+        let wallet = null; // Ethers.js Wallet instance
+        let clientId = null; // This client's wallet address
+
+        // --- UI Elements ---
+        const authButton = document.getElementById('authButton');
+        const authStatus = document.getElementById('authStatus');
+        const clientDetails = document.getElementById('clientDetails');
+        const displayWalletAddress = document.getElementById('displayWalletAddress');
+        const displayUserAgent = document.getElementById('displayUserAgent');
+
+        const startLiveBroadcastButton = document.getElementById('startLiveBroadcastButton');
+        const stopLiveBroadcastButton = document.getElementById('stopLiveBroadcastButton');
+        const liveBroadcastStatus = document.getElementById('liveBroadcastStatus');
+
+        const requestContentAddressInput = document.getElementById('requestContentAddress');
+        const requestBroadcasterClientIdInput = document.getElementById('requestBroadcasterClientId');
+        const requestWebRTCButton = document.getElementById('requestWebRTCButton');
+        const webrtcStatus = document.getElementById('webrtcStatus');
+        const receivedAudioPlayback = document.getElementById('receivedAudioPlayback');
+
+        const broadcastLog = document.getElementById('broadcastLog');
+        const webrtcLog = document.getElementById('webrtcLog');
+
+        let mediaRecorder;
+        let isLiveBroadcasting = false;
+        let chunkSequenceNumber = 0;
+
+        let mqttClient = null;
+        let mqttConnected = false;
+
+        // --- Conceptual Trie-like Buffer with TTL ---
+        const audioChunkBuffer = new Map(); // Map<contentAddress, { blob: Blob, timestamp: number }>
+        const TTL_MINUTES = 5;
+        const TTL_MS = TTL_MINUTES * 60 * 1000;
+        let cleanupIntervalId = null;
+
+        function cleanupAudioBuffer() {
+            const now = Date.now();
+            for (const [key, value] of audioChunkBuffer.entries()) {
+                if (now - value.timestamp > TTL_MS) {
+                    audioChunkBuffer.delete(key);
+                    console.log(`Cleaned up chunk ${key.substring(0, 8)}... from buffer (TTL).`);
+                    appendLog(`Chunk ${key.substring(0,8)}... removed from buffer (TTL).`, 'info', broadcastLog);
+                }
+            }
+        }
+
+        // --- WebRTC Peer Connection Management ---
+        const peerConnections = new Map(); // Map<remoteClientId (wallet address), RTCPeerConnection>
+        const dataChannels = new Map();     // Map<remoteClientId, RTCDataChannel>
+
+        const rtcConfig = {
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' },
+            ]
+        };
+
+        async function setupPeerConnection(remoteClientId, isOfferer) {
+            if (peerConnections.has(remoteClientId)) {
+                appendLog(`WebRTC: Connection to ${remoteClientId} already exists.`, 'info', webrtcLog);
+                return peerConnections.get(remoteClientId);
+            }
+
+            appendLog(`WebRTC: Setting up PeerConnection with ${remoteClientId} (Offerer: ${isOfferer})`, 'info', webrtcLog);
+            const pc = new RTCPeerConnection(rtcConfig);
+            peerConnections.set(remoteClientId, pc);
+
+            pc.onicecandidate = (event) => {
+                if (event.candidate) {
+                    // Sign and send ICE candidate to remote peer via MQTT signaling
+                    publishMqttSignal(remoteClientId, {
+                        type: 'iceCandidate',
+                        candidate: event.candidate,
+                        senderAddress: clientId, // Use wallet address
+                    });
+                    appendLog(`WebRTC: Sending ICE candidate to ${remoteClientId}`, 'info', webrtcLog);
+                }
+            };
+
+            if (isOfferer) {
+                const dataChannel = pc.createDataChannel('ubhp-data-channel');
+                dataChannels.set(remoteClientId, dataChannel);
+                setupDataChannelEvents(dataChannel, remoteClientId);
+                appendLog(`WebRTC: Created data channel for ${remoteClientId}`, 'info', webrtcLog);
+            } else {
+                pc.ondatachannel = (event) => {
+                    const dataChannel = event.channel;
+                    dataChannels.set(remoteClientId, dataChannel);
+                    setupDataChannelEvents(dataChannel, remoteClientId);
+                    appendLog(`WebRTC: Received data channel from ${remoteClientId}`, 'info', webrtcLog);
+                };
+            }
+
+            pc.onconnectionstatechange = () => {
+                appendLog(`WebRTC: Connection state with ${remoteClientId}: ${pc.connectionState}`, 'info', webrtcLog);
+                if (pc.connectionState === 'failed' || pc.connectionState === 'closed') {
+                    peerConnections.delete(remoteClientId);
+                    dataChannels.delete(remoteClientId);
+                    appendLog(`WebRTC: Cleaned up connection with ${remoteClientId}`, 'error', webrtcLog);
+                }
+            };
+
+            return pc;
+        }
+
+        function setupDataChannelEvents(dataChannel, remoteClientId) {
+            dataChannel.onopen = () => {
+                appendLog(`WebRTC: Data channel with ${remoteClientId} is OPEN!`, 'success', webrtcLog);
+                requestWebRTCButton.disabled = false;
+            };
+            dataChannel.onclose = () => {
+                appendLog(`WebRTC: Data channel with ${remoteClientId} is CLOSED.`, 'info', webrtcLog);
+            };
+            dataChannel.onerror = (error) => {
+                appendLog(`WebRTC: Data channel error with ${remoteClientId}: ${error.error.message}`, 'error', webrtcLog);
+            };
+            dataChannel.onmessage = async (event) => {
+                if (typeof event.data === 'string') {
+                    // This is a request for an audio chunk (string is contentAddress)
+                    const requestedContentAddress = event.data;
+                    appendLog(`WebRTC: Received request for chunk: ${requestedContentAddress.substring(0, 8)}... from ${remoteClientId}`, 'info', webrtcLog);
+
+                    const chunkEntry = audioChunkBuffer.get(requestedContentAddress);
+                    if (chunkEntry && chunkEntry.blob) {
+                        try {
+                            const arrayBuffer = await chunkEntry.blob.arrayBuffer();
+                            dataChannel.send(arrayBuffer);
+                            appendLog(`WebRTC: Sent audio chunk ${requestedContentAddress.substring(0, 8)}... to ${remoteClientId}`, 'success', webrtcLog);
+                        } catch (error) {
+                            appendLog(`WebRTC: Error sending chunk ${requestedContentAddress.substring(0, 8)}...: ${error.message}`, 'error', webrtcLog);
+                        }
+                    } else {
+                        appendLog(`WebRTC: Requested chunk ${requestedContentAddress.substring(0, 8)}... not found in buffer.`, 'error', webrtcLog);
+                    }
+                } else if (event.data instanceof ArrayBuffer) {
+                    // This is the actual audio chunk data (ArrayBuffer)
+                    const audioBlob = new Blob([event.data], { type: 'audio/webm' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    receivedAudioPlayback.src = audioUrl;
+                    receivedAudioPlayback.classList.remove('hidden');
+                    receivedAudioPlayback.play();
+                    appendLog(`WebRTC: Received and playing audio chunk from ${remoteClientId}!`, 'success', webrtcLog);
+                }
+            };
+        }
+
+        async function handleSignalingMessage(message) {
+            const { type, sdp, candidate, senderAddress, signature, payload } = message;
+
+            // 1. Verify Signature
+            try {
+                const recoveredAddress = ethers.utils.verifyMessage(JSON.stringify(payload), signature);
+                if (recoveredAddress.toLowerCase() !== senderAddress.toLowerCase()) {
+                    appendLog(`WebRTC Signaling Error: Invalid signature from ${senderAddress}. Recovered: ${recoveredAddress}`, 'error', webrtcLog);
+                    return; // Discard message if signature is invalid
+                }
+                // Signature is valid, proceed with the actual payload
+                appendLog(`WebRTC Signaling: Valid signature from ${senderAddress}`, 'info', webrtcLog);
+            } catch (e) {
+                appendLog(`WebRTC Signaling Error: Signature verification failed for ${senderAddress}: ${e.message}`, 'error', webrtcLog);
+                return;
+            }
+
+            let pc = peerConnections.get(senderAddress);
+            if (!pc) {
+                pc = await setupPeerConnection(senderAddress, false); // This client is the answerer
+            }
+
+            try {
+                if (type === 'offer') {
+                    appendLog(`WebRTC: Received SDP offer from ${senderAddress}`, 'info', webrtcLog);
+                    await pc.setRemoteDescription(new RTCSessionDescription(sdp));
+                    const answer = await pc.createAnswer();
+                    await pc.setLocalDescription(answer);
+                    publishMqttSignal(senderAddress, {
+                        type: 'answer',
+                        sdp: pc.localDescription,
+                        senderAddress: clientId,
+                    });
+                    appendLog(`WebRTC: Sent SDP answer to ${senderAddress}`, 'info', webrtcLog);
+                } else if (type === 'answer') {
+                    appendLog(`WebRTC: Received SDP answer from ${senderAddress}`, 'info', webrtcLog);
+                    await pc.setRemoteDescription(new RTCSessionDescription(sdp));
+                } else if (type === 'iceCandidate') {
+                    appendLog(`WebRTC: Received ICE candidate from ${senderAddress}`, 'info', webrtcLog);
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                }
+            } catch (error) {
+                console.error('WebRTC signaling error:', error);
+                appendLog(`WebRTC Signaling Error with ${senderAddress}: ${error.message}`, 'error', webrtcLog);
+            }
+        }
+
+        // --- Helper Functions ---
+        function displayStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = message;
+                element.className = `status-message ${type === 'success' ? 'status-success' : type === 'error' ? 'status-error' : 'status-info'}`;
+                element.classList.remove('hidden');
+            }
+        }
+
+        function appendLog(message, type = 'info', logElement = broadcastLog) {
+            const logItem = document.createElement('div');
+            logItem.className = `log-item text-slate-700 ${type === 'error' ? 'text-red-600' : type === 'success' ? 'text-green-600' : ''}`;
+            logItem.innerHTML = `<span class="font-bold text-slate-500">${new Date().toLocaleTimeString()}</span>: ${message}`;
+            if (logElement.firstChild && logElement.firstChild.tagName === 'P') {
+                logElement.innerHTML = '';
+            }
+            logElement.prepend(logItem);
+        }
+
+        // --- Ethers.js Wallet Generation/Login ---
+        authButton.addEventListener('click', async () => {
+            if (wallet) {
+                displayStatus('authStatus', 'Wallet already generated and logged in.', 'info');
+                return;
+            }
+
+            displayStatus('authStatus', 'Generating new wallet...', 'info');
+            try {
+                wallet = ethers.Wallet.createRandom();
+                clientId = wallet.address; // Client ID is now the wallet address
+
+                console.warn("!!! DANGER: In a real app, NEVER expose the mnemonic/private key like this. !!!");
+                console.warn("Mnemonic:", wallet.mnemonic.phrase);
+                console.warn("Private Key:", wallet.privateKey);
+
+                displayStatus('authStatus', 'Wallet generated and logged in!', 'success');
+                clientDetails.classList.remove('hidden');
+                displayWalletAddress.textContent = clientId;
+                displayUserAgent.textContent = navigator.userAgent;
+
+                startLiveBroadcastButton.disabled = false;
+                requestWebRTCButton.disabled = false;
+                connectMqtt(); // Connect MQTT after wallet is ready
+            } catch (error) {
+                console.error('Error generating wallet:', error);
+                displayStatus('authStatus', `Error generating wallet: ${error.message}`, 'error');
+            }
+        });
+
+        // --- UBHP Vec7 Generation (Simplified for Demo) ---
+        async function generateUbhpVec7(audioChunkBlob, clientId, chunkSequenceNum) {
+            const size = audioChunkBlob.size;
+            const h = parseFloat(Math.sqrt(size).toFixed(4));
+            const sin = parseFloat(Math.sin(size / 1000).toFixed(4));
+            const cos = parseFloat(Math.cos(size / 1000).toFixed(4));
+
+            const arrayBuffer = await audioChunkBlob.arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const contentAddress = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            const ubhpVec7 = [
+                h,
+                sin,
+                cos,
+                contentAddress.substring(0, 16),
+                chunkSequenceNum,
+                Date.now(),
+                clientId.substring(0, 8) // Shortened client ID for vector
+            ];
+
+            const clientMetadata = {
+                clientId: clientId, // Full client ID (wallet address)
+                userAgent: navigator.userAgent,
+                chunkSequence: chunkSequenceNum,
+                timestamp: Date.now(),
+                chunkType: audioChunkBlob.type,
+                chunkSize: audioChunkBlob.size,
+                contentAddress: contentAddress // Full content address for easy lookup
+            };
+
+            return { ubhpVec7, clientMetadata, contentAddress };
+        }
+
+        // --- MQTT Logic ---
+        const MQTT_BROKER_URL = 'wss://test.mosquitto.org:8081';
+        const MQTT_BROADCAST_TOPIC_BASE = `ubhp/${appId}/live_broadcast`;
+        const MQTT_SIGNALING_TOPIC_BASE = `ubhp/${appId}/webrtc/signal`;
+
+        function connectMqtt() {
+            if (mqttClient && mqttClient.connected) {
+                displayStatus('mqttStatus', 'MQTT client already connected.', 'info');
+                return;
+            }
+            if (!wallet) {
+                displayStatus('mqttStatus', 'Please generate wallet first.', 'error');
+                return;
+            }
+
+            displayStatus('mqttStatus', 'Connecting to MQTT broker...', 'info');
+            mqttClient = mqtt.connect(MQTT_BROKER_URL);
+
+            mqttClient.on('connect', () => {
+                mqttConnected = true;
+                displayStatus('mqttStatus', 'MQTT Connected!', 'success');
+                appendLog('MQTT client connected.', 'success', webrtcLog);
+
+                const mySignalingTopic = `${MQTT_SIGNALING_TOPIC_BASE}/${clientId}`;
+                mqttClient.subscribe(mySignalingTopic, (err) => {
+                    if (!err) {
+                        appendLog(`Subscribed to signaling topic: ${mySignalingTopic}`, 'info', webrtcLog);
+                    } else {
+                        appendLog(`Failed to subscribe to signaling topic: ${err.message}`, 'error', webrtcLog);
+                    }
+                });
+
+                mqttClient.subscribe(`${MQTT_BROADCAST_TOPIC_BASE}/#`, (err) => {
+                    if (!err) {
+                        appendLog(`Subscribed to broadcast topic: ${MQTT_BROADCAST_TOPIC_BASE}/#`, 'info', broadcastLog);
+                    } else {
+                        appendLog(`Failed to subscribe to broadcast topic: ${err.message}`, 'error', broadcastLog);
+                    }
+                });
+            });
+
+            mqttClient.on('message', (topic, message) => {
+                try {
+                    const parsedMessage = JSON.parse(message.toString());
+                    if (topic.startsWith(MQTT_SIGNALING_TOPIC_BASE)) {
+                        handleSignalingMessage(parsedMessage);
+                    } else if (topic.startsWith(MQTT_BROADCAST_TOPIC_BASE)) {
+                        const { ubhpVec7, clientMetadata } = parsedMessage;
+                        if (clientMetadata.clientId === clientId) {
+                            // Don't log our own broadcasts in the main log, they are already handled by publishHarmonizedReference
+                            return;
+                        }
+                        const logMessage = `Broadcasted UBHP Vec7 (Seq: ${clientMetadata.chunkSequence}, Hash: <span class="font-mono text-sky-800">${clientMetadata.contentAddress.substring(0,8)}...</span>) from <span class="font-mono text-purple-800">${clientMetadata.clientId.substring(0,10)}...</span>`;
+                        const logItem = document.createElement('div');
+                        logItem.className = 'log-item text-slate-700';
+                        logItem.innerHTML = `<span class="font-bold text-slate-500">${new Date().toLocaleTimeString()}</span>: ${logMessage}`;
+                        logItem.dataset.contentAddress = clientMetadata.contentAddress;
+                        logItem.dataset.broadcasterClientId = clientMetadata.clientId;
+                        logItem.onclick = () => {
+                            requestContentAddressInput.value = logItem.dataset.contentAddress;
+                            requestBroadcasterClientIdInput.value = logItem.dataset.broadcasterClientId;
+                            displayStatus('webrtcStatus', `Fields populated for request.`, 'info');
+                        };
+                        if (broadcastLog.firstChild && broadcastLog.firstChild.tagName === 'P') {
+                            broadcastLog.innerHTML = '';
+                        }
+                        broadcastLog.prepend(logItem);
+                    }
+                } catch (e) {
+                    console.error('Error parsing MQTT message:', e, message.toString());
+                    appendLog(`Error parsing MQTT message: ${e.message}`, 'error', webrtcLog);
+                }
+            });
+
+            mqttClient.on('error', (error) => {
+                mqttConnected = false;
+                console.error('MQTT connection error:', error);
+                displayStatus('mqttStatus', `MQTT connection error: ${error.message}`, 'error');
+                appendLog(`MQTT error: ${error.message}`, 'error', webrtcLog);
+                startLiveBroadcastButton.disabled = true;
+                stopLiveBroadcastButton.disabled = true;
+            });
+
+            mqttClient.on('close', () => {
+                mqttConnected = false;
+                displayStatus('mqttStatus', 'MQTT disconnected.', 'info');
+                appendLog('MQTT client disconnected.', 'info', webrtcLog);
+                startLiveBroadcastButton.disabled = true;
+                stopLiveBroadcastButton.disabled = true;
+            });
+        }
+
+        async function publishMqttSignal(targetClientId, signalMessagePayload) {
+            if (!mqttConnected || !wallet) {
+                console.error('MQTT not connected or wallet not ready for signaling.');
+                return;
+            }
+
+            const messageToSign = JSON.stringify(signalMessagePayload);
+            let signature;
+            try {
+                signature = await wallet.signMessage(messageToSign);
+            } catch (e) {
+                console.error('Error signing signaling message:', e);
+                appendLog(`Error signing signal to ${targetClientId}: ${e.message}`, 'error', webrtcLog);
+                return;
+            }
+
+            const fullSignalMessage = {
+                payload: signalMessagePayload,
+                signature: signature,
+                senderAddress: clientId // The wallet address of the sender
+            };
+
+            const topic = `${MQTT_SIGNALING_TOPIC_BASE}/${targetClientId}`;
+            mqttClient.publish(topic, JSON.stringify(fullSignalMessage), { qos: 0 }, (err) => {
+                if (err) {
+                    console.error('Failed to publish signaling message:', err);
+                    appendLog(`Failed to send signal to ${targetClientId}: ${err.message}`, 'error', webrtcLog);
+                }
+            });
+        }
+
+        async function publishHarmonizedReference(ubhpVec7, clientMetadata, contentAddress) {
+            if (!mqttConnected) {
+                console.error('Attempted to publish but MQTT client is not connected.');
+                displayStatus('mqttStatus', 'MQTT not connected. Cannot broadcast.', 'error');
+                return;
+            }
+
+            const payload = {
+                ubhpVec7: ubhpVec7,
+                clientMetadata: clientMetadata,
+            };
+
+            const topic = `${MQTT_BROADCAST_TOPIC_BASE}/${clientMetadata.clientId}`;
+
+            try {
+                mqttClient.publish(topic, JSON.stringify(payload), { qos: 1 }, (err) => {
+                    if (err) {
+                        console.error('Failed to publish message:', err);
+                        displayStatus('liveBroadcastStatus', `Broadcast failed for chunk ${clientMetadata.chunkSequence}: ${err.message}`, 'error');
+                        appendLog(`Broadcast failed for chunk ${clientMetadata.chunkSequence} (Hash: ${contentAddress.substring(0,8)}...): ${err.message}`, 'error', broadcastLog);
+                    } else {
+                        displayStatus('liveBroadcastStatus', `Broadcasting chunk ${clientMetadata.chunkSequence}...`, 'info');
+                        appendLog(`Broadcasted UBHP Vec7 (Seq: ${clientMetadata.chunkSequence}, Hash: ${contentAddress.substring(0,8)}...)`, 'success', broadcastLog);
+                    }
+                });
+            } catch (error) {
+                console.error('Error during MQTT publish:', error);
+                displayStatus('liveBroadcastStatus', `Error during broadcast: ${error.message}`, 'error');
+                appendLog(`Error during MQTT publish: ${error.message}`, 'error', broadcastLog);
+            }
+        }
+
+
+        // --- Live Broadcast Logic ---
+        startLiveBroadcastButton.addEventListener('click', async () => {
+            if (!wallet) {
+                displayStatus('liveBroadcastStatus', 'Please generate wallet first.', 'error');
+                return;
+            }
+            if (!mqttConnected) {
+                displayStatus('liveBroadcastStatus', 'MQTT not connected. Attempting to connect...', 'error');
+                connectMqtt();
+                return;
+            }
+            if (isLiveBroadcasting) {
+                displayStatus('liveBroadcastStatus', 'Already broadcasting.', 'info');
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                chunkSequenceNumber = 0;
+
+                mediaRecorder.ondataavailable = async event => {
+                    if (event.data.size > 0) {
+                        const audioChunkBlob = event.data;
+                        chunkSequenceNumber++;
+
+                        const { ubhpVec7, clientMetadata, contentAddress } = await generateUbhpVec7(
+                            audioChunkBlob,
+                            clientId, // Use wallet address as clientId
+                            chunkSequenceNumber
+                        );
+
+                        audioChunkBuffer.set(contentAddress, { blob: audioChunkBlob, timestamp: Date.now() });
+                        console.log(`Chunk ${chunkSequenceNumber} stored in buffer (Hash: ${contentAddress.substring(0,8)}...). Buffer size: ${audioChunkBuffer.size}`);
+                        appendLog(`Chunk ${chunkSequenceNumber} stored in buffer (Hash: ${contentAddress.substring(0,8)}...).`, 'info', broadcastLog);
+
+                        publishHarmonizedReference(ubhpVec7, clientMetadata, contentAddress);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    isLiveBroadcasting = false;
+                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                    stopLiveBroadcastButton.disabled = true;
+                    startLiveBroadcastButton.disabled = false;
+                    clearInterval(cleanupIntervalId);
+                    displayStatus('liveBroadcastStatus', 'Live broadcast stopped.', 'info');
+                    appendLog('Live broadcast session ended.', 'info', broadcastLog);
+                };
+
+                mediaRecorder.start(5000); // Emit data every 5000ms (5 seconds)
+                isLiveBroadcasting = true;
+                startLiveBroadcastButton.disabled = true;
+                stopLiveBroadcastButton.disabled = false;
+                displayStatus('liveBroadcastStatus', 'Live broadcasting started...', 'info');
+                appendLog('Live broadcast session started.', 'info', broadcastLog);
+
+                cleanupIntervalId = setInterval(cleanupAudioBuffer, 60 * 1000);
+
+            } catch (error) {
+                console.error('Error starting live broadcast:', error);
+                displayStatus('liveBroadcastStatus', `Error starting live broadcast: ${error.message}`, 'error');
+                startLiveBroadcastButton.disabled = false;
+                stopLiveBroadcastButton.disabled = true;
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+            }
+        });
+
+        stopLiveBroadcastButton.addEventListener('click', () => {
+            if (mediaRecorder && isLiveBroadcasting) {
+                mediaRecorder.stop();
+            }
+        });
+
+        // --- WebRTC Request Logic ---
+        requestWebRTCButton.addEventListener('click', async () => {
+            const contentAddress = requestContentAddressInput.value.trim();
+            const broadcasterClientId = requestBroadcasterClientIdInput.value.trim();
+
+            if (!contentAddress || !broadcasterClientId) {
+                displayStatus('webrtcStatus', 'Please enter both Content Address and Broadcaster Wallet Address.', 'error');
+                return;
+            }
+            if (!wallet) {
+                displayStatus('webrtcStatus', 'Please generate wallet first.', 'error');
+                return;
+            }
+            if (broadcasterClientId.toLowerCase() === clientId.toLowerCase()) {
+                displayStatus('webrtcStatus', 'Cannot request from self via WebRTC. Chunk is already local.', 'info');
+                const chunkEntry = audioChunkBuffer.get(contentAddress);
+                if (chunkEntry && chunkEntry.blob) {
+                    const audioUrl = URL.createObjectURL(chunkEntry.blob);
+                    receivedAudioPlayback.src = audioUrl;
+                    receivedAudioPlayback.classList.remove('hidden');
+                    receivedAudioPlayback.play();
+                    appendLog(`WebRTC: Playing local audio chunk ${contentAddress.substring(0, 8)}...`, 'info', webrtcLog);
+                } else {
+                    appendLog(`WebRTC: Local chunk ${contentAddress.substring(0, 8)}... not found.`, 'error', webrtcLog);
+                }
+                return;
+            }
+
+            displayStatus('webrtcStatus', `Requesting chunk ${contentAddress.substring(0, 8)}... from ${broadcasterClientId.substring(0,10)}...`, 'info');
+            appendLog(`WebRTC: Initiating request for chunk ${contentAddress.substring(0, 8)}... from ${broadcasterClientId}`, 'info', webrtcLog);
+
+            try {
+                const pc = await setupPeerConnection(broadcasterClientId, true); // This client is the offerer
+                const dataChannel = dataChannels.get(broadcasterClientId);
+
+                if (!dataChannel || dataChannel.readyState !== 'open') {
+                     dataChannel.onopen = () => {
+                        dataChannel.send(contentAddress);
+                        appendLog(`WebRTC: Sent request for chunk ${contentAddress.substring(0, 8)}... via data channel.`, 'info', webrtcLog);
+                    };
+                } else {
+                    dataChannel.send(contentAddress);
+                    appendLog(`WebRTC: Sent request for chunk ${contentAddress.substring(0, 8)}... via data channel.`, 'info', webrtcLog);
+                }
+
+                const offer = await pc.createOffer();
+                await pc.setLocalDescription(offer);
+
+                publishMqttSignal(broadcasterClientId, {
+                    type: 'offer',
+                    sdp: pc.localDescription,
+                    senderAddress: clientId,
+                });
+
+            } catch (error) {
+                console.error('WebRTC request initiation error:', error);
+                displayStatus('webrtcStatus', `WebRTC request failed: ${error.message}`, 'error');
+                appendLog(`WebRTC request initiation error: ${error.message}`, 'error', webrtcLog);
+            }
+        });
+
+
+        // --- Initial Setup ---
+        window.onload = async () => {
+            displayUserAgent.textContent = navigator.userAgent;
+        };
+    </script>
+</body>
+</html>
+

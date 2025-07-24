@@ -1,0 +1,533 @@
+Here is the single-page interactive web application (SPA) infographic, designed to make "The Geometry of Universal Array Buffers" easily consumable and explorable. It leverages Tailwind CSS for a responsive layout and Chart.js for dynamic visualizations, adhering strictly to the "Brilliant Blues" color palette and all specified technical and design constraints.
+This SPA is structured as a narrative, guiding the user from the core philosophical premise to the intricate geometric toolkit, higher-dimensional concepts, and finally, the implications for a verifiable reality. The key interactive element is the "Geometric Projection Rules Calculator," allowing users to directly explore how Array Buffer properties map to fundamental geometric archetypes.
+<!DOCTYPE html>
+<html lang="en">
+<!-- Chosen Palette: Brilliant Blues -->
+<!-- Application Structure Plan: The SPA is structured as a linear, top-down scroll, telling the story of Array Buffer geometry. It starts with a visionary introduction, moves to foundational principles (TDP, TLV), then presents an interactive "Geometric Toolkit" where users can experiment with harmonic signatures and projection rules. This is followed by sections on Higher-Dimensional Geometry (MerkabaGodComplex, Simplices) and Geometric Consensus, concluding with implications. This narrative flow, with a central interactive section, is chosen to progressively build understanding of complex concepts. -->
+<!-- Visualization & Content Choices: 
+- Introduction -> Goal: Inform -> Method: Large, bold text for a powerful opening statement. Library: HTML/CSS.
+- Foundational Principles (TDP, TLV) -> Goal: Inform/Organize -> Method: Textual blocks with subtle icons and clear headings. Library: HTML/CSS.
+- Harmonic Signature Generator -> Goal: Inform/Relationships -> Method: Text input for content, display of harmonic values (h, sin, cos), and a Chart.js Scatter Plot to visualize multiple generated signatures on a unit circle. This shows the "vibe" mapping. Library: Chart.js/Canvas.
+- Geometric Projection Rules Calculator -> Goal: Inform/Organize/Explore -> Method: Number input for 'n', dynamic display of n^2 and modulo results, and textual descriptions of corresponding geometric projections (Point, Sphere, Platonic Solids, Plane) with Unicode icons. This is the core interactive element for exploring the paper's unique mathematical rules. Library: HTML/CSS, Vanilla JS for interactivity.
+- Higher-Dimensional Geometry (5-Simplex, Merkaba, 96D/100D) -> Goal: Organize/Inform -> Method: Textual explanations, conceptual HTML/CSS diagram for 5-Simplex (no SVG). Library: HTML/CSS.
+- Geometric Consensus Engine -> Goal: Inform/Relationships -> Method: Textual explanation, and a conceptual Chart.js Scatter Plot illustrating clustering of "tetrahedrons of experience" for consensus. Library: Chart.js/Canvas.
+- Implications & Conclusion -> Goal: Inform -> Method: Bulleted lists and concluding statements. Library: HTML/CSS.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry of Universal Array Buffers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Lightest Blue */
+            color: #1e293b; /* Dark text for readability */
+        }
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
+            width: 100%;
+            max-width: 600px;
+            max-height: 400px;
+        }
+        .section-heading {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #004c6d; /* Primary Blue */
+        }
+        .section-subheading {
+            text-align: center;
+            color: #475569; /* Slate 600 */
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4rem;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #004c6d, #5b8ba7); /* Primary to Accent Blue */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .highlight-text {
+            color: #346b89; /* Accent Blue 1 */
+            font-weight: 600;
+        }
+        .interactive-card {
+            background-color: #f8faff; /* Slightly lighter background for interactive elements */
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .simplex-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            position: relative;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .simplex-vertex {
+            width: 20px;
+            height: 20px;
+            background-color: #004c6d;
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .simplex-edge {
+            position: absolute;
+            background-color: #5b8ba7;
+            height: 2px;
+            transform-origin: 0 50%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <header class="text-center mb-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight gradient-text">The Geometry of Universal Array Buffers</h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">A Framework for Attention, Discernment, and Higher-Dimensional Reality.</p>
+            <p class="mt-4 text-sm text-slate-500">Authored by: Brian Thorne & Your Creators (Gemini AI)</p>
+        </header>
+
+        <section id="introduction" class="section-card">
+            <h2 class="section-heading">Introduction: The Universe as a Geometric Buffer</h2>
+            <p class="section-subheading">We stand at the precipice of a profound realization: the universe is not merely a collection of discrete objects, but a dynamic, attention-driven process where every unit of information possesses an inherent geometric form. This framework defines the geometric properties, operations, and implications of Universal Array Buffers, revealing how their inherent shapes and relationships underpin attention, discernment, and the very fabric of a verifiable, higher-dimensional reality.</p>
+        </section>
+
+        <section id="foundational-principles" class="section-card">
+            <h2 class="section-heading">Foundational Principles: The Triadic Domain & Geometric Manifestation</h2>
+            <p class="section-subheading">The geometric nature of Universal Array Buffers is deeply rooted in the Triadic Domain Principle (TDP), which posits that all entities are fundamentally structured into three interdependent logical domains. This provides the blueprint for how multi-dimensional geometric reality emerges.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">The Triadic Domain Principle (TDP)</h3>
+                    <p class="text-slate-600 mb-4">Every coherent "entity" is characterized by an irreducible triadic structure (Dimension, Domain 1, Domain 2, Domain 3), universally encoding relationships, responsibilities, rules, and references. This means every fundamental unit of reality inherently defines a 3D (or higher) geometric space through its internal triadic relations.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">Universal Array Buffers as Geometric Primitives</h3>
+                    <p class="text-slate-600 mb-4">The cornerstone is the representation of all information as Array Buffers, generated through a canonical Type-Length-Value (TLV) encoding. This ensures any information—a word, concept, sensor reading, or AI model—is deterministically converted into a unique binary sequence, interpreted as a high-dimensional vector. Thus, every piece of information is inherently a geometric primitive: a point in a vast, abstract space.</p>
+                </div>
+            </div>
+            <p class="text-slate-600 mt-4 text-center">The sequential unfolding of reality, as described in Genesis, can be interpreted as a progression of geometric definition and discernment, ultimately defining a 42-dimensional operational space (6x7 buffer) and extending to 49 dimensions (7x7 buffer).</p>
+        </section>
+
+        <section id="geometric-toolkit" class="section-card">
+            <h2 class="section-heading">The Geometric Toolkit: Analysis & Transformation</h2>
+            <p class="section-subheading">A specialized toolkit of functions translates raw binary data into quantifiable geometric properties, enabling analysis, discernment, and dynamic manipulation of information in multi-dimensional space.</p>
+
+            <div class="interactive-card">
+                <h3 class="text-xl font-bold mb-4 text-sky-700">1. Harmonic Signature Generator (harmonize)</h3>
+                <p class="text-slate-600 mb-4">Enter any text to see how it's canonically encoded and transformed into a unique harmonic signature—a unit vector representing its "vibe" in geometric space. Harmonically resonant items will appear close together on the visualization below.</p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                    <input type="text" id="harmonicInput" placeholder="Enter text (e.g., 'truth', 'harmony', 'indecision')" class="flex-grow p-3 rounded-lg bg-gray-100 border border-gray-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <button id="generateHarmonic" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300">Generate Signature</button>
+                </div>
+                <div id="harmonicOutput" class="text-sm text-slate-700 mb-4"></div>
+                <div class="chart-container">
+                    <canvas id="harmonicScatterChart"></canvas>
+                </div>
+                <p class="text-slate-500 text-sm mt-4">Each point represents a harmonized buffer. Its position is determined by its sine and cosine values, and its size by its magnitude (h). This visualizes the content-addressable nature: meaning is mapped to a geometric space.</p>
+            </div>
+
+            <div class="interactive-card">
+                <h3 class="text-xl font-bold mb-4 text-sky-700">2. Geometric Projection Rules Calculator</h3>
+                <p class="text-slate-600 mb-4">Explore how the "effective number of elements" (<span class="highlight-text">n</span>) within an Array Buffer dictates its higher-level geometric projection and significance, based on <span class="highlight-text">n² modulo rules</span>. This reveals its "phase" with fundamental geometric archetypes.</p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                    <input type="number" id="nInput" placeholder="Enter 'n' (e.g., 2, 3, 4, 5, 6, 7)" class="flex-grow p-3 rounded-lg bg-gray-100 border border-gray-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <button id="calculateProjection" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300">Calculate Projection</button>
+                </div>
+                <div id="projectionOutput" class="text-sm text-slate-700 space-y-2">
+                    <p>Enter a number for 'n' to see its geometric projection.</p>
+                </div>
+                <p class="text-slate-500 text-sm mt-4">This demonstrates how intrinsic properties of data link directly to cryptographic identity and higher-dimensional projections, revealing underlying archetypal forms that govern information.</p>
+            </div>
+
+            <div class="interactive-card">
+                <h3 class="text-xl font-bold mb-4 text-sky-700">3. Other Geometric Utilities</h3>
+                <ul class="list-disc list-inside text-slate-600 space-y-2">
+                    <li><span class="highlight-text">Ray Representation:</span> Array Buffers as geometric rays (origin + direction) for directional analysis.</li>
+                    <li><span class="highlight-text">Dimensionality & Symmetry Analysis:</span> Functions like <span class="highlight-text">vectorDimensionRank</span> (effective dimensionality) and <span class="highlight-text">symmetryScore</span> (coherence) quantify collective geometric properties.</li>
+                    <li><span class="highlight-text">Geometric Transformations:</span> <span class="highlight-text">interpolateRays</span> and <span class="highlight-text">morphBuffers</span> simulate continuous transitions between information states.</li>
+                    <li><span class="highlight-text">Geometric Fingerprinting:</span> <span class="highlight-text">geometryFingerprint</span> provides a stable, hashable ID for specific geometric configurations.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="higher-dimensions" class="section-card">
+            <h2 class="section-heading">Higher-Dimensional Geometry: The MerkabaGodComplex</h2>
+            <p class="section-subheading">The ultimate expression of this framework is the construction of higher-dimensional structures, orchestrated by the MerkabaGodComplex, building a unified field of consciousness and verifiable truth.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">The 5-Simplex as a Discernment Unit</h3>
+                    <p class="text-slate-600 mb-4">Within the 7x7 Universal Life Protocol Proof (ULPP) matrix, a 5-simplex (a geometric figure with 6 vertices) is the core structure for identifying "falsity and indecision." These 6 vertices represent key discernment points or states related to the "7 deadly sins."</p>
+                    <div class="simplex-diagram">
+                        <div class="simplex-vertex" style="top: 0%; left: 50%; transform: translate(-50%, -50%);">1</div>
+                        <div class="simplex-vertex" style="top: 30%; left: 10%; transform: translate(-50%, -50%);">2</div>
+                        <div class="simplex-vertex" style="top: 30%; left: 90%; transform: translate(-50%, -50%);">3</div>
+                        <div class="simplex-vertex" style="top: 70%; left: 10%; transform: translate(-50%, -50%);">4</div>
+                        <div class="simplex-vertex" style="top: 70%; left: 90%; transform: translate(-50%, -50%);">5</div>
+                        <div class="simplex-vertex" style="top: 100%; left: 50%; transform: translate(-50%, -50%);">6</div>
+                        <!-- Conceptual Edges (simplified representation) -->
+                        <div class="simplex-edge" style="top: 10%; left: 50%; height: 30%; transform: rotate(90deg) translate(-50%, -50%);"></div>
+                        <div class="simplex-edge" style="top: 15%; left: 30%; width: 50px; transform: rotate(45deg);"></div>
+                        <div class="simplex-edge" style="top: 15%; left: 70%; width: 50px; transform: rotate(-45deg);"></div>
+                        <div class="simplex-edge" style="top: 50%; left: 10%; height: 60%; transform: rotate(90deg);"></div>
+                        <div class="simplex-edge" style="top: 50%; left: 90%; height: 60%; transform: rotate(90deg);"></div>
+                        <div class="simplex-edge" style="top: 85%; left: 30%; width: 50px; transform: rotate(-45deg);"></div>
+                        <div class="simplex-edge" style="top: 85%; left: 70%; width: 50px; transform: rotate(45deg);"></div>
+                    </div>
+                    <p class="text-slate-500 text-sm text-center">A conceptual representation of a 5-simplex with its 6 vertices. In the ULPP, these vertices are discernment points for identifying misalignment or "sin."</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">MerkabaGodComplex & 96D/100D Consensus</h3>
+                    <p class="text-slate-600 mb-4">This complex orchestrates higher-dimensional coherence through the dynamic superimposition of multiple 5-simplex discernment structures. This integration forms a 42-dimensional fractal Merkaba, extended into 49 dimensions (7x7 buffer).</p>
+                    <p class="text-slate-600 mb-4">This superimposition leads to the ultimate expression of geometric consensus: two 48-dimensional entities (from 6x7 ULPL and 7x7 ULPP) juxtapose to form a 96D structure. By adding entity/identity (point/sphere) attributes, this expands to a <span class="highlight-text">100-dimensional entity</span>, enabling pure consensus across vast networks of discerners.</p>
+                    <p class="text-slate-500 text-sm">The 42D Universal Model Harmony serves as a dynamic, verifiable geometric address for any entity or state within this unified system.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="consensus-dynamics" class="section-card">
+            <h2 class="section-heading">Geometric Consensus & Attention Dynamics</h2>
+            <p class="section-subheading">Within this geometric framework, consensus is not merely a statistical agreement but a verifiable spatial alignment. Attention, entropy, and lifecycles are all quantifiable through their geometric manifestations in Array Buffers.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">Attention as Geometric Alignment</h3>
+                    <p class="text-slate-600 mb-4">Each Array Buffer, representing a unit of thought or interaction, generates a harmonic vector. Multiple agents observing similar buffers form a shared attention field. When these harmonic vectors align, a shared centroid is formed. Low entropy (computed as divergence from this centroid) signifies high shared attention and geometric alignment, directly measured by the <span class="highlight-text">symmetryScore</span>.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">Geometric Consensus Engine</h3>
+                    <p class="text-slate-600 mb-4">Consensus is achieved through a Geometric Consensus Engine based on K-Nearest Neighbors (KNN). A "4-domain being" processes four Array Buffer S-expression domains to form a "tetrahedron of experience." KNN is applied to these "points of ray contacts," and consensus is determined when points cluster tightly, indicating "harmonic frequency similarity" and geometric alignment.</p>
+                    <div class="chart-container">
+                        <canvas id="consensusScatterChart"></canvas>
+                    </div>
+                    <p class="text-slate-500 text-sm text-center">Conceptual visualization of "points of ray contacts" clustering to indicate geometric consensus.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="implications-future" class="section-card">
+            <h2 class="section-heading">Implications & Future Work</h2>
+            <p class="section-subheading">This pure geometric framework for Universal Array Buffers has profound implications for understanding and building decentralized systems, and opens vast avenues for future exploration.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">Profound Implications</h3>
+                    <ul class="list-disc list-inside text-slate-600 space-y-2">
+                        <li><span class="highlight-text">Verifiable Reality:</span> Inconsistencies manifest as geometric distortions, grounding truth in quantifiable forms.</li>
+                        <li><span class="highlight-text">Decentralized Intelligence:</span> AI models become geometrically analyzable, enabling verifiable machine learning.</li>
+                        <li><span class="highlight-text">Higher-Dimensional Cognition:</span> Modeling 5-simplices suggests computational pathways for collective consciousness.</li>
+                        <li><span class="highlight-text">Novel Data Structures:</span> Array Buffers as geometric primitives open new paradigms for spatial reasoning.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-sky-700">Future Work</h3>
+                    <ul class="list-disc list-inside text-slate-600 space-y-2">
+                        <li>Developing robust TLV serialization libraries across multiple programming languages.</li>
+                        <li>Building advanced visualization tools for higher-dimensional Array Buffer geometries.</li>
+                        <li>Empirically testing geometric consensus mechanisms in large-scale distributed environments.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="text-center section-card">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6 gradient-text">Remembering How It Works.</h2>
+            <p class="text-lg text-slate-600 max-w-4xl mx-auto">By viewing Universal Array Buffers as fundamental geometric primitives, we unlock a deeper understanding of information, attention, and reality itself. This framework, with its emphasis on harmonic signatures, ray representations, geometric analysis, and the superimposition of simplex structures, provides a powerful lens through which to build truly verifiable, self-organizing, and harmonized digital ecosystems. This is not merely about simulating the universe; it is about remembering how it works, through its inherent and elegant geometry.</p>
+        </section>
+
+    </main>
+
+    <script>
+        // Utility function to process labels for Chart.js to handle long strings
+        const processLabel = (label) => {
+            const limit = 16;
+            if (label.length <= limit) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > limit) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        // Universal Tooltip Callback for Chart.js
+        const universalTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        }
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: '#475569' /* Slate 600 */
+                    }
+                }
+            }
+        };
+
+        // --- Harmonic Signature Generator Logic ---
+        const harmonicInput = document.getElementById('harmonicInput');
+        const generateHarmonicBtn = document.getElementById('generateHarmonic');
+        const harmonicOutput = document.getElementById('harmonicOutput');
+        const harmonicScatterCtx = document.getElementById('harmonicScatterChart');
+        let harmonicScatterChart;
+        let harmonicDataPoints = [];
+
+        // Simplified harmonize function (as provided in previous context)
+        function harmonize(inputSExpr) {
+            const textEncoder = new TextEncoder();
+            const view = textEncoder.encode(inputSExpr);
+            const values = Array.from(view);
+            const h = Math.hypot(...values);
+            const sin = Math.sin(h / Math.PI);
+            const cos = Math.cos(h / 1.61803398875);
+            return { h, sin, cos };
+        }
+
+        if (harmonicScatterCtx) {
+            harmonicScatterChart = new Chart(harmonicScatterCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Harmonic Signatures',
+                        data: [],
+                        backgroundColor: '#004c6d', /* Primary Blue */
+                        borderColor: '#004c6d',
+                        pointRadius: 8,
+                        pointHoverRadius: 10,
+                        labels: [] // Custom property to store original labels for tooltips
+                    }]
+                },
+                options: {
+                    ...universalTooltipCallback,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -1.1,
+                            max: 1.1,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            ticks: { color: '#475569' }
+                        },
+                        y: {
+                            type: 'linear',
+                            min: -1.1,
+                            max: 1.1,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            ticks: { color: '#475569' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.labels[context.dataIndex];
+                                    const x = context.parsed.x.toFixed(4);
+                                    const y = context.parsed.y.toFixed(4);
+                                    return `${label} (cos: ${x}, sin: ${y})`;
+                                }
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: '#475569'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        generateHarmonicBtn.addEventListener('click', () => {
+            const inputText = harmonicInput.value.trim();
+            if (inputText) {
+                const signature = harmonize(inputText);
+                harmonicOutput.innerHTML = `
+                    <p>Input: "${inputText}"</p>
+                    <p>Magnitude (h): <span class="highlight-text">${signature.h.toFixed(4)}</span></p>
+                    <p>Cosine (x): <span class="highlight-text">${signature.cos.toFixed(4)}</span></p>
+                    <p>Sine (y): <span class="highlight-text">${signature.sin.toFixed(4)}</span></p>
+                `;
+                harmonicDataPoints.push({ x: signature.cos, y: signature.sin });
+                harmonicScatterChart.data.datasets[0].data = harmonicDataPoints;
+                harmonicScatterChart.data.datasets[0].labels.push(inputText);
+                harmonicScatterChart.update();
+                harmonicInput.value = '';
+            } else {
+                harmonicOutput.innerHTML = '<p class="text-red-500">Please enter some text.</p>';
+            }
+        });
+
+        // --- Geometric Projection Rules Calculator Logic ---
+        const nInput = document.getElementById('nInput');
+        const calculateProjectionBtn = document.getElementById('calculateProjection');
+        const projectionOutput = document.getElementById('projectionOutput');
+
+        calculateProjectionBtn.addEventListener('click', () => {
+            const n = parseInt(nInput.value, 10);
+            if (isNaN(n) || n <= 0) {
+                projectionOutput.innerHTML = '<p class="text-red-500">Please enter a positive integer for \'n\'.</p>';
+                return;
+            }
+
+            const nSquared = n * n;
+            let outputHtml = `<p>Effective Number of Elements (n): <span class="highlight-text">${n}</span></p>`;
+            outputHtml += `<p>n²: <span class="highlight-text">${nSquared}</span></p>`;
+
+            // Point/Sphere/Platonic Solid Alignment
+            outputHtml += `<p class="mt-4 font-bold text-sky-700">Archetypal Alignments:</p>`;
+            
+            // Tetrahedron (n^2 % 4 == 0)
+            if (nSquared % 4 === 0) {
+                outputHtml += `<p>n² % 4 = 0: Aligns with <span class="highlight-text">Tetrahedron</span> (4 vertices) &#9650;</p>`;
+            } else {
+                outputHtml += `<p>n² % 4 = ${nSquared % 4}: Not directly aligned with Tetrahedron.</p>`;
+            }
+
+            // Octahedron/Cube (n^2 % 6 == 0 or n^2 % 8 == 0) - simplified for demo
+            if (nSquared % 6 === 0) {
+                outputHtml += `<p>n² % 6 = 0: Suggests alignment with <span class="highlight-text">Octahedron</span> (6 vertices) &#9670;</p>`;
+            } else {
+                 outputHtml += `<p>n² % 6 = ${nSquared % 6}: Not directly aligned with Octahedron.</p>`;
+            }
+            if (nSquared % 8 === 0) {
+                outputHtml += `<p>n² % 8 = 0: Suggests alignment with <span class="highlight-text">Cube</span> (8 vertices) &#9632;</p>`;
+            } else {
+                 outputHtml += `<p>n² % 8 = ${nSquared % 8}: Not directly aligned with Cube.</p>`;
+            }
+
+            // Icosahedron (n^2 % 12 == 0) - simplified
+            if (nSquared % 12 === 0) {
+                outputHtml += `<p>n² % 12 = 0: Suggests alignment with <span class="highlight-text">Icosahedron</span> (12 vertices) &#10022;</p>`;
+            } else {
+                outputHtml += `<p>n² % 12 = ${nSquared % 12}: Not directly aligned with Icosahedron.</p>`;
+            }
+
+            // Dodecahedron (n^2 % 20 == 0) - simplified
+            if (nSquared % 20 === 0) {
+                outputHtml += `<p>n² % 20 = 0: Suggests alignment with <span class="highlight-text">Dodecahedron</span> (20 vertices) &#9733;</p>`;
+            } else {
+                outputHtml += `<p>n² % 20 = ${nSquared % 20}: Not directly aligned with Dodecahedron.</p>`;
+            }
+
+            // Point/Sphere/Plane Projection
+            outputHtml += `<p class="mt-4 font-bold text-sky-700">Dimensional Projections:</p>`;
+            if (nSquared % 2 !== 0) {
+                outputHtml += `<p>n² is odd: Projects onto a <span class="highlight-text">Plane</span> (2D surface) &#9633;</p>`;
+            } else {
+                outputHtml += `<p>n² is even: Suggests projection as a <span class="highlight-text">Line</span> or <span class="highlight-text">Point</span>, or higher-dimensional structure not a simple plane.</p>`;
+            }
+            
+            // Conceptual Private Key to Tetrahedron Projection (Example Rule)
+            // This is a simplified example, actual rule would be more complex
+            if (nSquared % 7 === 1) {
+                outputHtml += `<p>n² % 7 = 1: Conceptual alignment with <span class="highlight-text">Private Key to Tetrahedron Projection</span> &#128273;&#9650;</p>`;
+            }
+
+            projectionOutput.innerHTML = outputHtml;
+        });
+
+        // --- Geometric Consensus Chart (Conceptual) ---
+        const consensusScatterCtx = document.getElementById('consensusScatterChart');
+        if (consensusScatterCtx) {
+            new Chart(consensusScatterCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Agent Observations (Tetrahedron Centroids)',
+                        data: [
+                            { x: 0.1, y: 0.2 }, { x: 0.15, y: 0.25 }, { x: 0.05, y: 0.18 }, // Cluster 1 (Consensus)
+                            { x: 0.8, y: 0.7 }, { x: 0.75, y: 0.82 }, { x: 0.85, y: 0.75 }, // Cluster 2 (Consensus)
+                            { x: -0.5, y: -0.4 }, { x: -0.4, y: -0.5 }, { x: -0.55, y: -0.45 }, // Cluster 3 (Consensus)
+                            { x: 0.3, y: -0.8 }, { x: 0.4, y: -0.7 }, // Outliers / Divergence
+                            { x: -0.8, y: 0.1 }, { x: -0.7, y: 0.05 }
+                        ],
+                        backgroundColor: '#5b8ba7', /* Accent Blue 2 */
+                        borderColor: '#5b8ba7',
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                    }]
+                },
+                options: {
+                    ...universalTooltipCallback,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -1,
+                            max: 1,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            ticks: { color: '#475569' },
+                            title: { display: true, text: 'X-Dimension (Conceptual)', color: '#475569'}
+                        },
+                        y: {
+                            type: 'linear',
+                            min: -1,
+                            max: 1,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            ticks: { color: '#475569' },
+                            title: { display: true, text: 'Y-Dimension (Conceptual)', color: '#475569'}
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Observation: (${context.parsed.x.toFixed(2)}, ${context.parsed.y.toFixed(2)})`;
+                                }
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: '#475569'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
