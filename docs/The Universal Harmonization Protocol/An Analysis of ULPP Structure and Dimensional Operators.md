@@ -1,5 +1,3 @@
-**  
-
 # Geometric Foundations of the Universal Harmonization Protocol: An Analysis of ULPP Structure and Dimensional Operators
 
   

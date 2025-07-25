@@ -11,13 +11,70 @@
             "id": "7735bdf6f59649d3",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "MerkabaGodComplexWhitepaper.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "MerkabaGodComplexWhitepaper"
+            }
+          },
+          {
+            "id": "c86f812452a00c17",
+            "type": "leaf",
+            "state": {
+              "type": "audio",
+              "state": {
+                "file": "audio/Universe Domain Expansion_ Decoding Our Shared Reality and Collective Creation.mp3"
+              },
+              "icon": "lucide-file-audio",
+              "title": "Universe Domain Expansion_ Decoding Our Shared Reality and Collective Creation"
+            }
+          },
+          {
+            "id": "ad9094ca991b189d",
+            "type": "leaf",
+            "state": {
+              "type": "audio",
+              "state": {
+                "file": "audio/Universal Trust and Verifiable Reality_ Unpacking the Decentralized Public Offering for a New Era.mp3"
+              },
+              "icon": "lucide-file-audio",
+              "title": "Universal Trust and Verifiable Reality_ Unpacking the Decentralized Public Offering for a New Era"
+            }
+          },
+          {
+            "id": "cf4bba166df3ae89",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The Triadic Domain Principle/A Unified Framework for Reality, Perception, and Geometry.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "A Unified Framework for Reality, Perception, and Geometry"
+            }
+          },
+          {
+            "id": "d740d183fd35c7f1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The Triadic Domain Principle/A Unified Framework for Reality, Perception, and Geometry.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "A Unified Framework for Reality, Perception, and Geometry"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -74,7 +131,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 452.5
+    "width": 927.5
   },
   "right": {
     "id": "8d7a68d7f9fa0bdc",
@@ -166,41 +223,41 @@
   },
   "active": "57c47f57df8dc2b4",
   "lastOpenFiles": [
-    "The Triadic Domain Principle/The Triadic Domain Principle -  A Unified Framework.html",
-    "Universal Life Protocol/Whitepaper.Oriamgi.Of.Reality.md",
-    "Universal Life Protocol/Untitled.md",
-    "Universal Life Protocol/UniversalLife.md",
-    "Universal Life Protocol/Universal Harmonization_ Redefining Reality, Trust, and Society Through Protocol.mp3",
-    "Universal Life Protocol/Universal Harmonization Protocol_ Reversing the _Sin of Indecision_ with AI and Verifiable Action.mp3",
-    "Universal Life Protocol/universal.life.html",
-    "Universal Life Protocol/The Universal Life Protocol - Autogenous Genesis - Encoding Divine Attention into Executable Reality.md",
-    "Universal Life Protocol/Resonace.Rings.md",
-    "Universal Life Protocol/Public Relations.md",
-    "Universal Life Protocol/Origami 2D to 3D Protocol.md",
-    "Universal Life Protocol/Manifesto of Universal Harmonization - An Anarcho-Syndicalist Vision.md",
-    "Universal Life Protocol/index.html",
-    "Universal Life Protocol/Harmonzied.Singularity.query.txt",
-    "Universal Life Protocol/Harmonzied.Singularity.md",
-    "Universal Life Protocol/Harmonic.Singularity.html",
-    "Universal Life Protocol/Geometric Foundations of the Universal Harmonization Protoco.md",
-    "Universal Life Protocol/gemini_generated_audio_overview_cc11fdd3.mp3",
-    "Universal Life Protocol/gemini_generated_audio_overview_5319b3fe.mp3",
-    "Universal Life Protocol/gemini_generated_audio_overview_4662d4f0.mp3",
-    "Universal Life Protocol/gemini_generated_audio_overview_6eef70c6.mp3",
-    "Universal Life Protocol/Divine.Blueprint.md",
-    "Universal Life Protocol/A White Paper on Verifiable Reality and Regenerative Systems.md",
-    "Universal Life Protocol/Attention.Is.Everything.md",
-    "Universal Life Protocol/An Origami of Reality – A Digital Manifesto for Ascent.md",
-    "Universal Life Protocol/A Digital Manifesto for a Protocol-Driven Reality and the Ascent from Indecision.md",
-    "Untitled.md",
-    "Geometric Foundations of the Universal Harmonization Protoco.md",
-    "An Origami of Reality – A Digital Manifesto for Ascent.md",
-    "Manifesto of Universal Harmonization - An Anarcho-Syndicalist Vision.md",
-    "versions/Trinity2D/Trinity2D.md",
-    "versions/Trinity2D/Manifesto.md",
-    "Universal Binary Hypergraph Protocol/The Triadic Domain Principle  - A Unified Framework for Reality, Perception, and Geometry.md",
-    "versions/The Triadic Domain Principle. is this file already represented.md",
-    "versions/A Definitive Specification for Implementation.minified.md",
-    "Universal Binary Hypergraph Protocol/A Definitive Specification for Implementation.minified.md"
+    "Universal Life Protocol/A Divine Blueprint for Seamless Manifestation and Aligned Attention.md",
+    "The Triadic Domain Principle/The Triadic Domain Principle. is this file already represented.md",
+    "The Triadic Domain Principle/A Unified Framework for Reality, Perception, and Geometry.md",
+    "An Anarcho-Syndicalist Vision 1.md",
+    "The Triadic Domain Principle/White Paper - The Triadic Domain Principle and Its Geometric Manifestations.md",
+    "Universal Binary Hypergraph Protocol/A Definitive Specification for Implementation.minified.md",
+    "audio/Universal Binary Hypergraph_ Building a Self-Organizing Digital World with _Vibe-Based_ Data 1.mp3",
+    "Universe Domain Expansion/A Protocol for Universal Harmonization.md",
+    "The Universal Harmonization Protocol/Transforming Binary Data from 2D to 3D via Quantum Collapse and Universal Axioms.md",
+    "notes/Harmonization and the Atomic Projective Plane.md",
+    "An Anarcho-Syndicalist Vision.md",
+    "Universal Life Protocol/Autogenous Genesis - Encoding Divine Attention into Executable Reality.md",
+    "Desert Alchemy/The Universal Life Protocol in Action – A Socioeconomic Trie for Regenerative Abundance.md",
+    "A Public Relations Blueprint for the Universal Life Protocol and Church.md",
+    "Universal Life Protocol/A Divine Covenant for Global Reparations and the Restoration of Man's Right.md",
+    "The Universal Harmonization Protocol/A Divine Blueprint for a Replicable and Reproducible Reality 1.md",
+    "The Universal Harmonization Protocol/From Foundational Philosophy to Practical Manifestation 1.md",
+    "Singularity/Towards a Unified Utopia.md",
+    "Singularity",
+    "The Universal Harmonization Protocol/An Analysis of ULPP Structure and Dimensional Operators.md",
+    "audio/Universal Harmonization_ Redefining Reality, Trust, and Society Through Protocol 1.mp3",
+    "audio/gemini_generated_audio_overview_6eef70c6.mp3",
+    "The Universal Harmonization Protocol/A Divine Blueprint for a Replicable and Reproducible Reality.md",
+    "The Universal Harmonization Protocol/From Foundational Philosophy to Practical Manifestation.md",
+    "The Universal Harmonization Protocol/An Origami of Reality – A Digital Manifesto for Ascent.md",
+    "The Universal Harmonization Protocol/A White Paper on Verifiable Reality and Regenerative Systems.md",
+    "The Universal Harmonization Protocol/A Digital Manifesto for a Protocol-Driven Reality and the Ascent from Indecision 1.md",
+    "The Universal Harmonization Protocol",
+    "The Universal Harmonization Protocol/A Digital Manifesto for a Protocol-Driven Reality and the Ascent from Indecision.md",
+    "Universal Binary Hypergraph Protocol/Conceptual Decentralized Public Offering (DPO) for the Universal Harmonization Protocol.md",
+    "Universal Binary Hypergraph Protocol/Autogenous Genesis - Encoding Divine Attention into Executable Reality.md",
+    "Desert Alchemy",
+    "Decoding the Universal Life Protocol_ Engineering a Unified Reality Through Rectified Language and Digital Observation.mp3",
+    "archive",
+    "Universe Domain Expansion",
+    "audio/Decoding Reality_ The Anarcho-Syndicalist Vision of Universal Harmonization, Attention, and Verifiable Trust 1.mp3"
   ]
 }
