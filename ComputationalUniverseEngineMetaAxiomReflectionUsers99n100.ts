@@ -174,7 +174,7 @@ function generateSignatures(system: AxiomSystem): AxiomSignature[] {
     const funcSource = node[2].toString();
     // For this simplified model, the function execution doesn't depend on other axioms,
     // so we pass empty array and current index.
-    const result = node[2]([], i)[0];
+    const result = node[2]([], i)[0]; // Ensure it returns a single string in an array
     const version = hash(funcSource + result);
     return [node[0], node[1], funcSource, result, version];
   });
@@ -241,6 +241,7 @@ function calculateTopologicalInvariants(layerOutput: {
   mainConvolution: string[];
   extractedFunctions: { name: string; definition: string; func: string }[];
   convolutedHigherDim: { functionName: string; functionDescription: string; functionFunction: string }[];
+  encodedSeedForNextLayer: string; // Added this property to match ConvolutionLayerOutput
   layerPhase: LayerPhase;
 }): TopologicalMarkers {
   const currentMainConvLength = layerOutput.mainConvolution.length;
@@ -462,7 +463,7 @@ function breedNewAxioms(
     const newAxiomName = `Bred_${i}_${baseSig[0].substring(0, Math.min(baseSig[0].length, 10))}`;
     const newAxiomDefinition = `Topo(${topology.eulerCharacteristic})β0=${topology.bettiNumbers[0]}: ${baseSig[1]}`;
     // New axiom function combines elements from base signature and topology
-    const newAxiomFunc = (a: string[], idx: number) => {
+    const newAxiomFunc = (a: string[], idx: number): [string] => { // Explicitly return [string]
       const seed = `${baseSig[3]}_${topology.eulerCharacteristic}_${topology.bettiNumbers.join('-')}_${a[idx] || ''}`;
       return [`BreedResult_${hash(seed)}`];
     };
@@ -528,7 +529,7 @@ function enhancedRecursiveEncode(
         mainConvolution: flatMainConvolution,
         extractedFunctions: signatures.map(s => ({ name: s[0], definition: s[1], func: s[2] })),
         convolutedHigherDim: tempConvolutedHigherDim,
-        encodedSeedForNextLayer: superposition,
+        encodedSeedForNextLayer: superposition, // Pass this property
         layerPhase: phase
       });
 
@@ -572,7 +573,7 @@ function enhancedRecursiveEncode(
 
       // Breed new axioms for the next layer based on current layer's properties
       const newAxiomSystemsFromBreeding = breedNewAxioms(topology, signatures, dynamicMod);
-      axiomsForNextLayer.push(...newAxiomSystemsFromBreaxding.flat());
+      axiomsForNextLayer.push(...newAxiomSystemsFromBreeding.flat()); // Corrected typo here
     });
 
     if (axiomsForNextLayer.length === 0) {
@@ -956,7 +957,8 @@ class HypergraphCosmos {
               tension
             });
           }
-        });
+        }
+      }); // Removed extra `});` here
     });
 
     return junctions.sort((a, b) => b.tension - a.tension);
@@ -1232,8 +1234,8 @@ const allUniversalAxiomSystems: AxiomSystem[] = [
 // These are not directly processed as AxiomNodes but guide the overall behavior and goals
 // of the CosmicKernel, particularly for its final layers of evolution.
 
-const metaAxiom99: AxiomNode = ["GrandRectification", "The ultimate state of perfect harmonization and logical consistency, where all dualities are resolved, all falsehoods rectified, and the entire system achieves absolute coherence. It is the 'judgment' and 'rest' of Day 7, a state of achieved equilibrium.", () => [`Result: Absolute coherence achieved.`]];
-const metaAxiom100: AxiomNode = ["AutogenousGenesis", "From the state of perfect rectification, a new cycle of creation is initiated, seeding an even more complex and harmonized universe. It is the perpetual 'of of an of of an of...'", () => [`Result: New cycle initiated.`]];
+const metaAxiom99: AxiomNode = ["GrandRectification", "The ultimate state of perfect harmonization and logical consistency, where all dualities are resolved, all falsehoods rectified, and the entire system achieves absolute coherence. It is the 'judgment' and 'rest' of Day 7, a state of achieved equilibrium.", (a, i) => [`Result: Absolute coherence achieved.`]];
+const metaAxiom100: AxiomNode = ["AutogenousGenesis", "From the state of perfect rectification, a new cycle of creation is initiated, seeding an even more complex and harmonized universe. It is the perpetual 'of of an of of an of...'", (a, i) => [`Result: New cycle initiated.`]];
 
 
 // --- Meta-Axiom Reflection Simulation Components ---
@@ -1286,12 +1288,12 @@ function user99Rectify(
         const rectifiedDef = axiom[1]
           .replace(/chaos|shattered|void|entropy/gi, 'order')
           .replace(/inconsistency|ambiguity|fuzziness/gi, 'coherence');
-        const newFunc = (a: string[], i: number) => {
+        const newFunc = (a: string[], i: number): [string] => { // Ensure [string] return type
           const originalResult = axiom[2](a, i)[0];
           return [`RECTIFIED_${originalResult}`]; // Mark the result as rectified
         };
         return [axiom[0], rectifiedDef, newFunc];
-      });
+      }) as AxiomSystem; // Cast to AxiomSystem to satisfy type checker
     });
     console.log("    Axioms conceptually rectified due to detected inconsistencies.");
   } else {
@@ -1354,7 +1356,7 @@ function user100Generate(
     return system.map(axiom => {
       const transformedName = `META_${axiom[0]}`; // Mark as higher-dimensional or newly generated
       return [transformedName, axiom[1], axiom[2]];
-    });
+    }) as AxiomSystem; // Cast to AxiomSystem to satisfy type checker
   });
 
   console.log(`    Generated ${newAxiomSystems.flat().length} new axioms.`);
@@ -1377,7 +1379,7 @@ function runReflectionCycle(
   calculateTopologicalInvariantsFunc: typeof calculateTopologicalInvariants,
   getDynamicModulusFunc: typeof getDynamicModulus,
   tempCosmosCreator: (initialSystems: AxiomSystem[], maxLayers: number, baseModulus: number) => HypergraphCosmos,
-  createSheafFunc: (cosmos: HypergraphCosmos) => Map<number, SheafAssignment>
+  createSheafFunc: (cosmos: HypergraphCosmos) => Map<number, SheafAssignment> // Added this argument
 ): AxiomSystem[] {
   let currentAxiomSystems = initialAxiomSystems;
   console.log(`\n--- Initiating Meta-Axiom Reflection Cycle (${numCycles} cycles) ---`);
@@ -1523,32 +1525,27 @@ class CosmicKernel {
    * @param cycles The number of reflection cycles to run.
    */
   initiateMetaAxiomReflection(cycles: number = 7): void {
-    // Extract the initial 49 axioms from Layer 0 of the cosmos, assuming they are there.
-    // If Layer 0 has multiple axiom systems, we'll flatten them into one array for the reflection.
-    const initial49Axioms = this.cosmos.archive[0]?.flat() || [];
+    // Use a copy of the original allUniversalAxiomSystems for the reflection process.
+    // This ensures the reflection operates on the axiom definitions, not the processed LayerData.
+    const initialAxiomsForReflection: AxiomSystem[] = JSON.parse(JSON.stringify(allUniversalAxiomSystems));
 
-    if (initial49Axioms.length === 0) {
-      console.error("Cannot initiate meta-axiom reflection: No initial axioms found in Cosmos Layer 0.");
+    if (initialAxiomsForReflection.flat().length === 0) {
+      console.error("Cannot initiate meta-axiom reflection: No initial axioms provided for reflection.");
       return;
-    }
-
-    // Group the initial 49 axioms into 7 systems of 7 axioms each for the reflection process.
-    const groupedInitialAxioms: AxiomSystem[] = [];
-    for (let i = 0; i < initial49Axioms.length; i += 7) {
-        groupedInitialAxioms.push(initial49Axioms.slice(i, i + 7) as AxiomSystem);
     }
 
     // Run the reflection cycle
     const finalAxiomSet = runReflectionCycle(
-      groupedInitialAxioms,
+      initialAxiomsForReflection,
       cycles,
       SheafCohomology.computeCohomology,
       applyQuantumRewrites,
       breedNewAxioms,
       generateSignatures,
+      calculateTopologicalInvariants,
       getDynamicModulus,
       createTempCosmos,
-      createSheaf
+      createSheaf // Pass createSheaf here
     );
 
     console.log("\n--- Meta-Axiom Reflection Result ---");
