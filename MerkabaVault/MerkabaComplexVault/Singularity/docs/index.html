@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Epoch of Universal Harmonization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
+            width: 100%;
+            max-width: 600px;
+            max-height: 400px;
+        }
+        .flow-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .flow-connector {
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            background-color: #665191;
+            z-index: -1;
+        }
+        .flow-connector::after {
+            content: '▼';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a05195;
+            font-size: 1.5rem;
+        }
+        .kpi-value {
+            font-weight: 800;
+            font-size: 3rem;
+            text-shadow: 0 0 15px rgba(255, 124, 67, 0.5);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #d45087, #ff7c43);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-gray-200 antialiased">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <header class="text-center mb-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">The Epoch of Universal Harmonization</h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">A manifesto for a verifiable, regenerative, and self-sovereign future, authored by Brian Thorne & Your Creators.</p>
+        </header>
+
+        <section id="vision" class="text-center mb-32">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text">Attention is everything, and everything is attention.</h2>
+            <p class="text-lg text-gray-400 max-w-4xl mx-auto">We stand at a profound realization: reality is not a static landscape, but a dynamic process unfolding through conscious focus. Our Unified Protocol is a framework to build this new reality on a foundation of protocol-driven trust.</p>
+        </section>
+
+        <section id="foundation" class="mb-32">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">The Foundation Protocol</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">A new language and architecture for verifiable reality, where trust is inherent in the design.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flow-card p-8 rounded-2xl shadow-2xl text-center">
+                    <div class="text-5xl mb-4">📜</div>
+                    <h3 class="text-2xl font-bold mb-2">UBHP</h3>
+                    <p class="text-gray-400">The Universal Binary Hypergraph Protocol redefines all data as canonical, verifiable S-expressions, creating a universal language of truth.</p>
+                </div>
+                <div class="flow-card p-8 rounded-2xl shadow-2xl text-center">
+                    <div class="text-5xl mb-4">💠</div>
+                    <h3 class="text-2xl font-bold mb-2">TDP</h3>
+                    <p class="text-gray-400">The Triadic Domain Principle provides the architecture, expanding into a 49D operational space that structures how information is harmonized.</p>
+                </div>
+                <div class="flow-card p-8 rounded-2xl shadow-2xl text-center">
+                    <div class="text-5xl mb-4">♾️</div>
+                    <h3 class="text-2xl font-bold mb-2">The Universal Log</h3>
+                    <p class="text-gray-400">The integration of UBHP and TDP creates an infinite, indexed log—a living, self-organizing record of our collective discernment.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="application" class="mb-32">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">The Regenerative Logistics Network</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">A practical demonstration of the protocol in action, creating a full-cycle, regenerative economy for UBHP Water Gel Modules.</p>
+            </div>
+            <div class="relative flex flex-col items-center space-y-12">
+                <div class="relative w-full max-w-md flow-card p-6 rounded-2xl shadow-xl text-center z-10">
+                    <h3 class="text-xl font-bold">1. Resource Extraction</h3>
+                    <p class="text-sm text-gray-400">Sustainable extraction of natural resources is logged and its impact assessed.</p>
+                </div>
+                <div class="flow-connector" style="top: 100%; height: 4rem;"></div>
+
+                <div class="relative w-full max-w-md flow-card p-6 rounded-2xl shadow-xl text-center z-10">
+                    <h3 class="text-xl font-bold">2. Processing & Production</h3>
+                    <p class="text-sm text-gray-400">Community Kernels use open-source blueprints to create UBHP Water Gel Modules.</p>
+                </div>
+                <div class="flow-connector" style="top: 100%; height: 4rem;"></div>
+
+                <div class="relative w-full max-w-md flow-card p-6 rounded-2xl shadow-xl text-center z-10">
+                    <h3 class="text-xl font-bold">3. Distribution & Consumption</h3>
+                    <p class="text-sm text-gray-400">Decentralized distribution network. Usage patterns are captured in the Universal Log.</p>
+                </div>
+                <div class="flow-connector" style="top: 100%; height: 4rem;"></div>
+
+                <div class="relative w-full max-w-md flow-card p-6 rounded-2xl shadow-xl text-center z-10">
+                    <h3 class="text-xl font-bold">4. Reduction & Recycling</h3>
+                    <p class="text-sm text-gray-400">Used modules are collected and processed for safe return to the Earth, closing the loop.</p>
+                </div>
+                <div class="flow-connector" style="top: 100%; height: 4rem;"></div>
+
+                <div class="relative w-full max-w-md flow-card p-6 rounded-2xl shadow-xl text-center z-10" style="border-color: #ff7c43;">
+                    <h3 class="text-xl font-bold text-green-400">5. Regeneration Cycle Complete</h3>
+                    <p class="text-sm text-gray-400">The network ensures resources are replenished, enhancing Earth's natural systems.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="economics" class="mb-32">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">The Decentralized Economy</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">A new economic model powered by a Decentralized Public Offering (DPO) and a suite of purpose-driven tokens.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="flow-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Token Utility Comparison</h3>
+                    <p class="text-center text-gray-400 mb-6">The ecosystem is balanced by distinct tokens for governance (HGT) and utility (ETU).</p>
+                    <div class="chart-container" style="height: 300px; max-height: 300px;">
+                        <canvas id="tokenUtilityChart"></canvas>
+                    </div>
+                </div>
+                <div class="flow-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Conceptual DPO Allocation</h3>
+                     <p class="text-center text-gray-400 mb-6">Funds are transparently allocated to foster long-term growth and community development.</p>
+                    <div class="chart-container" style="height: 300px; max-height: 300px;">
+                        <canvas id="dpoAllocationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sustainability" class="mb-32">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Earth Balance: The Sentinel of Sustainability</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">A dynamic, real-time metric, continuously updated by the Universal Log, provides transparent feedback on the network's regenerative health.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="flow-card p-8 rounded-2xl shadow-2xl text-center">
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">Current Earth Balance</h3>
+                    <p class="kpi-value text-green-400">107.3%</p>
+                    <p class="text-gray-400 mt-2">The network is currently operating at a net-positive regenerative state.</p>
+                </div>
+                <div class="flow-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Regenerative Impact Over Time</h3>
+                    <p class="text-gray-400 text-center mb-6">Tracks the cumulative positive or negative impact of all network activities.</p>
+                    <div class="chart-container" style="height: 300px; max-height: 300px;">
+                        <canvas id="earthBalanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="call-to-action" class="text-center">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6 gradient-text">Build the Future We Are Meant to Discern.</h2>
+            <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-12">This is a conceptual shift, a conscious participation in creation. We extend this urgent call to action to all.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flow-card p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold mb-2">For Visionaries</h3>
+                    <p class="text-gray-400">Lend your attention to the formalization of the protocol. Explore the consequences of a fundamentally triadic, attention-driven universe.</p>
+                </div>
+                 <div class="flow-card p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold mb-2">For Builders</h3>
+                    <p class="text-gray-400">Engage with the UBHP specification. Deploy Community Kernels. Develop applications on the Infinite Indexed Universal Log.</p>
+                </div>
+                 <div class="flow-card p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold mb-2">For Communities</h3>
+                    <p class="text-gray-400">Embrace self-organization. Participate in the DPO. Claim your stake and build localized, autonomous systems for regenerative abundance.</p>
+                </div>
+            </div>
+            <p class="mt-16 font-bold text-2xl">The time for this conceptual shift is now. Join us.</p>
+        </section>
+    </main>
+
+    <script>
+        const processLabel = (label) => {
+            const limit = 16;
+            if (label.length <= limit) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > limit) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        };
+
+        const universalTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: '#cbd5e1'
+                    }
+                }
+            }
+        };
+
+        const tokenUtilityCtx = document.getElementById('tokenUtilityChart');
+        if (tokenUtilityCtx) {
+            new Chart(tokenUtilityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Governance (Voting)', 'Network Security (Staking)', 'Economic Incentive (Utility)', 'Value Accrual (Effort)'],
+                    datasets: [{
+                        label: 'HGT (Governance)',
+                        data: [100, 80, 20, 10],
+                        backgroundColor: '#a05195',
+                        borderColor: '#d45087',
+                        borderWidth: 2
+                    }, {
+                        label: 'ETU (Utility)',
+                        data: [10, 40, 100, 90],
+                        backgroundColor: '#ff7c43',
+                        borderColor: '#ffa600',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    ...universalTooltipCallback,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#cbd5e1' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#cbd5e1' }
+                        }
+                    }
+                }
+            });
+        }
+
+        const dpoAllocationCtx = document.getElementById('dpoAllocationChart');
+        if (dpoAllocationCtx) {
+            new Chart(dpoAllocationCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Protocol Development', 'Ecosystem Grants', 'Community Initiatives', 'Infrastructure & Security'],
+                    datasets: [{
+                        data: [40, 30, 20, 10],
+                        backgroundColor: ['#665191', '#a05195', '#d45087', '#f95d6a'],
+                        borderColor: '#0d1117',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    ...universalTooltipCallback,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                }
+            });
+        }
+
+        const earthBalanceCtx = document.getElementById('earthBalanceChart');
+        if (earthBalanceCtx) {
+            new Chart(earthBalanceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Q1 2026', 'Q2 2026', 'Q3 2026', 'Q4 2026', 'Q1 2027', 'Q2 2027'],
+                    datasets: [{
+                        label: 'Regenerative Impact',
+                        data: [-15, -5, 20, 45, 75, 107.3],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 124, 67, 0.2)',
+                        borderColor: '#ff7c43',
+                        tension: 0.4,
+                        pointBackgroundColor: '#ffa600',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#ffa600'
+                    }]
+                },
+                options: {
+                    ...universalTooltipCallback,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: {
+                                color: '#cbd5e1',
+                                callback: function(value) {
+                                    return value + '%'
+                                }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#cbd5e1' }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
