@@ -1,0 +1,253 @@
+{
+  "vectorClock": {
+    "genesis": [
+      {
+        "verse_id": "Genesis 1:1",
+        "text": "In the beginning God created the heavens and the earth.",
+        "clock": {
+          "day": 1,
+          "phase": "init",
+          "vector_clock": {
+            "God": 1,
+            "Creation": 1
+          }
+        },
+        "dimensions": {
+          "truth": 1.0,
+          "justice": 0.2,
+          "love": 0.6,
+          "chaos": 0.0,
+          "order": 1.0,
+          "freedom": 0.8,
+          "obedience": 0.9,
+          "sacrifice": 0.0,
+          "life": 1.0,
+          "death": 0.0,
+          "knowledge": 0.7,
+          "power": 0.9
+        },
+        "intent": [
+          "creation",
+          "initiation",
+          "foundation"
+        ],
+        "agents": [
+          "God"
+        ],
+        "entropy": {
+          "input": 0.0,
+          "output": 0.2
+        },
+        "comments": [
+          "First act of creation sets the base for temporal vector space.",
+          "Low entropy indicates beginning of structured system."
+        ]
+      },
+      {
+        "low": [
+          {
+            "name": "day1_create",
+            "system": "You define boundaries between structure and chaos. You separate the unformed void into base identity, namespace, and purpose. Output schemas and identity templates.",
+            "dimensions": [
+              "identity",
+              "intent"
+            ]
+          },
+          {
+            "name": "day2_create",
+            "system": "You define separation of environments. You map network domains, node locations, and address spaces. Output network overlays and context separation rules.",
+            "dimensions": [
+              "space",
+              "network"
+            ]
+          },
+          {
+            "name": "day3_create",
+            "system": "You create structural forms. You assemble templates for objects, interfaces, and compositions. Output node types and their properties.",
+            "dimensions": [
+              "structure",
+              "schema"
+            ]
+          },
+          {
+            "name": "day4_create",
+            "system": "You embed time. You define clocks, metrics, lifecycles, and versions. Output temporal rules and vector clock definitions.",
+            "dimensions": [
+              "time",
+              "metrics"
+            ]
+          },
+          {
+            "name": "day5_create",
+            "system": "You define communication. You generate I/O rules, sensory channels, and signal protocols. Output WebAPI endpoint descriptions or observable features.",
+            "dimensions": [
+              "sensors",
+              "api"
+            ]
+          },
+          {
+            "name": "day6_create",
+            "system": "You define logic, behavior, and agency. You generate lambda functions, handlers, and state transition rules.",
+            "dimensions": [
+              "logic",
+              "actions"
+            ]
+          }
+        ],
+        "high": [
+          {
+            "properties": {
+              "type": "Node",
+              "origin": "Genesis"
+            },
+            "attributes": {
+              "state": "raw"
+            },
+            "actions": [
+              "instantiate",
+              "duplicate",
+              "branch"
+            ]
+          },
+          {
+            "actions": [
+              "escape",
+              "bind",
+              "lookup"
+            ],
+            "references": [
+              "protocol://constraint:egypt",
+              "protocol://freedom:mountain"
+            ]
+          },
+          {
+            "rules": {
+              "onEnter:state1": "require:ritual1",
+              "onFailure": "emit:purge"
+            },
+            "events": [
+              "sacrifice",
+              "cleanse",
+              "accept"
+            ]
+          },
+          {
+            "features": {
+              "watchdog://node:*": [
+                "errorRate > threshold",
+                "emit:prophecy"
+              ]
+            },
+            "actions": [
+              "warn",
+              "log",
+              "autoCorrect"
+            ]
+          },
+          {
+            "properties": {
+              "type": "messenger"
+            },
+            "rules": {
+              "onConflict": "merge:compassion-first",
+              "onAccess": "require:trust-score > 0.7"
+            }
+          },
+          {
+            "measurements": {
+              "vectorClock": "check:completeness",
+              "entropy": "check:delta-activity",
+              "consensus": "threshold:goodness > 0.9"
+            },
+            "actions": [
+              "shutdown",
+              "restart",
+              "archive"
+            ]
+          },
+          {
+            "properties": {
+              "role": "arbiter",
+              "mode": "observer"
+            },
+            "rules": {
+              "onAllGood": "commit:version",
+              "onAnyBad": "revert:day1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "day1-light",
+        "description": "Creates and separates light from darkness.",
+        "input": {
+          "context": "world_state_before_light",
+          "sensors": [
+            "photon_detected"
+          ]
+        },
+        "output": {
+          "action": "create_light_zone",
+          "state_change": "light=true"
+        },
+        "rules": {
+          "trigger_if": "darkness=total",
+          "require": [
+            "photon_spectrum"
+          ],
+          "effect": [
+            "illuminate_region"
+          ]
+        },
+        "interface": {
+          "webapi": "POST /zones/{zone_id}/light",
+          "libp2p_topic": "/day1/light"
+        }
+      }
+    ],
+    "exodus": [
+      {
+        "adam": {
+          "begat": [
+            "seth"
+          ]
+        },
+        "seth": {
+          "begat": [
+            "enosh"
+          ]
+        },
+        "noah": {
+          "begat": [
+            "shem",
+            "ham",
+            "japheth"
+          ]
+        },
+        "abraham": {
+          "begat": [
+            "isaac"
+          ]
+        },
+        "isaac": {
+          "begat": [
+            "jacob"
+          ]
+        },
+        "jacob": {
+          "begat": [
+            "reuben",
+            "simeon",
+            "",
+            "joseph",
+            "benjamin"
+          ]
+        }
+      }
+    ],
+    "leviticus": 1,
+    "prophets": 0,
+    "messiah": 0,
+    "judgment": 0
+  }
+}

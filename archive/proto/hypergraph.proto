@@ -1,0 +1,194 @@
+syntax = "proto3";
+
+package hypergraph.v1;
+
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/yourorg/hypergraph/proto";
+option (scalapb.options) = {
+  package_name: "co.yourorg.hypergraph.proto"
+  flat_package: true
+};
+
+// ==== Shared Conventions ====
+// - IDs: ^[a-z0-9_-]{1,64}$
+// - Timestamps: Unix nanoseconds
+// - Data: CBOR-encoded by default unless schema specifies otherwise
+// - Peer IDs: "0x..." for EVM, base58 for libp2p
+
+// ==== Core Structures ====
+
+// ==== Vector Clock ====
+message VectorClock {
+  map<string, uint64> entries = 1;  // peer_id → logical_time
+  uint64 size = 2; //  total = 2;                 // Total sum for cross-peer ordering
+}
+
+// // ==== Merkle Root (TODO) ====
+// message MerkleRoot {
+//   string hash = 1;        // e.g., SHA-256 or multihash
+//   string algorithm = 2;   // e.g., "sha256", "blake3", etc.
+// }
+
+// ==== Merkle Tree ====
+message MerkleTree {
+  message Node {
+    string hash = 1;          // Multihash format
+    string algorithm = 2;      // "sha2-256", "keccak-256", etc.
+    repeated string children = 3;  // For hierarchical structures
+  }
+  Node root = 1;
+}
+
+// ==== Transform Specification ====
+message Transform {
+  enum Runtime {
+    TYPESCRIPT = 0;
+    WASM = 1;
+    EVM = 2;
+    CUSTOM = 3;
+  }
+  Runtime runtime = 1;
+  string uri = 2;             // Content-addressed reference
+  string entrypoint = 3;      // Function name
+  bytes config = 4;           // Runtime-specific configuration
+}
+
+// ==== Graph Elements ====
+
+// ==== Vertex (Explicit Schema Support) ====
+message Vertex {
+  string id = 1 [(pattern) = "^[a-z0-9_-]{1,64}$"];
+  string schema_uri = 2;      // IPFS CID or registry reference
+  oneof payload {
+    bytes raw_data = 3;       // Default CBOR
+    google.protobuf.Any structured_data = 4;
+  }
+  uint64 created_at = 5;
+  bytes metadata = 6;         // Optional additional data
+}
+
+// ==== Edge ====
+message Edge {
+  string id = 1 [(pattern) = "^[a-z0-9_-]{1,64}$"];
+  string source = 2 [(required) = true];
+  string target = 3 [(required) = true];
+  bytes data = 4; // Schema implied by parent graph
+  uint64 created_at = 5; // Optional timestamp
+}
+
+// ==== Hyperedge ====
+message Hyperedge {
+  string id = 1 [(pattern) = "^[a-z0-9_-]{1,64}$"];
+  repeated string vertex_ids = 2 [(max_count) = 1000];
+  Transform transform = 3;   // Optional computation
+  bytes data = 4;
+  uint64 created_at = 5;
+}
+
+// ==== Incidence (Signed) ====
+message Incidence {
+  string hyperedge_id = 1 [(required) = true];
+  string vertex_id = 2 [(required) = true];
+  PeerIdentity creator = 3;
+  uint64 timestamp = 4; // Unix nanos
+  bytes signature = 5; // EIP-191 or libp2p signature
+  string signature_domain = 6; // EIP-712 domain separator
+}
+
+// ==== Identity ====
+
+message PeerIdentity {
+  oneof id_type {
+    string libp2p_peer_id = 1;    // base58-encoded
+    string hd_wallet_address = 2; // "0x..." for EVM chains
+  }
+  bytes public_key = 3;       // SECP256k1 public key
+  repeated string roles = 4;  // e.g., ["validator", "storage"]
+}
+
+// ==== Peer Metadata (Extensible, for roles etc.) ====
+message PeerMetadata {
+  string peer_id = 1;
+  repeated string roles = 2;              // e.g., ["validator", "observer"]
+  map<string, string> properties = 3;     // Arbitrary peer metadata
+}
+
+// ==== Composite Structures ====
+
+message PeerGraph {
+  PeerIdentity owner = 1;
+  repeated Vertex vertices = 2 [(max_count) = 1000000];
+  repeated Edge edges = 3 [(max_count) = 1000000];
+  
+  MerkleTree vertex_tree = 4;   // Hierarchical merkle structure
+  MerkleTree edge_tree = 5;   // Hierarchical merkle structure
+  VectorClock clock = 6;
+}
+
+// ==== Layer (Sync-Optimized) ====
+message Layer {
+  string id = 1 [(pattern) = "^[a-z0-9_-]{1,64}$"];
+  string protocol_path = 2;   // e.g., "/my-app/m/44'/60'/0'/0/1"
+
+  // Schema and Computation
+  string schema_uri = 3;
+  Transform default_transform = 4;
+
+  // Data
+  repeated Hyperedge hyperedges = 5 [(max_count) = 100000];
+  repeated Incidence incidences = 6 [(max_count) = 1000000];
+
+  // Sync State
+  VectorClock vector_clock = 7;
+  MerkleTree content_tree = 8; // Unifies hyperedges/incidences
+}
+
+message Hypergraph {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  uint64 created_at = 4;
+  uint64 updated_at = 5;
+
+  repeated PeerGraph peer_graphs = 6;
+  repeated Layer layers = 7;
+
+  VectorClock global_clock = 8;
+  MerkleTree version_tree = 9;
+  repeated PeerIdentity participants = 10;
+  repeated PeerMetadata peer_metadata = 11;
+}
+
+// ==== Sync Protocol ====
+
+message SyncRequest {
+  string object_id = 1;       // Layer or graph ID
+  VectorClock known_clock = 2;
+  MerkleTree known_tree = 3;
+  uint32 chunk_size = 4;      // Max objects per response max_chunks = 4;      // Pagination control
+  bytes filter = 5;           // Optional filter expression
+}
+
+message SyncResponse {
+  oneof content {
+    PeerGraph graph = 1;
+    Layer layer = 2;
+  }
+  bytes proof = 3;            // Merkle inclusion proof
+  bool has_more = 4;
+  VectorClock updated_clock = 5;
+}
+
+// ==== Service Definition ====
+
+service HypergraphService {
+  // Stream sync updates
+  rpc Sync(SyncRequest) returns (stream SyncResponse);
+  
+  // Get current state metadata
+  rpc GetStateMetadata(string) returns (Hypergraph);
+  
+  // Submit new content
+  rpc Submit(stream SyncResponse) returns (VectorClock);
+}

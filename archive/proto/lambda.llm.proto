@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package hypergraph.v1;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+// === Graph Header: Core Node Identity ===
+message GraphNode {
+  string id = 1; // HD address / Node ID
+  string type = 2; // Node type (sensor, agent, ui, etc.)
+  VectorClock clock = 3;
+  repeated string features = 4; // Feature sets (perception, rule, etc.)
+  repeated string links = 5; // Related nodes
+  google.protobuf.Timestamp created = 6;
+  google.protobuf.Timestamp updated = 7;
+}
+
+// === Vector Clock for Event Ordering ===
+message VectorClock {
+  map<string, uint64> entries = 1; // node_id -> logical time
+}
+
+// === Lambda Model Instruction ===
+message LambdaCall {
+  string lambda_model = 1; // identity, perception, expression, etc.
+  string node_id = 2;
+  GraphNode current = 3;
+  repeated GraphNode neighbors = 4;
+  google.protobuf.Any input = 5; // optional payload (sensor data, API call, etc.)
+}
+
+// === Lambda Response ===
+message LambdaResult {
+  string node_id = 1;
+  string lambda_model = 2;
+  google.protobuf.Any output = 3; // New state or WebAPI instruction
+  repeated DeltaLog deltas = 4; // Merkle-proofed changes
+}
+
+// === Merkle-Proofed State Change ===
+message DeltaLog {
+  string parent_hash = 1;
+  string new_hash = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  map<string, string> changes = 4; // key -> new value
+  repeated string affected_nodes = 5;
+}
+
+// === Sensor Data (ESP32, UI input) ===
+message PerceptionInput {
+  string source = 1; // sensor id
+  map<string, float> metrics = 2; // e.g. {"temp": 23.4, "accelX": 0.02}
+}
+
+// === WebAPI Expression ===
+message WebAPIInstruction {
+  string method = 1; // GET, POST, etc.
+  string url = 2;
+  map<string, string> headers = 3;
+  string body = 4;
+  bool async = 5;
+}
+
+// === Rule Logic Container ===
+message RuleSet {
+  string node_type = 1;
+  map<string, string> rules = 2; // rule_id -> logic expression (could be LLM prompt)
+}
+
+// === LLM Plan / Projection ===
+message ImaginationPlan {
+  string goal = 1;
+  repeated string steps = 2; // LLM-projected state transitions
+  repeated string required_nodes = 3;
+  map<string, string> reasoning = 4; // step -> rationale
+}

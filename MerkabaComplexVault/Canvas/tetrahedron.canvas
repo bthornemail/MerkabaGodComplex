@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"B","type":"file","file":"B.md","x":-320,"y":760,"width":120,"height":80},
+		{"id":"C","type":"file","file":"C.md","x":-200,"y":-260,"width":120,"height":80},
+		{"id":"O","type":"file","file":"O.md","x":240,"y":120,"width":120,"height":80},
+		{"id":"A","type":"file","file":"A.md","x":840,"y":960,"width":120,"height":80},
+		{"id":"D","type":"file","file":"D.md","x":720,"y":-260,"width":120,"height":80}
+	],
+	"edges":[
+		{"id":"edge-A-B","fromNode":"A","fromSide":"right","toNode":"B","toSide":"left"},
+		{"id":"edge-A-C","fromNode":"A","fromSide":"bottom","toNode":"C","toSide":"left"},
+		{"id":"edge-A-D","fromNode":"A","fromSide":"top","toNode":"D","toSide":"left"},
+		{"id":"edge-B-C","fromNode":"B","fromSide":"bottom","toNode":"C","toSide":"right"},
+		{"id":"edge-B-D","fromNode":"B","fromSide":"top","toNode":"D","toSide":"right"},
+		{"id":"edge-C-D","fromNode":"C","fromSide":"top","toNode":"D","toSide":"bottom"},
+		{"id":"edge-A-O","fromNode":"A","fromSide":"right","toNode":"O","toSide":"left"},
+		{"id":"edge-B-O","fromNode":"B","fromSide":"left","toNode":"O","toSide":"right"},
+		{"id":"edge-C-O","fromNode":"C","fromSide":"top","toNode":"O","toSide":"bottom"},
+		{"id":"edge-D-O","fromNode":"D","fromSide":"bottom","toNode":"O","toSide":"top"}
+	]
+}

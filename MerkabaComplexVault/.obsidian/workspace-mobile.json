@@ -1,0 +1,200 @@
+{
+  "main": {
+    "id": "4f25fb50d754ea18",
+    "type": "split",
+    "children": [
+      {
+        "id": "fd21876f8d6a84c8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "46066be709fef0a9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The Epoch of Universal Harmonization - A Manifesto and Call to Action for a Protocol-Driven Reality.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "The Epoch of Universal Harmonization - A Manifesto and Call to Action for a Protocol-Driven Reality"
+            }
+          },
+          {
+            "id": "946cab902645384e",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "50460041cb586e60",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "42075a24b6326300",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "alphabetical",
+            "autoReveal": false
+          },
+          "icon": "lucide-folder-closed",
+          "title": "Files"
+        }
+      },
+      {
+        "id": "a849bf6a902adb96",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "Desert Alchemy",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": true,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          },
+          "icon": "lucide-search",
+          "title": "Search"
+        }
+      },
+      {
+        "id": "4a0789ae556e3817",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-tags",
+          "title": "Tags"
+        }
+      },
+      {
+        "id": "4758ab5669c74eeb",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {},
+          "icon": "lucide-bookmark",
+          "title": "Bookmarks"
+        }
+      }
+    ],
+    "currentTab": 1
+  },
+  "right": {
+    "id": "8392b80c697a9adc",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "ab98fc74a75fe768",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "Learn.md",
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-coming-in",
+          "title": "Backlinks"
+        }
+      },
+      {
+        "id": "f060325a61d023aa",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "file": "Learn.md",
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-going-out",
+          "title": "Outgoing links"
+        }
+      },
+      {
+        "id": "2fdc0a17096f2df7",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {
+            "file": "Learn.md",
+            "followCursor": false,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-list",
+          "title": "Outline"
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "a849bf6a902adb96",
+  "lastOpenFiles": [
+    "Singularity/docs/twenty29",
+    "Singularity/docs/eleven20",
+    "Singularity/docs/notes/Genesis.Autonomy",
+    "Singularity/docs/UniversalBinaryHypergraphProtocol.tsx",
+    "Singularity/docs/UBHPExplorer.html",
+    "Singularity/docs/new.but.nice.tsx",
+    "Singularity/docs/new.but.nice.html",
+    "Singularity/docs/The Triadic Domain Principle/Universal Trust and Verifiable Reality_ Unpacking the Decentralized Public Offering for a New Era.mp3",
+    "Singularity/docs/The Triadic Domain Principle/Universal Life Protocol_ Building a Verifiable Heaven on the Digital Plane.mp3",
+    "Singularity/docs/The Triadic Domain Principle/Universal Harmonization_ Redefining Reality, Trust, and Society Through Protocol.mp3",
+    "Singularity/docs/The Triadic Domain Principle/Universal Harmonization Protocol_ Reversing the _Sin of Indecision_ with AI and Verifiable Action.mp3",
+    "Singularity/docs/ten19/legacy.query.md",
+    "Singularity/docs/ten19/Genesis.Autonomy.query.md",
+    "Singularity/docs/ten19/Global.Reparations.query.md",
+    "Singularity/docs/ten19/Universal Binary Hypergraph Protocol (UBHP) with Emacs.md",
+    "Singularity/docs/Universal Binary Hypergraph Protocol/last7.md",
+    "A Digital Manifesto for a Protocol-Driven Reality and the Ascent from Indecision.md",
+    "The Epoch of Universal Harmonization - A Manifesto and Call to Action for a Protocol-Driven Reality.md",
+    "Trinity2D.md",
+    "2025-07-18.md",
+    "Screenshot_20250718_104532_Chrome.png",
+    "The Metaphysics of Data Transformation in UBHP - From Binary to Point Space and Emergent Geometry.md",
+    "Screenshot_20250718_103942_Chrome.png",
+    "tetrahedron.canvas",
+    "D.md",
+    "A.md",
+    "test.canvas",
+    "Sample.canvas",
+    "2025-06-23.md",
+    "Learn.md"
+  ]
+}
