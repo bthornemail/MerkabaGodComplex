@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Chart</title>
+</head>
+<body>
+    <pre class="mermaid">
+        graph TD;
+            Marketplace
+            Person
+            Wallet
+            Token
+            Service_Board
+            Service_Provider
+            Service_User
+            Service_Consumer
+            Review
+            
+            subgraph "Marketplace Management"
+                Marketplace
+                Peer
+                Token
+                Wallet -->|Holds tokens| Token
+                Marketplace -->|Uses tokens| Token
+                Payment
+            end            
+            subgraph "User Management"
+                Person
+                Wallet
+                Person -->|Owns wallet| Wallet
+            end
+            subgraph "Home_Services_Board_in_Decentralized_Marketplace"
+                Service_Board
+                Service_Provider
+                Service_User
+                Service_Consumer
+                Review
+                Service_Board --> Service
+                Service_Board --> Service_Provider
+                Service_Board --> Person
+                Service_Board --> Review
+                Service_Board --> Payment
+            
+                Service_Provider --> Service
+                Service_Provider --> Review
+                Service_Provider --> Payment
+            
+                Person --> Service
+                Person --> Review
+                Person --> Payment
+            end
+    </pre>
+    <pre class="mermaid">
+        graph TD;
+            Token[Token]
+            Marketplace[Marketplace]
+            Person[Person]
+            Wallet[Wallet]
+        
+            subgraph "Token Management"
+                Token
+                Wallet -->|Holds tokens| Token
+                Person -->|Owns wallet| Wallet
+                Marketplace -->|Uses tokens| Token
+            end
+        </pre>
+        <pre class="mermaid">
+            graph TD;
+                Asset_Registration[Asset Registration]
+                Renting
+                Buying
+                Selling
+                Marketplace[Marketplace]
+                Person[Person]
+                Wallet[Wallet]
+            
+                subgraph "Asset Management"
+                    Asset_Registration
+                    Renting
+                    Buying
+                    Selling
+                    Wallet -->|Holds assets| Renting
+                    Wallet -->|Holds assets| Buying
+                    Wallet -->|Holds assets| Selling
+                    Person -->|Owns wallet| Wallet
+                    Marketplace -->|Deals with assets| Asset_Registration
+                end
+            </pre>
+            <pre class="mermaid">
+                graph TD;
+                    Bidding
+                    Negotiation[Negotiation]
+                    Marketplace[Marketplace]
+                    Person[Person]
+                    Wallet[Wallet]
+                
+                    subgraph "Transaction Management"
+                        Bidding
+                        Negotiation
+                        Wallet -->|Participates in transactions| Bidding
+                        Wallet -->|Participates in transactions| Negotiation
+                        Person -->|Owns wallet| Wallet
+                        Marketplace -->|Facilitates transactions| Bidding
+                        Marketplace -->|Facilitates transactions| Negotiation
+                    end
+                </pre>
+                                    
+
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>

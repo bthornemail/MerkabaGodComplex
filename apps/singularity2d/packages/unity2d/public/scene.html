@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="reset-graph-button">Reset</button>
+    <script type="module">
+        import * as THREE from 'three';
+
+        async function getData() {
+            const url = 'http://0.0.0.0:8000/graph.json';
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            json.nodes = json.nodes.map(node => node.attributes);
+            // Create a Set of node IDs (or publicKeys) for easy lookup
+            const nodeSet = new Set(json.nodes.map(node => node.publicKey));
+            // Filter edges where both source and target exist in the nodes set
+            json.links = json.edges.filter(edge => nodeSet.has(edge.source) && nodeSet.has(edge.target))
+            delete json.edges;
+            return json;
+        }
+        async function buildGraph(json) {
+            const rootId = json.nodes.find((node) => node.title === "environment").publicKey;
+            console.log({ rootId })
+            const nodesById = Object.fromEntries(json.nodes.map(node => [node.publicKey, Object.assign(node, { collapsed: true, childLinks: [] })]));
+            json.links.forEach(link => {
+                nodesById[link.source].childLinks.push(link);
+            });
+            const getPrunedTree = () => {
+                const visibleNodes = [];
+                const visibleLinks = [];
+
+                (function traverseTree(node = nodesById[selectedNode ?? rootId]) {
+                    visibleNodes.push(node);
+                    if (node.collapsed) return;
+                    visibleLinks.push(...node.childLinks);
+                    node.childLinks
+                        .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+                        .forEach(traverseTree);
+                })(); // IIFE
+
+                return { nodes: visibleNodes, links: visibleLinks };
+            };
+            try {
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                const shapes = json.nodes.map((node,index) => {
+                    let newColor = ()=>Math.floor((Math.random() * 100));
+                    const geometry = new THREE.BoxGeometry(1,1,1);
+                    const material = new THREE.MeshBasicMaterial({ color: `rgba(${newColor()},${newColor()},${newColor()})`/*0x00ff00*/ });
+                    const cube = new THREE.Mesh(geometry, material);
+                    cube.position.x = node.x ?? Math.random() * 100; 
+                    cube.position.y = node.y ?? Math.random() * 100; 
+                    cube.position.z = node.z ?? Math.random() * 100;
+                    scene.add(cube);
+                    return cube;
+                });
+
+                camera.position.x = 50;
+                camera.position.y = 50;
+                camera.position.z = 150;
+                function animate() {
+                    shapes.forEach((cube)=>{
+                        cube.rotation.x += 0.01;
+                        cube.rotation.y += 0.01
+                    })
+                    renderer.render(scene, camera);
+                }
+                renderer.setAnimationLoop(animate);
+                return scene;
+            } catch (error) {
+                console.error(error.message);
+                throw new Error(error);
+
+            }
+        }
+        const json = await getData();
+        let selectedNode = null;
+        await buildGraph(json);
+        document.querySelector("#reset-graph-button").addEventListener("click", async () => {
+            selectedNode = null;
+            await buildGraph(await getData())
+        })
+    </script>
+</body>
+
+</html>

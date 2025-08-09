@@ -1,0 +1,55 @@
+---
+"id": "0x"
+"sourece": "marketplace2D"
+"target": "connection"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "peer"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "board"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "listing"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "post"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "transaction"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "asset"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "service"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "content"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "chat"
+...
+---
+"id": "0x"
+"source": "marketplace2D"
+"target": "topic"
+...

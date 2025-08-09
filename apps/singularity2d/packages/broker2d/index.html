@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent 2D - Create and propagate Unity 2D networks</title>
+  <link rel="stylesheet" href="modules/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <nav class="navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <div class="brand">
+          <div id="qrcode"></div>
+          <h1>Agent 2D</h1>
+          <small>Chat with Unity 2D networks</small>
+        </div>
+      </a>
+      <form class="d-flex" role="search" id="open-graph-view-form">
+        <button class="btn btn-outline-warning btn-sm" id="open-graph-view-form-qty-button">0</button>
+        <input class="form-control form-control-sm me-2 text-light" type="search" placeholder="Username"
+          aria-label="Search" style="background-color: transparent;color: white;" id="open-graph-view-form-input">
+        <button class="btn btn-sm btn-outline-success" type="button" onclick="document.getElementById('logger').showModal()">Open</button>
+        <button class="btn btn-sm btn-outline-success" type="submit" hidden>Open</button>
+      </form>
+    </div>
+  </nav>
+  <main class="container flex-grow-1">
+    <div class="row" id="graph"></div>
+  </main>
+  <div class="container flex-grow-1">
+    <section class="container">
+      <textarea name="controller-area" id="controller-area" class="form-control" rows="15"></textarea>
+      <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+      <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+      <!-- <script>
+        const easyMDE = new EasyMDE({ element: document.getElementById('controller-area'), });
+      </script> -->
+    </section>
+    <section class="container">
+      <label class="mb-1">Broker Manager</label>
+      <div class="input-group">
+        <button id="create" class="btn btn-outline-warning btn-sm">Create</button>
+        <input type="text" placeholder="ExtendedKey" class="form-control form-control-sm" id="key">
+        <button id="register" class="btn btn-success btn-sm">Register</button>
+        <button id="activate" class="btn btn-primary btn-sm">Activate</button>
+      </div>
+    </section>
+  </div>
+  <footer>
+    <dialog class="container" id="logger">
+      <h2>Logs:</h2>
+      <!-- <ul id="logs" class="list-group" style="overflow-y: auto; height: 64px;"></ul> -->
+      <ul id="logs" class="list-group"></ul>
+      <button class="btn btn-sm btn-outline-danger" type="button" onclick="document.getElementById('logger').close()">Close</button>
+    </dialog>
+    <section class="container">
+      <!-- <label class="mb-1">Broker Manager</label> -->
+      <input type="text" placeholder="Message Agent" class="form-control form-control-sm" id="key">
+      <div style="display: grid;height: min-content;grid-auto-flow: column;">
+        <button id="create" class="btn btn-outline-warning btn-sm"><i
+            class="badge text-bg-secondary">+</i>Upload</button>
+        <button id="register" class="btn btn-success btn-sm"><i class="badge text-bg-secondary">?</i>Search</button>
+        <button id="activate" class="btn btn-primary btn-sm"><i class="badge text-bg-secondary">*</i>Reason</button>
+        <div style="width:50%;">&nbsp;</div>
+        <button id="activate" class="btn btn-primary btn-sm"><i class="badge text-bg-secondary">*</i>Voice</button>
+      </div>
+    </section>
+  </footer>
+  <dialog>
+    <section id="login" class="container">
+      <div id="qrcode">
+        <img src="src/images/http.wallet.png" id="get-qrcode">
+      </div>
+      <hr>
+      <button id="createWalletBtn" class="btn btn-primary">Create Wallet</button>
+    </section>
+  </dialog>
+  <dialog>
+    <section id="sign" class="container" style="display: flex;flex-direction: column;">
+      <textarea class="form-control">Ethers.js Operations</textarea>
+      <div class="btn-group">
+        <button id="signMessageBtn" class="btn btn-secondary">Sign Message</button>
+        <button id="verifyMessageBtn" class="btn btn-success">Verify Message</button>
+      </div>
+    </section>
+  </dialog>
+  <dialog>
+    <section id="block" class="container" style="display: flex;flex-direction: column;align-items: center;">
+      <!-- MerkleTree.js Section -->
+      <h4>Verify Block</h4>
+      <div class="btn-group" style="width: fit-content;">
+        <input id="root" class="form-control form-control-sm" placeholder="root">
+        <input id="hash" class="form-control form-control-sm" placeholder="hash">
+        <input id="key" class="form-control form-control-sm" placeholder="key">
+        <input id="signature" class="form-control form-control-sm" placeholder="signature">
+      </div>
+      <hr>
+      <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+      <hr>
+      <input id="entity" class="form-control form-control-sm" placeholder="entity">
+      <hr>
+      <button id="verifyProofBtn" class="btn btn-primary btn-sm">Verify</button>
+    </section>
+  </dialog>
+  <dialog>
+    <section id="transaction" class="container" style="display: flex;flex-direction: column;align-items: center;">
+      <div id="title-input" class="card-title">Title</div>
+      <div id="body-input" class="card-body">
+        <p id="text-input" class="card-text">Text</p>
+      </div>
+      <div id="footer-input" class="card-footer">
+        <button id="card-action" class="btn btn-primary btn-sm">Verify</button>
+        <button id="card-anti-action" class="btn btn-primary btn-sm">Verify</button>
+      </div>
+    </section>
+  </dialog>
+
+  <!-- <script type="module" src="/src/components/p2p.ts"></script> -->
+  <script type="module" src="/dist/app.js"></script>
+  <script type="module" src="/dist/bin/open.graph.view.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+{
+    "nodes":[
+
+	{ "id":"Author", "encoding":"Address" },
+	{ "id":"Title", "encoding":"String" },
+	{ "id":"Summary", "encoding":"String" },
+	{ "id":"Description", "encoding":"String" },
+	{ "id":"Image", "encoding":"String" },
+	{ "id":"Value", "encoding":"String" },
+	{ "id":"Content", "encoding":"CID" },	
+	{ "id":"Listing", "encoding":"Map" },
+	
+	{ "id":"Owner", "encoding":"Address" },
+	{ "id":"Asset", "encoding":"JSON" },
+
+	{ "id":"Loan", "encoding":"Map" },
+	{ "id":"Escrow", "encoding":"Map" },
+	{ "id":"Requirement", "encoding":"Map" },
+	{ "id":"Trade", "encoding":"Map" }
+    ],
+    "links":[
+	{ "source":"Author", "target":"Content" },
+	{ "source":"Title", "target":"Content" },
+	{ "source":"Summary", "target":"Content" },
+	{ "source":"Description", "target":"Content" },
+	{ "source":"Image", "target":"Content" },
+	{ "source":"Value", "target":"Content" },
+	{ "source":"Content", "target":"Listing" },
+	{ "source":"Listing", "target":"Asset" },
+	{ "source":"Asset", "target":"Owner" }
+    ]
+}

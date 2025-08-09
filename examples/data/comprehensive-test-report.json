@@ -1,0 +1,223 @@
+{
+  "tests": [
+    {
+      "name": "Personality Assessment Processing",
+      "passed": true,
+      "duration": 10.616988,
+      "details": {
+        "mbtiType": "INTJ",
+        "harmonicSignature": "ULP-MBTI-me3ptef9-g6..."
+      },
+      "timestamp": "2025-08-09T03:48:43.461Z"
+    },
+    {
+      "name": "Personal Agent Creation",
+      "passed": true,
+      "duration": 5.462685999999991,
+      "details": {
+        "agentId": "agent-1754711323466",
+        "consciousnessLevel": 0.9449943328695849
+      },
+      "timestamp": "2025-08-09T03:48:43.467Z"
+    },
+    {
+      "name": "Living Knowledge Creation",
+      "passed": true,
+      "duration": 0,
+      "details": {
+        "knowledgeUnitsCreated": 5,
+        "sampleIds": [
+          "knowledge-1754711324494-1ayy",
+          "knowledge-1754711324494-j8v7"
+        ]
+      },
+      "timestamp": "2025-08-09T03:48:44.494Z"
+    },
+    {
+      "name": "Knowledge Evolution (Conway Rules)",
+      "passed": true,
+      "duration": 0.07045660000007956,
+      "details": {
+        "evolutionCycles": 5,
+        "finalStats": {
+          "totalKnowledge": 2,
+          "averageAttention": 0.8791828277712701,
+          "averageAge": 5
+        },
+        "avgEvolutionTime": "0.07"
+      },
+      "timestamp": "2025-08-09T03:48:44.494Z"
+    },
+    {
+      "name": "Knowledge Statistics",
+      "passed": true,
+      "duration": 0,
+      "details": {
+        "totalKnowledge": 2,
+        "averageAttention": 0.8791828277712701,
+        "averageAge": 5
+      },
+      "timestamp": "2025-08-09T03:48:44.494Z"
+    },
+    {
+      "name": "Attention Token Minting",
+      "passed": true,
+      "duration": 7.780660000000125,
+      "details": {
+        "tokensMinted": 4,
+        "totalValue": "9.11",
+        "avgTokenValue": 2.278240007950532
+      },
+      "timestamp": "2025-08-09T03:48:44.506Z"
+    },
+    {
+      "name": "Market Cap Calculation",
+      "passed": true,
+      "duration": 0,
+      "details": {
+        "marketCap": "9.11",
+        "totalTokens": 4
+      },
+      "timestamp": "2025-08-09T03:48:44.506Z"
+    },
+    {
+      "name": "Token Value Evolution",
+      "passed": true,
+      "duration": 0,
+      "details": {
+        "beforeEvolution": 4,
+        "afterEvolution": 4,
+        "evolution1Stats": "2 survived, 2 died, 2 born",
+        "evolution2Stats": "2 survived, 2 died, 2 born",
+        "newTokens": 4,
+        "evolutionImpact": "Knowledge evolution system working"
+      },
+      "timestamp": "2025-08-09T03:48:44.515Z"
+    },
+    {
+      "name": "MCP Protocol Handshake",
+      "passed": true,
+      "duration": 1.2064490000000205,
+      "details": {
+        "serverName": "Universal Life Protocol",
+        "version": "2.0.0",
+        "capabilities": [
+          "resources",
+          "tools",
+          "prompts"
+        ]
+      },
+      "timestamp": "2025-08-09T03:48:44.725Z"
+    },
+    {
+      "name": "MCP Resource Listing",
+      "passed": true,
+      "duration": 2.1667170000000624,
+      "details": {
+        "resourceCount": 1,
+        "sampleResource": "Test INTJ Profile"
+      },
+      "timestamp": "2025-08-09T03:48:44.727Z"
+    },
+    {
+      "name": "MCP Tool Listing",
+      "passed": true,
+      "duration": 2.3481040000001485,
+      "details": {
+        "toolCount": 4,
+        "tools": [
+          "conscious-reasoning",
+          "evolve-knowledge",
+          "mint-attention-tokens",
+          "personality-based-reasoning"
+        ]
+      },
+      "timestamp": "2025-08-09T03:48:44.730Z"
+    },
+    {
+      "name": "Full System Integration",
+      "passed": true,
+      "duration": 0,
+      "details": {
+        "personalityType": "ENFP",
+        "harmonicSignature": "ULP-MBTI-me3ptfkr-63...",
+        "livingKnowledgeUnits": 4,
+        "attentionTokens": 4,
+        "totalTokenValue": "10.60",
+        "mcpResources": 2,
+        "agentConsciousness": "90%"
+      },
+      "timestamp": "2025-08-09T03:48:44.971Z"
+    },
+    {
+      "name": "System Data Flow",
+      "passed": true,
+      "duration": 0,
+      "details": {
+        "personalityInfluencedKnowledge": true,
+        "knowledgeBackedTokens": true,
+        "mcpAccessible": true,
+        "consciousAgentCreated": true
+      },
+      "timestamp": "2025-08-09T03:48:44.971Z"
+    }
+  ],
+  "benchmarks": [
+    {
+      "name": "Personality Assessment Performance",
+      "duration": 1025.8500840000002,
+      "score": 99.74149916,
+      "metrics": {
+        "assessmentsProcessed": 100,
+        "averageTime": "10.26",
+        "throughput": "97 assessments/second"
+      },
+      "timestamp": "2025-08-09T03:48:44.493Z"
+    },
+    {
+      "name": "Living Knowledge Performance",
+      "duration": 3.1135840000001735,
+      "score": 100,
+      "metrics": {
+        "ecosystemsProcessed": 50,
+        "averageTime": "0.06",
+        "avgFinalKnowledge": 2.24
+      },
+      "timestamp": "2025-08-09T03:48:44.498Z"
+    },
+    {
+      "name": "DPO Token System Performance",
+      "duration": 207.9836049999999,
+      "score": 100,
+      "metrics": {
+        "tokenBatchesProcessed": 25,
+        "averageTime": "8.32",
+        "totalTokensMinted": 250
+      },
+      "timestamp": "2025-08-09T03:48:44.723Z"
+    },
+    {
+      "name": "MCP Server Performance",
+      "duration": 214.49658499999987,
+      "score": 89.27517075,
+      "metrics": {
+        "requestsProcessed": 100,
+        "successRate": "100.0%",
+        "averageTime": "2.14",
+        "throughput": "466 requests/second"
+      },
+      "timestamp": "2025-08-09T03:48:44.944Z"
+    }
+  ],
+  "summary": {
+    "totalTests": 13,
+    "passedTests": 13,
+    "failedTests": 0,
+    "totalBenchmarks": 4,
+    "averagePerformance": 97.2541674775,
+    "systemHealthScore": 98.62708373875
+  },
+  "timestamp": "2025-08-09T03:48:43.449Z",
+  "generatedAt": "2025-08-09T03:48:44.971Z",
+  "systemVerification": "PASSED"
+}

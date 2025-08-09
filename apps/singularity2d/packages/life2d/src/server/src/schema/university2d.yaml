@@ -1,0 +1,82 @@
+---
+"identity": "peer"
+"title": "Peer"
+"address": ":address"
+...
+---
+"identity": "delegate"
+"peer": ":peer"
+"signature": ":signature"
+...
+---
+"identity": "connection"
+"title": "Connection"
+"service": ":service"
+"status": "status"
+...
+
+---
+"identity": "question"
+"content": "content"
+...
+---
+"identity": "answer"
+"title": "answer"
+"hash": ":hash"
+...
+---
+"identity": "key"
+"title": "key"
+"signature": ":signature"
+...
+---
+"identity": "test"
+"question": ":question"
+"answer": ":answer"
+"key": ":key"
+...
+---
+"identity": "task"
+"question": ":question"
+"delegate": ":delegate"
+"key": ":key"
+...
+---
+"identity": "exam"
+"title": "transaction"
+"source": ":peer"
+"target": ":peer"
+"asset": ":asset"
+...
+---
+"identity": "course"
+"title": ":title"
+"summary": ":summary"
+"description": ":description"
+"time": ":time"
+...
+
+# Figuring
+---
+"identity": "merchandise"
+"title": "merchandise"
+"content": ":content"
+"value": ":value"
+...
+---
+"identity": "chat"
+"title": "chat"
+"message": ":message"
+"sender": ":identity"
+"reciever": ":identity"
+...
+---
+"identity": "topic"
+"title": "topic"
+"history": ":history"
+...
+---
+"identity": "history"
+"environment": ":environment"
+"time": ":time"
+...

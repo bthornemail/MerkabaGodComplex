@@ -1,0 +1,236 @@
+{
+  "title": "The Universal Life Protocol: A Computational Universe Engine Compendium",
+  "subtitle": "CUE-CLARION-MDU Synthesis and Implementation",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "title": "Foundations: The Genesis of CUE",
+      "mdu_layer": 0,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 0 with 7 content units"
+    },
+    {
+      "chapter_number": 2,
+      "title": "MDU Principles: Modulo-Divisive Unfolding",
+      "mdu_layer": 1,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 1 with 7 content units"
+    },
+    {
+      "chapter_number": 3,
+      "title": "Vec7 Harmony: Prime Validation Systems",
+      "mdu_layer": 2,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 2 with 7 content units"
+    },
+    {
+      "chapter_number": 4,
+      "title": "UBHP Integration: Universal Binary Hypergraph Protocol",
+      "mdu_layer": 3,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 3 with 7 content units"
+    },
+    {
+      "chapter_number": 5,
+      "title": "CLARION Synthesis: Cognitive Architecture",
+      "mdu_layer": 4,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 4 with 7 content units"
+    },
+    {
+      "chapter_number": 6,
+      "title": "Implementation: Practical CUE Applications",
+      "mdu_layer": 5,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 5 with 7 content units"
+    },
+    {
+      "chapter_number": 7,
+      "title": "Harmonization: Universal Life Protocol Complete",
+      "mdu_layer": 6,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 6 with 7 content units"
+    },
+    {
+      "chapter_number": 8,
+      "title": "Foundations: The Genesis of CUE",
+      "mdu_layer": 7,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 7 with 7 content units"
+    },
+    {
+      "chapter_number": 9,
+      "title": "MDU Principles: Modulo-Divisive Unfolding",
+      "mdu_layer": 8,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 8 with 7 content units"
+    },
+    {
+      "chapter_number": 10,
+      "title": "Vec7 Harmony: Prime Validation Systems",
+      "mdu_layer": 9,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 9 with 7 content units"
+    },
+    {
+      "chapter_number": 11,
+      "title": "UBHP Integration: Universal Binary Hypergraph Protocol",
+      "mdu_layer": 10,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 10 with 7 content units"
+    },
+    {
+      "chapter_number": 12,
+      "title": "CLARION Synthesis: Cognitive Architecture",
+      "mdu_layer": 11,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 11 with 7 content units"
+    },
+    {
+      "chapter_number": 13,
+      "title": "Implementation: Practical CUE Applications",
+      "mdu_layer": 12,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 12 with 7 content units"
+    },
+    {
+      "chapter_number": 14,
+      "title": "Harmonization: Universal Life Protocol Complete",
+      "mdu_layer": 13,
+      "harmonic_addresses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "chunk_count": 7,
+      "description": "Chapter covering MDU Layer 13 with 7 content units"
+    }
+  ],
+  "mdu_structure": {
+    "base_B": 7,
+    "total_layers": 14,
+    "total_addresses": 98,
+    "vec7_validated": true
+  }
+}

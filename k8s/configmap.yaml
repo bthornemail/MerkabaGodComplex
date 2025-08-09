@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cue-config
+  namespace: cue-system
+  labels:
+    app: cue-system
+data:
+  cue-config.json: |
+    {
+      "environment": "production",
+      "debug": false,
+      "network": {
+        "peers": [],
+        "consensus": {
+          "type": "fano_plane",
+          "validators": ["k8s-v0", "k8s-v1", "k8s-v2", "k8s-v3", "k8s-v4", "k8s-v5", "k8s-v6"],
+          "timeout": 30000,
+          "retries": 3
+        }
+      },
+      "simulation": {
+        "entities": {
+          "maxCount": 50000,
+          "defaultDomains": {"default": 7, "secondary": 11, "tertiary": 13},
+          "evolutionRate": 1.0,
+          "persistenceEnabled": true
+        },
+        "execution": {
+          "stepDuration": 1000,
+          "maxSteps": 1000000,
+          "autoAdvance": true,
+          "parallelExecution": true,
+          "batchSize": 1000
+        }
+      },
+      "api": {
+        "server": {
+          "host": "0.0.0.0",
+          "port": 3000,
+          "cors": {
+            "enabled": true,
+            "origins": ["https://cue.yourdomain.com"]
+          },
+          "rateLimit": {
+            "enabled": true,
+            "requestsPerMinute": 100,
+            "burst": 10
+          }
+        }
+      },
+      "security": {
+        "authentication": {
+          "enabled": true,
+          "apiKeyHeader": "authorization"
+        },
+        "encryption": {
+          "enabled": true,
+          "algorithm": "aes-256-gcm"
+        }
+      },
+      "logging": {
+        "level": "info",
+        "format": "json",
+        "outputs": ["console"],
+        "file": {
+          "path": "/app/logs/cue.log"
+        }
+      }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: cue-system
+  labels:
+    app: cue-nginx
+data:
+  nginx.conf: |
+    events {
+        worker_connections 1024;
+    }
+    
+    http {
+        upstream cue-api {
+            server cue-api:3000;
+        }
+        
+        server {
+            listen 80;
+            server_name _;
+            
+            location /health {
+                access_log off;
+                return 200 "healthy\n";
+                add_header Content-Type text/plain;
+            }
+            
+            location /api/ {
+                proxy_pass http://cue-api;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+            
+            location / {
+                proxy_pass http://cue-api;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+        }
+    }

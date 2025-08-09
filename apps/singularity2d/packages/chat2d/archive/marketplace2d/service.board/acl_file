@@ -1,0 +1,13 @@
+#General settings
+topic readwrite
+topic readwrite public/#
+#User settings
+user admin
+topic readwrite admin/#
+topic readwrite #
+
+pattern readwrite user/%u/#
+
+#Client settings
+#Blank
+pattern readwrite client/%c/#

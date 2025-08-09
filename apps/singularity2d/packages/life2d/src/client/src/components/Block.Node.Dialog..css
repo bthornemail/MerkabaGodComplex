@@ -1,0 +1,13 @@
+#block-node-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+#block-node-card {
+    padding: 1rem;
+    min-height: 75vw;
+    background-color: rgba(255,255,255,0.65);
+}

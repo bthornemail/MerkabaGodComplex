@@ -1,0 +1,29 @@
+name: Publish mcp-bridge to npm
+
+on:
+  push:
+    tags:
+      - 'mcp-bridge-v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish libs/mcp-bridge
+        working-directory: libs/mcp-bridge
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm whoami || echo "Not logged in; using token"
+          # Ensure dist exists; this package ships built files in VCS
+          test -f dist/index.js || { echo "dist missing"; ls -la dist || true; exit 1; }
+          npm publish --access public

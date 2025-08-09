@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Tetrahedron to Octahedron Demo</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // Define tetrahedron vertices
+  const vertices = [
+    new THREE.Vector3(0, 1, 0), // Top
+    new THREE.Vector3(-1, -1, 1), // Base
+    new THREE.Vector3(1, -1, 1),
+    new THREE.Vector3(0, -1, -1),
+  ];
+
+  // Geometry and material for the tetrahedron
+  const geometry = new THREE.Geometry();
+  geometry.vertices.push(...vertices);
+
+  // Define faces of the tetrahedron
+  geometry.faces.push(new THREE.Face3(0, 1, 2));
+  geometry.faces.push(new THREE.Face3(0, 2, 3));
+  geometry.faces.push(new THREE.Face3(0, 3, 1));
+  geometry.faces.push(new THREE.Face3(1, 3, 2));
+
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+  const tetrahedron = new THREE.Mesh(geometry, material);
+  scene.add(tetrahedron);
+
+  camera.position.z = 5;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    tetrahedron.rotation.x += 0.01;
+    tetrahedron.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+
+  animate(); // Start the animation
+</script>
+
+</body>
+</html>

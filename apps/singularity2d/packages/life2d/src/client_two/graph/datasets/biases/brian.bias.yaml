@@ -1,0 +1,27 @@
+---
+"storage":
+  - "objective" 
+  - "observer"
+  - "object"
+"object":
+  - "objective"
+  - "bias"
+"objective":
+  - "observer"
+  - "bias"
+"observer":
+  - "object"
+  - "bias"
+"actor":
+  - "memory"
+  - "action"
+  - "bias"
+"action":
+  - "environment"
+  - "memory"
+  - "bias"
+"environment":
+  - "memory"
+  - "actor"
+  - "bias"
+...

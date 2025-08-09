@@ -1,0 +1,24 @@
+{
+  "title": "The Universal Life Protocol: A Computational Universe Engine Compendium",
+  "subtitle": "CUE-CLARION-MDU Synthesis and Implementation",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "title": "Foundations: The Genesis of CUE",
+      "mdu_layer": 0,
+      "harmonic_addresses": [
+        0,
+        1,
+        2
+      ],
+      "chunk_count": 3,
+      "description": "Chapter covering MDU Layer 0 with 3 content units"
+    }
+  ],
+  "mdu_structure": {
+    "base_B": 7,
+    "total_layers": 1,
+    "total_addresses": 3,
+    "vec7_validated": true
+  }
+}

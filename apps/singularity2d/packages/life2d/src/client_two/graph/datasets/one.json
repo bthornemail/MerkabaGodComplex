@@ -1,0 +1,6 @@
+{
+    "nodes":[
+	{ "id":"Person", "encoding":"Intelligence" }
+    ],
+    "links":[]
+}

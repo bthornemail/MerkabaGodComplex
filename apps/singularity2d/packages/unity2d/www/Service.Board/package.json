@@ -1,0 +1,21 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@helia/strings": "^3.0.0",
+    "blockstore-core": "^4.4.0",
+    "mqtt": "^5.3.4",
+    "multiformats": "^13.1.0",
+    "nn": "^0.0.7",
+    "showdown": "^2.1.0",
+    "tinyneat": "^1.1.0"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "name": "universal-life-protocol-workspace",
+  "version": "2.0.0",
+  "description": "CUE Framework Modular Workspace - Decentralized Architecture for Universal Life Protocol",
+  "workspaces": [
+    "libs/*",
+    "apps/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "install:all": "npm install && npm run workspace:install",
+    "workspace:install": "npm install --workspaces",
+    "build:all": "npm run build:libs && npm run build:apps",
+    "build:libs": "npm run build --workspace=libs/cue-core && npm run build --workspace=libs/cue-ai-training && npm run build --workspace=libs/cue-protocols",
+    "build:apps": "npm run build --workspace=apps/control-center && npm run build --workspace=apps/dashboard",
+    "dev:all": "npm run workspace:dev",
+    "workspace:dev": "concurrently \"npm run dev --workspace=apps/control-center\" \"npm run dev --workspace=apps/dashboard\"",
+    "test:all": "npm run test:libs && npm run test:apps && npm run test:tools",
+    "test:libs": "npm test --workspace=libs/cue-core && npm test --workspace=libs/cue-ai-training",
+    "test:apps": "npm test --workspace=apps/control-center && npm test --workspace=apps/dashboard",
+    "test:tools": "npm test --workspace=tools/testing",
+    "lint:all": "npm run lint --workspaces --if-present",
+    "type-check:all": "npm run type-check --workspaces --if-present",
+    
+    "control-center:start": "npm start --workspace=apps/control-center",
+    "control-center:dev": "npm run dev --workspace=apps/control-center",
+    "control-center:build": "npm run build --workspace=apps/control-center",
+    
+    "dashboard:start": "npm start --workspace=apps/dashboard",
+    "dashboard:dev": "npm run dev --workspace=apps/dashboard",
+    "dashboard:build": "npm run build --workspace=apps/dashboard",
+    
+    "ai-training:demo": "npm run clarion-training --workspace=libs/cue-ai-training",
+    "ai-training:quick": "npm run train:quick --workspace=libs/cue-ai-training",
+    "ai-training:deep": "npm run train:deep --workspace=libs/cue-ai-training",
+    "manuscript:generate": "npm run generate --workspace=libs/cue-ai-training",
+    "manuscript:benchmark": "npm run benchmark --workspace=libs/cue-ai-training",
+    "vec7:harmonize": "npm run harmonize --workspace=libs/cue-ai-training",
+    
+    "core:test": "npm test --workspace=libs/cue-core",
+    "protocols:test": "npm test --workspace=libs/cue-protocols",
+    
+    "benchmark:all": "npm run benchmark --workspace=tools/benchmarking",
+    "stress-test:all": "npm run stress-test --workspace=tools/testing",
+    
+    "clean:all": "npm run clean --workspaces --if-present"
+  },
+  "libraries": {
+    "cue-core": {
+      "name": "@ulp/cue-core",
+      "description": "Core CUE framework implementation - computational universe engine, axiom systems, and quantum operations",
+      "path": "libs/cue-core",
+      "main": "index.ts",
+      "exports": {
+        ".": "./index.ts",
+        "./axioms": "./axioms.ts",
+        "./crypto": "./crypto.ts",
+        "./types": "./types.ts"
+      }
+    },
+    "cue-ai-training": {
+      "name": "@ulp/cue-ai-training",
+      "description": "CLARION-MDU enhanced AI training system for manuscript generation and autonomous learning",
+      "path": "libs/cue-ai-training",
+      "main": "cue-amgf-orchestrator.ts",
+      "exports": {
+        ".": "./cue-amgf-orchestrator.ts",
+        "./clarion": "./clarion-mdu-integration.ts",
+        "./manuscript": "./manuscript-generator.ts",
+        "./training": "./cue-training-program.ts",
+        "./vec7": "./vec7-harmony-agents.ts"
+      }
+    },
+    "cue-protocols": {
+      "name": "@ulp/cue-protocols",
+      "description": "CUE protocol implementations - UBHP, harmonic geometry, and cryptographic primitives",
+      "path": "libs/cue-protocols",
+      "main": "index.ts",
+      "exports": {
+        ".": "./index.ts",
+        "./ubhp": "./ubhp_types.ts",
+        "./geometry": "./harmonic_geometry.ts",
+        "./crypto": "./crypto.ts",
+        "./axioms": "./axioms.ts"
+      }
+    }
+  },
+  "applications": {
+    "control-center": {
+      "name": "@ulp/control-center",
+      "description": "Real-time web dashboard for CUE systems monitoring and control",
+      "path": "apps/control-center",
+      "main": "src/main.tsx",
+      "dependencies": ["@ulp/cue-core", "@ulp/cue-ai-training"]
+    },
+    "dashboard": {
+      "name": "@ulp/dashboard", 
+      "description": "Legacy CUE dashboard implementation for compatibility",
+      "path": "apps/dashboard",
+      "main": "src/main.jsx",
+      "dependencies": ["@ulp/cue-core"]
+    }
+  },
+  "tools": {
+    "testing": {
+      "name": "@ulp/testing-tools",
+      "description": "Comprehensive testing suite for CUE framework validation",
+      "path": "tools/testing"
+    },
+    "benchmarking": {
+      "name": "@ulp/benchmarking-tools", 
+      "description": "Performance benchmarking and stress testing utilities",
+      "path": "tools/benchmarking"
+    }
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "CUE",
+    "CLARION-MDU",
+    "Universal Life Protocol", 
+    "Computational Universe Engine",
+    "AI Training",
+    "Manuscript Generation",
+    "Vec7 Harmony",
+    "Control Center",
+    "Autonomous Systems",
+    "Modular Architecture",
+    "Decentralized Adoption"
+  ],
+  "author": "Universal Life Protocol Team",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol.git"
+  },
+  "homepage": "https://github.com/universallifeprotocol/UniversalLifeProtocol#readme",
+  "architecture": {
+    "type": "modular-workspace",
+    "structure": {
+      "libs/": "Reusable libraries and core framework components",
+      "apps/": "End-user applications and dashboards", 
+      "tools/": "Development and testing utilities",
+      "docs/": "Consolidated documentation and specifications",
+      "examples/": "Usage examples and demonstrations"
+    },
+    "adoption": {
+      "decentralized": true,
+      "modularity": "high",
+      "reusability": "maximum",
+      "interoperability": "cross-platform"
+    }
+  }
+}

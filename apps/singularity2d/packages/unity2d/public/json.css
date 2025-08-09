@@ -1,0 +1,19 @@
+body,
+html {
+    height: 100%;
+}
+
+#json-outline {
+    border-right: 1px solid #ccc;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#editor-container {
+    padding: 10px;
+    height: 100%;
+}
+
+.draggable {
+    cursor: move;
+}

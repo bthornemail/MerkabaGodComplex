@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <button id="reset-graph-button">Reset</button> -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { io } from "socket.io-client";//"https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+        // import { io } from "./modules/socket.io/socket.io.esm.min.js";//"https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+        import { ethers, Wallet, HDNodeWallet } from "ethers";//"https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+        // import { ethers, Wallet, HDNodeWallet } from "./modules/ethers/ethers.min.js";//"https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+        let wallet = HDNodeWallet.fromPhrase("roast thank tiny coach seat ensure cruel auto shaft finish fee resemble")
+
+        let socket = io(":3000", {
+            auth: {
+                token: wallet.address,
+                signature: await wallet.signMessage("signature")
+            }
+        });
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setAnimationLoop(animate);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        camera.position.set(0, 0, 2);
+        controls.update();
+        document.body.appendChild(renderer.domElement);
+
+        const geometry = new THREE.SphereGeometry(1, 32, 64);
+        const material = new THREE.MeshBasicMaterial({ color: "#0000ff", wireframe: true });
+        const globe = new THREE.Mesh(geometry, material);
+        scene.add(globe); 
+        function detectCollision(a, b) {
+            return a.intersectsSphere(b)
+        };
+        function detectCollisions(a, n) {
+            const sphere = new THREE.Sphere();
+            const collisions = [];
+            sphere.applyMatrix4(a);
+            console.log(a.elements);
+            n.forEach((i) => {
+                console.log(i);
+                const iSphere = new THREE.Sphere();
+                iSphere.setFromPoints([i]);
+                // iSphere.applyMatrix4(i);
+                if (detectCollision(sphere, iSphere)) {
+                    console.log(sphere)
+                    return collisions.push(i);
+                }
+            })
+            return collisions.length === 0;
+        };
+
+        const points = [];
+        const layers = [];
+        const peers = [];
+        const tetrahedrons = [];
+        socket.on("tetrahedron", (node) => {
+            alert("tetrahedron");
+            const geometry = new THREE.TetrahedronGeometry(1);
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+            const tetrahedron = new THREE.Mesh(geometry, material);
+            tetrahedron.position.setFromMatrixPosition(node)
+            if (detectCollisions(tetrahedron.matrix, tetrahedrons)) {
+                tetrahedron.translateZ(tetrahedron.scale.z + 1);
+            }
+            scene.add(tetrahedron);
+            console.log(tetrahedron);
+        });
+        // socket.on("point", (node) => {
+        //     alert("point");
+        //     // const point = new THREE.Object3D();
+        //     const geometry = new THREE.SphereGeometry(1, 32, 64);
+        //     const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        //     const point = new THREE.Mesh(geometry, material);
+        //     // point.name = node.id;
+        //     point.position.setFromMatrixPosition(node);
+        //     // points.push(node);
+        //     // // if (detectCollisions(point.matrix, scene.children.map((child) => { return child.matrix })).includes(point.matrix)) {
+        //     if (detectCollisions(point.matrix, points)) {
+        //         console.log(geometry.scale.z + (node.z ?? node.x / node.y));
+        //         point.translateZ(point.scale.z + 1);
+        //     }
+        //     // console.log(node);
+        //     console.log(point.position.x,point.position.y,point.position.z);
+        //     // // point.userData = node;
+        //     scene.add(point);
+        // });
+        socket.on("peer", (node) => {
+            const geometry = new THREE.SphereGeometry(1, 32, 64);
+            const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.name = HDNodeWallet.createRandom().address;
+            sphere.position.setFromMatrixPosition(node)
+            if (detectCollisions(sphere.matrix, peers)) {
+                sphere.translateZ(sphere.position.z + 1);
+            }
+            globe.scale.addScalar(sphere.scale.z)
+            camera.position.setZ(camera.position.z + globe.scale.z);
+            controls.update();
+            scene.add(sphere);
+            console.log(sphere);
+        });
+        // socket.on("layer", (node) => {
+        //     alert("layer");
+        //     const geometry = new THREE.Group();
+        //     geometry.position.setFromMatrixPosition(node)
+        //     if (detectCollisions(geometry.matrix, layers)) {
+        //         geometry.translateZ(sphere.scale.z + 1);
+        //     }
+        //     scene.add(geometry);
+        //     console.log(geometry);
+        // });
+        function animate() {
+            globe.rotateX(0.001)
+            globe.rotateY(0.001)
+            renderer.render(scene, camera);
+        }
+    </script>
+
+    <!-- <script type="module">
+
+        // import * as THREE from './node_modules/three/build/three.module.min.js';
+        let graphAttributes = {
+            size: 0
+        };
+        // const url = 'http://127.0.0.1:3000/scene';
+        // const response = await fetch(url);
+        // if (!response.ok) {
+        //     throw new Error(`Response status: ${response.status}`);
+        // }
+
+        // const scene = await response.json();
+        // // // json.nodes = json.nodes.map(node => node.attributes);
+        // // // Create a Set of node IDs (or publicKeys) for easy lookup
+        // // // console.log(json)
+        // // const nodeSet = new Set(json.nodes.map(node => node.id));
+        // // // Filter edges where both source and target exist in the nodes set
+        // // json.links = [...json.edges.filter(edge => nodeSet.has(edge.source) && nodeSet.has(edge.target))]
+        // // delete json.edges;
+
+        // // const scene = new THREE.Scene();
+        // // const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // // const renderer = new THREE.WebGLRenderer();
+        // // renderer.setSize(window.innerWidth, window.innerHeight);
+        // // document.body.appendChild(renderer.domElement);
+        // // const shapes = json.nodes.map((node, index) => {
+        // //     let newColor = () => Math.floor((Math.random() * 100));
+        // //     const geometry = new THREE.TetrahedronGeometry(1);
+        // //     // const material = new THREE.MeshBasicMaterial({ color: `rgba(255,0,0)` });
+        // //     // const material = new THREE.MeshBasicMaterial({ color: `rgba(${newColor()},${newColor()},${newColor()})`/*0x00ff00*/ });
+        // //     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        // //     const cube = new THREE.Mesh(geometry, material);
+        // //     cube.position.x = node.x;
+        // //     cube.position.y = node.y;
+        // //     cube.position.z = node.z;
+        // //     scene.add(cube);
+        // //     return cube;
+        // // });
+        // // camera.position.z = json.attributes.camera.position.z//10;
+        // function animate() {
+        //     // shapes.forEach((cube) => {
+        //     //     cube.rotation.z += 0.01;
+        //     //     cube.rotation.x += 0.01;
+        //     //     cube.rotation.y += 0.01;
+        //     // })
+        //     renderer.render(scene, camera);
+        // }
+        // renderer.setAnimationLoop(animate);
+    </script> -->
+</body>
+
+</html>

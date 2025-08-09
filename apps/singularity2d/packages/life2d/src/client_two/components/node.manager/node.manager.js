@@ -1,0 +1,20 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    // alert("hello")
+    const dialog = document.querySelector('#block-node-dialog')
+    const activeNodeCanvasEl = document.querySelector('#active-node-canvas')
+    const ctx = activeNodeCanvasEl.getContext("2d");
+    ctx.strokeStyle = "blue";
+    ctx.beginPath();
+    ctx.rect(0,0,48,48);
+    ctx.roundRect(10,20,24,24,[15]);
+    ctx.stroke();
+    console.log(ctx)
+    // console.log(dialog)
+    // [{name:'test'}].forEach(element => {
+    //     const element = document.createElement('div');
+    //     // element.addClass("card");
+    //     alert(element.name)
+    //     // element.innerHtml = "<p>Hello</p>";
+    //     dialog.append(element)
+    // });
+})

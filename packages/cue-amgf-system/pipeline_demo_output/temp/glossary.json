@@ -1,0 +1,402 @@
+[
+  {
+    "term": "And",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "The",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "LORD",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "This",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "God",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Psalm",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Israel",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "CUE",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "For",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Chronicles",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Genesis",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Samuel",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Kings",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Jeremiah",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "It",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "But",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Isaiah",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Numbers",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Ezekiel",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "UBHP",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Exodus",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "John",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Luke",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Job",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Then",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Matthew",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Acts",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Lord",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Deuteronomy",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Proverbs",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "David",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Leviticus",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "These",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Jerusalem",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Math",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Joshua",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "In",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Judah",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "If",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "He",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "ULP",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Corinthians",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Mark",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Now",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Moses",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Judges",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Egypt",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Behold",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "They",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "JSON",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 7,
+    "vec7_phase": 0,
+    "source_documents": []
+  }
+]

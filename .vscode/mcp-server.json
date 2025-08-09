@@ -1,0 +1,5 @@
+{
+  "mcpServerEnabled": true,
+  "serverUrl": "http://localhost:8080",
+  "integrationDocs": "IMPORTANT/MCP_SETUP_AND_INTEGRATION.md"
+}

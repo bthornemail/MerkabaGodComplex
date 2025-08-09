@@ -1,0 +1,91 @@
+---
+"source": "actor"
+"target": "environment"
+"color": "black"
+---
+"source": "actor"
+"target": "time"
+"color": "black"
+---
+"source": "actor"
+"target": "action"
+"color": "black"
+---
+"source": "action"
+"target": "environment"
+"color": "red"
+---
+"source": "action"
+"target": "time"
+"color": "red"
+---
+"source": "environment"
+"target": "time"
+"color": "red"
+
+
+---
+"source": "object"
+"target": "observer"
+"color": "white"
+
+
+---
+"source": "object"
+"target": "entropy"
+"color": "white"
+---
+"source": "object"
+"target": "objective"
+"color": "white"
+---
+"source": "objective"
+"target": "observer"
+"color": "white"
+---
+"source": "objective"
+"target": "entropy"
+"color": "white"
+---
+"source": "observer"
+"target": "entropy"
+"color": "white"
+
+
+---
+"source": "actor"
+"target": "memory"
+"color": "white"
+
+
+---
+"source": "action"
+"target": "memory"
+"color": "white"
+
+
+---
+"source": "environment"
+"target": "memory"
+"color": "white"
+
+
+---
+
+"source": "actor"
+"target": "action"
+"color": "white"
+
+
+---
+"source": "action"
+"target": "environment"
+"color": "white"
+
+---
+
+"source": "environment"
+"target": "actor"
+"color": "white"
+
+...

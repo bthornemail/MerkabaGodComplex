@@ -1,0 +1,12 @@
+(defun ollama-organize-folder (folder-path model)
+  "Send file information from FOLDER-PATH to an Ollama model for categorization."
+  (interactive "DSelect Folder: \nsEnter Ollama Model: ")
+  (let* ((files (directory-files folder-path t directory-files-no-dot-files-regexp))
+         (file-data (mapconcat (lambda (file) (format "File: %s" (file-name-nondirectory file))) files "\n"))
+         (prompt (format "Organize these files into logical categories:\n\n%s" file-data))
+         (response (ollama-api-call model prompt)))
+    (with-current-buffer (get-buffer-create "*Ollama Folder Organization*")
+      (erase-buffer)
+      (insert response)
+      (org-mode)
+      (switch-to-buffer (current-buffer)))))

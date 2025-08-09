@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code with Image and Circle</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="256" height="256"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+        async function generateQRCodeWithImageAndCircle(imagePath, qrContent) {
+            const canvasSize = 256;
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Generate QR code
+            const qrOptions = {
+                width: canvasSize,
+                margin: 1,
+                errorCorrectionLevel: "H",
+            };
+
+            QRCode.toDataURL(qrContent, qrOptions, async (err, qrDataURL) => {
+                if (err) throw err;
+                const qrImage = new Image();
+                qrImage.src = qrDataURL;
+                qrImage.onload = () => {
+                    // Draw QR code
+                    ctx.drawImage(qrImage, 0, 0, canvasSize, canvasSize);
+
+                    // Load the main image
+                    const image = new Image();
+                    image.src = imagePath;
+                    image.onload = () => {
+                        const imageSize = Math.min(canvasSize / 4, image.width, image.height);
+                        const centerX = canvasSize / 2;
+                        const centerY = canvasSize / 2;
+                        const radius = imageSize / 2 + 4;
+
+                        // Draw circle around the image
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                        ctx.strokeStyle = 'black';
+                        ctx.fillStyle = 'white';
+                        ctx.lineWidth = imageSize * 0.25;
+                        ctx.stroke();
+                        ctx.fill();
+
+                        // Draw the image at the center
+                        ctx.drawImage(image, centerX - imageSize / 2, centerY - imageSize / 2, imageSize, imageSize);
+                    };
+                };
+            });
+        }
+
+        // Example usage
+        generateQRCodeWithImageAndCircle('input.svg', 'Your QR Code Content');
+    </script>
+</body>
+</html>

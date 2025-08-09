@@ -1,0 +1,12 @@
+---
+"identity": "token"
+"title": "token"
+"value": ":value"
+...
+---
+"identity": "escrow"
+"title": "escrow"
+"delegate": ":peer"
+"transaction": ":transaction"
+"requirements": ":requirements"
+...

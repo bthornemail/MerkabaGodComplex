@@ -1,0 +1,110 @@
+[
+    {
+        "source": "object",
+        "target": "objective",
+        "color": "red"
+    },
+    {
+        "source": "objective",
+        "target": "observer",
+        "color": "red"
+    },
+    {
+        "source": "observer",
+        "target": "entropy",
+        "color": "red"
+    },
+    {
+        "source": "entropy",
+        "target": "object",
+        "color": "red"
+    },
+    {
+        "source": "object",
+        "target": "vbias",
+        "color": "white"
+    },
+    {
+        "source": "objective",
+        "target": "vbias",
+        "color": "white"
+    },
+    {
+        "source": "observer",
+        "target": "vbias",
+        "color": "white"
+    },
+
+
+    
+    {
+        "source": "entropy",
+        "target": "vbias",
+        "color": "white"
+    },
+    {
+	"source": "storage",
+	"target": "vbias",
+	"color": "black"
+    },
+    {
+	"source": "vbias",
+	"target": "path",
+	"color": "yellow"
+    },
+    {
+	"source": "path",
+	"target": "bias",
+	"color": "yellow"
+    },
+    {
+	"source": "bias",
+	"target": "memory",
+	"color": "white"
+    },
+    {
+	"source": "bias",
+	"target": "memory",
+	"color": "white"
+    },
+    {
+        "source": "actor",
+        "target": "bias",
+        "color": "white"
+    },
+    {
+        "source": "action",
+        "target": "bias",
+        "color": "white"
+    },
+    {
+        "source": "environment",
+        "target": "bias",
+        "color": "white"
+    },
+    {
+        "source": "time",
+        "target": "bias",
+        "color": "white"
+    },
+    {
+        "source": "actor",
+        "target": "action",
+        "color": "white"
+    },
+    {
+        "source": "action",
+        "target": "environment",
+        "color": "white"
+    },
+    {
+        "source": "environment",
+        "target": "time",
+        "color": "white"
+    },
+    {
+        "source": "time",
+        "target": "actor",
+        "color": "white"
+    }
+]

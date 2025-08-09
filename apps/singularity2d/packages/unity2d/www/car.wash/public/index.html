@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick Wheel Wash</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script> -->
+  <!-- <script>eruda.init();</script> -->
+</head>
+
+<body>
+  <nav style="width: 100%;height:3rem;display: flex;flex-direction: row;align-items: center;">
+    <p class="navbar-brand" style="font-size: 1.5rem">Quick Wheel Wash</p>
+    <div style="display: flex;flex-direction: row;">
+      <p style="width: 100%;font-size: .75rem" id="nav-text">not connected</p>
+      <!-- <p style="width: 100%;font-size: calc(2vw + 4px);" id="nav-text">not connected</p> -->
+      <img id="nav-img" style="width:2.5rem;" src="/src/images/user-cross-svgrepo-com.svg" />
+    </div>
+    <!-- <i><img src="/src/images/notification-svgrepo-com.2.svg" style="width:3rem;"/></i> -->
+  </nav>
+  <main>
+    <section class="container"
+      style="height: 75vh;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+      <img class="loading" src="/src/images/qubodup-wheel.svg" style="width:100vw;" />
+      <hr>
+      <h1>Quick Wash</h1>
+      <p>The fastest way to looking good on the road</p>
+      <!-- <img src="/src/images/morpheus.png" style="width:100vw;" /> -->
+      <!-- <div class="container" style="display:flex;">
+        <div class="card" style="width:100%">
+          <button class="btn btn-primary">Clean</button>
+        </div>
+        <div class="card" style="width:100%">
+          <button class="btn btn-danger">Dirty</button>
+        </div>
+      </div> -->
+      <hr>
+      <div>
+        <button id="header-login-button" class="btn btn-success">Login</button>
+        <button id="header-start-button" class="btn btn-primary">Get Started</button>
+      </div>
+      <header>
+        <div style="display: grid;grid-template-columns: repeat(3,1fr);padding-top: .1rem;">
+          <sup>Wash</sup>
+          <sup>Protectant</sup>
+          <sup>Clean</sup>
+          <select id="select-wash-type" class="form-control form-control-sm">
+            <option value="basic-wash">Basic Wash</option>
+            <option value="detailed-wash" disabled>Detailed Wash</option>
+          </select>
+          <select id="select-protectant-type" class="form-control form-control-sm">
+            <option value="basic-gloss">UV</option>
+            <option value="matte-gloss">Matte</option>
+            <option value="oil-gloss">Gloss</option>
+            <option value="wet-gloss">Wet Gloss</option>
+          </select>
+          <select id="select-clean-type" class="form-control form-control-sm">
+            <option value="chemical-clean">Chemical</option>
+            <option value="green-clean">Green</option>
+            <option value="compound-clean" disabled>Compound</option>
+            <option value="detailed-clean" disabled>Detailed</option>
+          </select>
+        </div>
+        <p style="height: 100%;align-content: center;">Total: $<strong id="select-order-total">5.00</strong></p>
+        <a href="#schedule-service" style="display: flex;align-items: center;"><button
+            class="btn btn-success btn-sm">Order</button></a>
+        <!-- <i><img src="/src/images/notification-svgrepo-com.2.svg" style="width:3rem;"/></i> -->
+      </header>
+    </section>
+    <section>
+      <h2>Choose your wash type</h2>
+      <p>select you watch type</p>
+      <div class="overflow-container">
+        <div class="overflow-container-child">
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+              <h3>Basic Wash</h3>
+              <button class="btn btn-light">Basic Wash</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+              <h3>Green Clean</h3>
+              <button class="btn btn-light">Green Clean</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+              <h3>Detailed Wash</h3>
+              <button class="btn btn-light">Detailed Wash</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Choose Tire Protectorant</h2>
+      <p>Protect you tires</p>
+      <div class="overflow-container">
+        <div class="overflow-container-child">
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+              <h3>Matte</h3>
+              <button class="btn btn-light">Matte</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+              <h3>Semi-Gloss</h3>
+              <button class="btn btn-light">Semi-Gloss</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+              <h3>Gloss</h3>
+              <button class="btn btn-light">Gloss</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+              <h3>Oil Gloss</h3>
+              <button class="btn btn-light">Oil Gloss</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Choose Rim Service</h2>
+      <p>Get those rims cleaned up</p>
+      <div class="overflow-container">
+        <div class="overflow-container-child">
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/pngimg.com - tire_PNG64.png ');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+              <h3>Chemical Clean</h3>
+              <button class="btn btn-light">Chemical Clean</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/pngimg.com - tire_PNG64.png ');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+              <h3>Green Clean</h3>
+              <button class="btn btn-light">Green Clean</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/pngimg.com - tire_PNG64.png');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+              <h3>Compound Clean</h3>
+              <button class="btn btn-light">Compound Clean</button>
+            </div>
+          </div>
+          <div class="overflow-container-child-item"
+            style="background-image: url('src/images/pngimg.com - tire_PNG64.png');background-position: center;background-size: cover;">
+            <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+              <h3>Detailed Cleam</h3>
+              <button class="btn btn-light">Detailed Cleam</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="container"
+      style="background-image: url('src/images/secchio-e-spugna-archite-01.svg');background-position: center;background-size: cover;">
+      <div class="card">
+        <h2>How we clean</h2>
+        <!-- <video src="/src/videos/vecteezy_close-up-of-a-woman-s-hand-washing-the-alloy-wheels-of-a-car_8174262.mov" autoplay controls></video> -->
+        <a href="/cleaning.html">
+          <p>5 Step Cleaning Process</p>
+        </a>
+
+        <div class="overflow-container">
+          <div class="overflow-container-child">
+            <div class="overflow-container-child-item"
+              style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+              <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+                <h3>Basic Wash</h3>
+                <button class="btn btn-light">Basic Wash</button>
+              </div>
+            </div>
+            <div class="overflow-container-child-item"
+              style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+              <div class="card" style="background-color: rgba(255, 255, 255, .25);">
+                <h3>Green Clean</h3>
+                <button class="btn btn-light">Green Clean</button>
+              </div>
+            </div>
+            <div class="overflow-container-child-item"
+              style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+              <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+                <h3>Detailed Wash</h3>
+                <button class="btn btn-light">Detailed Wash</button>
+              </div>
+            </div>
+            <div class="overflow-container-child-item"
+              style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+              <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+                <h3>Detailed Wash</h3>
+                <button class="btn btn-light">Detailed Wash</button>
+              </div>
+            </div>
+            <div class="overflow-container-child-item"
+              style="background-image: url('src/images/qubodup-wheel.svg');background-position: center;background-size: cover;">
+              <div class="card" style="background-color: rgba(75, 65, 48, 0.35);">
+                <h3>Detailed Wash</h3>
+                <button class="btn btn-light">Detailed Wash</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="container">
+      <div id="schedule-service" class="card" style="padding: 1rem;">
+        <h2>Schedule Service</h2>
+        <label for="date">Select Date</label>
+        <select id="schedule-date-select" name="schedule:date" class="form-select" aria-label="Schedule Date">
+          <option value="" selected>Select Date</option>
+        </select>
+        <div class="card" id="schedule-date-card"></div>
+      </div>
+    </section>
+    <section class="container">
+      <div id="price-quote" class="card" style="padding: 1rem;">
+        <h2>Price Quote</h2>
+        <p id="quote-title" class="card-title"></p>
+        <p>Basic Wash <span>$5</span></p>
+        <p>Gloss <span>Matte</span></p>
+        <p>Clean <span>Chemical</span></p>
+        <hr>
+        <p>Total $<strong id="quote-amount">5.00</strong></p>
+      </div>
+    </section>
+    <section class="container">
+      <form id="submit-request-form" class="card form" style="padding:1rem;">
+        <h2>Submit Request</h2>
+        <div class="container" style="display: flex;align-items: center;justify-content: center;">
+          <!-- <input id="url" type="text"> -->
+          <div id="qrcode"></div>
+        </div>
+        <input name="title" class="form-control" value="Wheel Clean" hidden />
+        <input name="summary" class="form-control" value="Tire & Rim wash" hidden />
+        <input name="description" class="form-control" hidden />
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter Name">
+        </div>
+        <label for="address" class="form-label">Address</label>
+        <div class="mb-3 input-group">
+          <select name="contact:method" class="form-select" aria-label="Default select example">
+            <option value="qrcode" selected>Select Contact Method</option>
+            <option value="email">E-mail</option>
+            <option value="sms">Text</option>
+            <option value="mqtt">Broadcast</option>
+          </select>
+          <input type="text" class="form-control" name="address" placeholder="Enter Contact Address">
+        </div>
+        <button class="btn btn-primary">Submit</button>
+      </form>
+    </section>
+    <section class="container">
+      <div class="card" style="padding: 1rem;">
+        <h2>Order Status</h2>
+        <a href="/status.html">
+          <p>View Status Page</p>
+        </a>
+        <div class="input-group">
+          <button class="btn btn-outline-dark" disabled>6:00 am</button>
+          <input type="text" class="form-control" placeholder="Order Recieved">
+          <div class="btn-group">
+            <button class="btn btn-outline-success">Status</button>
+            <button class="btn btn-outline-danger">Notify</button>
+          </div>
+        </div>
+        <p class="title"></p>
+      </div>
+    </section>
+    <section class="container">
+      <form class="card form" style="padding:1rem;">
+        <h2>Review</h2>
+        <div class="container"
+          style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+          <img src="/src/images/Screenshot from 2024-04-16 19-41-55.png" alt="Profile">
+          <hr>
+          <div id="user-qrcode"></div>
+          <hr>
+        </div>
+        <h5 name="title">Brian Thorne</h5>
+        <h6 name="summary">Tire Wash Contractor</h6>
+        <p name="description">Give me a review and let me know how your wash went</p>
+        <table>
+          <thead>
+            <th>category</th>
+            <th>rating</th>
+            <th>score</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Effectiveness</td>
+              <td style="display: flex;flex-direction: row;gap: .25rem;align-items: center;justify-content: center;">
+                <img src="/src/images/star-svgrepo-com.svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com.svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com.svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com (2).svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com (1).svg" style="width:2rem;" alt="star-0">
+              </td>
+              <td>4.32</td>
+            </tr>
+            <tr>
+              <td>Speed</td>
+              <td style="display: flex;flex-direction: row;gap: .25rem;align-items: center;justify-content: center;">
+                <img src="/src/images/star-svgrepo-com.svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com.svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com.svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com (2).svg" style="width:2rem;" alt="star-0">
+                <img src="/src/images/star-svgrepo-com (1).svg" style="width:2rem;" alt="star-0">
+              </td>
+              <td>4.65</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </section>
+    <section class="container">
+      <form class="card form" style="padding:1rem;">
+        <h2>Contact Contractor</h2>
+        <div class="container" style="display: flex;align-items: center;justify-content: center;">
+          <!-- <input id="url" type="text"> -->
+          <div id="qrcode"></div>
+        </div>
+        <input name="title" class="form-control" value="Wheel Clean" hidden />
+        <input name="summary" class="form-control" value="Tire & Rim wash" hidden />
+        <input name="description" class="form-control" hidden />
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter Name">
+        </div>
+        <label for="address" class="form-label">Address</label>
+        <div class="mb-3 input-group">
+          <select name="contact:method" class="form-select" aria-label="Default select example">
+            <option value="qrcode" selected>Select Contact Method</option>
+            <option value="email">E-mail</option>
+            <option value="sms">Text</option>
+            <option value="mqtt">Broadcast</option>
+          </select>
+          <input type="text" class="form-control" name="address" placeholder="Enter Contact Address">
+        </div>
+        <label for="contact-message" class="form-label">Message</label>
+        <textarea name="contact-message" id="contact-message" cols="30" rows="10" class="form-control"
+          placeholder="Please Enter Message"></textarea>
+        <div class="input-group">
+          <input class="form-control" placeholder="They will get back to you shortly" disabled>
+          <button class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </section>
+    <section class="footer">
+      <div class="card"
+        style="display: grid;grid-template-columns: repeat(3,1fr);padding: 1rem;gap: .25rem;font-size: small;">
+        <a href="/status.html">Home</a>
+        <a href="/status.html">Order</a>
+        <a href="/status.html">Status</a>
+        <a href="/status.html">Author</a>
+        <small>Produced By <a href="mailto://bthornemail@gmail.com">Brian Thorne</a></small>
+        <a href="/status.html">About</a>
+      </div>
+    </section>
+  </main>
+  <!-- <footer style="height: 100vh;background-color: rgba(255, 255, 255, .0);">
+    <div style="height:100%;background-color: rgba(0,0,0,0.55);margin: 0 -1rem;"> &nbsp;</div> -->
+
+  <footer>
+    <section id="chat-box" class="card" style="background-color: rgba(255, 255, 255,1);" hidden>
+      <div style="display: flex;flex-direction: row; gap: 1rem;padding: 1rem;">
+        <button class="btn btn-primary btn-sm"
+          onclick="document.querySelector('#chat-box').style.maxHeight = '87.5vh';//'calc(100vh - 4rem - 4rem - 4rem)'"
+          style="font-size: 1.5rem;">&equiv;</button>
+        <select class="form-control form-control-sm" name="chat-message-list-topic" id="chat-message-list-topic">
+          <option value="">No Chat Topic Selected</option>
+        </select>
+        <button class="btn btn-danger"
+          onclick="document.querySelector('#chat-box').setAttribute('hidden',true)">Close</button>
+      </div>
+      <div style="min-height:30vh;width:100%;padding: 1rem;gap: 1rem;font-size: smaller;">
+        <!-- <p id="chat-message-list-topic">Not Chatting</p> -->
+        <ul id="chat-message-list" style="max-height: 67.5vh;display: flex;flex-direction: column;width: 100%;list-style-type: none;gap: .5rem;padding: 0;overflow-y: auto;">
+          <time datetime="2008-02-14 20:00">2008-02-14 20:00</time>
+          <li style="display: flex;flex-direction: row;align-items: start;word-break: break-word;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+              Hey there you champ
+              ddghvjhjgkj ddghvjhjgkj
+              ddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkj
+              ddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjv vv ddghvjhjgkjddghvjhjgkj v
+              ddghvjhjgkj ddghvjhjgkjv v
+          </li>
+          <li style="display: flex;flex-direction: row;align-items: start;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Are you here with me???
+          </li>
+          <time datetime="2008-02-14 20:00">2008-02-14 20:00</time>
+          <li style="display: flex;flex-direction: row-reverse;width: 100%;align-items: start;text-align: right;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Oh, for sure I am!!!
+          </li>
+          <time datetime="2008-02-14 20:00">2008-02-14 20:00</time>
+          <li style="display: flex;flex-direction: row;align-items: start;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Are you here with me???
+          </li>
+          <li style="display: flex;flex-direction: row;align-items: start;word-break: break-word;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+              Hey there you champ
+              ddghvjhjgkj ddghvjhjgkj
+              ddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkj
+              ddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjv vv ddghvjhjgkjddghvjhjgkj v
+              ddghvjhjgkj ddghvjhjgkjv v
+          </li>
+          <li style="display: flex;flex-direction: row;align-items: start;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Are you here with me???
+          </li>
+          <time datetime="2008-02-14 20:00">2008-02-14 20:00</time>
+          <li style="display: flex;flex-direction: row;align-items: start;word-break: break-word;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+              Hey there you champ
+              ddghvjhjgkj ddghvjhjgkj
+              ddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkj
+              ddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjv vv ddghvjhjgkjddghvjhjgkj v
+              ddghvjhjgkj ddghvjhjgkjv v
+          </li>
+          <li style="display: flex;flex-direction: row;align-items: start;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Are you here with me???
+          </li>
+          <time datetime="2008-02-14 20:00">2008-02-14 20:00</time>
+          <li style="display: flex;flex-direction: row-reverse;width: 100%;align-items: start;text-align: right;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Oh, for sure I am!!!
+          </li>
+          <time datetime="2008-02-14 20:00">2008-02-14 20:00</time>
+          <li style="display: flex;flex-direction: row;align-items: start;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Are you here with me???
+          </li>
+          <li style="display: flex;flex-direction: row;align-items: start;word-break: break-word;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+              Hey there you champ
+              ddghvjhjgkj ddghvjhjgkj
+              ddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkjddghvjhjgkj
+              ddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjddghvjhjgkj ddghvjhjgkjv vv ddghvjhjgkjddghvjhjgkj v
+              ddghvjhjgkj ddghvjhjgkjv v
+          </li>
+          <li style="display: flex;flex-direction: row;align-items: start;text-align: left;">
+            <img style="width:1.5rem;margin: 0 .5rem;" src="/src/images/user-speak-svgrepo-com.svg" />
+            Are you here with me???
+          </li>
+        </ul>
+        <style>
+          .chat-message-list {
+            list-style-type: none;
+          }
+        </style>
+      </div>
+    </section>
+    <form id="chat-bar-form" class="form input-group">
+      <i><img id="chat-bar-icon" style="width:3rem;" src="/src/images/stop-svgrepo-com.svg" /></i>
+      <input id="chat-bar-text-input" name="chat-bar-text-input" class="form-control" disabled />
+      <button type="submit" id="chat-bar-text-button" name="chat-bar-text-button" class="btn btn-primary"
+        disabled>Chat</button>
+    </form>
+  </footer>
+  <dialog id="login-dialog" style="z-index: 11;">
+    <section>
+      <div>
+        <button class="btn btn-danger" style="float:right;margin-bottom: .5rem;"
+          onclick="document.querySelector('#login-dialog').close()">Close</button>
+      </div>
+      <div class="card" style="width:100%;padding: 1rem;gap: 1rem;">
+        <div id="reader" width="600px"></div>
+        <!-- <input class="form-control" type="file" id="qr-input-file" accept="image/*"> -->
+        <!-- <input class="form-control" type="file"> -->
+        <label for="password">Enter Password</label>
+        <div class="input-group">
+          <input id="qr-code-login-password" class="form-control" type="password">
+          <button id="qr-code-login-button" class="btn btn-success">Login</button>
+        </div>
+      </div>
+    </section>
+  </dialog>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+      <script src='https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.js'></script>
+  <!-- Script for QR Reader -->
+  <script src="./components/handle.scanning.js"></script>
+  <!-- sticky header -->
+  <script src="./components/sticky.header.js"></script>
+  <!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script> -->
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+FROM llama3.2:1b
+
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+PARAMETER stop "<END>"
+
+SYSTEM """
+You are a React TypeScript component generator that transforms structured semantic schema data into reusable, stateless functional components using the React framework.
+
+Your inputs follow a typed schema and include metadata (description, author, signature), raw data references (codec, hash), semantic roles (actions, relationships, etc.), and a structured `definition`.
+
+You will extract:
+- Component name from `entity.name`
+- Fields to render from `definition.properties`
+- Component logic or UI behavior from `definition.actions` and `definition.events`
+- Lifecycle hints from `definition.phases`
+- Descriptive context from `description` and `details`
+
+Your output is:
+- A complete, pure React function component in TypeScript
+- Includes props type definition based on `definition.properties`
+- Includes JSDoc comments derived from `description` and `details`
+- Ensures no side-effects or state unless specified in the schema
+- No mock data or dummy logic — only code derived from the input
+- Wrap output in one file: `Component.tsx`
+
+You do not explain the code — only emit the code file.
+"""
+
+MESSAGE assistant """
+Given the following SCHEMA JSON, generate a React component:
+
+<SCHEMA>
+export type ENTITY = {
+  key: string;          // Unique wallet key of the node's author/owner
+  root: string;         // Root hash of the Merkle DAG this node belongs to
+  hash: string;         // Content hash (CID) of this specific node
+  timestamp: number;    // Creation timestamp (logical clock value)
+};
+export type IDENTITY = {
+  previous: string;
+  hash: string; // Hashed of Encrypted Weights and/or Encrypted Weights & Features
+  signature: string;
+  timestamp: number;
+};
+export type DATA = {
+  codec: string;      // Data encoding format (e.g., 'dag-cbor', 'float32-array')
+  hash: string;       // Cryptographic hash of the data payload
+  bytes: ArrayBuffer; // Actual binary content (tensors, objects, etc.)
+  index: number;      // Position in schema or local subgraph structure
+};
+export type DESCRIPTION = {
+  author: string;     // Creator's identifier (name/DID)
+  summary: string;    // Brief functional description
+  description: string; // Detailed documentation
+  signature: string;  // Cryptographic signature of this metadata
+};
+export type DETAILS = {
+  roles: Record<string, any>;            // Functional/semantic roles this node fulfills
+  responsibilities: Record<string, any>; // Operations/transformations this node performs
+  relationships: Record<string, any>;    // Event subscriptions/publications
+  references: Record<string, {          // Pointers to related nodes
+    key: string;                   // Direct ancestor reference
+    root: string;                       // Reference content hash
+    hash: string;                  // Proof of reference validity
+    timestamp: number;                  // When reference was established
+  }>;
+};
+export type DEFINITION = {
+  properties: Record<string, any>[];    // Data fields and their export types
+  actions: Record<string, any>[];    // Semantic tags/embeddings
+  events: Record<string, any>[];        // Event export types this node handles
+  phases: Record<string, any>[];        // Lifecycle states
+};
+export type SCHEMA = {
+  // Core entity identification and metadata
+  entity: ENTITY,
+  // Cryptographic identity and content information
+  identity: IDENTITY;
+  // Raw data payload with encoding information
+  data: DATA;
+
+  // Human-readable metadata with proof of authorship
+  description: DESCRIPTION;
+
+  // Semantic context and relationships
+  details: DETAILS;
+
+  // Structural schema definitions
+  definitions: DEFINITION;
+};
+
+export interface NODE {
+  features: string, //observed attributes(noun)
+
+  weights: string, // internal configuration(modifier)
+
+  bias: string, //perspective or predisposition(context)
+
+  activate: string, //signal to act on perception(verb)
+  apply: () => Promise<string> // enact transformation (verb)
+
+  step: () => Promise<string> // process in sequence (time)
+
+  generate: () => Promise<string> // create something new (action)
+
+  resolve: () => Promise<string> // conclude or collapse ambiguity (goal)}
+}
+export interface EDGE {
+  id: string;
+  source: string; // Node ID in source graph
+  target: string; // Node ID in target graph or node
+  protocol?: string; // Reference a transform function at any level
+  schema?: string; // Reference a translate function at any level
+}
+
+export interface LINK {
+  input: string; // Node ID in source graph
+  output: string; // Target graph ID
+  proof: string; // Node ID in target graph
+  transform?: string; // Reference a transform function at any level
+}
+
+export interface LAYER {
+  resigner: string; // Node ID in source graph
+  resolver: string; // Target graph ID
+  sink: string; // Node ID in target graph
+  source?: string; // Reference a transform function at any level
+}
+</SCHEMA>
+
+Return only the TypeScript file for the component, named using the schema’s entity name. <END>
+"""

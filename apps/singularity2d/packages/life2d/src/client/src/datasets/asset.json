@@ -1,0 +1,62 @@
+{
+    "domain": {
+	"name": "Asset Manager",
+	"version": "1"
+    },
+    "types": {
+	"CIDv1": [
+	    {
+		"name": "link",
+		"type": "string"
+	    }
+	],
+	"Asset": [
+	    {
+		"name": "name",
+		"type": "string"
+	    },
+	    {
+		"name": "registration",
+		"type": "CIDv1"
+	    }
+	],
+	"Registration": [
+	    {
+		"name": "asset",
+		"type": "Asset"
+	    },
+	    {
+		"name": "signature",
+		"type": "signature"
+	    }
+	],
+	"Trade": [
+	    {
+		"name": "to",
+		"type": "address"
+	    },
+	    {
+		"name": "from",
+		"type": "address"
+	    },
+	    {
+		"name": "asset",
+		"type": "Asset"
+	    }
+	],
+	"Loan": [
+	    {
+		"name": "wallet",
+		"type": "address"
+	    },
+	    {
+		"name": "asset",
+		"type": "Asset"
+	    }
+	]
+    },
+    "value": {
+	"name": "First Asset",
+	"registration": "Qm..."
+    }
+}

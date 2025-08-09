@@ -1,0 +1,55 @@
+{
+    "domain": {
+	"name": "Asset Manager",
+	"version": "1"
+    },
+    {
+	"types": {
+	    "Asset": [
+		{
+		    "name": "name",
+		    "type": "string"
+		},
+		{
+		    "name": "value",
+		    "type": "uint256"
+		}
+	    ],
+	    "Person": [
+		{
+		    "name": "name",
+		    "type": "string"
+		},
+		{ "name": "wallet",
+		  "type": "address"
+		}
+	    ],
+	    "Transfer": [
+		{
+		    "name": "from",
+		    "type": "Person"
+		},
+		{
+		    "name": "to",
+		    "type": "Person"
+		},
+		{ "name": "asset",
+		  "type": "Asset"
+		}
+	    ]
+	}
+    },
+    {
+	"value": {
+	    "from": {
+		name: 'Cow',
+		wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826'
+	    },
+		to: {
+		    name: 'Bob',
+		    wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'
+		},
+	    contents: 'Hello, Bob!'
+	}
+    }
+}

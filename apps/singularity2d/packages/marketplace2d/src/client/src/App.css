@@ -1,0 +1,38 @@
+
+/* #main {
+    padding: .5rem;
+    display: grid;
+    grid-template-rows: 1.5rem 1.5rem 2.25rem 1fr;
+} */
+.left { float: left;}
+.right { float: right;}
+
+#vault_ai-app {
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.nav-bar-header {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#main-view {
+    background-image: linear-gradient(
+	45deg,
+	magenta,
+	rebeccapurple,
+	dodgerblue,
+	green
+    );
+}
+
+.footer {
+    display: flex;
+    font-size: 8px;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: .5rem;
+}

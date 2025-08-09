@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer Graph Viewer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #graph {
+            width: 100%;
+            height: 100%;
+            /* width: 640px; */
+            /* height: 480px; */
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>3D Force Graph with Peer Subscriptions</h1>
+        <div id="graph-container"><div id="graph"></div></div>
+        <input type="text" id="dataInput" placeholder="Enter data to add" />
+        <button id="addData" class="btn btn-primary">Add Data</button>
+        <input type="text" id="extendedKeyInput" placeholder="Enter peer extended key" />
+        <button id="subscribe" class="btn btn-secondary">Subscribe to Peer</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.umd.min.js"></script>
+    <script src="https://unpkg.com/openpgp/dist/openpgp.min.js"></script>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://unpkg.com/3d-force-graph/dist/3d-force-graph.min.js"></script>
+
+    <script>
+        const graphData = { nodes: [], links: [] };
+        const localStorageKey = 'localGraph';
+        let client;
+        const peerSubscriptions = new Set();
+
+        // Initialize MQTT client
+        const mqttBroker = "wss://broker.hivemq.com:8000/mqtt"; // Example broker
+        client = mqtt.connect(mqttBroker);
+
+        client.on('connect', () => {
+            console.log('Connected to MQTT broker');
+            client.subscribe('shared-graph');
+        });
+
+        // 3D Force Graph Initialization
+        const container = document.querySelector("#graph-container")
+        const Graph = ForceGraph3D()
+            (document.getElementById('graph'))
+            .jsonUrl('/get/0x234343?signature=0x974')
+            .width(container.clientWidth)
+            .height(container.clientHeight/1.3)
+            // .width(640)
+            // .height(480)
+            .nodeAutoColorBy('group')
+            .onNodeClick(node => {
+                alert(`Node clicked: ${node.id}`);
+            });
+
+        // Generate Merkle Tree
+        function generateMerkleTree(dataArray) {
+            if (dataArray.length === 0) return null;
+
+            const hash = (data) => ethers.utils.keccak256(ethers.utils.toUtf8Bytes(data));
+            const tree = dataArray.map(item => hash(item));
+
+            while (tree.length > 1) {
+                const tempTree = [];
+                for (let i = 0; i < tree.length; i += 2) {
+                    if (i + 1 < tree.length) {
+                        tempTree.push(hash(tree[i] + tree[i + 1]));
+                    } else {
+                        tempTree.push(tree[i]); // Handle odd count
+                    }
+                }
+                tree.length = 0; // Clear original array
+                Array.prototype.push.apply(tree, tempTree); // Push new hashes
+            }
+            return tree[0]; // Return the root hash
+        }
+
+        // Add Data Function
+        function addData(data) {
+            const newNode = {
+                id: data,
+                group: Math.floor(Math.random() * 5) // Random group for coloring
+            };
+
+            graphData.nodes.push(newNode);
+            graphData.links.push({ source: newNode.id, target: "root" }); // Example link
+
+            const merkleRoot = generateMerkleTree(graphData.nodes.map(node => node.id));
+            console.log('Merkle Root:', merkleRoot);
+
+            localStorage.setItem(localStorageKey, JSON.stringify(graphData));
+            client.publish('shared-graph', JSON.stringify({ graphData, merkleRoot }));
+
+            Graph.graphData(graphData);
+        }
+
+        // Subscribe to Peer Graph
+        function subscribeToPeer(extendedKey) {
+            if (!peerSubscriptions.has(extendedKey)) {
+                peerSubscriptions.add(extendedKey);
+                client.subscribe(`peer-graph/${extendedKey}`);
+                console.log(`Subscribed to peer graph: ${extendedKey}`);
+            }
+        }
+
+        // Handle Incoming Messages
+        client.on('message', (topic, message) => {
+            if (topic.startsWith('peer-graph/')) {
+                const { graphData, merkleRoot } = JSON.parse(message.toString());
+                if (verifyMerkleRoot(graphData, merkleRoot)) {
+                    console.log('Received valid peer data:', graphData);
+                    mergeGraph(graphData);
+                } else {
+                    console.warn('Invalid Merkle root for incoming graph data.');
+                }
+            } else if (topic === 'shared-graph') {
+                const { graphData, merkleRoot } = JSON.parse(message.toString());
+                Graph.graphData(graphData);
+            }
+        });
+
+        // Verify Merkle Root
+        function verifyMerkleRoot(graphData, merkleRoot) {
+            const computedRoot = generateMerkleTree(graphData.nodes.map(node => node.id));
+            return computedRoot === merkleRoot;
+        }
+
+        // Merge incoming graph data into local graph
+        function mergeGraph(incomingGraph) {
+            // Simple merge logic: add new nodes and links
+            incomingGraph.nodes.forEach(node => {
+                if (!graphData.nodes.find(existingNode => existingNode.id === node.id)) {
+                    graphData.nodes.push(node);
+                }
+            });
+
+            incomingGraph.links.forEach(link => {
+                if (!graphData.links.find(existingLink => existingLink.source === link.source && existingLink.target === link.target)) {
+                    graphData.links.push(link);
+                }
+            });
+
+            Graph.graphData(graphData);
+        }
+
+        // Event Listeners
+        document.getElementById('addData').addEventListener('click', () => {
+            const dataInput = document.getElementById('dataInput').value;
+            if (dataInput) {
+                addData(dataInput);
+                document.getElementById('dataInput').value = ''; // Clear input
+            }
+        });
+
+        document.getElementById('subscribe').addEventListener('click', () => {
+            const extendedKeyInput = document.getElementById('extendedKeyInput').value;
+            if (extendedKeyInput) {
+                subscribeToPeer(extendedKeyInput);
+                document.getElementById('extendedKeyInput').value = ''; // Clear input
+            }
+        });
+
+    </script>
+</body>
+
+</html>

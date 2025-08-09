@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  html,
+  body,
+  main {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<body style="width: 100%;">
+    <div id="qrcode"></div>
+    <main style="max-width: 500px;height: 100%;background-color: black;">
+    <dialog style="border-radius: 15px;min-height: fit-content;" id="wallet-id" class="container">
+      <iframe sandbox="allow-scripts allow-same-origin"
+        style="border: 0; width: 100%; height: 500px;" src="wallet.html"></iframe>
+    </dialog>
+  </main>  
+  <script src="modules/ethers/ethers.umd.js"></script>
+  <!-- <script src="modules/qrcode/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script> -->
+  <!-- <script src="modules/html5-qrcode/html5-qrcode.min.js"></script> -->
+  <script>
+      //     var qrcode = new QRCode(document.getElementById("qrcode"), {
+      //   text: `http://127.0.0.1:8001/${ethers.HDNodeWallet.createRandom().extendedKey}`,
+      //   width: 128,
+      //   height: 128,
+      //   colorDark: "#000000",
+      //   colorLight: "#ffffff",
+      //   correctLevel: QRCode.CorrectLevel.H
+      // });
+    document.querySelector("body").addEventListener('click', async () => {
+      document.getElementById('wallet-id').showModal()
+    })
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'walletCreated') {
+        console.log('New Wallet Address:', event.data.address);
+      }
+      switch (event.data.type) {
+        case "proofVerified":
+        case "messageVerified":
+        case "messageSigned":
+        case "walletCreated":
+
+          break;
+
+        default:
+          break;
+      }
+    });
+  </script>
+</body>
+
+</html>

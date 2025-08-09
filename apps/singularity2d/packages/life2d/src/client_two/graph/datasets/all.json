@@ -1,0 +1,219 @@
+{
+    "nodes":[
+	{ "id":"Person", "encoding":"Intelligence" },
+	{ "id":"String", "encoding":"String" },
+	{ "id":"Path", "encoding":"String" },
+
+	{ "id":"Encrypt", "encoding":"Function" },
+	{ "id":"Decrypt", "encoding":"Function" },	
+	{ "id":"Sign", "encoding":"Function" },
+	{ "id":"Verify", "encoding":"Function" },
+	{ "id":"Signature", "encoding":"Signature" },
+	{ "id":"Address", "encoding":"Address" },
+	{ "id":"Wallet", "encoding":"Map" },
+
+	{ "id":"Peer", "encoding":"Address" },
+	{ "id":"Connection", "encoding":"Map" },
+	{ "id":"Network", "encoding":"Function" },
+	{ "id":"Domain", "encoding":"String" },
+
+	
+	{ "id":"Publisher", "encoding":"Address" },
+	{ "id":"Publish", "encoding":"Function" },
+	{ "id":"Publication", "encoding":"Map" },
+
+	{ "id":"Subscriber", "encoding":"Address" },
+	{ "id":"Subscribe", "encoding":"String" },
+	{ "id":"Subscription", "encoding":"Map" },
+		
+	{ "id":"Client", "encoding":"Address" },
+	{ "id":"Message", "encoding":"String" },
+	{ "id":"Payload", "encoding":"CID" },
+	{ "id":"Broadcast", "encoding":"Function" },
+	{ "id":"Topic", "encoding":"String" },
+	{ "id":"Chat", "encoding":"String" },
+
+	{ "id":"Author", "encoding":"Address" },
+	{ "id":"Title", "encoding":"String" },
+	{ "id":"Summary", "encoding":"String" },
+	{ "id":"Description", "encoding":"String" },
+	{ "id":"Image", "encoding":"String" },
+	{ "id":"Value", "encoding":"String" },
+	{ "id":"Content", "encoding":"CID" },	
+	{ "id":"Listing", "encoding":"Map" },
+	
+	{ "id":"Owner", "encoding":"Address" },
+	{ "id":"Asset", "encoding":"JSON" },	
+
+	{ "id":"Service", "encoding":"JSON" },
+
+	{ "id":"Consumer", "encoding":"Address" },
+	{ "id":"Provider", "encoding":"Address" },
+
+	{ "id":"Customer", "encoding":"Address" },
+	{ "id":"Order", "encoding":"CID" },
+	{ "id":"Confirmation", "encoding":"Signature" },
+	{ "id":"Consideration", "encoding":"Map" },
+	{ "id":"Declaration", "encoding":"CID" },
+	{ "id":"Announcement", "encoding":"String" },
+	
+	{ "id":"Contractor", "encoding":"Address" },
+	{ "id":"Contract", "encoding":"CID" },
+	{ "id":"Fulfillment", "encoding":"Signature" },
+	{ "id":"Agreement", "encoding":"Map" },
+	{ "id":"Negotiation", "encoding":"String" },
+	{ "id":"Offer", "encoding":"String" },
+
+	
+	{ "id":"Knowledege", "encoding":"JSON" },
+	{ "id":"Experience", "encoding":"JSON" },
+	
+	{ "id":"Scholar", "encoding":"Address" },
+	{ "id":"Observer", "encoding":"Address" },
+	{ "id":"Professor", "encoding":"Address" },
+	
+	{ "id":"Question", "encoding":"String" },
+	{ "id":"Answer", "encoding":"String" },
+	{ "id":"Key", "encoding":"Signature" },
+	{ "id":"Test", "encoding":"Map" },
+	
+	{ "id":"Delegate", "encoding":"Address" },
+	{ "id":"Verification", "encoding":"Signature" },
+	{ "id":"Objective", "encoding":"String" },
+	{ "id":"Task", "encoding":"Map" },
+	
+	{ "id":"Exam", "encoding":"CID" },
+	{ "id":"Course", "encoding":"CID" },
+	{ "id":"Registration", "encoding":"Map" },
+	{ "id":"Transcript", "encoding":"Map" },
+	{ "id":"Registry", "encoding":"Map" },
+	{ "id":"College", "encoding":"Map" },
+
+	{ "id":"Encode", "encoding":"Function" },
+	{ "id":"Set", "encoding":"Function" },
+	{ "id":"Post", "encoding":"Function" },
+	{ "id":"Get", "encoding":"Function" },
+	{ "id":"View", "encoding":"Function" },
+	
+	{ "id":"Token", "encoding":"Map" },
+	{ "id":"Loan", "encoding":"Map" },
+	{ "id":"Escrow", "encoding":"Map" },
+	{ "id":"Requirement", "encoding":"Map" },
+	{ "id":"Trade", "encoding":"Map" },
+	{ "id":"Transaction", "encoding":"Map" },
+	{ "id":"Account", "encoding":"Map" },
+	{ "id":"Ledger", "encoding":"Map" },
+	
+	{ "id":"University2D", "encoding":"Typescript" },
+	{ "id":"Marketplace2D", "encoding":"Typescript" },
+	{ "id":"Life2D", "encoding":"Typescript" },
+
+	{ "id":"Achievement","encoding": "CID" },
+	{ "id":"Assesment","encoding":"CID" },
+	{ "id":"Enrollment","encoding": "CID" },
+	{ "id":"Submission","encoding":"CID" }
+
+    ],
+    "links":[
+	{ "source":"Sign", "target":"Signature"},
+	{ "source":"Signature", "target":"Verify"},
+	{ "source":"Verify", "target":"Wallet"},
+	{ "source":"Encrypt", "target":"Wallet" },
+	{ "source":"Decrypt", "target":"Wallet" },
+	{ "source":"Wallet", "target":"Address"},
+	{ "source":"Address", "target":"Peer"},
+	
+
+	{ "source":"Peer", "target":"Connection" },
+	{ "source":"Connection", "target":"Network" },
+	{ "source":"Network", "target":"Domain" },
+	{ "source":"Domain", "target":"Marketplace" }, 
+	
+	{ "source":"Publisher", "target":"Publish" },
+	{ "source":"Publish", "target":"Publication" },
+	{ "source":"Publication", "target":"Topic" },
+	
+	{ "source":"Subscriber", "target":"Subscribe" },
+	{ "source":"Subscribe", "target":"Subscription"},
+	{ "source":"Subscription", "target":"Topic" },
+	
+
+	{ "source":"Client", "target":"Message" },
+	{ "source":"Message", "target":"Payload" },
+	{ "source":"Payload", "target":"Broadcast" },
+	{ "source":"Broadcast", "target":"Topic" },
+	{ "source":"Topic", "target":"Chat" },
+	{ "source":"Chat", "target":"Marketplace" },
+
+
+	{ "source":"Author", "target":"Content" },
+	{ "source":"Title", "target":"Content" },
+	{ "source":"Summary", "target":"Content" },
+	{ "source":"Description", "target":"Content" },
+	{ "source":"Image", "target":"Content" },
+	{ "source":"Value", "target":"Content" },
+	{ "source":"Content", "target":"Listing" },
+	{ "source":"Listing", "target":"Marketplace" },
+
+	{ "source":"Owner", "target":"Registration" },
+	{ "source":"Asset", "target":"Registration" },
+
+	{ "source":"Service", "target":"Registration" },
+
+	{ "source":"Consumer", "target":"Customer" },
+	{ "source":"Customer", "target":"Order" },
+	{ "source":"Order", "target":"Confirmation" },
+	{ "source":"Confirmation", "target":"Consideration" },
+	{ "source":"Consideration", "target":"Declaration" },
+	{ "source":"Declaration", "target":"Announcement" },
+	{ "source":"Announcement", "target":"Service" },
+
+	{ "source":"Provider", "target":"Contractor" },
+	{ "source":"Contractor", "target":"Contract" },
+	{ "source":"Contract", "target":"Fulfillment" },
+	{ "source":"Fulfillment", "target":"Agreement" },
+	{ "source":"Agreement", "target":"Negotiation" },
+	{ "source":"Negotiation", "target":"Offer" },
+	{ "source":"Offer", "target":"Service" },
+
+		
+	{ "source":"Knowledege", "target":"Registration" },
+	{ "source":"Experience", "target":"Registration" },
+
+	{ "source":"Question", "target":"Test" },
+	{ "source":"Answer", "target":"Key" },
+	{ "source":"Key", "target":"Test" },
+	{ "source":"Test", "target":"Exam" },
+
+	{ "source":"Observer", "target":"Delegate" },
+	{ "source":"Delegate", "target":"Verification" },
+	{ "source":"Verification", "target":"Objective" },
+	{ "source":"Objective", "target":"Task" },
+	{ "source":"Task", "target":"Exam" },
+	
+	{ "source":"Exam", "target":"Transcript" },
+	{ "source":"Transcript", "target":"Registry" }, 
+
+	
+	{ "source":"Professor", "target":"Course" },
+	{ "source":"Scholar", "target":"Course" },
+	{ "source":"Course", "target":"Registration" },
+	{ "source":"Registration", "target":"Registry" },
+
+	{ "source":"Registry", "target":"College" },
+	{ "source":"College", "target":"University2D" },
+	
+	
+	{ "source":"Set", "target":"Marketplace2D" },
+	{ "source":"Post", "target":"Marketplace2D" },
+	{ "source":"Get", "target":"Marketplace2D" },
+	{ "source":"View", "target":"Marketplace2D" },
+	{ "source":"Marketplace", "target":"Marketplace2D" },
+	{ "source":"Encode", "target":"Path" },
+	{ "source":"Path", "target":"Life2D" },
+    
+	{ "source":"University2D", "target":"University2D" },
+	{ "source":"Marketplace2D", "target":"Life2D" },
+	{ "source":"Person", "target":"Life2D"}	
+    ]
+}

@@ -1,0 +1,46 @@
+{
+	"nodes": [
+		{
+			"id": "Marketplace_2D",
+			"img": "color-lineal-marketplace-svgrepo-com.svg",
+			"name": "Marketplace 2D",
+			"title": "Marketplace 2D",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Listings",
+			"img": "database-folder-svgrepo-com.svg",
+			"name": "Assets",
+			"title": "Assets",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "Assets",
+			"img": "bar-code-scan-svgrepo-com.svg",
+			"name": "Assets",
+			"title": "Assets",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "Courses",
+			"img": "cap-education-hat-svgrepo-com.svg",
+			"name": "Courses",
+			"title": "Courses",
+			"color": "blue",
+			"val": 2
+		},
+		{
+			"id": "Services",
+			"img": "board-svgrepo-com.svg",
+			"name": "Services",
+			"title": "Services",
+			"color": "green",
+			"val": 2
+		}
+	],
+	"links": [
+	]
+}

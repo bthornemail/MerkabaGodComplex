@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Day Vault</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- <link href="styles.css" rel="stylesheet"> -->
+  <!-- <script src="node_modules/eruda/eruda.js"></script> -->
+  <!-- <script>eruda.init();</script> -->
+</head>
+
+<body>
+  <div class="nav-bar-header">
+    <div class="nav-brand">Day Vault!</div>
+    <a class="link" id="wallet">wallet</a>
+  </div>
+  <section>
+    <form class="form card" id="wallet-form" method="post">
+      <div id="test"></div>
+      <strong>Enter Mnemonic</strong>
+      <small>Enter mnemonic to login in a signing key</small>
+      <div id="mnemonic"></div>
+      <div style="text-align: center;">
+        <sup id="mnemonic-alert"></sup>
+        <br>
+        <button id="mnemonic-submit-button" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </section>
+  <footer class="footer">
+    <div>
+      <a href="/app">App</a>
+      <a href="/car-wash">car-wash</a>
+      <a href="/chat">chat</a>
+      <a href="/delivery-for-locals">delivery-for-locals</a>
+      <a href="/force-graph">force-graph</a>
+      <a href="/graph">graph</a>
+      <a href="/logistics-hub">logistics-hub</a>
+      <a href="/mermaid">mermaid</a>
+      <a href="/helia">helia</a>
+      <a href="/service-board">service-board</a>
+      <a href="/dialpad">dialpad</a>
+      <a href="/canvas">canvas</a>
+      <a href="/asset">asset</a>
+    </div>
+    <div>
+      <span>Valult AI - A Store of Active Knowledge</span>
+      <a href="mailto:contact@vault_ai.com">contact@vault_ai.com</a>
+    </div>
+  </footer>
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      padding: .5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    section {
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    form {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    #mnemonic {
+      width: 100%;
+      height: fit-content;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    .footer {
+      font-size: 8px;
+
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script type="module" src="modules/mqtt/mqtt.esm.js"></script>
+  <script src="modules/qrcode/qrcode.js"></script>
+  <!-- <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js"></script> -->
+  <!-- <script type="module" src="main.js"></script> -->
+  <script type="module">
+    import { faker } from 'https://esm.sh/@faker-js/faker';
+
+    faker.seed([42, 13, 17])
+    // Caitlyn Kerluke
+    const randomName = faker.person.fullName();
+
+    // Rusty@arne.info
+    const randomEmail = faker.internet.email();
+  </script>
+</body>
+
+</html>

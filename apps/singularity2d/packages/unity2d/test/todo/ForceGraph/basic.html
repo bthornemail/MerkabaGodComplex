@@ -1,0 +1,34 @@
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+
+  <script src="//unpkg.com/force-graph"></script>
+  <!--<script src="../../dist/force-graph.js"></script>-->
+</head>
+
+<body>
+  <div id="graph"></div>
+  <style>
+    * {
+      color: "white"
+    }
+  </style>
+  <script>
+    fetch('./datasets/marketplace.json').then(res => res.json()).then(data => {
+      const Graph = ForceGraph()
+        (document.getElementById('graph'))
+        .graphData(data)
+        .backgroundColor("black")
+        .nodeRelSize("8")
+        .nodeId('id')
+        .nodeVal('val')
+        .nodeLabel('id')
+        .nodeAutoColorBy('encoding')
+        .linkSource('source')
+        .linkTarget('target')
+    });
+  </script>
+</body>

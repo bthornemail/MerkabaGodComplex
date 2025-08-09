@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dialpad.css">
+</head>
+
+<body>
+    <!-- <img src="logo.png" alt="logo" height="64px" /> -->
+    <h3>Unity 2D</h3>
+    <small>enter passcode to continue</small>
+    <div id="dialpad"></div>
+</body>
+<style>
+    html,
+    root,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-image: url("background.jpg");
+    }
+</style>
+<!-- 
+<script>
+    // Add event listener for messages from the parent window
+    window.addEventListener('message', (event) => {
+      // Check the origin of the message to avoid cross-site scripting attacks
+      if (event.origin !== location.origin) {
+        alert(event.origin)
+        return;
+      }
+
+      // Handle the received message
+      console.log('Message received from parent window:', event.data);
+    });
+
+    // Function to send a message to the parent window
+    function sendMessageToParent(message) {
+      window.parent.postMessage(message, '/');
+    }
+
+    // Example of sending a message to the parent window
+    sendMessageToParent('Hello, parent window!');
+  </script> -->
+  <script src="/dapp.js"></script>
+<script src="dialpad.js"></script>
+<script>
+  let wallet;
+  if (sessionStorage.getItem("extendedKey")) {
+    wallet = HDNodeWallet.fromExtendedKey(sessionStorage.getItem("extendedKey"));
+  } else {
+    if (sessionStorage.getItem("mnemonic")) {
+      wallet = HDNodeWallet.fromPhrase(sessionStorage.getItem("mnemonic"));
+    } else {
+      console.log(wallet)
+      sessionStorage.setItem("mnemonic", wallet.mnemonic.phrase);
+    }
+  }
+  dialPad(alert,{defaultValue: wallet.extendedKey })
+  dialPad(alert)
+</script>
+</html>

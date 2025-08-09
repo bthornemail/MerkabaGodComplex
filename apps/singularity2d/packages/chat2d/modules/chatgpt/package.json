@@ -1,0 +1,40 @@
+{
+  "name": "vert.io",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsx watch index.ts --offline ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bthornemail/vert.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bthornemail/vert.io/issues"
+  },
+  "homepage": "https://github.com/bthornemail/vert.io#readme",
+  "dependencies": {
+    "@helia/json": "^1.0.0",
+    "@helia/strings": "^1.0.0",
+    "@helia/unixfs": "^1.4.0",
+    "@metamask/providers": "^11.1.0",
+    "@types/marked": "^5.0.1",
+    "ethers": "^6.6.4",
+    "express": "^4.18.2",
+    "helia": "^1.3.8",
+    "hnswlib-node": "^2.0.0",
+    "ioredis": "^5.3.2",
+    "marked": "^5.1.1",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/multer": "^1.4.7"
+  }
+}

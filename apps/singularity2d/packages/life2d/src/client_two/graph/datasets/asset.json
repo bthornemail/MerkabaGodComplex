@@ -1,0 +1,84 @@
+{
+    "nodes":[
+		{ "id":"Owner", "encoding":"Address" },
+		{ "id":"Asset", "encoding":"JSON" },
+		
+		{ "id":"Price", "encoding":"String" },
+		{ "id":"Cost", "encoding":"String" },
+		{ "id":"Value", "encoding":"String" },
+
+		{ "id":"Buy", "encoding":"Function" },
+		{ "id":"Sell", "encoding":"Function" },
+
+		{ "id":"Trade", "encoding":"Function" },
+		{ "id":"Transfer", "encoding":"Function" },
+
+		{ "id":"Escrow", "encoding":"Function" },
+		{ "id":"Allocate", "encoding":"Function" },
+
+		{ "id":"Loan", "encoding":"Function" },
+		{ "id":"Rent", "encoding":"Function" },
+
+		{ "id":"Negotiate", "encoding":"Function" },
+		{ "id":"Bid", "encoding":"Function" },
+
+
+		{ "id":"Payment", "encoding":"Map" },
+		{ "id":"Authorization", "encoding":"Map" },
+		{ "id":"Checkout", "encoding":"Map" },
+
+		{ "id":"Export", "encoding":"Map" },
+		{ "id":"Manifest", "encoding":"Map" },
+		{ "id":"Disbursement", "encoding":"Map" },
+		{ "id":"Requirement", "encoding":"Map" },
+		
+		{ "id":"Import", "encoding":"Map" },
+		{ "id":"Package", "encoding":"Map" },
+		{ "id":"Reconciliation", "encoding":"Map" },
+		{ "id":"Dependency", "encoding":"Map" },
+
+		{ "id":"Refund", "encoding":"Map" },
+
+		{ "id":"Receipt", "encoding":"Map" },
+		{ "id":"Invoice", "encoding":"Map" },
+		{ "id":"Billing", "encoding":"Map" },
+
+		{ "id":"Security", "encoding":"Map" },
+		{ "id":"Encumbrance", "encoding":"Map" },
+
+		{ "id":"Appreciation", "encoding":"Map" },
+		{ "id":"Depreciation", "encoding":"Map" },
+
+		{ "id":"Storage", "encoding":"Map" },
+		{ "id":"Portfolio", "encoding":"Map" },
+		{ "id":"Allocation", "encoding":"Map" },
+		{ "id":"Inventory", "encoding":"Map" },
+		{ "id":"Exchange", "encoding":"Function" }
+    ],
+    "links":[
+		{ "source":"Price", "target":"Asset" },
+		{ "source":"Cost", "target":"Asset" },
+		{ "source":"Value", "target":"Asset" },
+
+		{ "source":"Buy", "target":"Asset" },
+		{ "source":"Sell", "target":"Asset" },
+
+		{ "source":"Trade", "target":"Asset" },
+		{ "source":"Transfer", "target":"Asset" },
+
+		{ "source":"Escrow", "target":"Asset" },
+		{ "source":"Allocate", "target":"Asset" },
+
+		{ "source":"Loan", "target":"Asset" },
+		{ "source":"Rent", "target":"Asset" },
+		
+		{ "source":"Negotiate", "target":"Asset" },
+		{ "source":"Bid", "target":"Asset" },
+
+
+		{ "source":"Security", "target":"Allocation" },
+
+
+		{ "source":"Asset", "target":"Owner" }
+    ]
+}

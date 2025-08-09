@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Day Vault</title>
+  <link href="/modules/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <!-- <script src="node_modules/eruda/eruda.js"></script> -->
+  <!-- <script>eruda.init();</script> -->
+</head>
+
+<body>
+  <nav class="navbar" style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+    <!-- <div style="display: flex;align-items: center;justify-content: space-around;width: 100%;"> -->
+    <a class="navbar-brand" href="/">Unity 2D</a>
+    <div class="button-group">
+      <button class="btn btn-outline-secondary btn-sm"
+        onclick="document.getElementById('app-frame').requestFullscreen()">Topic</button>
+    </div>
+    <div id="isSignedOut" class="button-group">
+      <a class="btn btn-outline-success btn-sm" onclick="document.getElementById('register-dialog').showModal()"
+        id="register">Register</a>
+      <a class="btn btn-outline-danger btn-sm" onclick="document.getElementById('unlock-dialog').showModal()"
+        id="unlock">Unlock</a>
+    </div>
+    <div id="isSignedIn" class="button-group" hidden>
+      <a class="btn btn-outline-success btn-sm" onclick="document.getElementById('save-dialog').showModal()"
+        id="save">Save</a>
+      <a class="btn btn-outline-danger btn-sm" onclick="document.getElementById('lock-dialog').showModal()"
+        id="lock">Lock</a>
+    </div>
+    <script>
+      const isSignedIn = document.getElementById("isSignedIn");
+      const isSignedOut = document.getElementById("isSignedIn");
+      if (new URL(location).searchParams.get("extendedKey")) {
+        const extendedKey = new URL(location).searchParams.get("extendedKey");
+        isSignedOut.setAttribute("hidden", "hidden")
+        isSignedIn.removeAttribute("hidden")
+      }
+
+    </script>
+    <!-- </div> -->
+  </nav>
+  <header>
+    <form style="margin: 0;padding: 0;" id="identity-form" class="input-group">
+      <input value="" type="text" id="identity-input" class="form-control form-control-sm"
+        aria-label="Text input with segmented dropdown button">
+      <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle dropdown-toggle-split"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#">Public</a></li>
+        <li><a class="dropdown-item" href="#">Protected</a></li>
+        <li><a class="dropdown-item" href="#">Private</a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <div class="dropdown-item" onclick="document.getElementById('worker-dialog').showModal()" id="worker">Worker
+          </div>
+        </li>
+        <li>
+          <div class="dropdown-item" onclick="document.getElementById('graph-dialog').showModal()" id="graph">Graph
+          </div>
+        </li>
+      </ul>
+    </form>
+  </header>
+  <iframe id="app-frame" src="./app.html" allow="fullscreen" referrerpolicy="strict-origin"
+    sandbox="allow-scripts  allow-same-origin" style="height: 100%;"></iframe>
+  <nav class="navbar">
+    <form id="client-context-form" class="container-fluid">
+      <!-- <a class="navbar-brand">Path</a> -->
+      <div class="input-group">
+        <input id="path-input" placeholder="Path" type="text" class="form-control form-control-sm">
+        <a class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('sign-dialog').showModal()"
+          id="sign">Sign</a>
+        <a class="btn btn-outline-success btn-sm" onclick="document.getElementById('encrypt-dialog').showModal()"
+          id="encrypt">Encrypt</a>
+        <a class="btn btn-outline-primary btn-sm" onclick="document.getElementById('share-dialog').showModal()"
+          id="wallet">Share</a>
+      </div>
+    </form>
+  </nav>
+  <footer class="footer">
+    <div>
+      <span>Valult AI - A Store of Active Knowledge</span>
+      <a href="mailto:contact@vault_ai.com">contact@vault_ai.com</a>
+      <button type="button" style="float: right;font-size: xx-small;" class="btn btn-sm btn-outline-danger"
+        id="hide-wallet-button">Hide</button>
+    </div>
+  </footer>
+</body>
+
+<dialog id="register-dialog">
+  <button class="btn btn-danger btn-sm" onclick="document.getElementById('register-dialog').close()">Close</button>
+  <!-- <form action="/profile" method="post" enctype="multipart/form-data"> -->
+  <section>
+    <a id="qr-code-link" href="#">
+      <div id="qr-code"></div>
+    </a>
+    <small id="address"></small>
+    <small id="extendedKey" style="font-size: 6px;"></small>
+    <br />
+    <div class="progress" id="progress-bar" role="progressbar" aria-label="Basic example" aria-valuenow="0"
+      aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar" style="width: 0%"></div>
+    </div>
+    <form class="form card" id="wallet-form">
+      <strong>Enter Mnemonic</strong>
+      <small>Enter mnemonic to login in a signing key</small>
+      <div id="mnemonic"></div>
+      <div style="text-align: center;">
+        <sup id="mnemonic-alert">Enter Password</sup>
+        <input id="mnemonic-submit-input" type="password" class="form-control form-control-sm" />
+        <sup id="mnemonic-alert"></sup>
+        <br>
+        <button id="mnemonic-submit-button" class="btn btn-success btn-sm">Register</button>
+      </div>
+    </form>
+  </section>
+  <!-- </form> -->
+</dialog>
+<dialog id="unlock-dialog">
+  <button class="btn btn-danger" onclick="document.getElementById('unlock-dialog').close()">Close</button>
+  <hr>
+  <section>
+    <div id="local-address" style="text-align: center;">
+      <div id="reader"></div>
+    </div>
+    <sup>Enter Password</sup>
+    <br />
+    <div class="input-group">
+      <input class="form-control" type="password" />
+      <button class="btn btn-success" id="unlock-wallet-button">Decrypt</button>
+    </div>
+  </section>
+</dialog>
+<dialog id="sign-dialog">
+  <button class="btn btn-danger" onclick="document.getElementById('sign-dialog').close()">Close</button>
+  <!-- <form action="/profile" method="post" enctype="multipart/form-data"> -->
+  <div
+    style="width:100%;display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 2rem;gap: .5rem;">
+    <object allow="fullscreen" referrerpolicy="strict-origin" style="height: 100%;" type="text/html"
+      data="data/data.json" style="width:100%;max-width:240;height: 100%;max-height:180px" form="my-form"
+      frameborder="0" name="_self"></object>
+    <br />
+    <sup>Enter Password</sup>
+    <div class="input-group">
+      <input class="form-control" type="password" id="signturePasswordInput" placeholder="Enter password">
+      <button class="btn btn-primary" id="uploadButton">Upload</button>
+      <hr>
+    </div>
+  </div>
+  <!-- </form> -->
+</dialog>
+<dialog id="encrypt-dialog">
+  <button class="btn btn-danger" onclick="document.getElementById('encrypt-dialog').close()">Close</button>
+  <!-- <form action="/profile" method="post" enctype="multipart/form-data"> -->
+  <div
+    style="display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 2rem;gap: .5rem;">
+    <div id="current-extendedKey" style="font-size: 6px;"></div>
+    <strong id="current-address"></strong>
+    <div style="width: 100%;height: 100%;max-height: 30vh;overflow-y: auto;">
+      <p name="decodedResult" id="decodedResult" hidden></p>
+      <p name="current-wallet-json" id="current-wallet-json"></p>
+    </div>
+    <input class="form-control" type="file" id="fileInput" accept=".json">
+    <br />
+    <sup>Enter Password</sup>
+    <div class="input-group">
+      <input class="form-control" type="password" id="encryptPasswordInput" placeholder="Enter password">
+      <button class="btn btn-primary" id="uploadButton">Encrypt</button>
+      <hr>
+    </div>
+  </div>
+  <!-- </form> -->
+</dialog>
+<dialog id="share-dialog">
+  <button class="btn btn-danger" onclick="document.getElementById('share-dialog').close()">Close</button>
+  <form action="/share" method="post" enctype="multipart/form-data">
+    <div
+      style="display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 2rem;gap: .5rem;">
+      <object allow="fullscreen" referrerpolicy="strict-origin" style="height: 100%;" type="text/html"
+        data="data/data.json" style="width:100%;max-width:240;height: 100%;max-height:180px" form="my-form"
+        frameborder="0" name="_self"></object>
+      <br />
+      <sup>Enter Reciever</sup>
+      <div class="input-group">
+        <input class="form-control" type="text" id="shareInput" placeholder="Enter Reciever">
+        <button class="btn btn-primary" id="shareButton">Share</button>
+        <hr>
+      </div>
+    </div>
+  </form>
+</dialog>
+<dialog id="worker-dialog" style="height:65vh;">
+  <button class="btn btn-danger" onclick="document.getElementById('worker-dialog').close()">Close</button>
+  <!-- <form action="/worker" method="post" enctype="multipart/form-data">
+      <div
+        style="display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 2rem;gap: .5rem;">
+        <canvas id="canvas"></canvas>
+        <br />
+        <sup>Enter Command Message</sup>
+        <div class="input-group">
+          <input class="form-control" type="text" id="shareInput" placeholder="Enter Reciever">
+          <button class="btn btn-primary" id="shareButton">Share</button>
+          <hr>
+        </div>
+      </div>
+    </form>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "green";
+      ctx.fillRect(10, 10, 150, 100);
+    </script> -->
+  <!-- <iframe id="worker-frame" src="http://127.0.0.1:3001/worker" allow="fullscreen" referrerpolicy="same-origin"
+    sandbox="allow-scripts  allow-same-origin" style="height: 100%;"></iframe> -->
+</dialog>
+
+<dialog id="graph-dialog" style="height:65vh;">
+  <button class="btn btn-danger" onclick="document.getElementById('graph-dialog').close()">Close</button>
+
+  <div id="3d-graph"></div>
+  <script src="//unpkg.com/3d-force-graph"></script>
+  <!-- <script>
+    const elem = document.getElementById('3d-graph');
+
+    const Graph = ForceGraph3D({ controlType: 'orbit' })
+      (elem)
+        .jsonUrl('../datasets/miserables.json')
+        .nodeLabel('id')
+        .nodeAutoColorBy('group')
+        .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          const newPos = node.x || node.y || node.z
+            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+          Graph.cameraPosition(
+            newPos, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+        });
+  </script> -->
+  <script type="importmap">{ "imports": { "three": "//unpkg.com/three/build/three.module.js" }}</script>
+  <script type="module">
+    import SpriteText from "//unpkg.com/three-spritetext/dist/three-spritetext.mjs";
+
+    const N = 300;
+    const gData = {
+      nodes: [...Array(N).keys()].map(i => ({ id: i })),
+      links: [...Array(N).keys()]
+        .filter(id => id)
+        .map(id => ({
+          source: id,
+          target: Math.round(Math.random() * (id - 1))
+        }))
+    };
+    const Graph = ForceGraph3D({ controlType: 'orbit' })
+      (document.getElementById('3d-graph'))
+      // .jsonUrl('../datasets/miserables.json')
+      .graphData(gData)
+      .nodeAutoColorBy('group')
+      .nodeThreeObject(node => {
+        const sprite = new SpriteText(node.id);
+        sprite.material.depthWrite = false; // make sprite background transparent
+        sprite.color = node.color;
+        sprite.textHeight = 8;
+        return sprite;
+      })
+      .onNodeClick(node => {
+        // Aim at node from outside it
+        const distance = 200;
+        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+        const newPos = node.x || node.y || node.z
+          ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+          : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+        Graph.cameraPosition(
+          newPos, // new position
+          node, // lookAt ({ x, y, z })
+          3000  // ms transition duration
+        );
+      });
+
+    // Spread nodes a little wider
+    Graph.d3Force('charge').strength(-120);
+
+  </script>
+  <!-- <form action="/worker" method="post" enctype="multipart/form-data">
+      <div
+        style="display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 2rem;gap: .5rem;">
+        <canvas id="canvas"></canvas>
+        <br />
+        <sup>Enter Command Message</sup>
+        <div class="input-group">
+          <input class="form-control" type="text" id="shareInput" placeholder="Enter Reciever">
+          <button class="btn btn-primary" id="shareButton">Share</button>
+          <hr>
+        </div>
+      </div>
+    </form>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "green";
+      ctx.fillRect(10, 10, 150, 100);
+    </script> -->
+  <!-- <iframe id="worker-frame" src="http://127.0.0.1:3001/worker" allow="fullscreen" referrerpolicy="same-origin"
+    sandbox="allow-scripts  allow-same-origin" style="height: 100%;"></iframe> -->
+</dialog>
+<script src="/modules/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="modules/qrcode/qrcode.js"></script>
+<script src="modules/html5-qrcode/html5-qrcode.min.js"></script>
+<script type="module" src="modules/mqtt/mqtt.esm.js"></script>
+<script type="module" src="upload.js"></script>
+<script>
+  document.getElementById("hide-wallet-button").addEventListener("click", () => {
+    document.getElementsByClassName("navbar")[0].toggleAttribute("hidden");
+    document.getElementsByClassName("navbar")[1].toggleAttribute("hidden");
+    document.getElementsByTagName("header")[0].toggleAttribute("hidden");
+    if (document.getElementsByTagName("header")[0].hidden) {
+      document.getElementById("hide-wallet-button").textContent = "Show"
+      document.getElementById("hide-wallet-button").classList.replace("btn-outline-danger", "btn-outline-success")
+    } else {
+      document.getElementById("hide-wallet-button").textContent = "Hide"
+      document.getElementById("hide-wallet-button").classList.replace("btn-outline-success", "btn-outline-danger")
+    }
+    // document.getElementsByClassName("navbar")[0].setAttribute("hidden","hidden");
+    // document.getElementsByClassName("navbar")[1].setAttribute("hidden","hidden");
+    // document.getElementsByTagName("header")[0].setAttribute("hidden","hidden");
+  })
+</script>
+<script type="module">
+  import { ethers, Wallet, HDNodeWallet, id } from "/modules/ethers/ethers.min.js";
+  import { io } from "/modules/socket.io/socket.io.esm.min.js";
+
+  const mnemonicElement = document.getElementById("mnemonic");
+  function createElements(element) {
+    const mnemonic = HDNodeWallet.createRandom().mnemonic?.phrase;
+
+    console.log(mnemonic.split(" "))
+    for (let i = 0; i <= 11; i++) {
+      const div = document.createElement("div");
+      div.style.textAlign = "center";
+      const input = document.createElement("input");
+      const label = document.createElement("label");
+      label.textContent = `(phrase ${i + 1})`;
+      label.style.fontSize = "10px";
+      input.classList.add("form-control", "form-control-sm");
+      input.type = "password"
+      input.style.maxWidth = "84px";
+      input.name = i;
+      input.style.textAlign = "center";
+      input.defaultValue = mnemonic.split(" ")[i]
+      input.addEventListener("change", (e) => {
+        alert(e.currentTarget.value)
+      })
+      div.append(label)
+      div.append(input)
+      element.append(div)
+    }
+  }
+  function onScanSuccess(decodedText, decodedResult) {
+    // handle the scanned code as you like, for example:
+    console.log(`Code matched = ${decodedText}`, decodedResult);
+    const unlockButton = document.getElementById("unlock-wallet-button");
+    unlockButton.removeAttribute("disabled");
+    document.getElementById('app-frame').contentWindow.postMessage({ type: 'WALLET_INIT', payload: { publicKey: decodedText } }, '*');
+    document.getElementById('unlock-dialog').close();
+    // html5QrcodeScanner.clear()
+    // html5QrcodeScanner.clear();
+  }
+
+  function onScanFailure(error) {
+    // handle scan failure, usually better to ignore and keep scanning.
+    // for example:
+    console.warn(`Code scan error = ${error}`);
+  }
+
+  let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: { width: 128, height: 128 } },
+    /* verbose= */ false);
+  createElements(mnemonicElement);
+  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+  document.getElementById("identity-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = document.getElementById("identity-input")
+    let identity = input.value
+    if (!identity) return input.value = "/search";
+    identity = encodeURI(identity)
+    // alert(new URL(identity, location).href)
+    if (identity.toLowerCase().includes("identity")) {
+      input.value = "Identity"
+      return document.getElementById('app-frame').src = new URL("dialpad", location).href
+    };
+    // alert(location, path)
+    // alert(path)
+    // alert(new URL(location.origin, path).href)
+    document.getElementById('app-frame').src = new URL(identity, location).href
+  });
+  // Listen for messages from the iframe
+  window.addEventListener('message', async (event) => {
+    if (event.origin !== location.origin) return;
+
+    console.log('Message received from iframe:', event.data);
+    console.log(event.origin, 'event from your-parent-origin');
+    const { type, payload } = event.data;
+
+    switch (type) {
+      case 'CONNECT_WALLET':
+        document.getElementById("unlock-dialog").showModal()
+        break;
+      case 'SIGN_TRANSACTION':
+        const signedTransaction = await wallet.signTransaction(payload.transaction);
+        event.source.postMessage({ type: 'TRANSACTION_SIGNED', payload: { signedTransaction } }, event.origin);
+        break;
+      case 'ENCRYPT_DATA':
+        const encryptedData = ethers.utils.encrypt(wallet.publicKey, payload.data);
+        event.source.postMessage({ type: 'DATA_ENCRYPTED', payload: { encryptedData } }, event.origin);
+        break;
+      default:
+        alert(type);
+        break;
+      // Handle other message types
+    }
+  });
+</script>
+
+</html>

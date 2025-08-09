@@ -1,0 +1,55 @@
+.wallet,
+.semantic-universe,
+.quadrant,
+.graph-container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.semantic-universe {
+    height: calc(100vh - 15vh);
+    /* height: 82vh; */
+    overflow-y: auto;
+    justify-content: space-between;
+}
+.accordion,
+.accordion-collapse,
+.accordion-item,
+.accordion-header,
+.accordion-button,
+.accordion-body {
+    background: rgba(0,0,0,0.7) !important;
+    color: white  !important;
+}
+.matrix {
+    padding: 1rem;
+    gap: 1rem;
+    border: 2px dotted lightgreen;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.rumsfeld {
+    padding: 1rem;
+    gap: 1rem;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+/* // CSS (add to your stylesheet) */
+.label {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    transform: translateX(-50%);
+}

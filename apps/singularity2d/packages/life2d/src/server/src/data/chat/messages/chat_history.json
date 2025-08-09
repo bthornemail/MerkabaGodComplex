@@ -1,0 +1,4 @@
+[
+    { "role": "system", "content": "Welcome to the 0x Chat Room" },
+    { "role": "assistant", "content": "I'll be your assistant for today" }
+]

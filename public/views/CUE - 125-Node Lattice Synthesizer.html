@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CUE - 125-Node Lattice Synthesizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+        }
+        canvas { 
+            display: block; 
+            width: 100%;
+            height: 100%;
+        }
+        /* Custom scrollbar for the log */
+        #log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        #log-container::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        #log-container::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        #log-container::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- Main Controls Panel -->
+    <div id="controls" class="absolute top-4 left-4 p-4 bg-gray-900 bg-opacity-80 backdrop-blur-sm text-white rounded-lg shadow-2xl w-80 md:w-96 space-y-4 z-10">
+        <h3 class="text-xl font-bold text-teal-300 border-b border-teal-500/30 pb-2">125-Node Synthesis</h3>
+        <p class="text-sm text-gray-400">Visualizing the emergence of a <b>vec100</b> collective from five discrete <b>vec50</b> agents within a 5x5x5 axiomatic space.</p>
+        
+        <div class="space-y-2 pt-2">
+            <label for="nodeSlider" class="block text-sm font-medium text-gray-300">Construction Progress: <span id="nodeCountLabel">0</span> / 125 Nodes</label>
+            <input type="range" id="nodeSlider" min="0" max="125" step="1" value="0" class="w-full">
+        </div>
+         <button id="resetBtn" class="w-full px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">Reset Synthesis</button>
+    </div>
+    
+    <!-- Event Log Panel -->
+    <div class="absolute bottom-4 right-4 p-4 bg-gray-900 bg-opacity-80 backdrop-blur-sm rounded-lg shadow-2xl w-80 md:w-96 h-1/2 md:h-2/3 z-10 flex flex-col">
+        <h4 class="text-lg font-semibold text-teal-300 border-b border-teal-500/30 pb-2 mb-2">Synthesis Event Log</h4>
+        <div id="log-container" class="flex-grow overflow-y-auto pr-2 space-y-2">
+            <!-- Log messages will be injected here -->
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script>
+        // --- UTILITIES & SETUP ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0a0a0a);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        camera.position.set(0, 0, 12);
+        controls.update();
+
+        const ambientLight = new THREE.AmbientLight(0xcccccc, 0.5);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 10, 7);
+        scene.add(directionalLight);
+
+        const logContainer = document.getElementById('log-container');
+        function logEvent(message, type = 'info') {
+            const colors = {
+                info: 'text-gray-300',
+                success: 'text-green-400',
+                build: 'text-purple-400'
+            };
+            const p = document.createElement('p');
+            p.className = `text-sm ${colors[type]}`;
+            p.innerHTML = `<span class="font-mono text-gray-500">${new Date().toLocaleTimeString()}:</span> ${message}`;
+            logContainer.prepend(p);
+            if (logContainer.children.length > 100) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        // --- CORE VISUALIZATION LOGIC ---
+        const vizState = {
+            synthesisGroup: new THREE.Group(),
+            potentialNodes: null,
+            activeNodes: null,
+            dodecaMeshes: [],
+            allVertices: [],
+            allIndices: [],
+            faceMap: []
+        };
+        scene.add(vizState.synthesisGroup);
+
+        function initializeSynthesis() {
+            vizState.synthesisGroup.clear();
+            vizState.dodecaMeshes = [];
+            vizState.allVertices = [];
+            vizState.allIndices = [];
+            vizState.faceMap = [];
+            logEvent('Initializing 125-node synthesis protocol...', 'success');
+
+            // 1. Place vec25 Genesis Point
+            const genesisGeo = new THREE.SphereGeometry(0.15, 32, 32);
+            const genesisMat = new THREE.MeshBasicMaterial({ color: 0xffffff, emissive: 0xffffff });
+            const genesisPoint = new THREE.Mesh(genesisGeo, genesisMat);
+            vizState.synthesisGroup.add(genesisPoint);
+            logEvent('Placed <b>vec25</b> Genesis Point at centroid.', 'info');
+
+            // 2. Define the meta-tetrahedron for the 4 outer agents
+            const metaTetraGeo = new THREE.TetrahedronGeometry(4);
+            const centers = [new THREE.Vector3(0, 0, 0)]; // Center agent
+            for (let i = 0; i < metaTetraGeo.attributes.position.count; i++) {
+                centers.push(new THREE.Vector3().fromBufferAttribute(metaTetraGeo.attributes.position, i));
+            }
+            logEvent('Defined <b>vec100</b> meta-structure for 5 agents.', 'info');
+
+            // 3. Generate geometry for the 5 dodecahedrons (vec50 agents)
+            const t = (1 + Math.sqrt(5)) / 2;
+            const r = 1 / t;
+            const dodecaVertices = [
+                -1, -1, -1,    -1, -1,  1,    -1,  1, -1,    -1,  1,  1,
+                 1, -1, -1,     1, -1,  1,     1,  1, -1,     1,  1,  1,
+                 0, -r, -t,     0, -r,  t,     0,  r, -t,     0,  r,  t,
+                -r, -t,  0,    -r,  t,  0,     r, -t,  0,     r,  t,  0,
+                -t,  0, -r,    -t,  0,  r,     t,  0, -r,     t,  0,  r
+            ].map(v => v * 1.5); // Scale vertices
+            
+            const dodecaIndices = [
+                3, 11,  7,  3,  7, 15,  3, 15, 13,  7, 19, 15,  7, 11, 19, 11,  3, 13,
+               15, 19,  5, 15,  5,  9, 15,  9, 13,  5, 19, 18,  5, 18,  1,  5,  1,  9,
+                1, 18, 17,  1, 17,  8,  1,  8,  9, 17, 18,  0, 17,  0,  2, 17,  2,  8,
+                0, 18, 16,  0, 16,  4,  0,  4,  2,  4, 16, 12,  4, 12, 14,  4, 14,  2,
+               14, 12,  6, 14,  6, 10, 14, 10,  2,  6, 12, 13,  6, 13, 15,  6, 15, 10,
+               13,  9,  8, 13,  8, 17, 13, 17, 12,  8,  2, 10,  8, 10, 14,  8, 14, 17
+            ];
+
+            let totalVertexCount = 0;
+
+            for (let i = 0; i < centers.length; i++) {
+                const center = centers[i];
+                // FIX: Use the raw dodecaVertices and dodecaIndices arrays directly
+                // instead of creating an intermediate PolyhedronGeometry object.
+                const vertices = dodecaVertices;
+                const indices = dodecaIndices;
+                
+                for (let j = 0; j < vertices.length; j += 3) {
+                    vizState.allVertices.push(vertices[j] + center.x, vertices[j+1] + center.y, vertices[j+2] + center.z);
+                }
+                
+                const remappedIndices = indices.map(idx => idx + totalVertexCount);
+                vizState.allIndices.push(...remappedIndices);
+
+                for (let k = 0; k < remappedIndices.length; k += 3) {
+                    vizState.faceMap.push(i);
+                }
+                
+                totalVertexCount += vertices.length / 3;
+            }
+            
+            for (let i = 0; i < 25; i++) {
+                const radius = 6;
+                const phi = Math.acos(2 * Math.random() - 1);
+                const theta = Math.random() * Math.PI * 2;
+                vizState.allVertices.push(
+                    radius * Math.sin(phi) * Math.cos(theta),
+                    radius * Math.sin(phi) * Math.sin(theta),
+                    radius * Math.cos(phi)
+                );
+            }
+
+            vizState.potentialNodes = new THREE.Group();
+            vizState.activeNodes = new THREE.Group();
+            const potentialMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
+            const activeMat = new THREE.MeshBasicMaterial({ color: 0x00ffaa });
+            const nodeGeo = new THREE.SphereGeometry(0.05, 8, 8);
+
+            for (let i = 0; i < vizState.allVertices.length; i += 3) {
+                const pNode = new THREE.Mesh(nodeGeo, potentialMat);
+                pNode.position.set(vizState.allVertices[i], vizState.allVertices[i+1], vizState.allVertices[i+2]);
+                vizState.potentialNodes.add(pNode);
+
+                const aNode = new THREE.Mesh(nodeGeo.clone().scale(2,2,2), activeMat);
+                aNode.position.copy(pNode.position);
+                aNode.visible = false;
+                vizState.activeNodes.add(aNode);
+            }
+            vizState.synthesisGroup.add(vizState.potentialNodes);
+            vizState.synthesisGroup.add(vizState.activeNodes);
+            logEvent(`Generated potential field of ${vizState.allVertices.length / 3} total nodes.`, 'info');
+
+            const colors = [0xaa00ff, 0x00aaff, 0xffaa00, 0x00ffaa, 0xff0066];
+            for (let i = 0; i < 5; i++) {
+                const mesh = new THREE.Mesh(
+                    new THREE.BufferGeometry(),
+                    new THREE.MeshPhongMaterial({
+                        color: colors[i], emissive: new THREE.Color(colors[i]).multiplyScalar(0.3), 
+                        side: THREE.DoubleSide, transparent: true, opacity: 0.7
+                    })
+                );
+                vizState.dodecaMeshes.push(mesh);
+                vizState.synthesisGroup.add(mesh);
+            }
+
+            updateSynthesis(0);
+        }
+
+        function updateSynthesis(count) {
+            vizState.activeNodes.children.forEach((node, i) => {
+                node.visible = i < count;
+            });
+
+            const allPositions = new Float32Array(vizState.allVertices);
+            
+            for(let i = 0; i < 5; i++) {
+                const mesh = vizState.dodecaMeshes[i];
+                const relevantFaces = [];
+                
+                for(let j = 0; j < vizState.faceMap.length; j++) {
+                    if (vizState.faceMap[j] === i) {
+                        const faceStartIndex = j * 3;
+                        const v1 = vizState.allIndices[faceStartIndex];
+                        const v2 = vizState.allIndices[faceStartIndex + 1];
+                        const v3 = vizState.allIndices[faceStartIndex + 2];
+
+                        if (v1 < count && v2 < count && v3 < count) {
+                            relevantFaces.push(v1, v2, v3);
+                        }
+                    }
+                }
+
+                if (relevantFaces.length > 0) {
+                    mesh.geometry.setAttribute('position', new THREE.BufferAttribute(allPositions, 3));
+                    mesh.geometry.setIndex(relevantFaces);
+                    mesh.geometry.computeVertexNormals();
+                } else {
+                    mesh.geometry = new THREE.BufferGeometry();
+                }
+            }
+            logEvent(`Activated ${count} of 125 nodes.`, 'build');
+        }
+        
+        // --- MAIN ANIMATION LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+            vizState.synthesisGroup.rotation.y += 0.001;
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        window.onload = function() {
+            initializeSynthesis();
+            
+            const slider = document.getElementById('nodeSlider');
+            const label = document.getElementById('nodeCountLabel');
+            slider.addEventListener('input', (e) => {
+                const count = parseInt(e.target.value);
+                label.textContent = `${count} / 125`;
+                updateSynthesis(count);
+            });
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                slider.value = 0;
+                label.textContent = '0 / 125';
+                initializeSynthesis();
+            });
+            
+            animate();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+    "nodes":[
+	{
+	    "id": "action"
+	},
+	{
+	    "id": "actor"
+	},
+	
+	{
+	    "id": "object"
+	},
+	{
+	    "id": "objective"
+	},
+	{
+	    "id": "observer"
+	},
+
+	
+	{
+	    "id": "bias"
+	}
+    ],
+    "links":[
+	{
+	    "source": "object",
+	    "target": "objective"
+	},
+	{
+	    "source": "objective",
+	    "target": "observer"
+	},
+	{
+	    "source": "observer",
+	    "target": "object"
+	},
+
+	
+	{
+	    "source": "object",
+	    "target": "bias"
+	},
+	{
+	    "source": "objective",
+	    "target": "bias"
+	},
+	{
+	    "source": "observer",
+	    "target": "bias"
+	},
+
+	
+	{
+	    "source": "actor",
+	    "target": "bias"
+	},
+	{
+	    "source": "action",
+	    "target": "bias"
+	}
+    ]
+}

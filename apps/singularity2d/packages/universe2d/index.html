@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universe 2D - Create and propagate Unity 2D networks</title>
+  <link rel="manifest" href="manifest.webapp" />
+  <link rel="stylesheet" href="modules/easymde/easymde.min.css">
+  <link rel="stylesheet" href="modules/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="styles/app.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="display: flex;flex-direction: column;width: 100%;">
+  <section class="wrapper">
+    <section class="continer" style="flex-grow: 1;background-color: transparent;">
+      <header>
+        <h1>Universe 2D</h1>
+        <p>Web dictaphone</p>
+      </header>
+      <main id="main-section">
+        <section class="container" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+          <div id="force-graph"></div>
+        </section>
+        <div class="container wrapper" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+          <header id="node-header" style="height: min-content;">
+            <p id="node-details">
+              <span id="node-title">Record or generate entity</span>
+              <span id="node-summary"></span>
+              <span id="node-description"></span>
+              <span id="node-timestamp"></span>
+            </p>
+            <div id="node-tags">
+              <span class="badge rounded-pill text-bg-light">Title: <span>untitled</span></span>
+            </div>
+          </header>
+
+          <section class="main-controls">
+            <canvas class="visualizer" height="60px"></canvas>
+            <div id="buttons">
+              <button class="record">Record</button>
+              <button class="stop">Stop</button>
+            </div>
+          </section>
+          <section class="container" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+            <form id="node-input-form" style="display: flex;">
+              <select id="node-parent-select" class="stop form-control" style="width: fit-content;">
+                <option value="" selected>Parent</option>
+                <!-- <option value="">Root</option> -->
+              </select>
+              <input id="node-input" class="record form-control" style="flex-grow: 1;" type="text"></input>
+              <button id="node-input-button" class="stop" style="width: fit-content;">Submit</button>
+            </form>
+          </section>
+        </div>
+      </main>
+    </section>
+    <label for="toggle">❔</label>
+    <input type="checkbox" id="toggle">
+    <aside style="background-color: rgba(0,0,0,.75);display: flex;flex-direction: column;">
+      <div class="text-center">
+        <h1>Graph Controller</h1>
+        <p>Node: <span>no node selected</span></p>
+      </div>
+      <section class="container" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+        <h1>Phrase matcher</h1>
+        <p>Press the button then say the phrase to test the recognition.</p>
+
+        <button>Start new test</button>
+        <div>
+          <p class="phrase">Phrase...</p>
+          <p class="result">Right or wrong?</p>
+          <p class="output">...diagnostic messages</p>
+        </div>
+      </section>
+      <section class="container" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+        <h1>Speech color changer</h1>
+        <p class="hints"></p>
+        <div>
+          <p class="output"><em>...diagnostic messages</em></p>
+        </div>
+      </section>
+      <section class="sound-clips">
+
+      </section>
+      <section class="container" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+        <h1>Word List</h1>
+        <ul id="word-list">
+        </ul>
+      </section>
+      <section class="container" style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+        <h1>Ollama Chat</h1>
+        <div class="container" id="chat-container"></div>
+      </section>
+      <section class="container" style="background-color: transparent;border-width: 12px;display: flex;">
+        <button class="btn btn-outline-light">
+          <img src="public/src/images/id.png" alt="Login" style="filter: invert(100%);" width="64px" height="64px">
+        </button>
+        <form action="http://localhost:33333/login" method="post" class="form container">
+          <input type="email" name="username" id="username" placeholder="username" class="form-control" />
+          <input type="password" name="password" id="password" placeholder="password" class="form-control" />
+          <button type="submit" class="btn btn-outline-light" style="float: right;">Submit</button>
+          <button type="reset" class="btn btn-outline-warning" style="float: right;">Reset</button>
+        </form>
+      </section>
+    </aside>
+  </section>
+
+  <section style="flex-grow: 1;background-color: transparent;border-width: 12px;">
+    <canvas id="life" width="480" height="640" style="position: fixed;top: 0;left: 0;z-index: -1;"></canvas>
+  </section>
+  <script type="module" src="dist/app/app.js"></script>
+</body>
+
+</html>

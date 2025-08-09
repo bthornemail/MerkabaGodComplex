@@ -1,0 +1,370 @@
+const types = {
+	"CIDv1": [
+		{
+			"name": "link",
+			"type": "string"
+		}
+	],
+	"Person": [
+		{
+			"name": "name",
+			"type": "string"
+		},
+		{
+			"name": "wallet",
+			"type": "address"
+		}
+	],
+	"Token": [
+		{
+			"name": "wallet",
+			"type": "address"
+		},
+		{
+			"name": "value",
+			"type": "uint256"
+		}
+	],
+	"Delegate": [
+		{
+			"name": "signature",
+			"type": "signature"
+		},
+		{
+			"name": "ref",
+			"type": "CIDv1"
+		},
+		{
+			"name": "wallet",
+			"type": "address"
+		}
+	],
+	"Agreement": [
+		{
+			"name": "ref",
+			"type": "CIDv1"
+		},
+		{
+			"name": "requirements",
+			"type": "CIDv1"
+		},
+		{
+			"name": "signers",
+			"type": "address[]"
+		},
+		{
+			"name": "signatures",
+			"type": "signature[]"
+		},
+		{
+			"name": "arbitrators",
+			"type": "address[]"
+		}
+	],
+	"Requirement": [
+		{
+			"name": "address",
+			"type": "address"
+		},
+		{
+			"name": "value",
+			"type": "uint256"
+		}
+	],
+	"Escrow": [
+		{
+			"name": "requirements",
+			"type": "Requirement[]"
+		},
+		{
+			"name": "agreements",
+			"type": "Agreement[]"
+		}
+	],
+	"Listing": [
+		{
+			"name": "person",
+			"type": "Person"
+		},
+		{
+			"name": "ref",
+			"type": "address"
+		},
+		{
+			"name": "signature",
+			"type": "signature"
+		},
+		{
+			"name": "requirements",
+			"type": "CIDv1[]"
+		}
+	],
+	"Asset": [
+		{
+			"name": "name",
+			"type": "string"
+		},
+		{
+			"name": "registration",
+			"type": "CIDv1"
+		}
+	],
+	"Registration": [
+		{
+			"name": "asset",
+			"type": "Asset"
+		},
+		{
+			"name": "signature",
+			"type": "signature"
+		}
+	],
+	"Trade": [
+		{
+			"name": "to",
+			"type": "address"
+		},
+		{
+			"name": "from",
+			"type": "address"
+		},
+		{
+			"name": "asset",
+			"type": "Asset"
+		}
+	],
+	"Loan": [
+		{
+			"name": "wallet",
+			"type": "address"
+		},
+		{
+			"name": "asset",
+			"type": "Asset"
+		}
+	],
+	"Asset_Manager": [
+		{
+			"name": "trades",
+			"type": "Trade[]"
+		},
+		{
+			"name": "loans",
+			"type": "Loan[]"
+		}
+	],
+	"Question": [
+		{
+			"name": "title",
+			"type": "string"
+		},
+		{
+			"name": "summary",
+			"type": "string"
+		}
+	],
+	"Answer": [
+		{
+			"name": "signature",
+			"type": "string"
+		}
+	],
+	"Test": [
+		{
+			"name": "question",
+			"type": "Question"
+		},
+		{
+			"name": "answer",
+			"type": "Answer"
+		},
+		{
+			"name": "description",
+			"type": "CIDv1"
+		}
+	],
+	"Task": [
+		{
+			"name": "question",
+			"type": "Question"
+		},
+		{
+			"name": "delegate",
+			"type": "Delegate"
+		},
+		{
+			"name": "description",
+			"type": "CIDv1"
+		}
+	],
+	"Exam": [
+		{
+			"name": "test",
+			"type": "Test[]"
+		},
+		{
+			"name": "task",
+			"type": "Task[]"
+		},
+		{
+			"name": "description",
+			"type": "CIDv1"
+		}
+	],
+	"Course": [
+		{
+			"name": "title",
+			"type": "string"
+		},
+		{
+			"name": "summary",
+			"type": "string"
+		},
+		{
+			"name": "description",
+			"type": "CIDv1"
+		},
+		{
+			"name": "exams",
+			"type": "Exam[]"
+		}
+	],
+	"Achievement": [
+		{
+			"name": "student",
+			"type": "Registration"
+		},
+		{
+			"name": "results",
+			"type": "CIDv1"
+		}
+	],
+	"Assessment": [
+		{
+			"name": "student",
+			"type": "Registration"
+		},
+		{
+			"name": "results",
+			"type": "CIDv1"
+		}
+	],
+	"Transcript": [
+		{
+			"name": "student",
+			"type": "Registration"
+		},
+		{
+			"name": "signature",
+			"type": "signature"
+		},
+		{
+			"name": "results",
+			"type": "CIDv1"
+		}
+	],
+	"Enrollment": [
+		{
+			"name": "wallet",
+			"type": "address"
+		},
+		{
+			"name": "course",
+			"type": "Course"
+		}
+	],
+	"Submission": [
+		{
+			"name": "wallet",
+			"type": "address"
+		},
+		{
+			"name": "course",
+			"type": "Course"
+		},
+		{
+			"name": "signature",
+			"type": "signature"
+		}
+	],
+	"Knowledge_Board": [
+		{
+			"name": "registry",
+			"type": "Registration[]"
+		},
+		{
+			"name": "transcripts",
+			"type": "Transcript[]"
+		}
+	],
+	"Service": [
+		{
+			"name": "title",
+			"type": "string"
+		},
+		{
+			"name": "summary",
+			"type": "string"
+		},
+		{
+			"name": "description",
+			"type": "CIDv1"
+		}
+	],
+	"Post": [
+		{
+			"name": "service",
+			"type": "Service"
+		},
+		{
+			"name": "value",
+			"type": "uint256"
+		}
+	],
+	"Announcement": [
+		{
+			"name": "service",
+			"type": "Service"
+		}
+	],
+	"Consideration": [
+		{
+			"name": "service",
+			"type": "Service"
+		},
+		{
+			"name": "min",
+			"type": "uint256"
+		},
+		{
+			"name": "max",
+			"type": "uint256"
+		}
+	],
+	"Service_Board": [
+		{
+			"name": "post",
+			"type": "Post[]"
+		},
+		{
+			"name": "consideration",
+			"type": "Consideration[]"
+		},
+		{
+			"name": "announcement",
+			"type": "Announcement[]"
+		}
+	]
+}
+const schema: typeof types = types
+const schemaReturn: any = {}
+for (let i = 0; i < Object.keys(schema).length; i++) {
+	schemaReturn[Object.keys(schema)[i]] = {}
+	for (let v = 0; v < Object.values(schema).length; v++) {
+		if(Object.values(schema)[v])(
+			console.log(Object.entries(schema)[v])
+		)
+		schemaReturn[Object.keys(schema)[i]] = Object.values(schema)[v]
+	}
+}
+console.log(schemaReturn)

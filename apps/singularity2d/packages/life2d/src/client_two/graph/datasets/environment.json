@@ -1,0 +1,33 @@
+{
+    "nodes":[
+	{ "id":"Person", "encoding":"Person" },
+	{ "id":"Path", "encoding":"String" },
+
+	{ "id":"Bytes", "encoding":"Bytes" },
+	{ "id":"String", "encoding":"Bytes" },
+	{ "id":"Function", "encoding":"String" },
+	
+	{ "id":"Encode", "encoding":"Function" },
+	
+	{ "id":"Set", "encoding":"Function" },
+	{ "id":"Post", "encoding":"Function" },
+	{ "id":"Get", "encoding":"Function" },
+	{ "id":"View", "encoding":"Function" },
+
+	{ "id":"Environment", "encoding":"Typescript" }
+    ],
+    "links":[
+	{ "source":"Person", "target":"Environment"},
+	
+	{ "source":"Bytes", "target":"Encode"},
+	{ "source":"String", "target":"Encode"},
+	{ "source":"Function", "target":"Encode"},
+	{ "source":"Encode", "target":"Environment" },
+	
+	{ "source":"Set", "target":"Path" },
+	{ "source":"Post", "target":"Path" },
+	{ "source":"Get", "target":"Path" },
+	{ "source":"View", "target":"Path" },
+	{ "source":"Path", "target":"Environment"}
+    ]
+}

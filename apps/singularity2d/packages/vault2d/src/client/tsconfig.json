@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist", // Compiled output folder
+    "strict": true, // Enable strict type-checking options
+    "esModuleInterop": true, // Compatibility with CommonJS modules
+    "skipLibCheck": true, // Skip type checking for declaration files
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true, // Enables importing JSON files
+    "allowSyntheticDefaultImports": true, // Supports default imports from CommonJS modules
+    "allowJs": true,
+    "lib": ["DOM"] // Include both server-side and DOM libs if you're also working with the client
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist","public/modules","public/src"]
+}

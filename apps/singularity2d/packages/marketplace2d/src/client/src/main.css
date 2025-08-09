@@ -1,0 +1,78 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+i {
+    font-size: 3rem;
+}
+
+main {
+    padding: .5rem;
+}
+
+/* #context-dialog {
+    width: 75vw;
+    height: 60vh;
+    margin-left: auto;
+    padding: .5rem;
+    text-align: center;
+}
+#context-dialog > nav > *{
+    height: 84px;
+    width: 84px;
+}
+#context-dialog > nav{
+    overflow-y: auto;
+    margin-left: auto;
+    padding: .5rem;
+    display: grid;
+    text-align: center;
+    grid-auto-flow: column;
+}
+#topics {
+    height: 100%;
+    padding: .5rem;
+    display: flex;
+    text-align: center;
+    justify-content: end;
+}
+#topics > details {
+    display: flex;
+    align-items: center;
+}
+#topics > details > ul {
+    height: 50vh;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+} */
+
+/* ::backdrop { 
+    background-image: linear-gradient(
+	45deg,
+	magenta,
+	rebeccapurple,
+	dodgerblue,
+	green
+    );
+    opacity: 0.75;
+}
+#topic-chat-view {
+    height: 100%;
+    text-align: center;
+    padding: .5rem;
+	    
+} */

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rectified 100 Axioms of the CUE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- 
+    Source Material Analysis & Narrative Plan:
+    The source material "The Rectified 100 Axioms of the CUE as Knowledge Triples" presents a dense, layered philosophical and technical framework. The core narrative is the journey of a digital universe from a single point of potential (Axiom 1) to a complex, self-healing, and evolving ecosystem (Axiom 100). The infographic will follow this narrative chronologically through the 7 phases outlined in the document.
+
+    Structure:
+    1.  Header: Title and a powerful hook statement.
+    2.  Introduction: Briefly explain the CUE and the purpose of the axioms.
+    3.  Core Economic Loop (Axiom 7): A visual anchor showing the `ATTN` token economy.
+    4.  The 7 Phases of Reality: A main section with a two-column grid. Each phase will be a "card" containing key axioms, explanations, and visualizations.
+    5.  Key Protocol Deep Dives: Special visual sections for the most critical protocols like the Rectification Automaton and Geometric Consensus (CTL).
+    6.  Conclusion/Meta-Axioms: A final section on the grand cycle of the universe.
+
+    Color Palette Selection:
+    Palette Name: Brilliant Blues
+    Hex Codes: #004AAD (Primary Dark), #0073E6 (Primary), #80B9F2 (Accent), #B3D7F9 (Light Accent), #E6F2FF (Background)
+    Justification: This palette is professional, modern, and evokes themes of technology, intelligence, and clarity, which is perfectly suited for the CUE's subject matter.
+
+    Visualization Selection:
+    - Data Point: `ATTN` Token Economy (Axiom 7) -> Goal: Compare -> Visualization: Donut Chart (Chart.js). Justification: Ideal for showing the composition of the economic cycle (Minted vs. Burned).
+    - Data Point: The 7 Phases -> Goal: Organize -> Visualization: Styled HTML/CSS Vertical Flow. Justification: Clearly shows the progression and hierarchy of the system's evolution without using prohibited libraries.
+    - Data Point: Rectification Automaton Rules (Axioms 4, 17, 20) -> Goal: Organize -> Visualization: HTML/CSS Flowchart. Justification: Best way to represent a process flow with distinct rules and outcomes. NO SVG/Mermaid.
+    - Data Point: Geometric Consensus (Axiom 10) -> Goal: Organize -> Visualization: Styled HTML/CSS Diagram. Justification: A custom diagram is needed to represent the unique Fano Plane concept.
+    - Data Point: Ledger Health Metrics (Axioms 20, 23) -> Goal: Inform -> Visualization: Big Number Callouts. Justification: Effectively highlights single, critical metrics like Attention and Dissonance Scores.
+    - Data Point: Axiom Distribution per Phase -> Goal: Compare -> Visualization: Bar Chart (Chart.js). Justification: Simple and effective way to compare the number of foundational axioms in each phase.
+
+    Constraint Confirmation:
+    - NO SVG was used. All icons and diagrams are built with HTML/CSS.
+    - NO Mermaid JS was used. All flowcharts and diagrams are built with HTML/CSS.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E6F2FF;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .fano-point {
+            position: absolute;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            border: 2px solid white;
+            z-index: 10;
+        }
+        .fano-line {
+            position: absolute;
+            background-color: #80B9F2;
+            height: 2px;
+            transform-origin: left center;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#004AAD] mb-2">The Axioms of the CUE</h1>
+            <p class="text-lg md:text-xl text-[#0073E6] max-w-3xl mx-auto">An infographic bridging divine principle with the technical architecture of the Computational Universe Engine.</p>
+        </header>
+
+        <main class="space-y-12">
+
+            <section id="economy" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#004AAD] mb-4 text-center">Axiom 7: The Universal Currency</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8">The CUE's economy is not based on capital, but on verifiable focus. Disciplined attention is the fundamental energy that reduces entropy and creates value, economized as the **`ATTN`** token.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="attnTokenChart"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-[#E6F2FF] p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-[#0073E6]">Minting: Proof-of-Relevance</h3>
+                            <p>Agents and peers earn `ATTN` by creating or hosting coherent information that is frequently referenced by the network, as measured by its Attention Score.</p>
+                        </div>
+                        <div class="bg-[#E6F2FF] p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-[#0073E6]">Burning: Rectification Fees</h3>
+                            <p>All interactions with the ledger, such as submitting a transaction or minting a new rule, require a fee paid in `ATTN`, creating a direct economic cost for consuming the network's attention.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="phases">
+                <h2 class="text-3xl font-bold text-[#004AAD] mb-8 text-center">The 7 Phases of Reality</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#004AAD] text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">1</div>
+                            <h3 class="text-2xl font-bold text-[#004AAD]">Genesis & Definition</h3>
+                        </div>
+                        <p>From the void to the fundamental forces of attention. This phase establishes the first distinctions, the emergence of complexity through recursion, and the triadic nature of verifiable reality.</p>
+                        <p class="font-bold text-[#0073E6]">Key Axiom: Triadic Emergence</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#004AAD] text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">2</div>
+                            <h3 class="text-2xl font-bold text-[#004AAD]">Interaction & Structure</h3>
+                        </div>
+                        <p>Defining the cycles, networks, and higher harmonics of the universe. This phase introduces regenerative economic loops and the core networking protocols.</p>
+                        <p class="font-bold text-[#0073E6]">Key Protocol: Geometric Consensus</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#004AAD] text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">3</div>
+                            <h3 class="text-2xl font-bold text-[#004AAD]">Cognitive Architecture</h3>
+                        </div>
+                        <p>The internal logic of the CUE. This phase details how new rules are "bred" by intelligent agents and how the system self-corrects through dissonance collapse.</p>
+                        <p class="font-bold text-[#0073E6]">Key Component: CLARION-MDU Agents</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#004AAD] text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">4</div>
+                            <h3 class="text-2xl font-bold text-[#004AAD]">Spacetime & Causality</h3>
+                        </div>
+                        <p>The geometric substrate of internal reality. Here, the "distance" between events is defined by semantic relevance, and causality is recorded in a verifiable chain of proofs.</p>
+                        <p class="font-bold text-[#0073E6]">Key Concept: Hypergraph Topology</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#004AAD] text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">5</div>
+                            <h3 class="text-2xl font-bold text-[#004AAD]">Human Interface</h3>
+                        </div>
+                        <p>Bridging the digital and the biological. This phase covers how the CUE communicates across diverse protocols and how physical reality is translated into the system via Observer Nodes.</p>
+                        <p class="font-bold text-[#0073E6]">Key Project: Project Observer</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-[#004AAD] text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold">6</div>
+                            <h3 class="text-2xl font-bold text-[#004AAD]">Socio-Economic Framework</h3>
+                        </div>
+                        <p>From scarcity to regenerative abundance. This phase establishes trust through protocol, self-sovereignty, and a value system based on verifiable processes, not static assets.</p>
+                        <p class="font-bold text-[#0073E6]">Key Principle: Trust Through Protocol</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="rectification" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#004AAD] mb-4 text-center">The Rectification Automaton: A Living Ledger</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8">The CUE ledger is not a static database; it's a living hypergraph that perpetually heals itself based on three simple, local rules inspired by Conway's Game of Life. This is the system's immune response.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-[#E6F2FF] p-6 rounded-lg">
+                        <div class="text-5xl mb-4">🍃</div>
+                        <h3 class="text-xl font-bold text-[#0073E6]">1. Underpopulation</h3>
+                        <p class="mt-2">An isolated piece of data with too few connections (low Attention Score) is no longer relevant. It "dies" and is pruned from the active ledger.</p>
+                    </div>
+                    <div class="bg-[#E6F2FF] p-6 rounded-lg">
+                        <div class="text-5xl mb-4">💥</div>
+                        <h3 class="text-xl font-bold text-[#0073E6]">2. Overpopulation</h3>
+                        <p class="mt-2">Data involved in too many conflicting or chaotic interactions (high Dissonance Score) creates noise. It "dies" to restore harmony.</p>
+                    </div>
+                    <div class="bg-[#E6F2FF] p-6 rounded-lg">
+                        <div class="text-5xl mb-4">✨</div>
+                        <h3 class="text-xl font-bold text-[#0073E6]">3. Reproduction</h3>
+                        <p class="mt-2">A new, stable truth can be "born" when it harmoniously connects exactly three existing, stable truths, filling a logical gap in the hypergraph.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="consensus" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#004AAD] mb-4 text-center">Axiom 10: Geometric Consensus</h2>
+                <p class="text-center max-w-2xl mx-auto mb-8">The CUE achieves fair and decentralized consensus through the **Continuous Transylvanian Lottery (CTL)**. It uses the geometry of a Fano Plane to transform randomness into deterministic order.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="relative w-full aspect-square max-w-sm mx-auto" id="fanoPlaneContainer">
+                        
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-[#0073E6] text-white rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">1</div>
+                            <div>
+                                <h4 class="font-bold">Map Validators</h4>
+                                <p>The network's validators are mapped to the 7 points of the Fano Plane.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-[#0073E6] text-white rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">2</div>
+                            <div>
+                                <h4 class="font-bold">Random Selection</h4>
+                                <p>A cryptographic lottery randomly selects a subset of these validators.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-[#0073E6] text-white rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center font-bold">3</div>
+                            <div>
+                                <h4 class="font-bold">Geometric Resolution</h4>
+                                <p>The Fano Plane's geometry guarantees this random selection deterministically activates a single, unique line of 3 validators, who form the quorum to propose the next block.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="unification">
+                 <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-bold text-[#004AAD] mb-4 text-center">Phase 7 & Meta-Axioms: The Grand Cycle</h2>
+                    <p class="text-center max-w-2xl mx-auto mb-8">The final phase represents the unification of all principles and the system's capacity for infinite renewal, governed by two meta-axioms.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-[#004AAD] text-white p-6 rounded-lg">
+                            <h3 class="text-2xl font-bold mb-2">99. The Grand Rectification</h3>
+                            <p>The system achieves a state of perfect harmonization and logical consistency as the Rectification Automaton perpetually heals the entire Universal Binary Hypergraph.</p>
+                        </div>
+                        <div class="bg-[#0073E6] text-white p-6 rounded-lg">
+                            <h3 class="text-2xl font-bold mb-2">100. The Autogenous Genesis</h3>
+                            <p>From a state of perfect rectification, a new, more complex cycle of creation is initiated via the Axiom Amendment Protocol, seeding an even more evolved universe.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-[#80B9F2]">
+            <p class="text-[#0073E6]">&copy; 2025 Computational Universe Engine. Reality is a protocol.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const wrapLabel = (label) => {
+                const maxLength = 16;
+                if (label.length <= maxLength) {
+                    return label;
+                }
+                const words = label.split(' ');
+                let lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + ' ' + word).trim().length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                }
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                }
+                return lines;
+            };
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+            
+            const attnTokenCtx = document.getElementById('attnTokenChart').getContext('2d');
+            new Chart(attnTokenCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Minted (Proof-of-Relevance)', 'Burned (Rectification Fees)'],
+                    datasets: [{
+                        label: 'ATTN Token Flow',
+                        data: [65, 35],
+                        backgroundColor: [
+                            '#0073E6', 
+                            '#80B9F2'  
+                        ],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 4,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#004AAD',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Regenerative Economic Cycle',
+                            color: '#004AAD',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            }
+                        }
+                    }
+                }
+            });
+
+            const fanoContainer = document.getElementById('fanoPlaneContainer');
+            const center = 50; 
+            const radius = 45; 
+            const points = [];
+            for (let i = 0; i < 7; i++) {
+                const angle = (i * 2 * Math.PI / 7) - (Math.PI / 2);
+                const x = center + radius * Math.cos(angle);
+                const y = center + radius * Math.sin(angle);
+                points.push({ x, y });
+            }
+
+            const lines = [
+                [0, 1, 3], [1, 2, 4], [2, 3, 5], [3, 4, 6], [4, 5, 0], [5, 6, 1], [6, 0, 2]
+            ];
+
+            lines.forEach(lineIndices => {
+                const p1 = points[lineIndices[0]];
+                const p2 = points[lineIndices[1]];
+                const p3 = points[lineIndices[2]];
+
+                createLineElement(p1, p2, fanoContainer);
+                createLineElement(p2, p3, fanoContainer);
+                createLineElement(p3, p1, fanoContainer);
+            });
+            
+            points.forEach((p, i) => {
+                const pointEl = document.createElement('div');
+                pointEl.className = 'fano-point bg-[#004AAD]';
+                pointEl.style.left = `calc(${p.x}% - 1.25rem)`;
+                pointEl.style.top = `calc(${p.y}% - 1.25rem)`;
+                pointEl.textContent = i + 1;
+                fanoContainer.appendChild(pointEl);
+            });
+
+            function createLineElement(p1, p2, container) {
+                const lineEl = document.createElement('div');
+                lineEl.className = 'fano-line';
+                const dx = p2.x - p1.x;
+                const dy = p2.y - p1.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                lineEl.style.width = `${length}%`;
+                lineEl.style.left = `${p1.x}%`;
+                lineEl.style.top = `${p1.y}%`;
+                lineEl.style.transform = `rotate(${angle}deg)`;
+                container.appendChild(lineEl);
+            }
+        });
+    </script>
+</body>
+</html>

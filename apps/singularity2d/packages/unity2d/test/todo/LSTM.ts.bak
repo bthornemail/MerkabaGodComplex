@@ -1,0 +1,190 @@
+// Define the LSTM class
+export class LSTMNetwork {
+
+    inputSize: number;
+    hiddenSize: number;
+    outputSize: number;
+
+    // Initialize LSTM parameters
+    Wf: number[][];
+    Wi: number[][];
+    Wc: number[][];
+    Wo: number[][];
+    Wy: number[][];
+
+    bf: number[];
+    bi: number[];
+    bc: number[];
+    bo: number[];
+    by: number[];
+    constructor(inputSize: number, hiddenSize: number, outputSize: number) {
+        this.inputSize = inputSize;
+        this.hiddenSize = hiddenSize;
+        this.outputSize = outputSize;
+
+        // Initialize LSTM parameters
+        this.Wf = this.initializeWeights(hiddenSize + inputSize, hiddenSize);
+        this.Wi = this.initializeWeights(hiddenSize + inputSize, hiddenSize);
+        this.Wc = this.initializeWeights(hiddenSize + inputSize, hiddenSize);
+        this.Wo = this.initializeWeights(hiddenSize + inputSize, hiddenSize);
+        this.Wy = this.initializeWeights(hiddenSize, outputSize);
+
+        this.bf = this.initializeBias(hiddenSize);
+        this.bi = this.initializeBias(hiddenSize);
+        this.bc = this.initializeBias(hiddenSize);
+        this.bo = this.initializeBias(hiddenSize);
+        this.by = this.initializeBias(outputSize);
+    }
+
+    // Initialize weights with random values
+    initializeWeights(inputSize: number, outputSize: number) {
+        const weights: number[][] = [];
+        for (let i = 0; i < outputSize; i++) {
+            const row: number[] = [];
+            for (let j = 0; j < inputSize; j++) {
+                row.push(Math.random() * 2 - 1);
+            }
+            weights.push(row);
+        }
+        return weights;
+    }
+
+    // Initialize bias with random values
+    initializeBias(size: number) {
+        return Array.from({ length: size }, () => Math.random() * 2 - 1);
+    }
+
+    // LSTM forward pass
+    forward(inputs: number[], prevHiddenState: number[], prevCellState: number[]) {
+        const concatInputHidden = [...inputs, ...prevHiddenState];
+        const forgetGate = this.sigmoid(this.matrixVectorMultiply(concatInputHidden, this.Wf, this.bf));
+        const inputGate = this.sigmoid(this.matrixVectorMultiply(concatInputHidden, this.Wi, this.bi));
+        const cellGate = this.tanh(this.matrixVectorMultiply(concatInputHidden, this.Wc, this.bc));
+        const outputGate = this.sigmoid(this.matrixVectorMultiply(concatInputHidden, this.Wo, this.bo));
+
+        const cellState = this.elementwiseMultiply(forgetGate, prevCellState).map((val, i) => val + inputGate[i] * cellGate[i]);
+        const hiddenState = this.elementwiseMultiply(outputGate, this.tanh(cellState));
+
+        const output = this.sigmoid(this.matrixVectorMultiply(hiddenState, this.Wy, this.by));
+        return [output, hiddenState, cellState];
+    }
+
+    // Activation functions
+    sigmoid(x: number[]) {
+        return x.map((val: number) => 1 / (1 + Math.exp(-val)));
+    }
+
+    tanh(x: number[]) {
+        return x.map((val: number) => Math.tanh(val));
+    }
+
+    // Matrix-vector multiplication
+    matrixVectorMultiply(vector: number[], matrix: number[][], bias: number) {
+        return matrix.map((row: number[]) => row.reduce((acc, val, i) => acc + val * vector[i], 0)).map((val, i) => val + bias[i]);
+    }
+
+    // Elementwise multiplication of two arrays
+    elementwiseMultiply(arr1:number[], arr2:number[]) {
+        return arr1.map((val: number, i: number) => val * arr2[i]);
+    }
+
+    // Export network weights and biases
+    exportParameters() {
+        return {
+            Wf: this.Wf,
+            Wi: this.Wi,
+            Wc: this.Wc,
+            Wo: this.Wo,
+            Wy: this.Wy,
+            bf: this.bf,
+            bi: this.bi,
+            bc: this.bc,
+            bo: this.bo,
+            by: this.by
+        };
+    }
+
+    // Load network weights and biases
+    loadParameters(parameters) {
+        this.Wf = parameters.Wf;
+        this.Wi = parameters.Wi;
+        this.Wc = parameters.Wc;
+        this.Wo = parameters.Wo;
+        this.Wy = parameters.Wy;
+        this.bf = parameters.bf;
+        this.bi = parameters.bi;
+        this.bc = parameters.bc;
+        this.bo = parameters.bo;
+        this.by = parameters.by;
+    }
+}
+
+// Evolutionary algorithm function
+function evolvePopulation(population: LSTMNetwork[],fitness: number, mutationRate: number) {
+    // // Evaluate fitness of each individual in the population
+    // population.forEach(individual => {
+    //     // Evaluate fitness of individual (e.g., based on performance on a task)
+    //     individual.fitness = Math.random(); // Placeholder for actual fitness evaluation
+    // });
+
+    // // Sort population by fitness
+    // population.sort((a, b) => b.fitness - a.fitness);
+
+    // Select individuals for reproduction (e.g., top 50%)
+    const selectedParents = population.slice(0, population.length / 2);
+
+    // Reproduce and mutate to create new generation
+    const newPopulation: LSTMNetwork[] = [];
+    for (let i = 0; i < population.length; i++) {
+        const parentA = selectedParents[Math.floor(Math.random() * selectedParents.length)];
+        const parentB = selectedParents[Math.floor(Math.random() * selectedParents.length)];
+        const child: LSTMNetwork = crossover(parentA, parentB);
+        // child.mutate(mutationRate);
+        newPopulation.push(child);
+    }
+
+    return newPopulation;
+}
+
+// Crossover function (for simplicity, just averaging weights)
+function crossover(parentA: LSTMNetwork, parentB: LSTMNetwork) {
+    const child = new LSTMNetwork(parentA.inputSize, parentA.hiddenSize, parentA.outputSize);
+    child.Wf = parentA.Wf.map((rowA, i) => rowA.map((_, j) => (parentA.Wf[i][j] + parentB.Wf[i][j]) / 2));
+    child.Wi = parentA.Wi.map((rowA, i) => rowA.map((_, j) => (parentA.Wi[i][j] + parentB.Wi[i][j]) / 2));
+    child.Wc = parentA.Wc.map((rowA, i) => rowA.map((_, j) => (parentA.Wc[i][j] + parentB.Wc[i][j]) / 2));
+    child.Wo = parentA.Wo.map((rowA, i) => rowA.map((_, j) => (parentA.Wo[i][j] + parentB.Wo[i][j]) / 2));
+    child.Wy = parentA.Wy.map((rowA, i) => rowA.map((_, j) => (parentA.Wy[i][j] + parentB.Wy[i][j]) / 2));
+    child.bf = parentA.bf.map((val, i) => (val + parentB.bf[i]) / 2);
+    child.bi = parentA.bi.map((val, i) => (val + parentB.bi[i]) / 2);
+    child.bc = parentA.bc.map((val, i) => (val + parentB.bc[i]) / 2);
+    child.bo = parentA.bo.map((val, i) => (val + parentB.bo[i]) / 2);
+    child.by = parentA.by.map((val, i) => (val + parentB.by[i]) / 2);
+    return child;
+}
+
+// Example usage
+const populationSize = 100;
+const mutationRate = 0.1;
+const numInputs = 2;
+const numHidden = 3;
+const numOutputs = 1;
+const maxGenerations  = 5;
+const fitness = .75;
+// Example usage
+let initialPopulation: LSTMNetwork[] = Array.from({ length: populationSize }, () => new LSTMNetwork(numInputs, numHidden, numOutputs));
+// console.log({initialPopulation});
+  
+// Evolutionary loop
+for (let generation = 1; generation <= maxGenerations; generation++) {
+//   console.log(`Generation ${generation}`);
+
+  // Evolve the population
+  const evolvedPopulation = evolvePopulation(initialPopulation, fitness,mutationRate);
+
+  // Replace old population with new generation
+  initialPopulation = evolvedPopulation;
+}
+
+// After evolution, you can evaluate and use the best individual from the final population for your task
+const bestIndividual = initialPopulation[0];
+console.log("Best individual:", bestIndividual);

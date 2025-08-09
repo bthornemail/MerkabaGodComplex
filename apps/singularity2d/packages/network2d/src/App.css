@@ -1,0 +1,63 @@
+.app {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+}
+/* // CSS (add to your stylesheet) */
+.label {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    transform: translateX(-50%);
+}
+
+.wallet,
+.semantic-universe,
+.quadrant,
+.graph-container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.semantic-universe {
+    height: calc(100vh - 15vh);
+    /* height: 82vh; */
+    overflow-y: auto;
+    justify-content: space-between;
+}
+li,
+/* ul, */
+/* .card-body, */
+.card {
+    background: rgba(0,0,0,0.15) !important;
+    color: white  !important;
+}
+input {
+    background: rgba(255,255,255,0.1) !important;
+    color: white  !important;
+}
+
+.accordion,
+.accordion,
+.accordion-collapse,
+.accordion-item,
+.accordion-header,
+.accordion-button,
+.accordion-body {
+    background: rgba(0,0,0,0.7) !important;
+    color: white  !important;
+}

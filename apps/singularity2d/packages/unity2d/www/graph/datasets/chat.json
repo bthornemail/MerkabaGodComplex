@@ -1,0 +1,34 @@
+{
+    "nodes":[
+	{ "id":"Publisher", "encoding":"Address" },
+	{ "id":"Publish", "encoding":"Function" },
+	{ "id":"Publication", "encoding":"Map" },
+
+	{ "id":"Subscriber", "encoding":"Address" },
+	{ "id":"Subscribe", "encoding":"String" },
+	{ "id":"Subscription", "encoding":"Map" },
+		
+	{ "id":"Client", "encoding":"Address" },
+	{ "id":"Message", "encoding":"String" },
+	{ "id":"Payload", "encoding":"CID" },
+	{ "id":"Broadcast", "encoding":"Function" },
+	{ "id":"Topic", "encoding":"String" },
+	{ "id":"Chat", "encoding":"String" }
+    ],
+    "links":[
+	{ "source":"Publisher", "target":"Publish" },
+	{ "source":"Publish", "target":"Publication" },
+	{ "source":"Publication", "target":"Topic" },
+	
+	{ "source":"Subscriber", "target":"Subscribe" },
+	{ "source":"Subscribe", "target":"Subscription"},
+	{ "source":"Subscription", "target":"Topic" },
+	
+
+	{ "source":"Client", "target":"Message" },
+	{ "source":"Message", "target":"Payload" },
+	{ "source":"Payload", "target":"Broadcast" },
+	{ "source":"Broadcast", "target":"Topic" },
+	{ "source":"Topic", "target":"Chat" }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "defaultACLAccess": {
+	"publishClientSend": true,
+	"publishClientReceive": true,
+	"subscribe": true,
+	"unsubscribe": true
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "domain": {
+	"name": "Marketplace 2D",
+	"version": "1"
+    },
+    "types": {
+	"Tokens": [
+	    {
+		"name": "wallet",
+		"type": "address"
+	    },
+	    {
+		"name": "value",
+		"type": "uint256"
+	    }
+	],
+	"Asset_Manager": [
+	    {
+		"name": "trades",
+		"type": "Trade[]"
+	    },
+	    {
+		"name": "loans",
+		"type": "Loan[]"
+	    }
+	    
+	],
+	"Knowledge_Board": [
+	    {
+		"name": "registry",
+		"type": "Registration[]"
+	    },
+	    {
+		"name": "transcripts",
+		"type": "Transcript"
+	    }
+	],
+	"Service_Board": [
+	    {
+		"name": "assets",
+		"type": "Asset[]"
+	    },
+	    {
+		"name": "inventory",
+		"type": "uint256"
+	    }
+	],
+	"Person": [
+	    {
+		"name": "name",
+		"type": "string"
+	    },
+	    { "name": "wallet",
+	      "type": "address"
+	    }
+	]
+    }
+}

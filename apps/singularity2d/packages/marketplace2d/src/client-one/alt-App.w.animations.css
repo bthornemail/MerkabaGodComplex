@@ -1,0 +1,286 @@
+/* Variables */
+:root {
+  --primary-color: #5b5fed;
+  --secondary-color: #b4239d;
+  --background-color: #ffffff;
+  --text-color: #1a1a1a;
+  --border-color: #3a3a3a;
+  --accent-color: linear-gradient(45deg, #5b5fed, #b4239d);
+}
+
+
+/* Header & Nav*/
+header, nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+header, .header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+.header h1,
+.header h2 {
+  margin: 0;
+}
+
+/* Main Content */
+.home-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+nav, .nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  min-width: 60%;
+}
+.nav-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.nav-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Footer */
+.footer {
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  text-align: center;
+}
+
+/* Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.connect-wallet-placeholder {
+  height: 44px; /* Adjust this based on the height of the ConnectWallet component */
+}
+
+/* Components */
+/* ... (All your component styles) */
+/* Connect Wallet */
+.connect-wallet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.connect-wallet h1 {
+  margin-right: 1rem;
+}
+
+/* NFT Card */
+.nft-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.nft-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.nft-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.nft-card-body {
+  font-size: 1rem;
+}
+
+/* VertCoin, ExamNFT, ServiceNFT, AssetNFT (NFT Detail Pages) */
+.nft-detail {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.nft-detail img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.nft-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nft-detail-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.nft-detail-description {
+  font-size: 1.2rem;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 767px) {
+  .nft-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Utility Classes */
+/* ... (Any utility classes you might want to add) */
+/* Utility Classes */
+
+/* Fade In */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Fade Out */
+.fade-out {
+  animation: fadeOut 0.3s ease-in-out both;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Scale In */
+.scale-in {
+  animation: scaleIn 0.3s ease-in-out both;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Scale Out */
+.scale-out {
+  animation: scaleOut 0.3s ease-in-out both;
+}
+
+@keyframes scaleOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+/* Slide In (Left) */
+.slide-in-left {
+  animation: slideInLeft 0.3s ease-in-out both;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide Out (Left) */
+.slide-out-left {
+  animation: slideOutLeft 0.3s ease-in-out both;
+}
+
+@keyframes slideOutLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Slide In (Right) */
+.slide-in-right {
+  animation: slideInRight 0.3s ease-in-out both;
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide Out (Right) */
+.slide-out-right {
+  animation: slideOutRight 0.3s ease-in-out both;
+}
+
+@keyframes slideOutRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

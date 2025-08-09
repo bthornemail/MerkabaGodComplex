@@ -1,0 +1,30 @@
+{
+  "name": "@singularity/ledger2d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "calc.ts",
+  "scripts": {
+    "prestart": "clear" ,
+    "start": "concurrently  -c \"auto\"  \"yarn:redis\" \"yarn:server\"" ,
+    "predev": "clear" ,
+    "dev": "concurrently  -c \"auto\"  \"yarn:redis\" \"yarn:server\" \"yarn:client\"" ,
+    "redis": "redis-server",
+    "server": "tsx watch calc.ts",
+    "client": "cd public && live-server",
+    "test": "jest -w --verbose --detectOpenHandles"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@noble/secp256k1": "^2.1.0",
+    "ethers": "^6.13.2",
+    "ioredis": "^5.3.2",
+    "jest": "^29.5.0",
+    "openai": "^3.3.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "ts-jest": "^29.1.0"
+  }
+}

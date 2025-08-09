@@ -1,0 +1,26 @@
+---
+"id": "0x"
+"source": "Wallet"
+"target": "token:0x4343242342342343242343232"
+...
+---
+"id": "0x"
+"source": "Wallet"
+"target": "asset:0x1232321323213"
+...
+---
+"id": "0x"
+"source": "Wallet"
+"target": "agreement:0x1232321323213"
+...
+---
+"id": "0x"
+"source": "agreement:0x1232321323213"
+"target": "delegate:0x1232321323213"
+...
+---
+"id": "0x"
+"source": "Peer_Connections"
+"target": "peer:0x65675757"
+...
+ 

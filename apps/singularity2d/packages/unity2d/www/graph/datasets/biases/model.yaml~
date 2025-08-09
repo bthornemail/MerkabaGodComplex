@@ -1,0 +1,135 @@
+"nodes":
+  
+"id": "action"
+"color": "blue"
+
+
+"id": "actor"
+"color": "blue"
+
+
+"id": "environment"
+"color": "blue"
+
+
+
+"id": "object"
+"color": "red"
+
+
+"id": "objective"
+"color": "red"
+
+
+"id": "observer"
+"color": "red"
+
+"id": "bias"
+"color": "yellow"
+"label": "<h1>Bais for model</h1>"
+"val": "18"
+
+
+"id": "storage"
+"color": "purple"
+
+
+"id": "memory"
+"color": "green"
+
+"links":
+"source": "storage"
+"target": "objective"
+"color": "black"
+
+
+"source": "storage"
+"target": "observer"
+"color": "black"
+
+
+"source": "storage"
+"target": "object"
+"color": "black"
+
+
+
+"source": "object"
+"target": "objective"
+"color": "red"
+
+
+"source": "objective"
+"target": "observer"
+"color": "red"
+
+
+"source": "observer"
+"target": "object"
+"color": "red"
+
+
+
+
+"source": "object"
+"target": "bias"
+"color": "white"
+
+
+"source": "objective"
+"target": "bias"
+"color": "white"
+
+
+"source": "observer"
+"target": "bias"
+"color": "white"
+
+
+
+
+"source": "actor"
+"target": "bias"
+"color": "white"
+
+
+"source": "action"
+"target": "bias"
+"color": "white"
+
+
+"source": "environment"
+"target": "bias"
+"color": "white"
+
+
+"source": "actor"
+"target": "memory"
+"color": "white"
+
+
+"source": "action"
+"target": "memory"
+"color": "white"
+
+
+"source": "environment"
+"target": "memory"
+"color": "white"
+
+
+
+"source": "actor"
+"target": "action"
+"color": "white"
+
+
+"source": "action"
+"target": "environment"
+"color": "white"
+
+
+"source": "environment"
+"target": "actor"
+"color": "white"
+

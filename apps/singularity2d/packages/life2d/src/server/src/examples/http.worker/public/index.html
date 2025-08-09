@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chat Bot</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Include Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <!-- <div style="display: flex;flex-direction: row;"> -->
+  <!-- <div id="multiaddrs" class="container">
+    <h2>Protocols</h2>
+  </div> -->
+  <div id="chatContainer" class="container">
+    <div class="chatMessages">
+      <div id="chatMessages"></div>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" id="inputMessage" class="form-control" placeholder="Type your message...">
+      <div class="input-group-append">
+        <button id="sendButton" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+  <!-- <command-manager></command-manager> -->
+  <!-- </div> -->
+
+  <!-- <div class="container">
+    <h1>IPFS in the Browser via Helia</h1>
+    <div>
+      <button class="btn btn-success" onclick="window.helia.start()">Start Helia</button>
+      <button class="btn btn-danger" onclick="window.helia.stop()">Stop Helia</button>
+    </div>
+      <form class="form">
+        <div class="input-group">
+          <button id="connect-button" class="btn btn-primary">Dial Protocol</button>
+          <input id="connect-input" class="form-control" type="text">
+        </div>
+      </form>
+    <h1 id="status">Node status: <span id="statusValue">Not Started</span></h1>
+    <div id="nodeInfo">
+      <h3>ID: <span id="nodeId">unknown</span></h3>
+      <h3>Discovered Peers: <span id="discoveredPeerCount">0</span></h3>
+      <h3>Connected Peers: <span id="connectedPeerCount">0</span></h3>
+      <ul id="connectedPeersList"></ul>
+    </div>
+    <style>
+      #runningLog span {
+        display: block;
+      }
+    </style>
+  </div> -->
+  <!-- <script>
+    fetch('https://source.unsplash.com/random')
+      .then((response) => {
+        document.body.style.backgroundImage = `url(${response.url})`;
+      });
+  </script> -->
+  <script src="https://unpkg.com/interface-datastore/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blockstore-core@^4.0.1/dist/index.min.js" defer></script>
+  <script src="https://unpkg.com/@helia/dag-json/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/datastore-core@^9.0.3/dist/index.min.js" defer></script>
+  <script src="https://unpkg.com/multiformats/dist/index.min.js" defer></script>
+  <!-- <script src="https://unpkg.com/libp2p/dist/index.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/libp2p@^0.43.0/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@chainsafe/libp2p-yamux@^3.0.7/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@chainsafe/libp2p-noise@^11.0.2/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@libp2p/websockets@^5.0.5/dist/index.min.js" defer></script>
+  <script src="https://unpkg.com/@multiformats/multiaddr/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@libp2p/peer-id-factory@^9.0.3/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@libp2p/bootstrap@^6.0.0/dist/index.min.js" defer></script>
+  <script src="https://unpkg.com/@libp2p/kad-dht/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/helia@^1.0.0/dist/index.min.js" defer></script>
+
+
+  <!-- <script>
+    const sse = new EventSource("/sse");
+    sse.addEventListener("message", ({ data }) => {
+      console.log(data);
+    });
+  </script> -->
+  <!-- <script src="chat.js"></script> -->
+  <script src="commands.js" defer></script>
+  <script src="components/node.js" defer></script>
+
+  <!-- <script>
+    class WalletLogin extends HTMLElement {
+      static observedAttributes = ["id", "key"];
+
+      constructor() {
+        // Always call super first in constructor
+        super();
+      }
+
+      connectedCallback() {
+        console.log("Custom element added to page.");
+        const shadow = this.attachShadow({ mode: "open" });
+        const mainDiv = document.createElement("div");
+        mainDiv.setAttribute("class", "card");
+        fetch('/commands')
+          .then(async (response) => {
+            const commands = await response.json()
+            console.log(commands);
+            commands.forEach((command) => {
+              const h3 = document.createElement("h3");
+              const p = document.createElement("p");
+              const submitButton = document.createElement("button");
+              h3.textContent = command.name
+              p.textContent = command.summary
+              submitButton.textContent = "Submit"
+              submitButton.setAttribute("class", "btn");
+              // Attach the created elements to the shadow dom
+              mainDiv.appendChild(h3);
+              mainDiv.appendChild(p);
+              mainDiv.appendChild(submitButton);
+            });
+          });
+
+        // Create some CSS to apply to the shadow dom
+        const style = document.createElement("style");
+
+        console.log(style.isConnected);
+        style.textContent = `
+      .wrapper {
+        position: relative;
+      }
+
+      .button {
+        font-size: 0.8rem;
+        width: 200px;
+        display: inline-block;
+        border: 1px solid black;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        opacity: 0;
+        transition: 0.6s all;
+        position: absolute;
+        bottom: 20px;
+        left: 10px;
+        z-index: 3;
+      }
+
+      img {
+        width: 1.2rem;
+      }
+
+      .icon:hover + .info, .icon:focus + .info {
+        opacity: 1;
+      }
+      `;
+        shadow.appendChild(mainDiv);
+        shadow.appendChild(style);
+        console.log(style.isConnected);
+      }
+
+      disconnectedCallback() {
+        console.log("Custom element removed from page.");
+      }
+
+      adoptedCallback() {
+        console.log("Custom element moved to new page.");
+      }
+      // Element functionality written in here
+      attributeChangedCallback(name, oldValue, newValue) {
+        console.log(`Attribute ${name} has changed.`);
+      }
+    }
+    customElements.define("wallet-login", WalletLogin);
+  </script> -->
+</body>
+
+</html>

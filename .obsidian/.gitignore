@@ -1,0 +1,15 @@
+# Obsidian user-specific settings
+workspace.json
+workspaces.json
+app.json
+appearance.json
+hotkeys.json
+core-plugins.json
+core-plugins-migration.json
+community-plugins.json
+graph.json
+bookmarks.json
+publish.json
+
+# Obsidian cache
+cache/

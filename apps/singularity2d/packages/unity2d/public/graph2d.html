@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="//unpkg.com/force-graph"></script>
+</head>
+
+<body>
+
+    <div id="graph"></div>
+    <button id="reset-graph-button">Reset</button>
+    <script type="module">
+        const json = await getData();
+        let selectedNode = null;
+        await buildGraph(json);
+
+        document.querySelector("#reset-graph-button").addEventListener("click", async () => {
+            selectedNode = null;
+            await buildGraph(await getData())
+        })
+        async function getData() {
+            const url = 'http://0.0.0.0:8000/graph.json';
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            json.nodes = json.nodes.map(node => node.attributes);
+            // Create a Set of node IDs (or publicKeys) for easy lookup
+            const nodeSet = new Set(json.nodes.map(node => node.publicKey));
+            // Filter edges where both source and target exist in the nodes set
+            json.links = json.edges.filter(edge => nodeSet.has(edge.source) && nodeSet.has(edge.target))
+            delete json.edges;
+            return json;
+        }
+        async function buildGraph(json) {
+            const rootId = json.nodes.find((node) => node.title === "client").publicKey;
+            console.log({ rootId })
+            const nodesById = Object.fromEntries(json.nodes.map(node => [node.publicKey, Object.assign(node, { collapsed: true, childLinks: [] })]));
+            json.links.forEach(link => {
+                nodesById[link.source].childLinks.push(link);
+            });
+            const getPrunedTree = () => {
+                const visibleNodes = [];
+                const visibleLinks = [];
+
+                (function traverseTree(node = nodesById[selectedNode ?? rootId]) {
+                    visibleNodes.push(node);
+                    if (node.collapsed) return;
+                    visibleLinks.push(...node.childLinks);
+                    node.childLinks
+                        .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+                        .forEach(traverseTree);
+                })(); // IIFE
+
+                return { nodes: visibleNodes, links: visibleLinks };
+            };
+            try {
+                const elem = document.getElementById('graph');
+                const Graph = ForceGraph()
+                    (document.getElementById('graph'))
+                    .graphData(json)
+                    .backgroundColor("black")
+                    // .graphData(getPrunedTree())
+                    .onNodeHover(node => elem.style.cursor = node && node.childLinks.length ? 'pointer' : null)
+                    // .onNodeClick(async (node) => {
+                    //     if (!selectedNode) {
+                    //         selectedNode = node.publicKey;
+                    //     }
+                    //     if (node.childLinks.length) {
+                    //         node.collapsed = !node.collapsed; // toggle collapse state
+                    //         Graph.graphData(getPrunedTree());
+                    //         // await buildGraph(getPrunedTree());
+                    //     }
+                    // })
+                    .cooldownTicks(100)
+                    .nodeLabel('publicKey')
+                    .nodeId('publicKey')
+                    .nodeAutoColorBy('depth')
+                    // .d3VelocityDecay(.9)
+                    // .d3AlphaDecay(0.59)	
+                    .nodeCanvasObject((node, ctx, globalScale) => {
+                        // ((ctx) => {
+                        // const size = 12;
+                        // ctx.drawImage(node.img, node.x - size / 2, node.y - size / 2, size, size);
+                        // })(ctx)
+                        const label = node.title;
+                        const fontSize = 12 / globalScale;
+                        ctx.font = `${fontSize}px Sans-Serif`;
+                        const textWidth = ctx.measureText(label).width;
+                        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+                        // ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillStyle = node.color;
+                        ctx.fillText(label, node.x, node.y);
+
+                        node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+                    })
+                    .nodePointerAreaPaint((node, color, ctx) => {
+                        ctx.fillStyle = color;
+                        const bckgDimensions = node.__bckgDimensions;
+                        bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+                    })
+                    .linkColor("white")
+                    .linkAutoColorBy("source")
+                // .linkWidth(2)
+                // Graph.d3Force('center', null);
+                // Graph.d3Force('center', null);
+
+                // fit to canvas when engine stops
+                Graph.onEngineStop(() => Graph.zoomToFit(400));
+
+                return Graph;
+            } catch (error) {
+                console.error(error.message);
+                throw new Error(error);
+                
+            }
+        }
+    </script>
+    <!-- <script type="module">
+
+
+        async function getData() {
+            const url = 'http://0.0.0.0:8000/graph.json';
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                json.nodes = json.nodes.map(node => node.attributes);
+                json.nodes = json.nodes.map((node) => mapImgToNode(node));
+                function mapImgToNode(node) {
+                    // If the node has child nodes, map their paths recursively
+                    if (node.nodes && node.nodes.length >= 1) {
+                        node.nodes = node.nodes.map((childNode) => {
+                            // Recursively assign the path to each child node
+                            return mapImgToNode(childNode);
+                        });
+                    }
+                    const img = new Image();
+                    img.src = `./target.png`;
+                    return Object.assign({}, { img }, node);
+                    // return node
+                }
+                // Create a Set of node IDs (or publicKeys) for easy lookup
+                const nodeSet = new Set(json.nodes.map(node => node.publicKey));
+                // Filter edges where both source and target exist in the nodes set
+                json.links = json.edges.filter(edge => nodeSet.has(edge.source) && nodeSet.has(edge.target))
+                // json.links = json.edges;
+
+                delete json.edges;
+                console.log(json.links);
+
+                const rootId = json.nodes.find((node) => node.title === "environment").publicKey;
+                const userId = json.nodes.find((node) => node.title === "user").publicKey;
+                console.log({ rootId })
+
+                const nodesById = Object.fromEntries(json.nodes.map((node) => {
+                    // if(node.title === "environmen" ){
+                    //     alert(node.title)
+                    //     return [node.publicKey, Object.assign(node, {collapsed: false, childLinks: [] })]
+                    // };
+                    switch (node.title) {
+                        case "environment":
+                            // case "environmen":
+                            // case "environme":
+                            // alert(node.title)
+                            return [node.publicKey, Object.assign(node, { collapsed: false, childLinks: [] })]
+                            break;
+                        default:
+                            return [node.publicKey, Object.assign(node, { collapsed: true, childLinks: [] })]
+                            break;
+                    }
+                    // return [node.publicKey, Object.assign(node, {collapsed: true, childLinks: [] })]
+                }));
+
+                json.links.forEach(link => {
+                    nodesById[link.source].childLinks.push(link);
+                });
+
+                const getPrunedTree = () => {
+                    const visibleNodes = [];
+                    const visibleLinks = [];
+
+                    (function traverseTree(node = nodesById[rootId]) {
+                        visibleNodes.push(node);
+                        if (node.collapsed) return;
+                        visibleLinks.push(...node.childLinks);
+                        node.childLinks
+                            .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+                            .forEach(traverseTree);
+                    })(); // IIFE
+
+                    (function traverseTree(node = nodesById[userId]) {
+                        visibleNodes.push(node);
+                        if (node.collapsed) return;
+                        visibleLinks.push(...node.childLinks);
+                        node.childLinks
+                            .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+                            .forEach(traverseTree);
+                    })(); // IIFE
+                    return { nodes: visibleNodes, links: visibleLinks };
+                };
+
+                const elem = document.getElementById('graph');
+                const Graph = ForceGraph()
+                    (document.getElementById('graph'))
+                    .graphData(json)
+                    .backgroundColor("black")
+                    // .graphData(getPrunedTree())
+                    .onNodeHover(node => elem.style.cursor = node && node.childLinks.length ? 'pointer' : null)
+                    // .onNodeClick(node => {
+                    //     if (node.childLinks.length) {
+                    //         node.collapsed = !node.collapsed; // toggle collapse state
+                    //         Graph.graphData(getPrunedTree());
+                    //     }
+                    // })
+                    .cooldownTicks(100)
+                    .nodeLabel('publicKey')
+                    .nodeId('publicKey')
+                    .nodeAutoColorBy('depth')
+                    // .d3VelocityDecay(.9)
+                    // .d3AlphaDecay(0.59)	
+                    .nodeCanvasObject((node, ctx, globalScale) => {
+                        // ((ctx) => {
+                        // const size = 12;
+                        // ctx.drawImage(node.img, node.x - size / 2, node.y - size / 2, size, size);
+                        // })(ctx)
+                        const label = node.title;
+                        const fontSize = 12 / globalScale;
+                        ctx.font = `${fontSize}px Sans-Serif`;
+                        const textWidth = ctx.measureText(label).width;
+                        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+                        // ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillStyle = node.color;
+                        ctx.fillText(label, node.x, node.y);
+
+                        node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+                    })
+                    .nodePointerAreaPaint((node, color, ctx) => {
+                        ctx.fillStyle = color;
+                        const bckgDimensions = node.__bckgDimensions;
+                        bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+                    })
+                    .linkColor("white")
+                    .linkAutoColorBy("source")
+                // .linkWidth(2)
+                // Graph.d3Force('center', null);
+                // Graph.d3Force('center', null);
+
+                // fit to canvas when engine stops
+                Graph.onEngineStop(() => Graph.zoomToFit(400));
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+
+        getData()
+    </script> -->
+
+</body>
+
+</html>

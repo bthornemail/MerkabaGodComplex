@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The full name of the user."
+    },
+    "age": {
+      "type": "integer",
+      "description": "The age of the user."
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "The user's street address in Los Angeles County."
+        },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "description": "The latitude coordinate of the user's location."
+            },
+            "longitude": {
+              "type": "number",
+              "description": "The longitude coordinate of the user's location."
+            }
+          },
+          "required": ["latitude", "longitude"]
+        }
+      },
+      "required": ["address", "coordinates"],
+      "description": "The user's location details in Los Angeles County."
+    },
+    "job_description": {
+      "type": "string",
+      "description": "The user's current job or occupation."
+    },
+    "personal_description": {
+      "type": "string",
+      "description": "A brief personal description or bio of the user."
+    },
+    "goals": {
+      "type": "string",
+      "description": "The user's goals or objectives within Marketplace2D."
+    },
+    "known_skills": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Skills and expertise that the user currently possesses."
+    },
+    "desired_skills": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Skills the user wishes to acquire or improve."
+    },
+    "services_provided": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Services the user can offer to others in the marketplace."
+    },
+    "educational_background": {
+      "type": "string",
+      "description": "The user's educational qualifications and background."
+    },
+    "things_owned": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Physical assets or items owned by the user."
+    },
+    "coin2D_balance": {
+      "type": "integer",
+      "description": "The user's current balance of Coin2D tokens."
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Digital or physical assets associated with the user."
+    },
+    "exams_completed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Examinations or certifications completed by the user."
+    },
+    "transactions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Historical transaction records related to the user's activity."
+    }
+  },
+  "required": [
+    "name",
+    "age",
+    "location",
+    "job_description",
+    "personal_description",
+    "goals",
+    "known_skills",
+    "desired_skills",
+    "services_provided",
+    "educational_background",
+    "things_owned",
+    "coin2D_balance",
+    "assets",
+    "exams_completed",
+    "transactions"
+  ],
+  "description": "User profile schema for Marketplace2D, a decentralized marketplace."
+}

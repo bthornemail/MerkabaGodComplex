@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build All Apps",
+      "type": "shell",
+      "command": "npm run build:all",
+      "group": "build",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Test All Apps",
+      "type": "shell",
+      "command": "npm run test:all",
+      "group": "test",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Lint All Apps",
+      "type": "shell",
+      "command": "npm run lint:all",
+      "group": "test",
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "Run MCP Integration Demo",
+      "type": "shell",
+      "command": "npx tsx examples/demos/mcp-integration-demo.ts",
+      "group": "test"
+    },
+    {
+      "label": "Codacy CLI Analyze",
+      "type": "shell",
+      "command": "codacy-cli analyze",
+      "group": "test"
+    }
+  ]
+}

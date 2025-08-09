@@ -1,0 +1,78 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tools = void 0;
+exports.tools = [
+    {
+        type: "function",
+        function: {
+            name: "createContentNode",
+            description: "Create random content node",
+            parameters: {
+                type: "object",
+                properties: {
+                    title: {
+                        type: "string",
+                        description: "Name of a document, asset or service",
+                    },
+                    summary: {
+                        type: "string",
+                        description: "short description of a document, asset or service",
+                    },
+                    description: {
+                        type: "string",
+                        description: "long description of a document, asset or service",
+                    },
+                    datetime: {
+                        type: "string",
+                        description: "date and time of a document, asset or service created in ISO string",
+                    },
+                    author: {
+                        type: "string",
+                        description: "author of a document, asset or service",
+                    },
+                    images: {
+                        type: "string",
+                        description: "image of a document, asset or service",
+                    },
+                    tags: {
+                        type: "array",
+                        description: "relevant tags of a document, asset or service",
+                        enum: ["tags"],
+                    },
+                    keywords: {
+                        type: "array",
+                        description: "relevant keywords of a document, asset or service",
+                        enum: ["keywords"],
+                    },
+                    content: {
+                        type: "string",
+                        description: "frontmatter string of fields that are used",
+                    },
+                },
+                required: ["title", "content"],
+            },
+        }
+    },
+];
+class Tools {
+    constructor() {
+        this.tools = exports.tools;
+        this.events = new Map();
+    }
+    run(name, attributes) {
+        if (!this.events.has(name))
+            return;
+        return this.events.get(name)(attributes);
+    }
+    ;
+    get(name) {
+        return name ? this.tools.filter((tool) => tool.function.name === name) : this.tools;
+    }
+    ;
+    list() {
+        return this.tools.map((tool) => tool.function.name);
+    }
+    ;
+}
+exports.default = Tools;
+//# sourceMappingURL=tools.js.map

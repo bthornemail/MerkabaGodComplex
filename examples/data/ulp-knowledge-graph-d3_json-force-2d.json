@@ -1,0 +1,1056 @@
+{
+  "nodes": [
+    {
+      "id": "knowledge_knowledge_1",
+      "label": "quantum consciousness eme...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 20.93246619657846,
+      "color": "rgb(109, 160, 220)",
+      "opacity": 1,
+      "shape": "circle",
+      "x": 241.20541509933983,
+      "y": -21.296808109123823,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_1",
+        "content": "quantum consciousness emergence",
+        "attention": 0.7288310797718974,
+        "age": 9,
+        "lastAccessed": 1754708407894.6042,
+        "connections": 5
+      }
+    },
+    {
+      "id": "knowledge_knowledge_2",
+      "label": "distributed network intel...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 19.433097533800286,
+      "color": "rgb(122, 166, 218)",
+      "opacity": 0.9288731689200191,
+      "shape": "circle",
+      "x": 320.6428261308114,
+      "y": 73.06954512023601,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_2",
+        "content": "distributed network intelligence",
+        "attention": 0.6288731689200192,
+        "age": 19,
+        "lastAccessed": 1754706876893.5776,
+        "connections": 5
+      }
+    },
+    {
+      "id": "knowledge_knowledge_3",
+      "label": "attention economy princip...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 22.847623297966344,
+      "color": "rgb(93, 153, 223)",
+      "opacity": 1,
+      "shape": "circle",
+      "x": 124.26411752675043,
+      "y": 71.55032743163304,
+      "pulse": true,
+      "data": {
+        "id": "knowledge_3",
+        "content": "attention economy principles",
+        "attention": 0.8565082198644229,
+        "age": 11,
+        "lastAccessed": 1754709458190.643,
+        "connections": 1
+      }
+    },
+    {
+      "id": "knowledge_knowledge_4",
+      "label": "causal reality formation",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 18.84286152298685,
+      "color": "rgb(127, 169, 217)",
+      "opacity": 0.8895241015324569,
+      "shape": "circle",
+      "x": 228.60829042122378,
+      "y": 106.3989529035503,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_4",
+        "content": "causal reality formation",
+        "attention": 0.5895241015324568,
+        "age": 3,
+        "lastAccessed": 1754706594561.1458,
+        "connections": 5
+      }
+    },
+    {
+      "id": "knowledge_knowledge_5",
+      "label": "hypergraph knowledge stru...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 24.195011747661123,
+      "color": "rgb(81, 147, 225)",
+      "opacity": 1,
+      "shape": "circle",
+      "x": 203.25280321782168,
+      "y": 135.69219288915542,
+      "pulse": true,
+      "data": {
+        "id": "knowledge_5",
+        "content": "hypergraph knowledge structures",
+        "attention": 0.9463341165107415,
+        "age": 9,
+        "lastAccessed": 1754709990051.1365,
+        "connections": 1
+      }
+    },
+    {
+      "id": "knowledge_knowledge_6",
+      "label": "autonomous agent coordina...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 17.809914260215812,
+      "color": "rgb(136, 173, 215)",
+      "opacity": 0.820660950681054,
+      "shape": "circle",
+      "x": 196.41051517471485,
+      "y": 236.97366876180376,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_6",
+        "content": "autonomous agent coordination",
+        "attention": 0.5206609506810541,
+        "age": 11,
+        "lastAccessed": 1754708927918.2913,
+        "connections": 1
+      }
+    },
+    {
+      "id": "knowledge_knowledge_7",
+      "label": "living system evolution",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 16.386506471530037,
+      "color": "rgb(149, 178, 213)",
+      "opacity": 0.7257670981020026,
+      "shape": "circle",
+      "x": 142.19632331221982,
+      "y": 258.5372079030487,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_7",
+        "content": "living system evolution",
+        "attention": 0.42576709810200253,
+        "age": 8,
+        "lastAccessed": 1754708466225.7954,
+        "connections": 5
+      }
+    },
+    {
+      "id": "knowledge_knowledge_8",
+      "label": "consciousness measurement",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 24.336272852020183,
+      "color": "rgb(80, 147, 225)",
+      "opacity": 1,
+      "shape": "circle",
+      "x": 78.72950929911562,
+      "y": 230.58679134774067,
+      "pulse": true,
+      "data": {
+        "id": "knowledge_8",
+        "content": "consciousness measurement",
+        "attention": 0.9557515234680123,
+        "age": 18,
+        "lastAccessed": 1754708295192.9414,
+        "connections": 1
+      }
+    },
+    {
+      "id": "knowledge_knowledge_9",
+      "label": "reality verification prot...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 17.571816274040657,
+      "color": "rgb(138, 174, 215)",
+      "opacity": 0.8047877516027107,
+      "shape": "circle",
+      "x": 100.14876716825158,
+      "y": 292.7379451313685,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_9",
+        "content": "reality verification protocols",
+        "attention": 0.5047877516027106,
+        "age": 20,
+        "lastAccessed": 1754707828093.8828,
+        "connections": 5
+      }
+    },
+    {
+      "id": "knowledge_knowledge_10",
+      "label": "temporal knowledge dynami...",
+      "type": "knowledge_unit",
+      "category": "knowledge",
+      "size": 18.69521349255802,
+      "color": "rgb(129, 169, 217)",
+      "opacity": 0.8796808995038679,
+      "shape": "circle",
+      "x": 62.80992497427251,
+      "y": 337.5747327546082,
+      "pulse": false,
+      "data": {
+        "id": "knowledge_10",
+        "content": "temporal knowledge dynamics",
+        "attention": 0.5796808995038678,
+        "age": 13,
+        "lastAccessed": 1754707432940.93,
+        "connections": 2
+      }
+    },
+    {
+      "id": "quantum_state_0",
+      "label": "Quantum 1",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 18.700233684981608,
+      "color": "hsl(323.46854632202445, 70%, 60%)",
+      "opacity": 0.9512587631868102,
+      "shape": "diamond",
+      "x": 18.94652372738065,
+      "y": 267.0726365001222,
+      "pulse": true,
+      "data": {
+        "coherence": 0.8375292106227009,
+        "phase": 5.645591159959121,
+        "entangled": false
+      }
+    },
+    {
+      "id": "quantum_state_1",
+      "label": "Quantum 2",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 16.795747283545506,
+      "color": "hsl(95.86169487150325, 70%, 60%)",
+      "opacity": 0.8798405231329564,
+      "shape": "diamond",
+      "x": -21.71834901002028,
+      "y": 185.30792872051944,
+      "pulse": false,
+      "data": {
+        "coherence": 0.5994684104431881,
+        "phase": 1.673102202049894,
+        "entangled": false
+      }
+    },
+    {
+      "id": "quantum_state_2",
+      "label": "Quantum 3",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 16.937682500382657,
+      "color": "hsl(191.93703540750496, 70%, 60%)",
+      "opacity": 0.8851630937643495,
+      "shape": "diamond",
+      "x": -117.35676158666277,
+      "y": 158.35496988671494,
+      "pulse": false,
+      "data": {
+        "coherence": 0.6172103125478319,
+        "phase": 3.3499332243778976,
+        "entangled": false
+      }
+    },
+    {
+      "id": "quantum_state_3",
+      "label": "Quantum 4",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 19.257948113307968,
+      "color": "hsl(49.22618116259727, 70%, 60%)",
+      "opacity": 0.9721730542490488,
+      "shape": "diamond",
+      "x": -70.83535800959689,
+      "y": 148.6281214879259,
+      "pulse": true,
+      "data": {
+        "coherence": 0.9072435141634962,
+        "phase": 0.8591589394705325,
+        "entangled": false
+      }
+    },
+    {
+      "id": "quantum_state_4",
+      "label": "Quantum 5",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 16.707606415105822,
+      "color": "hsl(71.98408957248122, 70%, 60%)",
+      "opacity": 0.8765352405664681,
+      "shape": "diamond",
+      "x": -196.0089749455697,
+      "y": 243.65017439929863,
+      "pulse": false,
+      "data": {
+        "coherence": 0.5884508018882275,
+        "phase": 1.2563593720903148,
+        "entangled": false
+      }
+    },
+    {
+      "id": "quantum_state_5",
+      "label": "Quantum 6",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 18.2015499605887,
+      "color": "hsl(51.33441859266966, 70%, 60%)",
+      "opacity": 0.9325581235220761,
+      "shape": "diamond",
+      "x": -105.85248445381262,
+      "y": 75.99101936041765,
+      "pulse": false,
+      "data": {
+        "coherence": 0.7751937450735873,
+        "phase": 0.8959546240390793,
+        "entangled": true
+      }
+    },
+    {
+      "id": "quantum_state_6",
+      "label": "Quantum 7",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 19.964364637612526,
+      "color": "hsl(274.5853209785816, 70%, 60%)",
+      "opacity": 0.9986636739104696,
+      "shape": "diamond",
+      "x": -194.19115208056226,
+      "y": 117.8751108255698,
+      "pulse": true,
+      "data": {
+        "coherence": 0.9955455797015657,
+        "phase": 4.792417928721707,
+        "entangled": true
+      }
+    },
+    {
+      "id": "quantum_state_7",
+      "label": "Quantum 8",
+      "type": "quantum_state",
+      "category": "quantum",
+      "size": 19.891659405347948,
+      "color": "hsl(16.899249383491536, 70%, 60%)",
+      "opacity": 0.995937227700548,
+      "shape": "diamond",
+      "x": -162.42633272751803,
+      "y": 64.51953359095712,
+      "pulse": true,
+      "data": {
+        "coherence": 0.9864574256684935,
+        "phase": 0.29494754285754915,
+        "entangled": false
+      }
+    },
+    {
+      "id": "token_0",
+      "label": "6.7 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 17.981831602882043,
+      "color": "rgb(212, 166, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -305.50492313618446,
+      "y": 48.03343496014209,
+      "data": {
+        "value": 6.654554401921361,
+        "active": false
+      }
+    },
+    {
+      "id": "token_1",
+      "label": "1.2 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 9.777887872685978,
+      "color": "rgb(37, 29, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -255.007363838915,
+      "y": 32.55412094843383,
+      "data": {
+        "value": 1.1852585817906522,
+        "active": true
+      }
+    },
+    {
+      "id": "token_2",
+      "label": "1.1 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 9.641485674767727,
+      "color": "rgb(34, 27, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -371.68210070421753,
+      "y": -56.11193048616448,
+      "data": {
+        "value": 1.0943237831784849,
+        "active": true
+      }
+    },
+    {
+      "id": "token_3",
+      "label": "8.7 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 21.02624641490268,
+      "color": "rgb(255, 200, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -358.7212788816111,
+      "y": -116.03027280211992,
+      "data": {
+        "value": 8.684164276601786,
+        "active": true
+      }
+    },
+    {
+      "id": "token_4",
+      "label": "4.7 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 15.090788292292924,
+      "color": "rgb(150, 118, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -193.10043255913595,
+      "y": -42.162153338822634,
+      "data": {
+        "value": 4.727192194861949,
+        "active": true
+      }
+    },
+    {
+      "id": "token_5",
+      "label": "6.7 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 18.009569528416705,
+      "color": "rgb(212, 166, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -247.1802831344935,
+      "y": -197.3499622610846,
+      "data": {
+        "value": 6.6730463522778045,
+        "active": false
+      }
+    },
+    {
+      "id": "token_6",
+      "label": "4.1 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 14.175467851009707,
+      "color": "rgb(131, 102, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -170.90253847177823,
+      "y": -158.28091150533965,
+      "data": {
+        "value": 4.116978567339805,
+        "active": true
+      }
+    },
+    {
+      "id": "token_7",
+      "label": "7.0 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 18.451442330279995,
+      "color": "rgb(222, 174, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -126.60527263931593,
+      "y": -254.59259229101318,
+      "data": {
+        "value": 6.967628220186665,
+        "active": true
+      }
+    },
+    {
+      "id": "token_8",
+      "label": "5.9 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 16.849533611839618,
+      "color": "rgb(188, 147, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -56.198692570509266,
+      "y": -180.70865460928164,
+      "data": {
+        "value": 5.8996890745597454,
+        "active": false
+      }
+    },
+    {
+      "id": "token_9",
+      "label": "8.9 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 21.353700665943073,
+      "color": "rgb(255, 200, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -54.97736918521035,
+      "y": -294.43746964953573,
+      "data": {
+        "value": 8.902467110628715,
+        "active": false
+      }
+    },
+    {
+      "id": "token_10",
+      "label": "4.1 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 14.131254582870678,
+      "color": "rgb(130, 102, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": -3.6241802385788784,
+      "y": -269.11056016589635,
+      "data": {
+        "value": 4.087503055247119,
+        "active": true
+      }
+    },
+    {
+      "id": "token_11",
+      "label": "8.6 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 20.949139156997504,
+      "color": "rgb(255, 200, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 60.90490237477954,
+      "y": -296.5517743201086,
+      "data": {
+        "value": 8.632759437998336,
+        "active": false
+      }
+    },
+    {
+      "id": "token_12",
+      "label": "7.2 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 18.729523380792045,
+      "color": "rgb(228, 178, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 79.65847781927161,
+      "y": -305.61757858741333,
+      "data": {
+        "value": 7.153015587194698,
+        "active": true
+      }
+    },
+    {
+      "id": "token_13",
+      "label": "5.0 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 15.432143626105162,
+      "color": "rgb(157, 123, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 101.86903469981874,
+      "y": -264.1526325269997,
+      "data": {
+        "value": 4.954762417403442,
+        "active": true
+      }
+    },
+    {
+      "id": "token_14",
+      "label": "3.7 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 13.583780830841818,
+      "color": "rgb(118, 93, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 56.946853728700574,
+      "y": -158.23581694237993,
+      "data": {
+        "value": 3.7225205538945456,
+        "active": false
+      }
+    },
+    {
+      "id": "token_15",
+      "label": "8.6 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 20.973754723944467,
+      "color": "rgb(255, 200, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 121.31851236671841,
+      "y": -95.52184195376203,
+      "data": {
+        "value": 8.649169815962978,
+        "active": false
+      }
+    },
+    {
+      "id": "token_16",
+      "label": "3.4 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 13.159731287122261,
+      "color": "rgb(109, 85, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 193.17745857138308,
+      "y": -200.00613021436655,
+      "data": {
+        "value": 3.4398208580815073,
+        "active": true
+      }
+    },
+    {
+      "id": "token_17",
+      "label": "3.2 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 12.852224816468128,
+      "color": "rgb(103, 80, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 141.4596089700863,
+      "y": -46.234672687070415,
+      "data": {
+        "value": 3.2348165443120855,
+        "active": false
+      }
+    },
+    {
+      "id": "token_18",
+      "label": "2.0 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 10.985809728688077,
+      "color": "rgb(63, 49, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 182.1133611333252,
+      "y": -53.01038601868018,
+      "data": {
+        "value": 1.9905398191253845,
+        "active": true
+      }
+    },
+    {
+      "id": "token_19",
+      "label": "6.7 ATN",
+      "type": "attention_token",
+      "category": "economic",
+      "size": 17.98291140136122,
+      "color": "rgb(212, 166, 0)",
+      "opacity": 0.8,
+      "shape": "hexagon",
+      "x": 318.38192251459907,
+      "y": -61.55294049947258,
+      "data": {
+        "value": 6.655274267574146,
+        "active": true
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "quantum_state_0",
+      "target": "quantum_state_6",
+      "type": "quantum_entanglement",
+      "weight": 0.5380677031419074,
+      "color": "#ff00ff",
+      "width": 2.6142031094257225,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.9471218670571313
+      }
+    },
+    {
+      "source": "quantum_state_1",
+      "target": "quantum_state_2",
+      "type": "quantum_entanglement",
+      "weight": 0.9457419224716913,
+      "color": "#ff00ff",
+      "width": 3.837225767415074,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.9709831857432993
+      }
+    },
+    {
+      "source": "quantum_state_1",
+      "target": "quantum_state_7",
+      "type": "quantum_entanglement",
+      "weight": 0.890952003237239,
+      "color": "#ff00ff",
+      "width": 3.672856009711717,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.9665624816715028
+      }
+    },
+    {
+      "source": "quantum_state_2",
+      "target": "quantum_state_3",
+      "type": "quantum_entanglement",
+      "weight": 0.57777891707158,
+      "color": "#ff00ff",
+      "width": 2.73333675121474,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.9405196918281431
+      }
+    },
+    {
+      "source": "quantum_state_2",
+      "target": "quantum_state_5",
+      "type": "quantum_entanglement",
+      "weight": 0.6144547545382554,
+      "color": "#ff00ff",
+      "width": 2.8433642636147662,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.8140746254102399
+      }
+    },
+    {
+      "source": "quantum_state_2",
+      "target": "quantum_state_7",
+      "type": "quantum_entanglement",
+      "weight": 0.7760393711239636,
+      "color": "#ff00ff",
+      "width": 3.328118113371891,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.9645268853465789
+      }
+    },
+    {
+      "source": "quantum_state_3",
+      "target": "quantum_state_4",
+      "type": "quantum_entanglement",
+      "weight": 0.5736369421621569,
+      "color": "#ff00ff",
+      "width": 2.7209108264864708,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.9517138354379594
+      }
+    },
+    {
+      "source": "quantum_state_3",
+      "target": "quantum_state_6",
+      "type": "quantum_entanglement",
+      "weight": 0.9001526670783058,
+      "color": "#ff00ff",
+      "width": 3.7004580012349173,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.8006513237362344
+      }
+    },
+    {
+      "source": "quantum_state_3",
+      "target": "quantum_state_7",
+      "type": "quantum_entanglement",
+      "weight": 0.7851237611156343,
+      "color": "#ff00ff",
+      "width": 3.355371283346903,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.8273670989762056
+      }
+    },
+    {
+      "source": "quantum_state_4",
+      "target": "quantum_state_6",
+      "type": "quantum_entanglement",
+      "weight": 0.7290980108253529,
+      "color": "#ff00ff",
+      "width": 3.187294032476059,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.8048666292612339
+      }
+    },
+    {
+      "source": "quantum_state_6",
+      "target": "quantum_state_7",
+      "type": "quantum_entanglement",
+      "weight": 0.6040664077892708,
+      "color": "#ff00ff",
+      "width": 2.8121992233678124,
+      "opacity": 0.7,
+      "style": "curved",
+      "animated": true,
+      "data": {
+        "bellViolation": 0.839326017878618
+      }
+    },
+    {
+      "source": "token_1",
+      "target": "knowledge_knowledge_4",
+      "type": "token_flow",
+      "weight": 1.8747773486289552,
+      "color": "#ffd700",
+      "width": 2.874777348628955,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 1.8747773486289552
+      }
+    },
+    {
+      "source": "token_2",
+      "target": "knowledge_knowledge_8",
+      "type": "token_flow",
+      "weight": 0.6767954348086391,
+      "color": "#ffd700",
+      "width": 1.6767954348086391,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.6767954348086391
+      }
+    },
+    {
+      "source": "token_4",
+      "target": "knowledge_knowledge_8",
+      "type": "token_flow",
+      "weight": 2.3875854390674425,
+      "color": "#ffd700",
+      "width": 3.3875854390674425,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 2.3875854390674425
+      }
+    },
+    {
+      "source": "token_5",
+      "target": "knowledge_knowledge_8",
+      "type": "token_flow",
+      "weight": 0.11822857430228062,
+      "color": "#ffd700",
+      "width": 1.1182285743022806,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.11822857430228062
+      }
+    },
+    {
+      "source": "token_7",
+      "target": "knowledge_knowledge_2",
+      "type": "token_flow",
+      "weight": 0.705625867235256,
+      "color": "#ffd700",
+      "width": 1.705625867235256,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.705625867235256
+      }
+    },
+    {
+      "source": "token_8",
+      "target": "knowledge_knowledge_8",
+      "type": "token_flow",
+      "weight": 0.29126977523748243,
+      "color": "#ffd700",
+      "width": 1.2912697752374824,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.29126977523748243
+      }
+    },
+    {
+      "source": "token_9",
+      "target": "knowledge_knowledge_3",
+      "type": "token_flow",
+      "weight": 0.21146248370499943,
+      "color": "#ffd700",
+      "width": 1.2114624837049994,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.21146248370499943
+      }
+    },
+    {
+      "source": "token_10",
+      "target": "knowledge_knowledge_8",
+      "type": "token_flow",
+      "weight": 0.4748358660812799,
+      "color": "#ffd700",
+      "width": 1.47483586608128,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.4748358660812799
+      }
+    },
+    {
+      "source": "token_14",
+      "target": "knowledge_knowledge_2",
+      "type": "token_flow",
+      "weight": 0.6887318429843627,
+      "color": "#ffd700",
+      "width": 1.6887318429843627,
+      "opacity": 0.6,
+      "style": "dashed",
+      "animated": true,
+      "data": {
+        "flowRate": 0.6887318429843627
+      }
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "superposition_1754710066554",
+      "nodes": [
+        "quantum_state_0",
+        "quantum_state_1",
+        "quantum_state_2"
+      ],
+      "type": "quantum_superposition",
+      "label": "Quantum Superposition",
+      "color": "#9400d3",
+      "data": {
+        "coherence": 0.8913884693323406
+      }
+    },
+    {
+      "id": "knowledge_cluster_1754710066554",
+      "nodes": [
+        "knowledge_knowledge_1",
+        "knowledge_knowledge_2",
+        "knowledge_knowledge_3",
+        "knowledge_knowledge_4",
+        "knowledge_knowledge_5"
+      ],
+      "type": "semantic_cluster",
+      "label": "Semantic Cluster",
+      "color": "#2ecc71",
+      "data": {
+        "cohesion": 0.9263616317010903
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "id": "cluster_knowledge_unit",
+      "nodeIds": [
+        "knowledge_knowledge_1",
+        "knowledge_knowledge_2",
+        "knowledge_knowledge_3",
+        "knowledge_knowledge_4",
+        "knowledge_knowledge_5",
+        "knowledge_knowledge_6",
+        "knowledge_knowledge_7",
+        "knowledge_knowledge_8",
+        "knowledge_knowledge_9",
+        "knowledge_knowledge_10"
+      ],
+      "label": "KNOWLEDGE UNIT",
+      "color": "#4a90e2",
+      "collapsed": false
+    },
+    {
+      "id": "cluster_quantum_state",
+      "nodeIds": [
+        "quantum_state_0",
+        "quantum_state_1",
+        "quantum_state_2",
+        "quantum_state_3",
+        "quantum_state_4",
+        "quantum_state_5",
+        "quantum_state_6",
+        "quantum_state_7"
+      ],
+      "label": "QUANTUM STATE",
+      "color": "#9400d3",
+      "collapsed": false
+    },
+    {
+      "id": "cluster_attention_token",
+      "nodeIds": [
+        "token_0",
+        "token_1",
+        "token_2",
+        "token_3",
+        "token_4",
+        "token_5",
+        "token_6",
+        "token_7",
+        "token_8",
+        "token_9",
+        "token_10",
+        "token_11",
+        "token_12",
+        "token_13",
+        "token_14",
+        "token_15",
+        "token_16",
+        "token_17",
+        "token_18",
+        "token_19"
+      ],
+      "label": "ATTENTION TOKEN",
+      "color": "#ffd700",
+      "collapsed": false
+    }
+  ]
+}

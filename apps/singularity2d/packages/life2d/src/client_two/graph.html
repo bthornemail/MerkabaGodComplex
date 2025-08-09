@@ -1,0 +1,133 @@
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+	<script>eruda.init();</script>
+
+	<script src="//unpkg.com/force-graph"></script>
+	<!--<script src="../../dist/force-graph.js"></script>-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="graph.css" rel="stylesheet">
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<h1>Cloudy_Day_Vault</h1>
+	</div>
+	<section>
+		<div id="hud-dataview" style="grid-area:hud-dataview;">
+			<div id="hud" style="grid-area:hud;">
+				Hud
+			</div>
+			<div id="dataview" style="grid-area:dataview;">
+				DataView
+			</div>
+		</div>
+		<div id="graphview" style="grid-area:graph;">
+			<div id="graph"></div>
+		</div>
+		<div id="options" style="grid-area:options;">
+			<button class="btn btn-lg btn-success">+</button>
+			<button class="btn btn-lg btn-danger">+</button>
+			<button class="btn btn-lg btn-warning">+</button>
+			<button class="btn btn-lg btn-primary">+</button>
+			<button class="btn btn-lg btn-secondary">+</button>
+		</div>
+		<div id="inputs" style="grid-area:inputs;">
+			<form id="chat-form" class="form btn-group" role="group" aria-label="Chat Form" method="POST" action="/chat"
+				style="width:100%;height:100%;">
+				<button id="input-option-button" type="button" class="btn btn-light">Chat</button>
+				<input name="chat-message" class="form-control" placeholder="Enter Text!!!" />
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<div id="announcements" style="grid-area:announcements;background-color: yellow;height:100%;">&nbsp;
+		</div>
+	</section>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script> -->
+	<script>
+		const hud = document.querySelector("#hud")
+		const dataview = document.querySelector("#dataview")
+	</script>
+	<script src="/components/Graph/components/add.node.element.js"></script>
+	<script src="/bin/new.image.js"></script>
+	<script src="/components/DataView/new.data.view.js"></script>
+	<script src="/bin/get.data.js"></script>
+	<script src="/bin/post.data.js"></script>
+	<script>
+		document.querySelector("#chat-form").addEventListener("submit", (e) => {
+			e.preventDefault()
+			const formData = new FormData(e.currentTarget);
+			postData("/chat", formData).then((data) => {
+				console.log(data)
+				e.target.reset()
+				// ; // JSON data parsed by `data
+				// const myGraph = ForceGraph();
+				// const graph = document.querySelector("#graph")
+				// console.log(graph)
+				// delete data.links
+				// delete data.edges
+				// myGraph(graph).graphData(data);
+			});
+			// postData("/add-node", formData).then((data) => {
+			// 	console.log(data); // JSON data parsed by `data
+			// 	const myGraph = ForceGraph();
+			// 	const graph = document.querySelector("#graph")
+			// 	console.log(graph)
+			// 	delete data.links
+			// 	delete data.edges
+			// 	myGraph(graph).graphData(data);
+			// });
+		})
+		fetch('components/Graph/data.json').then(res => res.json()).then(data => {
+			const baseSize = 8
+			const Graph = ForceGraph()
+				(document.getElementById('graph'))
+				.graphData(data)
+				// .backgroundColor('linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1), rgba(0,0,0,0.25)')
+				.backgroundColor('rgba(0,0,0,0.05)')
+				.nodeId('id')
+				.nodeVal('val')
+				.nodeLabel('label')
+				.nodeAutoColorBy('group')
+				.nodeRelSize(baseSize)
+				.linkSource('source')
+				.linkTarget('target')
+				.linkWidth(baseSize * 2)
+				// .backgroundColor("grey")
+				.width(window.innerWidth * .85)
+				.height(window.innerHeight * .66)
+				.onNodeClick((node, event) => {
+					const card = newDataView(node)
+					dataview.replaceChildren(card)
+					const image = newImage(node)
+					hud.replaceChildren(image)
+				})
+			// .onBackgroundClick((event) => {
+			// 	const datavew = document.querySelector("#dataview")
+			// 	const chatForm = document.querySelector("#chat-form")
+			// 	const chatInput = document.querySelector("#chat-message")
+			// 	const query = document.querySelector("#input-option-button")
+			// 	// console.log(event.y, event.x)
+			// 	// console.log(event)
+			// 	const newNode = addNodeElement({
+			// 		x:event.x,
+			// 		y:event.y,
+			// 	})
+			// 	dataview.replaceChildren(newNode)
+			// 	// chatForm.x.value = event.x
+			// 	// chatForm.y.value = event.y
+			// 	// chatForm.name = "add-node"
+			// 	// chatForm.setAttribute('name',"add-node")
+			// 	// query.textContent = "Add Node?"
+			// 	// chatForm['chat-message'].placeholder = "Enter Node Title"
+			// 	// chatForm['chat-message'].setAttribute("placeholder","Enter Node Title")
+			// })
+			Graph.onEngineStop(() => Graph.zoomToFit(0, 36));
+		});
+	</script>
+</body>

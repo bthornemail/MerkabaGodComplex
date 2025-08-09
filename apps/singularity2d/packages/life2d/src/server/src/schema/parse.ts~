@@ -1,0 +1,48 @@
+interface Property {
+    name: string;
+    type: string;
+}
+
+interface Type {
+    [key: string]: Property[];
+}
+
+interface Link {
+    source: string;
+    target: string;
+}
+
+interface JsonData {
+    types: Type;
+}
+
+const jsonData: JsonData = {
+    "types": {
+        "CIDv1": [{ "name": "link", "type": "string" }],
+        "Person": [{ "name": "name", "type": "string" }, { "name": "wallet", "type": "address" }],
+        "Token": [{ "name": "wallet", "type": "address" }, { "name": "value", "type": "uint256" }],
+        // Add more types here...
+        "Service_Board": [
+            { "name": "post", "type": "Post[]" },
+            { "name": "consideration", "type": "Consideration[]" },
+            { "name": "announcement", "type": "Announcement[]" }
+        ]
+    }
+};
+
+const types: Type = jsonData.types;
+const nodes: string[] = Object.keys(types);
+const links: Link[] = [];
+
+for (const [typeName, properties] of Object.entries(types)) {
+    properties.forEach((prop) => {
+        if (types[prop.type]) {
+            links.push({ source: typeName, target: prop.type });
+        }
+    });
+}
+
+console.log("Nodes:");
+console.log(nodes);
+console.log("\nLinks:");
+console.log(links);

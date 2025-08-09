@@ -1,0 +1,1 @@
+{"text": " Come on, come on, come on.", "segments": [{"id": 0, "seek": 0, "start": 0.0, "end": 1.2, "text": " Come on, come on, come on.", "tokens": [50364, 2492, 322, 11, 808, 322, 11, 808, 322, 13, 50424], "temperature": 0.0, "avg_logprob": -0.685026486714681, "compression_ratio": 1.2380952380952381, "no_speech_prob": 0.23942796885967255}], "language": "English"}

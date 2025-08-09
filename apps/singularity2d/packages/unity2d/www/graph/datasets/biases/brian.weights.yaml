@@ -1,0 +1,13 @@
+---
+"actor": "brian"
+"action": "get"
+"environment": "marketplace"
+
+"object": "listings"
+"objective": ""
+"observer": "worker"
+
+"storage": "record"
+"memory": "buffer"
+"bias": "Uint8Array"
+...

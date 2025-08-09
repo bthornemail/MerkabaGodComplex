@@ -1,0 +1,195 @@
+config:
+  target: "ws://localhost:8083"
+  phases:
+    # Warm-up phase
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm-up"
+    # Load testing phase  
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained load"
+    # Stress testing phase
+    - duration: 120
+      arrivalRate: 100
+      name: "Peak load"
+    # Cool-down phase
+    - duration: 60
+      arrivalRate: 10
+      name: "Cool-down"
+  
+  # WebSocket-specific configuration
+  ws:
+    # Auto-reconnect on connection drops
+    autoReconnect: true
+    # Maximum reconnection attempts
+    maxReconnectAttempts: 3
+    # Reconnection delay in ms
+    reconnectDelay: 1000
+  
+  # Custom variables for ULP testing
+  variables:
+    messageTypes:
+      - "request_system_status"
+      - "request_dpo_stats" 
+      - "request_active_tokens"
+      - "refresh_token_economy"
+      - "request_vec7_harmony"
+      - "request_knowledge_trie"
+    
+    agentIds:
+      - "test-agent-alpha"
+      - "test-agent-beta"
+      - "test-agent-gamma"
+      - "benchmark-agent-1"
+      - "benchmark-agent-2"
+
+  # Performance tracking
+  metrics:
+    - name: "websocket_connections"
+      unit: "count"
+    - name: "message_latency"
+      unit: "ms"
+    - name: "cue_events_received"
+      unit: "count"
+    - name: "consensus_operations"
+      unit: "count"
+
+scenarios:
+  # Main WebSocket load test scenario
+  - name: "CUE WebSocket Load Test"
+    engine: "ws"
+    flow:
+      # Initial connection and authentication
+      - send:
+          payload: |
+            {
+              "type": "connect",
+              "timestamp": {{ $timestamp }},
+              "client_id": "artillery_{{ $uuid }}",
+              "version": "v0.1-audit"
+            }
+      
+      # Wait for connection acknowledgment
+      - think: 1
+      
+      # Request system status to establish baseline
+      - send:
+          payload: |
+            {
+              "type": "{{ $randomFromArray(messageTypes) }}",
+              "timestamp": {{ $timestamp }},
+              "client_id": "artillery_{{ $uuid }}"
+            }
+      
+      # Simulate realistic user interaction patterns
+      - think: 2
+      
+      # Send burst of mixed requests to test throughput
+      - loop:
+          - send:
+              payload: |
+                {
+                  "type": "{{ $randomFromArray(messageTypes) }}",
+                  "timestamp": {{ $timestamp }},
+                  "payload": {
+                    "agent_id": "{{ $randomFromArray(agentIds) }}",
+                    "test_data": "{{ $uuid }}"
+                  }
+                }
+          - think: 1
+          
+          # Simulate CUE network events
+          - send:
+              payload: |
+                {
+                  "type": "simulate_cue_event",
+                  "event_type": "{{ $randomFromArray(['AGENT_ACTION', 'STATE_CHANGED', 'CTL_QUORUM_ACTIVATED']) }}",
+                  "agent_id": "{{ $randomFromArray(agentIds) }}",
+                  "timestamp": {{ $timestamp }}
+                }
+          - think: 2
+          
+        count: 10
+      
+      # Test consensus operation under load
+      - send:
+          payload: |
+            {
+              "type": "request_consensus_status",
+              "timestamp": {{ $timestamp }},
+              "require_quorum": true
+            }
+      
+      - think: 3
+      
+      # Final status check
+      - send:
+          payload: |
+            {
+              "type": "request_final_status",
+              "timestamp": {{ $timestamp }},
+              "session_summary": true
+            }
+
+  # HTTP API load test scenario (mixed workload)
+  - name: "HTTP API Load Test"
+    engine: "http"
+    flow:
+      # Test REST API endpoints if available
+      - get:
+          url: "/api/health"
+          headers:
+            X-Test-Client: "artillery-http"
+      
+      - think: 1
+      
+      - get:
+          url: "/api/system/status"
+          headers:
+            X-Test-Client: "artillery-http"
+            
+      - think: 2
+      
+      # Test POST operations
+      - post:
+          url: "/api/cue/events"
+          headers:
+            Content-Type: "application/json"
+            X-Test-Client: "artillery-http"
+          json:
+            type: "test_event"
+            payload:
+              agent_id: "{{ $randomFromArray(agentIds) }}"
+              timestamp: "{{ $timestamp }}"
+              test_data: "{{ $uuid }}"
+
+# Custom plugins for ULP-specific metrics
+plugins:
+  # Metrics plugin for custom performance tracking
+  metrics-by-endpoint:
+    # Track WebSocket message types separately
+    useOnlyRequestNames: true
+    
+  # Ensure we can track CUE-specific events
+  publish-metrics:
+    # Export metrics in ULP format
+    - type: "json"
+      target: "artillery-ulp-metrics.json"
+      
+# Expected performance thresholds (matching verification plan)
+expect:
+  # WebSocket performance expectations
+  - metric: "engine.websocket.response_time.p95"
+    threshold: 50  # p95 latency < 50ms
+    
+  - metric: "engine.websocket.response_time.p99"  
+    threshold: 100 # p99 latency < 100ms
+    
+  # HTTP API expectations  
+  - metric: "http.response_time.p95"
+    threshold: 200 # API p95 < 200ms
+    
+  # Connection success rate
+  - metric: "websocket.connections.success_rate"
+    threshold: 95  # 95% successful connections

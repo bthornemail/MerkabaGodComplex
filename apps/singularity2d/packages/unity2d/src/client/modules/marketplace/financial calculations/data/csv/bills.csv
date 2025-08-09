@@ -1,0 +1,10 @@
+name,tags,amount,date,isPaid
+Aurioun,insurance,13,7/01/2022,true
+Public Storage,insurance,26,7/01/2022,true
+Lemonade,insurance,6.09,7/11/2022,true
+National General,insurance,458.17,7/11/2022,true
+Infinity insurance,insurance,474.19,7/12/2022,false
+Next insurance,insurance,42.92,7/11/2022,true
+Next insurance,insurance,37.25,7/11/2022,true
+Primerica,insurance,99,7/11/2022,true
+SFMTA,parking violation,84,7/20/22,false

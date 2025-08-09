@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dialpad.css">
+</head>
+
+<body>
+    <img src="logo.png" alt="logo" />
+    <h1>Welcome to small Moves Only Server</h1>
+    <div id="dialpad"></div>
+</body>
+<style>
+    html,
+    root,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-image: url("backgound.jpg");
+    }
+</style>
+<script src="dialpad.js"></script>
+<script>
+    dialPad()
+</script>
+</html>

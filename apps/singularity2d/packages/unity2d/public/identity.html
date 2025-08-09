@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info Card</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">User Information</h2>
+    <div id="userInfoCard" class="card" style="width: 18rem; display: none;">
+        <img id="userPhoto" src="" class="card-img-top" alt="User Photo">
+        <div class="card-body">
+            <h5 class="card-title" id="userName"></h5>
+            <p class="card-text" id="userTitle"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="userEmail"></li>
+            <li class="list-group-item" id="userPhone"></li>
+            <li class="list-group-item" id="userAddress"></li>
+        </ul>
+        <div class="card-body">
+            <a href="#" id="userGitHub" class="card-link">GitHub</a>
+            <a href="#" id="userLinkedIn" class="card-link">LinkedIn</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('http://127.0.0.1:3000/vcard')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('userPhoto').src = data.photo.url;
+                document.getElementById('userName').innerText = `${data.namePrefix} ${data.firstName} ${data.middleName} ${data.lastName} ${data.nameSuffix}`;
+                document.getElementById('userTitle').innerText = data.title;
+                document.getElementById('userEmail').innerText = data.email;
+                document.getElementById('userPhone').innerText = data.cellPhone;
+                document.getElementById('userAddress').innerText = `${data.homeAddress.street}, ${data.homeAddress.city}, ${data.homeAddress.stateProvince}, ${data.homeAddress.postalCode}, ${data.homeAddress.countryRegion}`;
+                document.getElementById('userGitHub').href = data.url;
+                document.getElementById('userGitHub').innerText = "GitHub";
+                document.getElementById('userLinkedIn').href = data.socialUrls.linkedIn;
+                document.getElementById('userLinkedIn').innerText = "LinkedIn";
+                
+                document.getElementById('userInfoCard').style.display = 'block';
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+</script>
+</body>
+</html>

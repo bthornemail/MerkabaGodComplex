@@ -1,0 +1,2 @@
+Addin intp the node graph with Energy, Attention, and Focus
+this willhelp to classify and wuantitify the nodes on the node grhap so theat it can better reflet the action and knowledg of the pople accessing the graph

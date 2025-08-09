@@ -1,0 +1,8 @@
+const buffer = new ArrayBuffer(4096)
+
+const point = new Int8Array(buffer, 2, 2)
+const z = new Float32Array(buffer, 4, 4);
+console.log(z.byteOffset); // 4
+point.fill(128 / 2)
+z.fill(.5)
+console.log(buffer)

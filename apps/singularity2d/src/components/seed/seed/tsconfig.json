@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // "outDir": "./dist/relay", // Directory to output compiled files
+    "target": "ES2020",
+    "module": "CommonJS", // Retaining CommonJS for server-side
+    // "target": "ESNext", // Target modern JavaScript features (Node.js 16+)
+    // "module": "ESNext", // Use ES Modules (modern Node.js supports this)
+    "moduleResolution": "node", // Use Node.js module resolution
+    // "strict": true, // Enable strict type-checking options
+    "esModuleInterop": true, // Compatibility with CommonJS modules
+    "skipLibCheck": true, // Skip type checking for declaration files
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true, // Enables importing JSON files
+    "allowSyntheticDefaultImports": true, // Supports default imports from CommonJS modules
+    "sourceMap": true, // Include source maps for debugging
+    "noImplicitAny": null
+  }
+}

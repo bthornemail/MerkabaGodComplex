@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "csv": "^6.2.0",
+    "ioredis": "^5.2.1"
+  },
+  "name": "financial-calculations",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

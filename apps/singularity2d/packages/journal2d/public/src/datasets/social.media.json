@@ -1,0 +1,139 @@
+{
+	"nodes": [
+		{
+			"id": "post:1",
+			"img": "browser-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "like:1",
+			"img": "like-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "dislike:1",
+			"img": "dislike-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "comment:1",
+			"img": "comment-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "post:2",
+			"img": "browser-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "like:2",
+			"img": "like-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "dislike:2",
+			"img": "dislike-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "comment:2",
+			"img": "comment-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "like:21",
+			"img": "like-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "dislike:21",
+			"img": "dislike-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "comment:21",
+			"img": "comment-svgrepo-com.svg",
+			"name": "post",
+			"title": "post",
+			"color": "yellow",
+			"val": 2
+		}
+		
+	],
+	"links": [
+		{
+			"source": "Social_Media",
+			"target": "post:1"
+		},
+		{
+			"source": "post:1",
+			"target": "like:1"
+		},
+		{
+			"source": "post:1",
+			"target": "dislike:1"
+		},
+		{
+			"source": "post:1",
+			"target": "comment:1"
+		},
+		{
+			"source": "Social_Media",
+			"target": "post:2"
+		},
+		{
+			"source": "post:2",
+			"target": "like:2"
+		},
+		{
+			"source": "post:2",
+			"target": "dislike:2"
+		},
+		{
+			"source": "post:2",
+			"target": "comment:2"
+		},
+		{
+			"source": "post:2",
+			"target": "like:21"
+		},
+		{
+			"source": "post:2",
+			"target": "dislike:21"
+		},
+		{
+			"source": "post:2",
+			"target": "comment:21"
+		}
+	]
+}

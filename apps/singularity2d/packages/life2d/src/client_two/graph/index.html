@@ -1,0 +1,280 @@
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+  <!--<script src="/node_modules/dist/3d-force-graph.js"></script>-->
+</head>
+
+<body>
+  <div id="3d-graph"></div>
+  <!-- <script defer src="//unpkg.com/3d-force-graph"></script> -->
+  <script defer src="/graph/node_modules/3d-force-graph/dist/3d-force-graph.min.js"></script>
+
+  <script defer type="importmap">{ "imports": { "three": "//unpkg.com/three/build/three.module.js" }}</script>
+  <script defer type="module">
+    import * as THREE from '/graph/node_modules/three/src/Three.js';
+    // import * as THREE from '//unpkg.com/three/build/three.module.js';
+    import SpriteText from "/graph/node_modules/three-spritetext/dist/three-spritetext.mjs";
+    // import SpriteText from "//unpkg.com/three-spritetext/dist/three-spritetext.mjs";
+    import * as secp from "/graph/node_modules/@noble/secp256k1/index.js";
+    // import * as secp from "https://unpkg.com/@noble/secp256k1";
+
+    // import { ethers, Wallet, SigningKey } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+    import { ethers, Wallet, SigningKey } from "/graph/node_modules/ethers/dist/ethers.min.js";
+    import { CSS2DRenderer, CSS2DObject } from '//unpkg.com/three/examples/jsm/renderers/CSS2DRenderer.js';
+    import mqtt from "/graph/node_modules/mqtt/dist/mqtt.esm.js"//'src/mqtt.esm.mjs'
+    const config = {
+      port: 3883,
+      username: '',
+      password: '',
+      clientId: Wallet.createRandom().address,
+      keepalive: 60,
+      clean: true,
+      reconnectPeriod: 300000,
+      connectTimeout: 30000,
+      rejectUnauthorized: false,
+    }
+    const client = mqtt.connect("mqtt://127.0.0.1", config);
+    client.on("connect", () => {
+      subscribe("graph").catch((error) => console.log(error))
+    });
+
+    client.on("message", (topic, message) => {
+      // message is Buffer
+      console.log(topic);
+      if (topic !== "graph") return;
+      console.log(message.toString());
+      appendMessage("peer", `<img src="/src/images/user-data-svgrepo-com.svg" width="36">\n
+    topic: ${topic}
+    message: ${message.toString()}
+    `)
+    });
+    let nodeActive;
+    // import {parse, stringify} from '/node_modules/yaml/dist/index.js'
+    async function logMovies(path) {
+      const response = await fetch(path);
+      const movies = await response.json();
+      return movies
+    }
+    const biases = await logMovies("datasets/biases/bias.json")
+    const weights = await logMovies("datasets/biases/weights.json")
+    //const bbiases = await logMovies("/datasets/biases/brian.bias.json")
+    //const bweights = await logMovies("/datasets/biases/brian.weights.json")
+    const privateKey = secp.utils.randomPrivateKey()
+    const publicKey = secp.getPublicKey(privateKey, true)
+    console.log("Private Key", privateKey)
+    console.log("Public Key", publicKey)
+    const signingKey = new SigningKey(privateKey)
+    // console.log("SigningKey", signingKey)
+    console.log("Signing Key Private Key", signingKey.privateKey);
+    console.log("Signing Key Public Key", signingKey.publicKey)
+    const wallet = new Wallet(signingKey.privateKey)
+    console.log("Wallet", wallet)
+    console.log("Wallet Private key", wallet.privateKey)
+    console.log("Wallet Address", wallet.address)
+    let nodeData = [
+      { id: wallet.address, x: 100, y: 200, z: -50 },
+    ]
+    let linkData = [
+      { source: wallet.address, target: "bias" },
+      { source: wallet.address, target: "entropy" },
+      { source: wallet.address, target: "time" },
+      // { source: wallet.address, target: "observer" },
+      // { source: wallet.address, target: "storage" },
+    ]
+    const message = "Hello World";
+    console.log("message", message)
+    const encodedMessage = new TextEncoder().encode(message)
+    console.log("encodedMessage", encodedMessage)
+    console.log("Wallet Sign message", await wallet.signMessage(message))
+
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+      // .graphData(Object.assign({}, {
+      //   nodes: nodeData.concat(weights),
+      //   links: linkData.concat(biases)
+      // }))
+      .graphData({
+        nodes: [
+          { id: 'actor', x: 10, y: 0, z: 0 },
+          {
+            id: 'action',
+            x: -4.999999999999998,
+            y: 8.660254037844387,
+            z: 0
+          },
+          {
+            id: 'time',
+            x: -5.000000000000004,
+            y: -8.660254037844386,
+            z: 0
+          },
+          {
+            id: 'context',
+            x: 0,
+            y: 0,
+            z: 8.16496580927726,
+            color: 'green',
+          },
+          {
+            id: 'domain',
+            x: 0,
+            y: 0,
+            z: 0,
+            group: 'center'
+          }
+        ],
+        links: [
+          { source: 'actor', target: 'domain', color: 'gray' },
+          { source: 'actor', target: 'time', color: 'gray' },
+          { source: 'actor', target: 'action', color: 'gray' },
+          { source: 'action', target: 'domain', color: 'gray' },
+          { source: 'action', target: 'time', color: 'gray' },
+          { source: 'time', target: 'domain', color: 'gray' },
+        ]
+      })
+      .backgroundColor("#a6a6a6")
+      .nodeLabel('label')
+      .nodeAutoColorBy('group')
+      .nodeThreeObject(node => {
+        const sprite = new SpriteText(node.id);
+        sprite.material.depthWrite = false; // make sprite background transparent
+        sprite.color = node.color;
+        sprite.textHeight = node.val ?? 8;
+        sprite.x = 24
+        return sprite;
+      })
+      .onNodeDragEnd(node => {
+        node.fx = node.x;
+        node.fy = node.y;
+        node.fz = node.z;
+      })
+      // .onNodeHover(node => {
+      //   if (!node || !node?.id) { return setTimeout(() => { Graph.scene().remove(nodeActive) }, 500) };
+      //   const nodeEl = document.createElement('div');
+      //   console.log(node)
+      //   nodeEl.textContent = node.id;
+      //   nodeEl.innerHTML = '<h1 onclick="alert("cliecked")">Click me</h1>';
+      //   nodeEl.style.color = node.color;
+      //   nodeEl.className = 'node-label';
+      //   const sprite = new CSS2DObject(nodeEl)
+      //   sprite.position.x = node.x;
+      //   sprite.position.y = node.y + 10;
+      //   sprite.position.z = node.z;
+      //   nodeActive = sprite
+      //   Graph.scene().add(sprite);
+      // })
+      .onNodeClick(node => {
+        // Aim at node from outside it
+        const distance = 150;
+        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+        const newPos = node.x || node.y || node.z
+          ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+          : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+        Graph.cameraPosition(
+          newPos, // new position
+          node, // lookAt ({ x, y, z })
+          3000  // ms transition duration
+        );
+      })
+      .onNodeRightClick((node) => {
+        const sprite = new SpriteText("node is: " + node.id);
+        sprite.material.depthWrite = false; // make sprite background transparent
+        sprite.color = "red"//node.color;
+        //                                 sprite.id = node.id
+        console.log(node)
+        const coords = Graph.screen2GraphCoords(node.x, node.y, 500);
+        console.log(coords);
+        sprite.position.set(node.x, node.y + 10, node.z)
+        sprite.textHeight = 8;
+        Graph.scene().add(sprite);
+        setTimeout(() => {
+          Graph.scene().remove(sprite);
+        }, 1000)
+      })
+      .nodeThreeObjectExtend(false)
+
+      // .onNodeRightClick((node) => {
+      //   const nodeEl = document.createElement('div');
+      //   console.log(node)
+      //   console.log(nodeEl)
+      //   // nodeEl.textContent = node.id;
+      //   nodeEl.classList.add("card")
+      //   nodeEl.style.width = "240px"
+      //   nodeEl.style.height = "240px"
+      //   nodeEl.style.backgroundColor = "red"
+      //   nodeEl.textContent = `<h1>
+      //     Click me
+
+      //     // const sprite = new SpriteText("node is: " + node.id);
+      //   // sprite.material.depthWrite = false; // make sprite background transparent
+      //   // sprite.color = "red"//node.color;
+      //   // //                                 sprite.id = node.id
+      //   // console.log(node)
+      //   // const coords = Graph.screen2GraphCoords(node.x, node.y, 500);
+      //   // console.log(coords);
+      //   // sprite.position.set(node.x, node.y + 10, node.z)
+      //   // sprite.textHeight = 8;
+      //   // Graph.scene().add(sprite);
+      //   const nodeEl = document.createElement('div');
+      //   console.log(node)
+      //   // nodeEl.textContent = node.id;
+
+      // })
+      // .nodeThreeObjectExtend(false)
+      // .linkWidth(1)
+      // .linkThreeObjectExtend(true)
+      //     </h1>`;
+      //   // nodeEl.style.color = node.color;
+      //   // nodeEl.className = 'node-label';
+      //   const sprite = new CSS2DObject(nodeEl)
+      //   // sprite.position.x = node.x;
+      //   // sprite.position.y = node.y;
+      //   // sprite.position.z = node.z;
+      //   sprite.position.set(node.x, node.y + 10, node.z)
+      //   nodeActive = sprite
+      //   Graph.scene().add(sprite);
+      // Graph.numDimensions(3)
+      //   setTimeout(() => {
+      //     Graph.scene().remove(sprite);
+      //   }, 1000)
+      // })
+      .nodeThreeObjectExtend(false)
+      .linkWidth(1)
+      .linkThreeObjectExtend(true)
+      .linkThreeObject(link => {
+        // extend link with text sprite
+        const sprite = new SpriteText(link.action ? link.action : `${link.source} > ${link.target}`);
+        sprite.color = 'lightgrey';
+        sprite.textHeight = 2;
+        return sprite;
+      })
+      .linkPositionUpdate((sprite, { start, end }) => {
+        const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
+          [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+        })));
+
+        // Position sprite
+        Object.assign(sprite.position, middlePos);
+      })
+      .linkOpacity(1)
+      .nodeThreeObjectExtend(false)
+    // .cooldownTicks(100)
+    // .cooldownTime(3000)
+    // .onEngineStop(() => Graph.zoomToFit(10));
+    // Spread nodes a little wider
+    Graph.d3Force('charge').strength(-120);
+    // Graph.onEngineStop(() => Graph.zoomToFit(100));
+
+    const sprite = new SpriteText("*");
+    sprite.material.depthWrite = false; // make sprite background transparent
+    sprite.color = "red"//node.color;
+    sprite.position.set(0, 0, 0)
+    sprite.textHeight = 4;
+    Graph.scene().add(sprite);
+  </script>
+</body>

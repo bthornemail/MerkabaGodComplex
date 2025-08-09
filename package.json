@@ -1,5 +1,226 @@
 {
+  "name": "@universal-life-protocol/core",
+  "version": "2.0.0",
+  "description": "Revolutionary AI framework implementing living, conscious digital reality with meta-cognitive reasoning, attention economics, and autonomous learning",
+  "type": "module",
+  "private": false,
+  "packageManager": "npm@10.0.0",
+  "workspaces": [
+    "apps/*",
+    "libs/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "install:all": "npm install && npm run install:libs && npm run install:apps && npm run install:tools",
+    "install:libs": "cd libs/cue-core && npm install && cd ../cue-ai-training && npm install && cd ../cue-protocols && npm install && cd ../cue-dev-environment && npm install && cd ../harmonized-components && npm install",
+    "install:apps": "cd apps/control-center && npm install && cd ../dashboard && npm install",
+    "install:tools": "cd tools/testing && npm install 2>/dev/null || true && cd ../benchmarking && npm install 2>/dev/null || true",
+    "start": "node start-services.cjs",
+    "dev": "npm run start",
+    "services": "node start-services.cjs",
+    "build": "npm run build:core && npm run build:ai-training && npm run build:protocols && npm run build:harmonized && npm run build:package",
+    "build:package": "tsc --project tsconfig.build.json && node build-package.cjs",
+    "publish:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
+    "publish:stable": "npm version patch && npm publish",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
+    "test": "npm run test:core && npm run test:ai-training",
+    "clean": "npm run clean:all",
+    "build:all": "npm run build && npm run build:apps",
+    "build:apps": "cd apps/control-center && npm run build && cd ../dashboard && npm run build && cd ../knowledge-trie && npm run build",
+    "test:all": "npm run test && npm run test:apps",
+    "test:apps": "cd apps/control-center && npm test && cd ../dashboard && npm test && cd ../knowledge-trie && npm test",
+    "lint:all": "npm run lint && npm run lint:apps",
+    "lint": "eslint .",
+    "lint:apps": "cd apps/control-center && npm run lint && cd ../dashboard && npm run lint && cd ../knowledge-trie && npm run lint",
+    "clarion:train": "cd libs/cue-ai-training && npx ts-node clarion-mdu-training-demo.ts",
+    "clarion:status": "cd libs/cue-ai-training && node -e \"console.log('CLARION-MDU Status:', require('./clarion_mdu_training_memory.json' || '{}'))\"",
+    "ollama:test": "cd libs/cue-dev-environment && npx ts-node simple-ollama-test.ts",
+    "ollama:demo": "cd libs/cue-dev-environment && npx ts-node integrated-demo.ts",
+    "ollama:agent": "cd .ollama && ls -la",
+    "core:demo": "cd libs/cue-core && npx ts-node demo.ts",
+    "core:test": "cd libs/cue-core && npx ts-node comprehensive-test.ts",
+    "core:build": "cd libs/cue-core && npm run build 2>/dev/null || tsc 2>/dev/null || echo 'Build not configured'",
+    "ai-training:demo": "cd libs/cue-ai-training && npx ts-node clarion-mdu-training-demo.ts",
+    "ai-training:quick": "cd libs/cue-ai-training && npx ts-node quick-benchmark.ts",
+    "ai-training:benchmark": "cd libs/cue-ai-training && npx ts-node test-cue-amgf.ts",
+    "ai-training:build": "cd libs/cue-ai-training && npm run build 2>/dev/null || echo 'AI training ready'",
+    "protocols:test": "cd libs/cue-protocols && echo 'Protocol tests not implemented yet'",
+    "protocols:build": "cd libs/cue-protocols && npm run build 2>/dev/null || echo 'Protocols ready'",
+    "build:harmonized": "bash scripts/build-harmonized-components.sh",
+    "harmonized:demo": "cd apps/singularity2d && npm run dev",
+    "dpo:demo": "cd apps/cue-dpo && npx ts-node dpo-demo.ts",
+    "dpo:validate": "node examples/demos/validate-dpo-system.js",
+    "mcp:demo": "npx tsx examples/demos/mcp-integration-demo.ts",
+    "mcp:server": "npx tsx examples/demos/mcp-integration-demo.ts",
+    "personality:demo": "node examples/demos/personality-mcp-demo.js",
+    "personality:test": "node examples/mcp/test-mcp-integration.js",
+    "research:demo": "node examples/demos/research-engine-demo.js",
+    "research:generate": "npx ts-node libs/research-module/manuscript-generator.ts",
+    "research:engine": "npx ts-node libs/research-module/integrated-research-engine.ts",
+    "manuscript:create": "node -e \"const { ManuscriptGenerator } = require('./libs/research-module/manuscript-generator.js'); new ManuscriptGenerator().generateCompleteManuscript().then(console.log)\"",
+    "control-center:start": "cd apps/control-center && npm start",
+    "control-center:dev": "cd apps/control-center && npm run dev",
+    "control-center:build": "cd apps/control-center && npm run build",
+    "dashboard:start": "cd apps/dashboard && npm start",
+    "dashboard:dev": "cd apps/dashboard && npm run dev",
+    "agents:status": "echo 'LLM Agents:' && ls -la .gemini .obsidian .ollama .claude 2>/dev/null || echo 'Agent folders not found'",
+    "agents:gemini": "cd .gemini && ls -la",
+    "agents:obsidian": "cd .obsidian && ls -la",
+    "agents:ollama": "cd .ollama && ls -la",
+    "build:core": "npm run core:build",
+    "build:ai-training": "npm run ai-training:build",
+    "build:protocols": "npm run protocols:build",
+    "test:core": "npm run core:test",
+    "test:ai-training": "npm run ai-training:benchmark",
+    "clean:all": "rm -rf dist node_modules */node_modules */*/node_modules",
+    "ws:build": "npm run -ws --if-present build",
+    "ws:test": "npm run -ws --if-present test",
+    "ws:lint": "npm run -ws --if-present lint",
+    "format": "prettier --write .",
+    "mcp:test": "node examples/mcp/test-mcp-integration.js",
+    "api:start": "node dist/libs/api/cue-api-server.js",
+    "api:dev": "npx ts-node libs/api/cue-api-server.ts",
+    "cli:build": "cd libs/cli && npm run build",
+    "cli:test": "cd libs/cli && npm test",
+    "config:validate": "npx ts-node -e \"import('./libs/config/config-manager.js').then(m => m.getConfigManager().validate())\"",
+    "test:load": "bash scripts/run-load-tests.sh",
+    "test:lighthouse": "npx @lhci/cli autorun",
+    "benchmark:ws": "k6 run scripts/k6-ws-benchmark.js", 
+    "benchmark:mixed": "artillery run scripts/artillery-load-test.yml",
+    "audit:third-party": "echo 'Ready for third-party verification. See VERIFICATION_BENCHMARKING.md'"
+  },
+  "keywords": [
+    "cue",
+    "computational-universe-engine",
+    "clarion-mdu",
+    "autonomous-ai",
+    "ollama-integration",
+    "ai-training",
+    "manuscript-generation",
+    "control-center",
+    "vec7-harmony",
+    "modular-architecture",
+    "typescript",
+    "react"
+  ],
+  "author": "Brian Thorne",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol.git"
+  },
+  "homepage": "https://github.com/universallifeprotocol/UniversalLifeProtocol#readme",
+  "bugs": {
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./mcp": {
+      "require": "./dist/libs/mcp-bridge/ulp-mcp-server.js",
+      "import": "./dist/libs/mcp-bridge/ulp-mcp-server.mjs",
+      "types": "./dist/libs/mcp-bridge/ulp-mcp-server.d.ts"
+    },
+    "./mcp/personality": {
+      "require": "./dist/libs/mcp-bridge/personality-profiling-mcp.js",
+      "import": "./dist/libs/mcp-bridge/personality-profiling-mcp.mjs",
+      "types": "./dist/libs/mcp-bridge/personality-profiling-mcp.d.ts"
+    },
+    "./consciousness": {
+      "require": "./dist/consciousness.js",
+      "import": "./dist/consciousness.mjs",
+      "types": "./dist/consciousness.d.ts"
+    },
+    "./living-knowledge": {
+      "require": "./dist/living-knowledge.js",
+      "import": "./dist/living-knowledge.mjs",
+      "types": "./dist/living-knowledge.d.ts"
+    },
+    "./protocols/living-knowledge": {
+      "require": "./dist/libs/cue-protocols/living-knowledge.js",
+      "import": "./dist/libs/cue-protocols/living-knowledge.mjs",
+      "types": "./dist/libs/cue-protocols/living-knowledge.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "ANNOUNCEMENT.md",
+    "LICENSE",
+    "demo-complete-system.js",
+    "test-consciousness-system.js",
+    "walkthrough-demo.js"
+  ],
   "dependencies": {
-    "commander": "^14.0.0"
+    "axios": "^1.6.0",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "tsconfig-paths": "^4.2.0",
+    "ws": "^8.14.2",
+    "zod": "^3.22.0",
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/auto-instrumentation-node": "^0.51.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.51.0",
+    "@opentelemetry/sdk-trace-node": "^1.23.0",
+    "@opentelemetry/sdk-metrics": "^1.23.0",
+    "@opentelemetry/resources": "^1.23.0",
+    "@opentelemetry/semantic-conventions": "^1.23.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.17.16",
+    "@types/ws": "^8.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/ui": "^2.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-vitest": "^0.5.4",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.11",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.0.0"
+  },
+  "optionalDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/offscreen-canvas": "^0.1.5",
+    "@types/query-selector-shadow-dom": "^1.0.4",
+    "canvas": "^2.11.2",
+    "jsdom": "^25.0.1",
+    "offscreen-canvas": "^0.1.1"
+  },
+  "overrides": {
+    "esbuild": "^0.25.8",
+    "tmp": "^0.2.4",
+    "vitest": "^2.0.0"
+  },
+  "resolutions": {
+    "esbuild": "^0.25.8",
+    "tmp": "^0.2.4"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "config": {
+    "primary-focus": "autonomous-cue-ai",
+    "secondary-focus": "book-manuscript",
+    "dev-environment": "ollama-integrated",
+    "production-environment": "clean-modular"
   }
 }

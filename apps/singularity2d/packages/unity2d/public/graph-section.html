@@ -1,0 +1,234 @@
+
+<section id="graph-section">
+    <div style="width: 360px;" id="3d-graph"></div>
+    <div style="width: 360px;" id="graph"></div>
+    <script src="//unpkg.com/3d-force-graph"></script>
+    <script src="//unpkg.com/force-graph"></script>
+    <script type="importmap">{ "imports": { "three": "//unpkg.com/three/build/three.module.js" }}</script>
+    <script type="module">
+        // import SpriteText from "//unpkg.com/three-spritetext/dist/three-spritetext.mjs";
+        import { CSS2DRenderer, CSS2DObject } from '//unpkg.com/three/examples/jsm/renderers/CSS2DRenderer.js';
+
+        const N = 300;
+        const gData = {
+            nodes: [...Array(N).keys()].map(i => ({ fingerprint: i, title: i })),
+            links: [...Array(N).keys()]
+                .filter(id => id)
+                .map(id => ({
+                    source: id,
+                    target: Math.round(Math.random() * (id - 1))
+                }))
+        };
+        const Graph = ForceGraph3D({
+            controlType: 'orbit',
+            extraRenderers: [new CSS2DRenderer()]
+        })
+            (document.getElementById('3d-graph'))
+            .backgroundColor("white")
+            .width(document.getElementById('3d-graph').clientWidth - 64)
+            .height(document.getElementById('3d-graph').clientWidth - 64)
+            .jsonUrl('/get/0x234343?signature=0x974')
+            .cooldownTicks(100)
+            //   .graphData(gData)
+            .nodeId("fingerprint")
+            .nodeLabel("title")
+            .nodeAutoColorBy('path')
+            //   .nodeThreeObject(node => {
+            //     const spr
+            //   .nodeThreeObject(node => {
+            //     const sprite = new SpriteText(node.title);
+            //     sprite.material.depthWrite = false; // make sprite background transparent
+            //     sprite.color = node.color;
+            //     sprite.textHeight = 8;
+            //     return sprite;
+            //   })
+            .nodeThreeObject((node) => {
+                const nodeEl = document.createElement('div');
+                // nodeEl.textContent = node.title || node.html || node.label;
+                nodeEl.innerHTML = `<br/>
+<br/>
+<br/>
+<div>
+    ${node.imgSrc ? `<img width="24" src="/src/images/input.png">` : `<img width="24" src="/src/images/3347250.png">`}
+    <br/>
+    ${node.title || node.html || node.label}
+    </div>`;
+                nodeEl.style.color = node.color;
+                nodeEl.className = 'node-label';
+                return new CSS2DObject(nodeEl);
+            })
+            .nodeThreeObjectExtend(true)ite = new SpriteText(node.title);
+            //     sprite.material.depthWrite = false; // make sprite background transparent
+            //     sprite.color = node.color;
+            //     sprite.textHeight = 8;
+            //     return sprite;
+            //   })
+            .nodeThreeObject((node) => {
+                const nodeEl = document.createElement('div');
+                // nodeEl.textContent = node.title || node.html || node.label;
+                nodeEl.innerHTML = `<br/>
+<br/>
+<br/>
+<div>
+    ${node.imgSrc ? `<img width="24" src="/src/images/input.png">` : `<img width="24" src="/src/images/3347250.png">`}
+    <br/>
+    ${node.title || node.html || node.label}
+    </div>`;
+                nodeEl.style.color = node.color;
+                nodeEl.className = 'node-label';
+                return new CSS2DObject(nodeEl);
+            })
+            .nodeThreeObjectExtend(true)
+            .onNodeClick(node => {
+                // Aim at node from outside it
+                const distance = 200;
+                const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+                const newPos = node.x || node.y || node.z
+                    ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+                    : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+                Graph.cameraPosition(
+                    newPos, // new position
+                    node, // lookAt ({ x, y, z })
+                    3000  // ms transition duration
+                );
+            })
+            .onNodeRightClick((node, event) => {
+                document.querySelectorAll("section").forEach((section) => {
+                    if (section.id === "graph-section") return;
+                    if (section.id === "footer") return;
+                    section.setAttribute("hidden", "hidden")
+                })
+                if (node.lin
+            //   .nodeThreeObject(node => {
+            //     const sprite = new SpriteText(node.title);
+            //     sprite.material.depthWrite = false; // make sprite background transparent
+            //     sprite.color = node.color;
+            //     sprite.textHeight = 8;
+            //     return sprite;
+            //   })
+            .nodeThreeObject((node) => {
+                const nodeEl = document.createElement('div');
+                // nodeEl.textContent = node.title || node.html || node.label;
+                nodeEl.innerHTML = `<br/>
+<br/>
+<br/>
+<div>
+    ${node.imgSrc ? `<img width="24" src="/src/images/input.png">` : `<img width="24" src="/src/images/3347250.png">`}
+    <br/>
+    ${node.title || node.html || node.label}
+    </div>`;
+                nodeEl.style.color = node.color;
+                nodeEl.className = 'node-label';
+                return new CSS2DObject(nodeEl);
+            })
+            .nodeThreeObjectExtend(true)k) {
+                    document.location = node.link
+                }
+            })
+        // Spread nodes a little wider
+        Graph.d3Force('charge').strength(-120 * 6);
+        Graph.onEngineStop(() => Graph.zoomToFit(400));
+
+        fetch('/get/0x234343?signature=0x974').then(res => res.json()).then(data => {
+            const myGraph = ForceGraph();
+
+            // link parent/children
+            const nodesById = Object.fromEntries(data.nodes.map(node => [node.fingerprint, node]));
+            console.log(nodesById)
+            data.links.forEach(link => {
+                nodesById[link.source].childLinks.push(link);
+            });
+
+            // const getPrunedTree = () => {
+            //     const visibleNodes = [];
+            //     const visibleLinks = [];
+
+            //     (function traverseTree(node = nodesById[data.nodes[0].fingerprint]) {
+            //         visibleNodes.push(node);
+            //         if (node.collapsed) return;
+            //         visibleLinks.push(...node.childLinks);
+            //         node.childLinks
+            //             .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+            //             .forEach(traverseTree);
+            //     })(); // IIFE
+
+            //     return { nodes: visibleNodes, links: visibleLinks };
+            // };
+            myGraph(document.getElementById('graph'))
+                .graphData(data)
+                // .backgroundColor("grey")
+                .width(document.getElementById('graph').clientWidth - 64)
+                .height(document.getElementById('graph').clientWidth - 64)
+                // .jsonUrl('/get/0x234343?signature=0x974')
+                .cooldownTicks(100)
+                //   .graphData(gData)
+                .nodeId("fingerprint")
+                .nodeLabel("title")
+                .nodeAutoColorBy('path')
+                // .graphData(getPrunedTree())
+                // .onNodeHover(node => elem.style.cursor = node && node.childLinks.length ? 'pointer' : null)
+                // .onNodeClick(node => {
+                //     if (node.childLinks.length) {
+                //         node.collapsed = !node.collapsed; // toggle collapse state
+                //         myGraph.graphData(getPrunedTree());
+                //     }
+                // })
+                .linkDirectionalParticles(1)
+                .linkDirectionalParticleWidth(2.5)
+                // .nodeColor(node => !node.childLinks.length ? 'green' : node.collapsed ? 'red' : 'yellow')
+                // .onNodeClick(node => {
+                //     // Aim at node from outside it
+                //     const distance = 200;
+                //     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+                //     const newPos = node.x || node.y || node.z
+                //         ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+                //         : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+                //     myGraph.cameraPosition(
+                //         newPos, // new position
+                //         node, // lookAt ({ x, y, z })
+                //         3000  // ms transition duration
+                //     );
+                // })
+                // .onNodeRightClick((node, event) => {
+                //     document.querySelectorAll("section").forEach((section) => {
+                //         if (section.id === "graph-section") return;
+                //         if (section.id === "footer") return;
+                //         section.setAttribute("hidden", "hidden")
+                //     })
+                //     if (node.link) {
+                //         document.location = node.link
+                //     }
+                // })
+                .nodeCanvasObject((node, ctx, globalScale) => {
+                    const label = node.title;
+                    const fontSize = 12 / globalScale;
+                    ctx.font = `${fontSize}px Sans-Serif`;
+                    const textWidth = ctx.measureText(label).width;
+                    const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = node.color;
+                    ctx.fillText(label, node.x, node.y);
+
+                    node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+                })
+                .nodePointerAreaPaint((node, color, ctx) => {
+                    ctx.fillStyle = color;
+                    const bckgDimensions = node.__bckgDimensions;
+                    bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+                });
+            // Spread nodes a little wider
+            myGraph.d3Force('charge').strength(-120 * 6);
+            myGraph.onEngineStop(() => myGraph.zoomToFit(400));
+        });
+
+    </script>
+</section>

@@ -1,0 +1,44 @@
+{
+  "name": "@ulp/cue-ai-training",
+  "version": "1.0.0",
+  "description": "CLARION-MDU enhanced AI training system for manuscript generation and autonomous learning",
+  "main": "cue-amgf-orchestrator.ts",
+  "exports": {
+    ".": "./cue-amgf-orchestrator.ts",
+    "./clarion": "./clarion-mdu-integration.ts",
+    "./manuscript": "./manuscript-generator.ts",
+    "./training": "./cue-training-program.ts",
+    "./vec7": "./vec7-harmony-agents.ts"
+  },
+  "scripts": {
+    "clarion-training": "npx ts-node clarion-mdu-training-demo.ts",
+    "generate": "npx ts-node manuscript-generator.ts",
+    "benchmark": "npx ts-node quick-benchmark.ts",
+    "harmonize": "npx ts-node vec7-harmony-agents.ts",
+    "test": "npx ts-node test-cue-amgf.ts",
+    "test:autonomous": "node test-working.mjs",
+    "test:simple": "npx ts-node simple-test.ts",
+    "train:quick": "npx ts-node cue-training-program.ts --quick",
+    "train:deep": "npx ts-node cue-training-program.ts --deep"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.17.16",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [
+    "CLARION-MDU",
+    "AI-training",
+    "manuscript-generation",
+    "vec7-harmony",
+    "autonomous-learning"
+  ],
+  "author": "Universal Life Protocol Team",
+  "license": "ISC"
+}

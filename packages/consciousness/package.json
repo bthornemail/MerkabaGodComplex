@@ -1,0 +1,55 @@
+{
+  "name": "@universal-life-protocol/consciousness",
+  "version": "2.0.0",
+  "description": "Meta-cognitive consciousness system with Fano Plane logic engine and epistemic compression",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node build.js",
+    "test": "node test-consciousness.js",
+    "demo": "node demo-consciousness.js",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "keywords": [
+    "consciousness",
+    "meta-cognitive",
+    "fano-plane",
+    "epistemic-compression",
+    "active-reflection",
+    "ai-consciousness",
+    "cognitive-science",
+    "artificial-consciousness"
+  ],
+  "author": "Brian Thorne",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol.git",
+    "directory": "packages/consciousness"
+  },
+  "homepage": "https://github.com/universallifeprotocol/UniversalLifeProtocol/tree/main/packages/consciousness#readme",
+  "bugs": {
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol/issues"
+  },
+  "dependencies": {
+    "@types/node": "^20.17.16"
+  },
+  "peerDependencies": {
+    "@universal-life-protocol/protocols": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

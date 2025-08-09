@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Builder</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #form-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        #controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            transform: translateY(0);
+            z-index: 1000;
+        }
+        #controls-bar .bar-header {
+            background-color: #495057;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .queue-item {
+            display: inline-block;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h2>Form Builder</h2>
+        <form id="dynamic-form" action="#" method="post">
+            <div id="form-container" class="border p-3">
+                <!-- Form elements will be added here -->
+            </div>
+        </form>
+        <div class="form-group">
+            <label for="form-action-url">Form Action URL:</label>
+            <input type="text" id="form-action-url" class="form-control" placeholder="Enter form action URL">
+        </div>
+    </div>
+
+    <div id="controls-bar" class="open">
+        <div class="bar-header" onclick="toggleControlsBar()">Form Controls</div>
+        <div class="p-3">
+            <h6>Queued Controls:</h6>
+            <div id="control-queue">
+                <!-- Queued control icons will appear here -->
+            </div>
+        </div>
+        <hr style="border-color: #ffffff;">
+        <div class="p-3">
+            <button class="btn btn-sm btn-outline-light" onclick="addInputControl('label')">Label</button>
+            <button class="btn btn-sm btn-outline-light" onclick="addInputControl('text')">Text Input</button>
+            <button class="btn btn-sm btn-outline-light" onclick="addInputControl('textarea')">Text Area</button>
+            <button class="btn btn-sm btn-outline-light" onclick="addInputControl('button')">Button</button>
+            <button class="btn btn-sm btn-outline-light" onclick="addInputControl('select')">Select</button>
+            <!-- <button class="btn btn-sm btn-outline-light" onclick="addInputControl('checklist')">Checklist</button> -->
+            <!-- <button class="btn btn-sm btn-outline-light" onclick="addInputControl('toggle')">Toggle Bar</button> -->
+        </div>
+        
+    </div>
+
+    <!-- Modal for editing form element properties -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Form Element</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <div class="form-group">
+                            <label for="element-label">Label</label>
+                            <input type="text" id="element-label" class="form-control" placeholder="Enter label">
+                        </div>
+                        <div class="form-group">
+                            <label for="element-placeholder">Placeholder</label>
+                            <input type="text" id="element-placeholder" class="form-control" placeholder="Enter placeholder text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveElementChanges()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        let selectedElement = null; // Track the currently selected element
+
+        function toggleControlsBar() {
+            const bar = document.getElementById('controls-bar');
+            bar.classList.toggle('open');
+        }
+
+        function addInputControl(type) {
+            const formContainer = document.getElementById('form-container');
+            let controlElement;
+
+            switch (type) {
+                case 'text':
+                    controlElement = document.createElement('input');
+                    controlElement.type = 'text';
+                    controlElement.className = 'form-control my-2';
+                    controlElement.placeholder = 'Text Input';
+                    // controlElement.disabled = true;
+                    break;
+                case 'textarea':
+                    controlElement = document.createElement('textarea');
+                    controlElement.className = 'form-control my-2';
+                    controlElement.placeholder = 'Text Area';
+                    // controlElement.disabled = true;
+                    break;
+                case 'button':
+                    controlElement = document.createElement('button');
+                    controlElement.type = 'button';
+                    controlElement.className = 'btn btn-secondary my-2';
+                    controlElement.innerText = 'Button';
+                    // controlElement.disabled = true;
+                    break;
+                case 'select':
+                    controlElement = document.createElement('select');
+                    controlElement.className = 'form-control my-2';
+                    const option1 = new Option('Option 1', '1');
+                    const option2 = new Option('Option 2', '2');
+                    controlElement.add(option1);
+                    controlElement.add(option2);
+                    // controlElement.disabled = true;
+                    break;
+                case 'label':
+                    controlElement = document.createElement('label');
+                    controlElement.className = 'form-label my-2';
+                    controlElement.innerText = 'Label';
+                    // controlElement.disabled = true;
+                    break;
+            }
+
+            if (controlElement) {
+                controlElement.onclick = () => openEditModal(type, controlElement);
+                formContainer.appendChild(controlElement);
+                addToQueue(type, controlElement);
+            }
+        }
+
+        function addToQueue(type, controlElement) {
+            const queue = document.getElementById('control-queue');
+            const queueItem = document.createElement('div');
+            queueItem.className = 'queue-item';
+            queueItem.innerHTML = `<span class="badge badge-pill badge-primary">${type}</span>`;
+            queueItem.onclick = () => openEditModal(controlElement);
+            queue.appendChild(queueItem);
+        }
+
+        function openEditModal(type, element) {
+            selectedElement = element;
+            // switch (type) {
+            //     case 'text':
+            // document.getElementById('editModalLabel').value = element.placeholder || element.innerText || '';
+            // document.getElementById('element-placeholder').value = element.placeholder || '';
+            //         break;
+            //     case 'textarea':
+            //         controlElement = document.createElement('textarea');
+            //         controlElement.className = 'form-control my-2';
+            //         controlElement.placeholder = 'Text Area';
+            //         // controlElement.disabled = true;
+            //         break;
+            //     case 'button':
+            //         controlElement = document.createElement('button');
+            //         controlElement.type = 'button';
+            //         controlElement.className = 'btn btn-secondary my-2';
+            //         controlElement.innerText = 'Button';
+            //         // controlElement.disabled = true;
+            //         break;
+            //     case 'select':
+            //         controlElement = document.createElement('select');
+            //         controlElement.className = 'form-control my-2';
+            //         const option1 = new Option('Option 1', '1');
+            //         const option2 = new Option('Option 2', '2');
+            //         controlElement.add(option1);
+            //         controlElement.add(option2);
+            //         // controlElement.disabled = true;
+            //         break;
+            //     case 'label':
+            //         controlElement = document.createElement('label');
+            //         controlElement.className = 'form-label my-2';
+            //         controlElement.innerText = 'Label';
+            //         // controlElement.disabled = true;
+            //         break; 
+            // }
+            document.getElementById('element-label').value = element.placeholder || element.innerText || '';
+            document.getElementById('element-placeholder').value = element.placeholder || '';
+            $('#editModal').modal('show');
+        }
+
+        function saveElementChanges() {
+            if (selectedElement) {
+                const newLabel = document.getElementById('element-label').value;
+                const newPlaceholder = document.getElementById('element-placeholder').value;
+                if (selectedElement.tagName === 'BUTTON') {
+                    selectedElement.innerText = newLabel;
+                } else {
+                    selectedElement.placeholder = newPlaceholder;
+                }
+                selectedElement.disabled = false; // Enable the element after editing
+                $('#editModal').modal('hide');
+            }
+        }
+
+        // Set the form action URL based on user input
+        document.getElementById('form-action-url').addEventListener('input', function() {
+            document.getElementById('dynamic-form').action = this.value;
+        });
+    </script>
+
+</body>
+</html>

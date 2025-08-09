@@ -1,0 +1,3 @@
+2024/02/25-08:12:39.371 1dbdf Reusing MANIFEST /home/bthorne/github/service.board/remote-profile/Default/Sync Data/LevelDB/MANIFEST-000001
+2024/02/25-08:12:39.378 1dbdf Recovering log #3
+2024/02/25-08:12:39.380 1dbdf Reusing old log /home/bthorne/github/service.board/remote-profile/Default/Sync Data/LevelDB/000003.log 

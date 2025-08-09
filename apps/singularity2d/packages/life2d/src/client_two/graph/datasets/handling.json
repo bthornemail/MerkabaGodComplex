@@ -1,0 +1,29 @@
+{
+    "nodes":[
+	{ "id":"Management", "encoding":"Address" },
+	{ "id":"Inventory", "encoding":"JSON" },
+	{ "id":"Fee", "encoding":"String" },
+
+	{ "id":"Tracking", "encoding":"Map" },
+	{ "id":"Maintenance", "encoding":"Map" },
+	{ "id":"Repair", "encoding":"Map" },
+	{ "id":"Upkeep", "encoding":"Map" },
+	{ "id":"Utilization", "encoding":"Map" },
+	{ "id":"Logistics", "encoding":"Map" },
+	{ "id":"Usage", "encoding":"Map" },
+	{ "id":"Deployment", "encoding":"Map" },
+	{ "id":"Optimization", "encoding":"Map" },
+	{ "id":"Efficiency", "encoding":"Map" },
+	{ "id":"Enhancement", "encoding":"Map" },
+
+
+	{ "id":"Evaluation", "encoding":"Map" },
+	{ "id":"Valuation", "encoding":"Map" },
+	{ "id":"Appraisal", "encoding":"Map" },
+	{ "id":"Assessment", "encoding":"Map" },
+	{ "id":"Analysis", "encoding":"Map" }
+    ],
+    "links":[
+	{ "source":"Asset", "target":"Owner" }
+    ]
+}

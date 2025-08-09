@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local 2D </title>
+  <!-- <link rel="manifest" href="manifest.webapp" /> -->
+  <link rel="stylesheet" href="modules/bootstrap/bootstrap.min.css">  
+  <link rel="stylesheet" href="modules/easymde/easymde.min.css">  
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="importmap">
+          {
+            "imports": {
+              "ethers": "/node_modules/ethers/dist/ethers.js",
+              "merkletreejs": "/node_modules/merkletreejs/merkletree.js",
+              "mqtt": "/modules/mqtt/mqtt.esm.js",
+              "socket.io-client":"/node_modules/socket.io-client/dist/socket.io.esm.min.js",
+              "three": "/node_modules/three/build/three.module.js",
+              "three/addons/":"/node_modules/three/examples/jsm/",
+              "three/examples/": "./node_modules/three/examples/",
+              "three-spritetext": "/node_modules/three-spritetext/dist/three-spritetext.mjs"
+            }
+          }
+        </script>
+  <!-- <script src="./modules/html5-qrcode/html5-qrcode.min.js"></script> -->
+  <!-- <script src="./modules/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script> -->
+  <!-- <script src="./bin/handle.file.input.js"></script> -->
+  <script src="./modules/easymde/easymde.min.js"></script>
+  <script>
+    const scheme = "web+tea";
+    const url = "/tea?type=%s"
+    navigator.registerProtocolHandler(scheme, url);
+    const scheme1 = "web+coffee";
+    const url1 = "/coffee?type=%s"
+    navigator.registerProtocolHandler(scheme1, url1);
+  </script>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

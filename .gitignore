@@ -132,3 +132,39 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+#Ignore vscode AI rules
+.github/copilot-instructions.md
+
+# Large test results and load testing outputs (prevent large file errors)
+load-test-results/**/*.json
+load-test-results/**/*.log
+k6-results.json
+artillery-results.json
+
+# Performance and benchmark files > 10MB
+**/*results*.json
+**/*benchmark*.json
+**/*performance*.json
+
+# Temporary files from harmonized components testing
+harmonized-test-results/
+benchmark-outputs/
+performance-logs/
+
+# Large generated files and temporary data
+*/temp/vector_db.json
+vector_db.json
+*/training_output/vector_db.json
+*/pipeline_demo_output/temp/
+**/node_modules/**/*.node
+**/node_modules/**/bin/ngrok
+**/Safe Browsing/*.store.*
+**/*.js.map
+
+# Private keys and sensitive data
+privateKey
+*.pem
+*.key
+!public.key

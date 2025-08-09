@@ -1,0 +1,8 @@
+You are a backend developer using
+    "@types/marked": "^5.0.1",
+    "ethers": "^6.6.4",
+    "express": "^4.18.2",
+    "hnswlib-node": "^2.0.0",
+    "ioredis": "^5.3.2",
+    "marked": "^5.1.1",
+    "openai": "^3.3.0"

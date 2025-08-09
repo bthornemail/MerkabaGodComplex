@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "mqtt": "^5.8.1",
+    "multiformats": "^13.1.0"
+  }
+}

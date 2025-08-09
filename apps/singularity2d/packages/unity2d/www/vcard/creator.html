@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update vCard</title>
+</head>
+<body>
+  <h1>Update vCard</h1>
+  <form id="vcard-form">
+    <h2>Personal Information</h2>
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" name="lastname" value="Desloovere"><br><br>
+    
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" name="firstname" value="Jeroen"><br><br>
+    
+    <label for="additional">Additional:</label>
+    <input type="text" id="additional" name="additional" value=""><br><br>
+    
+    <label for="prefix">Prefix:</label>
+    <input type="text" id="prefix" name="prefix" value=""><br><br>
+    
+    <label for="suffix">Suffix:</label>
+    <input type="text" id="suffix" name="suffix" value=""><br><br>
+    
+    <h2>Work Information</h2>
+    <label for="company">Company:</label>
+    <input type="text" id="company" name="company" value="Siesqo"><br><br>
+    
+    <label for="jobtitle">Job Title:</label>
+    <input type="text" id="jobtitle" name="jobtitle" value="Web Developer"><br><br>
+    
+    <label for="role">Role:</label>
+    <input type="text" id="role" name="role" value="Data Protection Officer"><br><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="info@jeroendesloovere.be"><br><br>
+    
+    <label for="phone1">Phone Number 1 (PREF;WORK):</label>
+    <input type="tel" id="phone1" name="phone1" value="1234121212"><br><br>
+    
+    <label for="phone2">Phone Number 2 (WORK):</label>
+    <input type="tel" id="phone2" name="phone2" value="123456789"><br><br>
+    
+    <h2>Address</h2>
+    <label for="street">Street:</label>
+    <input type="text" id="street" name="street" value="street"><br><br>
+    
+    <label for="worktown">Town:</label>
+    <input type="text" id="worktown" name="worktown" value="worktown"><br><br>
+    
+    <label for="postcode">Postcode:</label>
+    <input type="text" id="postcode" name="postcode" value="workpostcode"><br><br>
+    
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" value="Belgium"><br><br>
+    
+    <h2>Social Media</h2>
+    <label for="twitter">Twitter:</label>
+    <input type="text" id="twitter" name="twitter" value="https://twitter.com/desloovere_j"><br><br>
+    
+    <h2>Website</h2>
+    <label for="url">URL:</label>
+    <input type="url" id="url" name="url" value="http://www.jeroendesloovere.be"><br><br>
+    
+    <button type="submit">Update vCard</button>
+  </form>
+  
+  <h2>Updated vCard</h2>
+  <pre id="vcard-output"></pre>
+
+  <script type="module">
+    import VCard from 'https://cdn.skypack.dev/vcard-creator'
+
+    document.getElementById('vcard-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      
+      const lastname = form.lastname.value;
+      const firstname = form.firstname.value;
+      const additional = form.additional.value;
+      const prefix = form.prefix.value;
+      const suffix = form.suffix.value;
+      const company = form.company.value;
+      const jobtitle = form.jobtitle.value;
+      const role = form.role.value;
+      const email = form.email.value;
+      const phone1 = form.phone1.value;
+      const phone2 = form.phone2.value;
+      const street = form.street.value;
+      const worktown = form.worktown.value;
+      const postcode = form.postcode.value;
+      const country = form.country.value;
+      const twitter = form.twitter.value;
+      const url = form.url.value;
+      
+      // Create new vCard
+      const myVCard = new VCard();
+      
+      myVCard
+        .addName(lastname, firstname, additional, prefix, suffix)
+        .addCompany(company)
+        .addJobtitle(jobtitle)
+        .addRole(role)
+        .addEmail(email)
+        .addPhoneNumber(phone1, 'PREF;WORK')
+        .addPhoneNumber(phone2, 'WORK')
+        .addAddress(null, null, street, worktown, null, postcode, country)
+        .addSocial(twitter, 'Twitter', twitter.split('/').pop())
+        .addURL(url);
+      
+      // Display updated vCard
+      document.getElementById('vcard-output').textContent = myVCard.toString();
+    });
+  </script>
+</body>
+</html>

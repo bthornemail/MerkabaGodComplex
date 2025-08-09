@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Interactive 3D Blockchain Visualization</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Camera setup -->
+      <a-entity camera look-controls position="0 1.6 5"></a-entity>
+      
+      <!-- Light setup -->
+      <a-light type="ambient" color="#ccc"></a-light>
+      <a-light type="directional" position="-1 1 0" intensity="0.8"></a-light>
+      
+      <!-- Blockchain Block 1 -->
+      <a-box id="block1" color="#4CC3D9" position="0 1 -5" depth="0.5" height="1" width="1.5"></a-box>
+      <a-text value="Block 1" position="0 2 -5" align="center" color="#FFFFFF"></a-text>
+      
+      <!-- Blockchain Block 2 -->
+      <a-box id="block2" color="#4CC3D9" position="2 1 -5" depth="0.5" height="1" width="1.5"></a-box>
+      <a-text value="Block 2" position="2 2 -5" align="center" color="#FFFFFF"></a-text>
+      
+      <!-- Blockchain Block 3 -->
+      <a-box id="block3" color="#4CC3D9" position="4 1 -5" depth="0.5" height="1" width="1.5"></a-box>
+      <a-text value="Block 3" position="4 2 -5" align="center" color="#FFFFFF"></a-text>
+      
+      <!-- Connectors -->
+      <a-cylinder color="#7BC8A4" radius="0.05" height="2" position="1 1 -5" rotation="0 0 90"></a-cylinder>
+      <a-cylinder color="#7BC8A4" radius="0.05" height="2" position="3 1 -5" rotation="0 0 90"></a-cylinder>
+      
+      <!-- Info Panel for Block Details -->
+      <a-entity id="infoPanel" position="0 3 -4" visible="false">
+        <a-plane color="#333" height="1" width="3"></a-plane>
+        <a-text id="infoText" value="" position="0 0 0.1" align="center" color="#FFFFFF"></a-text>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      // JavaScript for click interaction
+      document.querySelector('#block1').addEventListener('click', () => showInfo("Block 1 Details: \nHash: ABC123..."));
+      document.querySelector('#block2').addEventListener('click', () => showInfo("Block 2 Details: \nHash: DEF456..."));
+      document.querySelector('#block3').addEventListener('click', () => showInfo("Block 3 Details: \nHash: GHI789..."));
+
+      // Function to display block details in the info panel
+      function showInfo(details) {
+        const infoPanel = document.querySelector('#infoPanel');
+        const infoText = document.querySelector('#infoText');
+        
+        infoText.setAttribute('value', details); // Set details text
+        infoPanel.setAttribute('visible', true); // Make panel visible
+      }
+    </script>
+  </body>
+</html>

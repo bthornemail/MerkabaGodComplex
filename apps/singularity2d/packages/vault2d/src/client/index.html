@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Sandboxed Wallet</title>
+  <link rel='stylesheet' href='/modules/bootstrap/bootstrap.min.css'>
+</head>
+<style>
+  html,
+  body,
+  section {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<body class='p-3'>
+  <main class="container">
+    <h1>Vault 2D</h1>
+    <!-- <div id="qrcode"></div> -->
+    <div class="input-group">
+      <button id="connect" class="btn btn-success btn-sm">Connect</button>
+      <input type="text" placeholder="url" class="form-control form-control-sm" id="host-url">
+      <input type="text" placeholder="address" class="form-control form-control-sm" id="host-address">
+    </div>
+    <div id="graph"></div>
+    <button id="create" class="btn btn-warning btn-sm">Create</button>
+    <input type="text" placeholder="ExtendedKey" class="form-control form-control-sm" id="key">
+    <button id="register" class="btn btn-success btn-sm">Register</button>
+    <button id="activate" class="btn btn-primary btn-sm">Activate</button>
+  </main>
+  <dialog>
+    <section id="login" class='container'>
+      <div id="qrcode">
+        <img src="/src/images/http.wallet.png" id="get-qrcode"></img>
+      </div>
+      <hr>
+      <button id='createWalletBtn' class='btn btn-primary'>Create Wallet</button>
+    </section>
+  </dialog>
+  <dialog>
+    <section id="sign" class='container' style="display: flex;flex-direction: column;">
+      <textarea class="form-control">Ethers.js Operations</textarea>
+      <div class='btn-group'>
+        <button id='signMessageBtn' class='btn btn-secondary'>Sign Message</button>
+        <button id='verifyMessageBtn' class='btn btn-success'>Verify Message</button>
+      </div>
+    </section>
+  </dialog>
+  <dialog>
+    <section id="block" class='container' style="display: flex;flex-direction: column;align-items: center;">
+      <!-- MerkleTree.js Section -->
+      <h4>Verify Block</h4>
+      <div class='btn-group' style="width: fit-content;">
+        <input id='root' class='form-control form-control-sm' placeholder='root'></input>
+        <input id='hash' class='form-control form-control-sm' placeholder='hash'></input>
+        <input id='key' class='form-control form-control-sm' placeholder='key'></input>
+        <input id='signature' class='form-control form-control-sm' placeholder='signature'></input>
+      </div>
+      <hr>
+      <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+      <hr>
+      <input id='entity' class='form-control form-control-sm' placeholder='entity'></input>
+      <hr>
+      <button id='verifyProofBtn' class='btn btn-primary btn-sm'>Verify</button>
+    </section>
+  </dialog>
+  <dialog>
+    <section id="transaction" class='container' style="display: flex;flex-direction: column;align-items: center;">
+      <div id='title-input' class='card-title'>Title</div>
+      <div id='body-input' class='card-body'>
+        <p id='text-input' class='card-text'>Text</p>
+      </div>
+      <div id='footer-input' class='card-footer'>
+        <button id='card-action' class='btn btn-primary btn-sm'>Verify</button>
+        <button id='card-anti-action' class='btn btn-primary btn-sm'>Verify</button>
+      </div>
+    </section>
+  </dialog>
+  <script src="modules/qrcode/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script>
+  <script src="modules/html5-qrcode/html5-qrcode.min.js"></script>
+  <script src="modules/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script>
+  <script src="modules/3d-force-graph/dist/3d-force-graph.js"></script>
+  <script type="module" src="dist/app.js"></script>
+  <!-- <script type="module" src="/public/wallet.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Registration</title>
+</head>
+
+<body>
+    <h1>Welcome to Asset Registration!</h1>
+
+    <form id="assetForm">
+        <label for="dataSheet">DataSheet:</label><br>
+        <input type="file" id="dataSheet" name="dataSheet" accept=".csv"><br>
+
+        <label for="image">Asset Image:</label><br>
+        <input type="file" id="image" name="image" accept="image/*"><br>
+
+        <input type="submit" value="Register Asset">
+    </form>
+
+    <div id="displayQRcode"></div>
+
+    <h2>Registered Assets</h2>
+    <div id="assetsDisplay"></div>
+
+<body>
+</html>
+
+
+<script>
+    // Uploads the file to IPFS and returns the newly created IPFS url
+    async function uploadToIPFS(file) {
+      // This function depends on your actual IPFS setup
+      // and needs to be implemented
+    }
+  
+    // Generates a QR code for the given text and returns the newly
+    // created DOM element.
+    function generateQRCode(text) {
+      // This function depends on which QR code library you use
+      // and needs to be implemented
+    }
+  
+    // Registers the asset on the smart contract using the given IPFS urls.
+    async function registerAsset(dataSheetUrl, imageUrl) {
+      // This function depends on your Ethereum contract and library setup
+      // (e.g., ethers.js or web3.js) and needs to be implemented
+    }
+  
+    document.getElementById("assetForm").addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const dataSheet = document.getElementById("dataSheet").files[0];
+      const image = document.getElementById("image").files[0];
+  
+      // Upload to IPFS and get URLs of these files
+      const dataSheetURL = await uploadToIPFS(dataSheet);
+      const imageURL = await uploadToIPFS(image);
+  
+      // Generate QR codes for these URLs and append it to the 'displayQRcode' div
+      const qrCodeDataSheet = generateQRCode(dataSheetURL);
+      const qrCodeImage = generateQRCode(imageURL);
+      document.getElementById("displayQRcode").appendChild(qrCodeDataSheet);
+      document.getElementById("displayQRcode").appendChild(qrCodeImage);
+  
+      // Register these assets to the blockchain
+      const result = await registerAsset(dataSheetURL, imageURL);
+      if (result) {
+        // If the asset was registered successfully, add it to the 'assetsDisplay'
+        const assetsDiv = document.getElementById('assetsDisplay');
+        assetsDiv.innerHTML += `Asset registered with datasheet at ${dataSheetURL} and image at ${imageURL} <br/>`;
+      }
+    });
+  </script>

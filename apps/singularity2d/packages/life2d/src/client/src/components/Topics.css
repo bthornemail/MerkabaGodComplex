@@ -1,0 +1,45 @@
+#runningLog span {
+    display: block;
+  }
+#context-dialog {
+    width: 75vw;
+    height: 60vh;
+    margin-left: auto;
+    padding: .5rem;
+    text-align: center;
+}
+#context-dialog > nav > *{
+    height: 84px;
+    width: 84px;
+}
+#context-dialog > nav{
+    overflow-y: auto;
+    margin-left: auto;
+    padding: .5rem;
+    display: grid;
+    text-align: center;
+    grid-auto-flow: column;
+}
+#topics {
+    height: 100%;
+    padding: .5rem;
+    display: flex;
+    text-align: center;
+    justify-content: end;
+}
+#topics > details {
+    display: flex;
+    align-items: center;
+}
+#topics > details > ul {
+    height: 50vh;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+#topic-chat-view {
+    height: 100%;
+    text-align: center;
+    padding: .5rem;
+}

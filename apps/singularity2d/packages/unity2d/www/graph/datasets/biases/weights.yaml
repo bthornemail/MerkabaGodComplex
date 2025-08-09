@@ -1,0 +1,93 @@
+---
+"id": "time"
+"domain": "dynamic"
+"color": "blue"
+"type": "liability"
+"neural": "bias"
+---
+"id": "action"
+"domain": "dynamic"
+"color": "blue"
+"type": "asset"
+"neural": "feature"
+---
+"id": "actor"
+"domain": "dynamic"
+"color": "blue"
+"type": "asset"
+"neural": "feature"
+---
+"id": "environment"
+"domain": "dynamic"
+"color": "blue"
+"type": "equity"
+"neural": "feature"
+
+---
+"id": "entropy"
+"domain": "static"
+"color": "red"
+"type": "liability"
+"neural": "bias"
+---
+"id": "object"
+"domain": "static"
+"color": "red"
+"type": "asset"
+"neural": "feature"
+---
+"id": "objective"
+"domain": "static"
+"color": "red"
+"type": "asset"
+"neural": "feature"
+---
+"id": "observer"
+"domain": "static"
+"color": "red"
+"type": "equity"
+"neural": "feature"
+
+---
+"id": "bias"
+"domain": "virtual"
+"color": "yellow"
+"type": "liability"
+"neural": "bias"
+---
+"id": "path"
+"domain": "virtual"
+"color": "yellow"
+"type": "asset"
+"neural": "feature"
+---
+"id": "storage"
+"domain": "virtual"
+"color": "yellow"
+"type": "asset"
+"neural": "feature"
+---
+"id": "memory"
+"domain": "virtual"
+"color": "yellow"
+"type": "equity"
+"neural": "feature"
+
+---
+"id": "environemt"
+"domain": "constant"
+"color": "black"
+"type": "revenue"
+"neural": "model"
+"transformer": "flatmap"
+"is": "indeterminate"
+
+---
+"id": "context"
+"domain": "variable"
+"color": "white"
+"type": "expense"
+"neural": "input"
+"transformer": "neural-net"
+"is": "determinalistc"
+

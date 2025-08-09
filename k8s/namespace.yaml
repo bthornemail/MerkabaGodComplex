@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cue-system
+  labels:
+    app: cue-system
+    version: v1.0.0

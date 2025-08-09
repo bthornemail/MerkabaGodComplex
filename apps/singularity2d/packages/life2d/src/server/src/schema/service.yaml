@@ -1,0 +1,39 @@
+{
+    "nodes":[
+	{ "id":"Service", "encoding":"JSON" },
+
+	{ "id":"Consumer", "encoding":"Address" },
+	{ "id":"Provider", "encoding":"Address" },
+
+	{ "id":"Customer", "encoding":"Address" },
+	{ "id":"Order", "encoding":"CID" },
+	{ "id":"Confirmation", "encoding":"Signature" },
+	{ "id":"Consideration", "encoding":"Map" },
+	{ "id":"Declaration", "encoding":"CID" },
+	{ "id":"Announcement", "encoding":"String" },
+	
+	{ "id":"Contractor", "encoding":"Address" },
+	{ "id":"Contract", "encoding":"CID" },
+	{ "id":"Fulfillment", "encoding":"Signature" },
+	{ "id":"Agreement", "encoding":"Map" },
+	{ "id":"Negotiation", "encoding":"String" },
+	{ "id":"Offer", "encoding":"String" }
+    ],
+    "links":[
+	{ "source":"Consumer", "target":"Customer" },
+	{ "source":"Customer", "target":"Order" },
+	{ "source":"Order", "target":"Confirmation" },
+	{ "source":"Confirmation", "target":"Consideration" },
+	{ "source":"Consideration", "target":"Declaration" },
+	{ "source":"Declaration", "target":"Announcement" },
+	{ "source":"Announcement", "target":"Service" },
+
+	{ "source":"Provider", "target":"Contractor" },
+	{ "source":"Contractor", "target":"Contract" },
+	{ "source":"Contract", "target":"Fulfillment" },
+	{ "source":"Fulfillment", "target":"Agreement" },
+	{ "source":"Agreement", "target":"Negotiation" },
+	{ "source":"Negotiation", "target":"Offer" },
+	{ "source":"Offer", "target":"Service" }
+    ]
+}

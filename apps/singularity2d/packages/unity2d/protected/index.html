@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>On_Location Car & Trck Wash</title>
+
+  <link href="/api/modules/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="/api/styles.css" rel="stylesheet">
+  <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script> -->
+  <!-- <script>eruda.init();</script> -->
+</head>
+
+<body>
+  <main>
+    <section class="container">
+      <form id="contact-form" class="card form" style="padding:1rem;">
+        <h2>On <img width="36" src="/api/repo.svg"/> Location</h2>
+        <p>Car & Truck Wash</p>
+        <div style="margin: 1rem auto;" id="reader"></div>
+        <input name="title" class="form-control" value="Wheel Clean" hidden />
+        <input name="summary" class="form-control" value="Tire & Rim wash" hidden />
+        <input name="description" class="form-control" hidden />
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter Name">
+        </div>
+        <label for="address" class="form-label">Address</label>
+        <div class="mb-3 input-group">
+          <select id="contact-method" name="contact:method" class="form-select" aria-label="Default select example">
+            <option value="" selected>Contact Method</option>
+            <option value="qrcode" selected>QR Code</option>
+            <option value="email">E-mail</option>
+            <option value="sms">Text</option>
+            <option value="chat">Chat</option>
+            <option id="broadcast-option" value="mqtt">Broadcast</option>
+          </select>
+          <input id="contact-address-input" type="text" class="form-control" name="address" placeholder="Enter Contact Address">
+          <select id="model-select" name="model-select" class="form-select" aria-label="Model select" hidden="hidden">
+            <option id="model-select-default" value="" selected>Select Model</option>
+          </select>
+          <select id="topic-select" name="topic-select" class="form-select" aria-label="Topic select" hidden="hidden">
+            <option id="topic-select-default" value="" selected>Select Topic</option>
+            <option id="topic-select-login-topic-option" value="login-topic" >Login</option>
+            <!-- <option id="topic-select-new-topic-option" value="newTopic" >New Topic</option> -->
+          </select>
+        </div>
+        <label id="message-label" for="contact-message" class="form-label">Message</label>
+        <textarea id="message-textarea" name="contact-message" id="contact-message" cols="30" rows="10" class="form-control"
+          placeholder="Please Enter Message"></textarea>
+        <div class="input-group mt-3">
+          <input class="form-control" id="form-input" placeholder="They will get back to you shortly" disabled>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <dialog id="tool-dialog"></dialog>
+  <script src="/api/modules/bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
+  <script src="/api/modules/html5-qrcode/html5-qrcode.min.js" type="text/javascript"></script>
+  <script src='/api/modules/qrcode/qrcode.js'></script>
+  <script type="module" src="/api/app.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>

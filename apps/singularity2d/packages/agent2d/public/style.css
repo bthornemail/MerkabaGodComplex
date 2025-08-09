@@ -1,0 +1,148 @@
+/**
+ * Fix user-agent
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+textarea {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+html {
+  background-size: cover;
+  background-image: url("/src/images/background.webp");
+}
+body {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  /* background-size: ; */
+  background-color: rgba(0, 0, 0, .75);
+  color: white;
+}
+header,
+nav,
+.brand,
+select,
+button,
+form > input{
+  color: white !important;
+  background-color: rgba(0, 0, 0, .1) !important;
+}
+option {
+  color: black;
+}
+
+/* footer {
+  background: lightblue;
+  height: 100px;
+  flex-grow: 1;
+  transition: flex-grow 0.5s ease-in-out;
+}
+footer:hover {
+  flex-grow: 3;
+} */
+header {
+  height: fit-content;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+footer {
+  padding: 1rem;
+}
+#logger ul{
+  max-height: 50vh;
+  /* max-height: 200px; */
+  overflow-y: auto;
+}
+.brand {
+  font-size: small;
+}
+
+.brand > h1 {
+  font-size: large;
+}
+.EasyMDEContainer button {
+  color: white;
+}
+.EasyMDEContainer button:hover {
+  color: #0d6efd;
+}
+/* #svg-container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, .55);
+} */
+
+/* #canvas-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, .55);
+
+} */
+/* .open-graph-view  */
+/* #graph,
+canvas  {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, .1);
+  background-size: cover;
+  background-image: url("/src/images/background.webp");
+} */
+/* #main-svg {
+  background-size: cover;
+} */
+
+/* #log {
+  position: fixed;
+  top: 1rem;
+  left: 45%;
+  z-index: 1;
+} */
+/* #zoom-control-bar {
+  position: fixed;
+  bottom: 15px;
+  left: 30px;
+}
+
+#chat-interface-bar {
+  position: fixed;
+  bottom: 15px;
+  right: 30px;
+} */

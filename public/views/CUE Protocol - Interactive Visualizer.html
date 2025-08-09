@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CUE Protocol - Interactive Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+        }
+        canvas { 
+            display: block; 
+            width: 100%;
+            height: 100%;
+        }
+        /* Custom scrollbar for the log */
+        #log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        #log-container::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        #log-container::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        #log-container::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- Main Controls Panel -->
+    <div id="controls" class="absolute top-4 left-4 p-4 bg-gray-900 bg-opacity-80 backdrop-blur-sm text-white rounded-lg shadow-2xl w-80 md:w-96 space-y-4 z-10">
+        <h3 class="text-xl font-bold text-teal-300 border-b border-teal-500/30 pb-2">CUE Protocol Visualizer</h3>
+        
+        <!-- Scenario Selector -->
+        <div class="space-y-1">
+            <label for="scenarioSelector" class="block text-sm font-medium text-gray-300">Select Demonstration</label>
+            <select id="scenarioSelector" class="w-full p-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-teal-400 focus:outline-none">
+                <option value="agentRpc">Agent RPC: Smart Thermostat</option>
+                <option value="axiomaticValidation">Axiomatic Validation (Vec7 Phases)</option>
+                <option value="stateRectification">State Rectification</option>
+                <option value="geometricExplorer">Geometric Construction</option>
+            </select>
+        </div>
+
+        <!-- Scenario-Specific Controls will be injected here -->
+        <div id="scenario-controls" class="space-y-4 pt-4 border-t border-gray-700"></div>
+    </div>
+    
+    <!-- Event Log Panel -->
+    <div class="absolute bottom-4 right-4 p-4 bg-gray-900 bg-opacity-80 backdrop-blur-sm rounded-lg shadow-2xl w-80 md:w-96 h-1/2 md:h-2/3 z-10 flex flex-col">
+        <h4 class="text-lg font-semibold text-teal-300 border-b border-teal-500/30 pb-2 mb-2">Protocol Event Log</h4>
+        <div id="log-container" class="flex-grow overflow-y-auto pr-2 space-y-2">
+            <!-- Log messages will be injected here -->
+        </div>
+    </div>
+    
+    <!-- Message Box for Alerts -->
+    <div id="message-box" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 hidden z-50">
+        <div class="bg-gray-800 p-6 rounded-lg text-white text-center shadow-lg max-w-sm mx-4">
+            <p id="message-text" class="text-lg"></p>
+            <button id="close-message" class="mt-4 px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">OK</button>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script>
+        // --- UTILITIES & SETUP ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0a0a0a);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        camera.position.set(0, 8, 15);
+        controls.update();
+
+        const ambientLight = new THREE.AmbientLight(0xcccccc, 0.5);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 10, 7);
+        scene.add(directionalLight);
+
+        const logContainer = document.getElementById('log-container');
+        function logEvent(message, type = 'info') {
+            const colors = {
+                info: 'text-gray-300',
+                success: 'text-green-400',
+                action: 'text-yellow-400',
+                error: 'text-red-400',
+                agent: 'text-cyan-400',
+                build: 'text-purple-400'
+            };
+            const p = document.createElement('p');
+            p.className = `text-sm ${colors[type]}`;
+            p.innerHTML = `<span class="font-mono text-gray-500">${new Date().toLocaleTimeString()}:</span> ${message}`;
+            logContainer.prepend(p);
+            if (logContainer.children.length > 100) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        // --- SCENE GROUPS FOR SCENARIOS ---
+        const scenarioGroups = {
+            agentRpc: new THREE.Group(),
+            axiomaticValidation: new THREE.Group(),
+            stateRectification: new THREE.Group(),
+            geometricExplorer: new THREE.Group(),
+        };
+        Object.values(scenarioGroups).forEach(group => scene.add(group));
+
+        // --- GLOBAL STATE ---
+        let currentScenario = 'agentRpc';
+        let time = 0;
+        let particles = [];
+
+        // --- SCENARIO 1: AGENT RPC (SMART THERMOSTAT) ---
+        let agentState = {
+            temperature: 22.0,
+            desiredTemperature: 22.0,
+            tolerance: 0.5,
+            hvacStatus: 'OFF'
+        };
+        const agentObjects = {};
+
+        function setupAgentRpcScenario() {
+            const group = scenarioGroups.agentRpc;
+            group.clear();
+            const agentGeo = new THREE.IcosahedronGeometry(1.5, 1);
+            const agentMat = new THREE.MeshPhongMaterial({ color: 0x00aaff, emissive: 0x003366, wireframe: true });
+            agentObjects.agentPeer = new THREE.Mesh(agentGeo, agentMat);
+            group.add(agentObjects.agentPeer);
+            const sensorGeo = new THREE.SphereGeometry(0.7, 32, 32);
+            const sensorMat = new THREE.MeshPhongMaterial({ color: 0x00ffaa, emissive: 0x005533 });
+            agentObjects.sensorNode = new THREE.Mesh(sensorGeo, sensorMat);
+            agentObjects.sensorNode.position.set(-8, 0, 0);
+            group.add(agentObjects.sensorNode);
+            const hvacGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+            const hvacMat = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+            agentObjects.hvacNode = new THREE.Mesh(hvacGeo, hvacMat);
+            agentObjects.hvacNode.position.set(8, 0, 0);
+            group.add(agentObjects.hvacNode);
+            const lineMat = new THREE.LineBasicMaterial({ color: 0x444444, transparent: true, opacity: 0.5 });
+            const line1 = new THREE.Line(new THREE.BufferGeometry().setFromPoints([agentObjects.sensorNode.position, agentObjects.agentPeer.position]), lineMat);
+            group.add(line1);
+            const line2 = new THREE.Line(new THREE.BufferGeometry().setFromPoints([agentObjects.agentPeer.position, agentObjects.hvacNode.position]), lineMat);
+            group.add(line2);
+            const controlsContainer = document.getElementById('scenario-controls');
+            controlsContainer.innerHTML = `
+                <div class="space-y-2">
+                    <label for="temperatureSlider" class="block text-sm font-medium text-gray-300">Simulated Room Temperature: <span id="tempValue" class="font-bold text-teal-300">${agentState.temperature.toFixed(1)}°C</span></label>
+                    <input type="range" id="temperatureSlider" min="18" max="26" step="0.1" value="${agentState.temperature}" class="w-full">
+                    <p class="text-xs text-gray-400">Agent Policy: Maintain ${agentState.desiredTemperature}°C (±${agentState.tolerance}°C)</p>
+                </div>
+            `;
+            document.getElementById('temperatureSlider').addEventListener('input', (e) => {
+                agentState.temperature = parseFloat(e.target.value);
+                document.getElementById('tempValue').textContent = `${agentState.temperature.toFixed(1)}°C`;
+                logEvent(`Sensor reading: Temperature is now ${agentState.temperature.toFixed(1)}°C.`, 'info');
+                createPulse(agentObjects.sensorNode.position, agentObjects.agentPeer.position, 0x00ffaa);
+                checkAgentPolicy();
+            });
+            logEvent('Agent RPC Scenario Initialized: Smart Thermostat online.', 'success');
+        }
+
+        function checkAgentPolicy() {
+            const { temperature, desiredTemperature, tolerance, hvacStatus } = agentState;
+            let newStatus = hvacStatus;
+            if (temperature > desiredTemperature + tolerance) newStatus = 'COOL';
+            else if (temperature < desiredTemperature - tolerance) newStatus = 'HEAT';
+            else newStatus = 'OFF';
+            if (newStatus !== hvacStatus) {
+                agentState.hvacStatus = newStatus;
+                logEvent(`Agent Policy Triggered. New state: ${newStatus}`, 'agent');
+                createPulse(agentObjects.agentPeer.position, agentObjects.hvacNode.position, 0xffaa00);
+                updateHvacNodeVisuals();
+            }
+        }
+        
+        function updateHvacNodeVisuals() {
+            const colors = { OFF: 0xcccccc, COOL: 0x00aaff, HEAT: 0xff6600 };
+            agentObjects.hvacNode.material.color.setHex(colors[agentState.hvacStatus]);
+            agentObjects.hvacNode.material.emissive.setHex(colors[agentState.hvacStatus]).multiplyScalar(0.5);
+        }
+
+        // --- SCENARIO 2: AXIOMATIC VALIDATION ---
+        let validationState = { phase: -1, baseObject: null, layers: [] };
+        const phaseDescriptions = [
+            "<b>Phase 0: Read (Modulo Prime)</b> - Validates the fundamental size and structure of the input data.",
+            "<b>Phase 1: Write (Twin Primes)</b> - Enforces structural symmetry and balance in relationships.",
+            "<b>Phase 2: Transform (Prime Geometry)</b> - Mandates adherence to a valid geometric structure.",
+            "<b>Phase 3: Render (Sequential Primes)</b> - Prevents out-of-order construction of complex interactions.",
+            "<b>Phase 4: Serialize (Wilson Primes)</b> - Finalizes the data into an immutable, content-addressable unit.",
+            "<b>Phase 5: Verify (Sophie Germain)</b> - Ensures a verifiable derivation path and provenance.",
+            "<b>Phase 6: Harmonize (Circular Primes)</b> - The final check for holistic coherence and authority."
+        ];
+
+        function setupAxiomaticValidationScenario() {
+            const group = scenarioGroups.axiomaticValidation;
+            group.clear();
+            validationState.phase = -1;
+            validationState.layers = [];
+            const baseGeo = new THREE.TetrahedronGeometry(2);
+            const baseMat = new THREE.MeshPhongMaterial({ color: 0x555555, transparent: true, opacity: 0.5 });
+            validationState.baseObject = new THREE.Mesh(baseGeo, baseMat);
+            group.add(validationState.baseObject);
+            const controlsContainer = document.getElementById('scenario-controls');
+            controlsContainer.innerHTML = `
+                <div class="space-y-2">
+                    <p class="text-sm text-gray-300">Step through the 7 phases of the Grand Unified Axiom to validate a state transition.</p>
+                    <button id="nextPhaseBtn" class="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">Start Validation (Phase 0)</button>
+                    <button id="resetValidationBtn" class="w-full px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">Reset</button>
+                </div>
+            `;
+            document.getElementById('nextPhaseBtn').addEventListener('click', advanceValidationPhase);
+            document.getElementById('resetValidationBtn').addEventListener('click', () => {
+                setupAxiomaticValidationScenario();
+                logEvent('Axiomatic Validation reset.', 'info');
+            });
+            logEvent('Axiomatic Validation Scenario Initialized.', 'success');
+        }
+        
+        function advanceValidationPhase() {
+            validationState.phase++;
+            if (validationState.phase >= 7) {
+                logEvent('<b>Validation Complete!</b> The data unit is now a fully harmonized, verifiable entry on the ledger.', 'success');
+                document.getElementById('nextPhaseBtn').disabled = true;
+                document.getElementById('nextPhaseBtn').textContent = 'Validation Complete';
+                return;
+            }
+            logEvent(phaseDescriptions[validationState.phase], 'action');
+            document.getElementById('nextPhaseBtn').textContent = `Advance to Phase ${validationState.phase + 1}`;
+            const group = scenarioGroups.axiomaticValidation;
+            const colors = [0xff00ff, 0x00ffff, 0xffff00, 0xffaa00, 0x00ffaa, 0xaa00ff, 0xffffff];
+            validationState.baseObject.material.color.setHex(colors[validationState.phase]);
+            validationState.baseObject.material.opacity = 0.3 + (validationState.phase * 0.1);
+            let layer;
+            switch(validationState.phase) {
+                case 0: layer = new THREE.LineSegments(new THREE.EdgesGeometry(validationState.baseObject.geometry), new THREE.LineBasicMaterial({ color: colors[validationState.phase] })); break;
+                case 1: layer = new THREE.Mesh(new THREE.SphereGeometry(3, 16, 8), new THREE.MeshBasicMaterial({ color: colors[validationState.phase], wireframe: true, transparent: true, opacity: 0.5 })); break;
+                case 2: layer = new THREE.Mesh(new THREE.IcosahedronGeometry(3.5, 0), new THREE.MeshBasicMaterial({ color: colors[validationState.phase], wireframe: true, transparent: true, opacity: 0.4 })); break;
+                case 3:
+                    const points = new THREE.IcosahedronGeometry(4, 0).attributes.position.array;
+                    const pointGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+                    layer = new THREE.Points(pointGeo, new THREE.PointsMaterial({ color: colors[validationState.phase], size: 0.2 }));
+                    break;
+                case 4: layer = new THREE.Mesh(new THREE.TorusKnotGeometry(4, 0.1, 100, 16), new THREE.MeshBasicMaterial({ color: colors[validationState.phase], wireframe: true, transparent: true, opacity: 0.6 })); break;
+                case 5: layer = new THREE.Mesh(new THREE.DodecahedronGeometry(5), new THREE.MeshBasicMaterial({ color: colors[validationState.phase], wireframe: true, transparent: true, opacity: 0.3 })); break;
+                case 6: validationState.baseObject.material.emissive.setHex(0xffffff); validationState.baseObject.material.emissiveIntensity = 0.5; break;
+            }
+            if(layer) {
+                layer.rotation.set(Math.random(), Math.random(), Math.random());
+                validationState.layers.push(layer);
+                group.add(layer);
+            }
+        }
+
+        // --- SCENARIO 3: STATE RECTIFICATION ---
+        let rectificationState = { isCoherent: true, magnitude: 35, peerObject: null };
+        const RECTIFICATION_BASE = 24;
+
+        function setupStateRectificationScenario() {
+            const group = scenarioGroups.stateRectification;
+            group.clear();
+            const peerGeo = new THREE.SphereGeometry(2, 64, 64);
+            const peerMat = new THREE.MeshPhongMaterial({ color: 0x00ff00, emissive: 0x005500 });
+            rectificationState.peerObject = new THREE.Mesh(peerGeo, peerMat);
+            group.add(rectificationState.peerObject);
+            const controlsContainer = document.getElementById('scenario-controls');
+            controlsContainer.innerHTML = `
+                <div class="space-y-2">
+                    <p class="text-sm text-gray-300">A peer's state must remain coherent. Perform actions to see its state change, and rectify it when it becomes dissonant.</p>
+                    <p class="text-sm text-gray-300">Internal Magnitude: <span id="magnitudeValue" class="font-bold text-teal-300">${rectificationState.magnitude}</span></p>
+                    <p class="text-sm text-gray-300">State: <span id="stateValue" class="font-bold text-green-400">Coherent</span></p>
+                    <button id="performActionBtn" class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Perform State Action</button>
+                    <button id="rectifyBtn" class="w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors" disabled>Rectify State</button>
+                </div>
+            `;
+            document.getElementById('performActionBtn').addEventListener('click', performStateAction);
+            document.getElementById('rectifyBtn').addEventListener('click', rectifyState);
+            rectificationState.isCoherent = true;
+            rectificationState.magnitude = 35;
+            updateRectificationVisuals();
+            logEvent('State Rectification Scenario Initialized.', 'success');
+        }
+        
+        function performStateAction() {
+            const change = Math.floor(Math.random() * 15) + 1;
+            rectificationState.magnitude += change;
+            logEvent(`Action performed. State magnitude increased by ${change} to ${rectificationState.magnitude}.`, 'action');
+            rectificationState.isCoherent = (rectificationState.magnitude % 5 === 0 || rectificationState.magnitude % 7 === 0);
+            updateRectificationVisuals();
+        }
+        
+        function rectifyState() {
+            if (rectificationState.isCoherent) return;
+            const originalMagnitude = rectificationState.magnitude;
+            rectificationState.magnitude = 35; 
+            const delta = Math.abs(originalMagnitude - rectificationState.magnitude);
+            logEvent(`Rectification initiated. State magnitude reset to ${rectificationState.magnitude}. Delta of ${delta}.`, 'success');
+            if (delta % RECTIFICATION_BASE === 0) logEvent(`Transition delta (${delta}) is harmonically balanced!`, 'success');
+            else logEvent(`Transition delta (${delta}) is dissonant.`, 'error');
+            rectificationState.isCoherent = true;
+            updateRectificationVisuals();
+        }
+
+        function updateRectificationVisuals() {
+            const { peerObject, isCoherent, magnitude } = rectificationState;
+            const stateValueEl = document.getElementById('stateValue');
+            document.getElementById('magnitudeValue').textContent = magnitude;
+            document.getElementById('rectifyBtn').disabled = isCoherent;
+            if (isCoherent) {
+                peerObject.material.color.setHex(0x00ff00);
+                peerObject.material.emissive.setHex(0x005500);
+                stateValueEl.textContent = 'Coherent';
+                stateValueEl.className = 'font-bold text-green-400';
+            } else {
+                peerObject.material.color.setHex(0xff0000);
+                peerObject.material.emissive.setHex(0x550000);
+                stateValueEl.textContent = 'Dissonant';
+                stateValueEl.className = 'font-bold text-red-400';
+            }
+        }
+
+        // --- SCENARIO 4: GEOMETRIC CONSTRUCTION ---
+        
+        // FIX: Replaced the direct use of THREE.TetrahedronGeometry with a more robust
+        // manual creation using THREE.PolyhedronGeometry. This avoids the initialization error.
+        function generateMerkabaData(radius, center = new THREE.Vector3(0,0,0)) {
+            const tetraVertices = [ 1, 1, 1,  1, -1, -1,  -1, 1, -1,  -1, -1, 1 ];
+            const tetraIndices = [ 2, 1, 0,  0, 3, 2,  1, 3, 0,  2, 3, 1 ];
+
+            const tetra1Geo = new THREE.PolyhedronGeometry(tetraVertices, tetraIndices, radius, 0);
+            const tetra2Geo = tetra1Geo.clone().rotateX(Math.PI);
+
+            const vertices1 = tetra1Geo.attributes.position.array;
+            const indices1 = tetra1Geo.index.array;
+            
+            const vertices2 = tetra2Geo.attributes.position.array;
+            const indices2 = tetra2Geo.index.array;
+
+            const vertices = [...vertices1, ...vertices2];
+            const numVertices1 = vertices1.length / 3;
+            const indices = [...indices1, ...Array.from(indices2).map(i => i + numVertices1)];
+
+            for(let i = 0; i < vertices.length; i+=3) {
+                vertices[i] += center.x;
+                vertices[i+1] += center.y;
+                vertices[i+2] += center.z;
+            }
+            return { vertices, indices };
+        }
+        
+        function generateMerkabaComplexGeometry() {
+            const majorRadius = 3.5;
+            const minorRadius = 1;
+            const finalVertices = [];
+            const finalIndices = [];
+            let vertexOffset = 0;
+
+            const mainMerkabaData = generateMerkabaData(majorRadius);
+            const majorVertices = [];
+            for (let i = 0; i < mainMerkabaData.vertices.length; i += 3) {
+                majorVertices.push(new THREE.Vector3(mainMerkabaData.vertices[i], mainMerkabaData.vertices[i+1], mainMerkabaData.vertices[i+2]));
+            }
+
+            for (const majorVertex of majorVertices) {
+                const minorMerkabaData = generateMerkabaData(minorRadius, majorVertex);
+                finalVertices.push(...minorMerkabaData.vertices);
+                finalIndices.push(...minorMerkabaData.indices.map(i => i + vertexOffset));
+                vertexOffset += minorMerkabaData.vertices.length / 3;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(finalVertices), 3));
+            geometry.setIndex(new THREE.BufferAttribute(new Uint16Array(finalIndices), 1));
+            geometry.computeVertexNormals();
+            return geometry;
+        }
+
+        const geometricExplorerState = {
+            shapeData: {
+                tetrahedron: () => new THREE.TetrahedronGeometry(2.5),
+                cube: () => new THREE.BoxGeometry(2.5, 2.5, 2.5),
+                icosahedron: () => new THREE.IcosahedronGeometry(2.5, 0),
+                merkabaComplex: () => generateMerkabaComplexGeometry()
+            },
+            currentShape: 'icosahedron',
+            buildInterval: null,
+            buildSpeed: 200,
+            mesh: null,
+            nodes: null,
+            centroid: null,
+            currentIndex: 0
+        };
+
+        function setupGeometricExplorerScenario() {
+            const group = scenarioGroups.geometricExplorer;
+            group.clear();
+
+            const controlsContainer = document.getElementById('scenario-controls');
+            controlsContainer.innerHTML = `
+                <div class="space-y-2">
+                    <p class="text-sm text-gray-300">Construct complex shapes from a <b>vec100</b> (a list of vertices), originating from a <b>vec25</b> axiomatic seed.</p>
+                    <div>
+                        <label for="shapeSelector" class="block text-sm font-medium text-gray-300">Select Shape</label>
+                        <select id="shapeSelector" class="w-full p-2 rounded-md bg-gray-800 border border-gray-700 text-white">
+                            <option value="merkabaComplex">Merkaba Complex</option>
+                            <option value="icosahedron">Icosahedron</option>
+                            <option value="cube">Cube</option>
+                            <option value="tetrahedron">Tetrahedron</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="buildSpeedSlider" class="block text-sm font-medium text-gray-300">Build Speed</label>
+                        <input type="range" id="buildSpeedSlider" min="50" max="1000" step="50" value="${geometricExplorerState.buildSpeed}" class="w-full">
+                    </div>
+                    <button id="startBuildBtn" class="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">Start Building</button>
+                </div>
+            `;
+
+            document.getElementById('startBuildBtn').addEventListener('click', startBuildingShape);
+            document.getElementById('shapeSelector').addEventListener('change', (e) => {
+                geometricExplorerState.currentShape = e.target.value;
+                startBuildingShape();
+            });
+            document.getElementById('buildSpeedSlider').addEventListener('input', (e) => {
+                geometricExplorerState.buildSpeed = 1050 - parseInt(e.target.value);
+            });
+
+            logEvent('Geometric Construction Scenario Initialized.', 'success');
+            startBuildingShape();
+        }
+
+        function startBuildingShape() {
+            const state = geometricExplorerState;
+            const group = scenarioGroups.geometricExplorer;
+            group.clear();
+            if (state.buildInterval) clearInterval(state.buildInterval);
+
+            const centroidGeo = new THREE.SphereGeometry(0.2, 32, 32);
+            const centroidMat = new THREE.MeshBasicMaterial({ color: 0xffffff, emissive: 0xffffff });
+            state.centroid = new THREE.Mesh(centroidGeo, centroidMat);
+            group.add(state.centroid);
+            logEvent('Axiomatic seed <b>vec25</b> placed at centroid.', 'success');
+
+            const shapeDef = state.shapeData[state.currentShape]();
+            
+            const vertices = shapeDef.attributes.position.array;
+            if (!shapeDef.index) {
+                logEvent(`Error: Geometry for '${state.currentShape}' is non-indexed.`, 'error');
+                return;
+            }
+            const indices = shapeDef.index.array;
+            
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(vertices), 3));
+            geometry.setIndex(new THREE.BufferAttribute(new Uint16Array(indices), 1));
+            geometry.computeVertexNormals();
+            geometry.setDrawRange(0, 0);
+
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x00aaff, emissive: 0x003366, side: THREE.DoubleSide, transparent: true, opacity: 0.8
+            });
+            state.mesh = new THREE.Mesh(geometry, material);
+            group.add(state.mesh);
+            
+            state.nodes = new THREE.Group();
+            group.add(state.nodes);
+
+            state.currentIndex = 0;
+            logEvent(`Loading <b>vec100</b> for ${state.currentShape}. Vertices: ${vertices.length / 3}, Faces: ${indices.length / 3}`, 'build');
+
+            state.buildInterval = setInterval(stepBuild, state.buildSpeed);
+        }
+
+        function stepBuild() {
+            const state = geometricExplorerState;
+            const geometry = state.mesh.geometry;
+            const totalIndices = geometry.index.count;
+
+            if (state.currentIndex >= totalIndices) {
+                clearInterval(state.buildInterval);
+                state.buildInterval = null;
+                logEvent(`Construction of ${state.currentShape} complete.`, 'success');
+                return;
+            }
+
+            state.currentIndex += 3;
+            geometry.setDrawRange(0, state.currentIndex);
+
+            const nodeGeo = new THREE.SphereGeometry(0.1, 16, 16);
+            const nodeMat = new THREE.MeshBasicMaterial({ color: 0x00ffaa });
+            
+            const indices = geometry.index.array;
+            const vertices = geometry.attributes.position.array;
+            
+            for(let i = state.currentIndex - 3; i < state.currentIndex; i++) {
+                const vertexIndex = indices[i];
+                if (!state.nodes.children.find(node => node.userData.index === vertexIndex)) {
+                    const node = new THREE.Mesh(nodeGeo, nodeMat);
+                    node.position.set(
+                        vertices[vertexIndex * 3],
+                        vertices[vertexIndex * 3 + 1],
+                        vertices[vertexIndex * 3 + 2]
+                    );
+                    node.userData.index = vertexIndex;
+                    state.nodes.add(node);
+                    logEvent(`Adding node ${vertexIndex} from vec100 to scene.`, 'info');
+                }
+            }
+            logEvent(`Forming face ${state.currentIndex / 3} / ${totalIndices / 3}`, 'build');
+        }
+
+
+        // --- SCENARIO SWITCHING ---
+        document.getElementById('scenarioSelector').addEventListener('change', function() {
+            currentScenario = this.value;
+            Object.keys(scenarioGroups).forEach(key => {
+                scenarioGroups[key].visible = (key === currentScenario);
+            });
+            
+            if (geometricExplorerState.buildInterval) clearInterval(geometricExplorerState.buildInterval);
+            document.getElementById('scenario-controls').innerHTML = '';
+            logContainer.innerHTML = '';
+            
+            switch(currentScenario) {
+                case 'agentRpc': setupAgentRpcScenario(); break;
+                case 'axiomaticValidation': setupAxiomaticValidationScenario(); break;
+                case 'stateRectification': setupStateRectificationScenario(); break;
+                case 'geometricExplorer': setupGeometricExplorerScenario(); break;
+            }
+        });
+
+        // --- PULSE & PARTICLE ANIMATION ---
+        function createPulse(start, end, color) {
+            const pulseGeo = new THREE.SphereGeometry(0.2, 16, 16);
+            const pulseMat = new THREE.MeshBasicMaterial({ color: color });
+            const pulse = new THREE.Mesh(pulseGeo, pulseMat);
+            pulse.position.copy(start);
+            const particle = { mesh: pulse, start: start.clone(), end: end.clone(), life: 0, duration: 1.5 };
+            particles.push(particle);
+            scene.add(pulse);
+        }
+
+        function animateParticles(deltaTime) {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.life += deltaTime;
+                const progress = p.life / p.duration;
+                if (progress >= 1) {
+                    scene.remove(p.mesh);
+                    particles.splice(i, 1);
+                    continue;
+                }
+                p.mesh.position.lerpVectors(p.start, p.end, progress);
+            }
+        }
+
+        // --- MAIN ANIMATION LOOP ---
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const deltaTime = clock.getDelta();
+            time += deltaTime;
+
+            if (scenarioGroups.agentRpc.visible) agentObjects.agentPeer.rotation.y += 0.005;
+            if (scenarioGroups.axiomaticValidation.visible) {
+                validationState.baseObject.rotation.y += 0.003;
+                validationState.baseObject.rotation.x += 0.002;
+                validationState.layers.forEach((layer, i) => { layer.rotation.y += 0.005 * (i % 2 === 0 ? 1 : -1); });
+            }
+            if(scenarioGroups.stateRectification.visible) {
+                const peer = rectificationState.peerObject;
+                if(!rectificationState.isCoherent) peer.scale.setScalar(Math.sin(time * 5) * 0.05 + 1);
+                else peer.scale.lerp(new THREE.Vector3(1,1,1), 0.1);
+            }
+            if(scenarioGroups.geometricExplorer.visible) {
+                const state = geometricExplorerState;
+                if (state.mesh) {
+                    state.mesh.rotation.y += 0.001;
+                    state.nodes.rotation.y += 0.001;
+                }
+                if (state.centroid) {
+                    state.centroid.scale.setScalar(Math.sin(time * 3) * 0.2 + 1);
+                }
+            }
+
+            animateParticles(deltaTime);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        window.onload = function() {
+            document.getElementById('scenarioSelector').value = 'agentRpc';
+            Object.keys(scenarioGroups).forEach(key => { scenarioGroups[key].visible = (key === 'agentRpc'); });
+            setupAgentRpcScenario();
+            animate();
+        };
+    </script>
+</body>
+</html>

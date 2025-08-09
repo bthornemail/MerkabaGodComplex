@@ -1,0 +1,194 @@
+{
+	"nodes": [
+		{
+			"id": "Day_Vault",
+			"img": "vault.svg",
+			"name": "Day Vault",
+			"title": "Day Vault",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "User_Auth",
+			"img": "lock-svgrepo-com.svg",
+			"name": "User Auth",
+			"title": "User Auth",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Sign_Up",
+			"img": "key-svgrepo-com.svg",
+			"name": "Sign Up",
+			"title": "Sign Up",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Sign_In",
+			"img": "lock-svgrepo-com (1).svg",
+			"name": "Sign In",
+			"title": "Sign In",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Vault_User",
+			"img": "security-shield-svgrepo-com.svg",
+			"name": "Brian",
+			"title": "Brian",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Wallet",
+			"img": "wallet-wallet-svgrepo-com.svg",
+			"name": "Wallet",
+			"title": "Wallet",
+			"color": "yellow",
+			"val": 2
+		},
+		{
+			"id": "Asset_Manager",
+			"img": "bar-code-scan-svgrepo-com.svg",
+			"name": "Asset Manager",
+			"title": "Asset Manager",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "Register_Asset",
+			"img": "barcode-scanner-svgrepo-com.svg",
+			"name": "Register Asset",
+			"title": "Register Asset",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "Trade_Asset",
+			"img": "transfer-svgrepo-com (1).svg",
+			"name": "Trade-Asset",
+			"title": "Trade-Asset",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "Knowledge_College",
+			"img": "cap-education-hat-svgrepo-com.svg",
+			"name": "Knowledge College",
+			"title": "Knowledge College",
+			"color": "blue",
+			"val": 2
+		},
+		{
+			"id": "Service_Board",
+			"img": "board-svgrepo-com.svg",
+			"name": "Service Board",
+			"title": "Service Board",
+			"color": "green",
+			"val": 2
+		},
+		{
+			"id": "Social_Media",
+			"img": "globalization-global-svgrepo-com.svg",
+			"name": "Social Media",
+			"title": "Social Media",
+			"color": "green",
+			"val": 2
+		},
+		{
+			"id": "Social_Media:public",
+			"img": "social-media-branding-advertising-promotion-svgrepo-com.svg",
+			"name": "Social Media:public",
+			"title": "Public Chat Room",
+			"color": "green",
+			"val": 10
+		},
+		{
+			"id": "Peer_Connections",
+			"img": "users-svgrepo-com.svg",
+			"name": "Peer Connections",
+			"title": "Peer Connections",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "Vault_Registrar",
+			"img": "availability-svgrepo-com.svg",
+			"name": "Registrar",
+			"title": "Registrar",
+			"color": "red",
+			"val": 2
+		}
+	],
+	"links": [
+		{
+			"source": "Vault",
+			"target": "User_Auth"
+		},
+		{
+			"source": "User_Auth",
+			"target": "Sign_Up"
+		},
+		{
+			"source": "User_Auth",
+			"target": "Sign_In"
+		},
+		{
+			"source": "Vault",
+			"target": "Vault_User"
+		},
+		{
+			"source": "Vault_User",
+			"target": "Wallet"
+		},
+		{
+			"source": "Vault",
+			"target": "Vault_Registrar"
+		},
+		{
+			"source": "Vault_Registrar",
+			"target": "Asset_Manager"
+		},
+		{
+			"source": "Asset_Manager",
+			"target": "Register_Asset",
+			"color": "red"
+		},
+		{
+			"source": "Asset_Manager",
+			"target": "Trade_Asset",
+			"color": "red"
+		},
+		{
+			"source": "Vault_Registrar",
+			"target": "Knowledge_College"
+		},
+		{
+			"source": "Vault_Registrar",
+			"target": "Service_Board"
+		},
+		{
+			"source": "Vault",
+			"target": "Social_Media"
+		},
+		{
+			"source": "Social_Media",
+			"target": "Social_Media:public"
+		},
+		{
+			"source": "Vault",
+			"target": "Peer_Connections"
+		}
+	],
+	"entanglements": [
+		{
+			"source": "Cloud",
+			"target": "Cloudy_Day"
+		},
+		{
+			"source": "Cloudy_Day",
+			"target": "Day_Vault"
+		}
+	]
+}

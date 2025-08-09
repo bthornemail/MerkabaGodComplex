@@ -1,0 +1,99 @@
+  /* Define Bootstrap-like color classes */
+#notification-icon.primary {
+  fill: #007bff; /* Primary */
+}
+
+#notification-icon.secondary {
+  fill: #6c757d; /* Secondary */
+}
+
+#notification-icon.success {
+  fill: #28a745; /* Success */
+}
+
+#notification-icon.danger {
+  fill: #dc3545; /* Danger */
+}
+
+#notification-icon.warning {
+  fill: #ffc107; /* Warning */
+}
+
+#notification-icon.info {
+  fill: #17a2b8; /* Info */
+}
+
+#notification-icon.light {
+  fill: #f8f9fa; /* Light */
+}
+
+#notification-icon.dark {
+  fill: #343a40; /* Dark */
+}
+
+/* Ensure the fill color is inherited */
+#notification-icon path,
+#notification-icon g path {
+  fill: inherit;
+}
+
+/* Define the notification animation */
+@keyframes notification {
+  0%, 100% {
+    opacity: 1; /* Only initial path is visible */
+  }
+  33% {
+    opacity: 1; /* Initial path and group 1 are visible */
+  }
+  66% {
+    opacity: 1; /* Initial path, group 1, and group 2 are visible */
+  }
+}
+
+/*#notification-icon.animation #initial-path {
+  animation: notification 3s infinite;
+}*/
+
+#notification-icon.animation #group1 {
+  animation: notification 1.5s infinite .5s;
+}
+
+#notification-icon.animation #group2 {
+  animation: notification 1.5s infinite 1s;
+}
+
+/* Ensure initial state for the groups */
+/*#group1,
+#group2 {
+  opacity: 0;
+}
+*/
+/* States for the animation steps */
+#notification-icon.animation #group1 {
+  animation: showHide 1.5s infinite 1s;
+}
+
+#notification-icon.animation #group2 {
+  animation: showHide2 1.5s infinite 1s;
+}
+@keyframes showHide2 {
+    0% {
+    opacity: 0;
+    }
+    33%,
+  66% {
+    opacity: .4;
+    }
+    100% {
+    opacity: .8;
+  }
+}
+
+@keyframes showHide {
+  0%, 33% {
+    opacity: 0;
+  }
+  66%, 100% {
+    opacity: .4;
+  }
+}

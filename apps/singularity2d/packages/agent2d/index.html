@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent 2D - Create and propagate Unity 2D networks</title>
+  <link rel="stylesheet" href="modules/easymde/easymde.min.css">
+  <link rel="stylesheet" href="modules/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <nav class="navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <div class="brand">
+          <div id="qrcode"></div>
+          <h1>Agent 2D</h1>
+          <small>Chat with Unity 2D networks</small>
+        </div>
+      </a>
+      <form class="d-flex" role="search" id="open-graph-view-form">
+        <button class="btn btn-outline-warning btn-sm" id="open-graph-view-form-qty-button">0</button>
+        <input class="form-control form-control-sm me-2 text-light" type="search" placeholder="Username"
+          aria-label="Search" style="background-color: transparent;color: white;" id="open-graph-view-form-input">
+        <button class="btn btn-sm btn-outline-success" type="button"
+          onclick="document.getElementById('logger').showModal()">Events</button>
+        <button class="btn btn-sm btn-outline-success" type="submit" hidden>Open</button>
+      </form>
+    </div>
+  </nav>
+  <header style="padding: 0 2rem;" id="auth-view">
+  </header>
+  <main class="container flex-grow-1">
+    <div class="row" id="graph"></div>
+  </main>
+  <section class="container d-flex flex-column " style="overflow-y: auto;">
+    <section class="container flex-grow-1" style="max-height: 100%;overflow-y: auto;">
+      <div id="controller-view"> </div>
+    </section>
+    <section class="container flex-grow-1">
+      <div id="controller-options"></div>
+    </section>
+  </section>
+  <footer>
+    <dialog class="container" id="logger">
+      <h2>Logs:</h2>
+      <!-- <ul id="logs" class="list-group" style="overflow-y: auto; height: 64px;"></ul> -->
+      <ul id="logs" class="list-group"></ul>
+      <button class="btn btn-sm btn-outline-danger" type="button"
+        onclick="document.getElementById('logger').close()">Close</button>
+    </dialog>
+    <section class="container">
+      <section class="container" id="node-options-container"></section>
+      <section class="container" id="graph-options-container"></section>
+    </section>
+  </footer>
+  <script type="module" src="/dist/app.js"></script>
+</body>
+
+</html>

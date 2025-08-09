@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Day Vault</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+  <script src="node_modules/eruda/eruda.js"></script>
+  <script>eruda.init();</script>
+</head>
+
+<body>
+  <div class="nav-bar-header">
+    <div class="nav-brand">Day Vault!</div>
+    <a class="link" id="wallet">wallet</a>
+    <img src="http:////via.placeholder.com/24" />
+  </div>
+  <nav aria-label="breadcrumb">
+    <ol id="topic-breadcrumb" class="breadcrumb">
+      <!--
+	<li class="breadcrumb-item"><a href="#">Home</a></li>
+	<li class="breadcrumb-item"><a href="#">Marketplace</a></li>
+	<li class="breadcrumb-item active" aria-current="page">Public</li>
+	-->
+    </ol>
+  </nav>
+  <form id="topics-form" class="form input-group" disabled="disabled">
+    <select class="form-select" aria-label="Small select example" id="topics" name="topics">
+      <option name="Topics" value="">Topics</option>
+      <optgroup label="Services">
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </optgroup>
+    </select>
+    <input type="text" class="form-control" name="topic" />
+    <button type="submit" class="btn btn-primary">Search</button>
+
+  </form>
+  <section id="main-view">
+    <div id="topics" class="card" hidden>
+      <details class="card">
+        <summary>Latest Topics</summary>
+        <ul id="latest-topics" class="card"></ul>
+      </details>
+      <details class="card">
+        <summary>Popular Topics</summary>
+        <ul id="popular-topics" class="card"></ul>
+      </details>
+      <details class="card">
+        <summary>Default Topics</summary>
+        <ul id="default-topics" class="card"></ul>
+      </details>
+    </div>
+    <div id="topic-chat-view" class="card">
+      <h1>Public Chat</h1>
+    </div>
+  </section>
+  <form id="chat-form" class="form input-group">
+    <button id="context-switch-button" class="btn btn-outline-primary"
+      onclick="document.querySelector('#context-dialog').showModal()">
+      <h1>@</h1>
+    </button>
+    <dialog id="context-dialog">
+      <h2>context</h2>
+      <nav class="nav">
+        <i class="card" onclick="alert('clicked')">&#9997;</i>
+        <i class="card" onclick="alert('clicked')">&curren;</i>
+      </nav>
+      <button id="context-close-button" class="btn btn-danger"
+        onclick="document.querySelector('#context-dialog').close()">close</button>
+    </dialog>
+    <input type="text" class="form-control" id="chat-form-message" name="chat-form-message" />
+    <button type="submit" class="btn btn-primary" id="chat-form-button">Submit</button>
+  </form>
+  <footer class="footer">
+    <span>Valult AI - A Store of Active Knowledge</span>
+    <a href="mailto:contact@vault_ai.com">contact@vault_ai.com</a>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="node_modules/mqtt/dist/mqtt.min.js"></script>
+  <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+  <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js"></script>
+  <script type="module" src="main.js"></script>
+  <script type="module">
+    import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+
+    const socket = io("ws://127.0.0.1:3000", {
+      reconnectionDelayMax: 10000
+    });
+  </script>
+</body>
+
+</html>

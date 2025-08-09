@@ -1,0 +1,16 @@
+const buffer = new ArrayBuffer(512 * 2)
+const canvasBuffer = new ArrayBuffer(4096)
+
+const viewPort = new Int16Array(buffer, 8)
+const dataView = new DataView(canvasBuffer, (canvasBuffer.byteLength / 2) - (256 / 2), 256)
+const canva = new Uint8Array(dataView.buffer, dataView.byteOffset, dataView.byteLength)
+const index = new Int16Array(buffer, 2, 2)
+const point = new Int8Array(buffer, 2, 2)
+const edges = new Int8Array(buffer)
+const embeddings = new Float32Array(buffer, 4, 512);
+point.fill(128 / 2)
+canva.fill(128 / 2)
+embeddings.fill(.5)
+console.log({ point })
+console.log({ canva })
+console.log({ embeddings })

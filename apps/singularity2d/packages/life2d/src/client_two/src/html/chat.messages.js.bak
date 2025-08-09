@@ -1,0 +1,40 @@
+document.querySelector("#chat-section").innerHTML = `
+    <div id="chatContainer" class="container">
+      <div class="chatMessages"></div>
+      <div class="input-group">
+          <div class="custom-file btn btn-lg btn-outline-light">
+            <input type="file" id="inputGroupFile01" class="form-control form-control-lg"
+              aria-describedby="inputGroupFileAddon01" style="display: none;">
+            <label for="inputGroupFile01">
+              <img src="/src/images/2192072-200.png" style="height:2rem;width:2rem;"
+                alt="Upload" style="cursor: pointer;">
+            </label> 
+          </div>
+<div id="chatBar" class="btn-group">
+<!--    <input type="text" id="inputMessage" class="form-control form-control-lg" placeholder="Type your message..."/>
+    <button id="sendButton" class="btn btn-primary">Send</button>
+<button id="toggleChatButton" onclick="document.querySelector('#chatBar').style.display = 'initial';" class="btn btn-outline-light"><img src="/src/images/chat.svg" style="height:2rem;width:2rem;" alt="Chat" style="cursor: pointer;"></button> -->
+</div>
+          
+      </div>
+
+  <style>
+    .custom-file-input {
+        display: none;
+    }
+
+    .custom-file label img {
+        width: 50px;
+              height: 50px;
+            }
+ </style>
+ <script>
+   document.addEventListener('DOMContentLoaded', async () => {
+   document.getElementById('inputGroupFile01').addEventListener('change', function (e) {
+       var fileName = e.target.files[0].name;
+        // Do something with the file name, like displaying it somewhere
+        alert("File chosen: " + fileName);
+       });
+     });
+  </script>
+ </div>`

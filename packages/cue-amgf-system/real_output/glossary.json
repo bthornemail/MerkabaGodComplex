@@ -1,0 +1,402 @@
+[
+  {
+    "term": "MDU",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "The",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "This",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "CUE",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "In",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "For",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "It",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "ULP",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Peer",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "An",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "CLARION",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "CEP",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Math",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Wikipedia",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Set",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "CTL",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "File",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Phase",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Map",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "JSON",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Date",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Multi",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Harmonic Address",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Chinese Remainder Theorem",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "BOOTSTRAP",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Universal Counter",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "What",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Modulo",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "However",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Section",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "To",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Each",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Represents",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "PEER",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "AGENT",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Promise",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Domain Layer",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "CRT",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Agent",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Error",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Divisive Unfolding",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "These",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "HSM",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "WASM",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "REPLACE",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Step",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Continuous Transylvanian Lottery",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Fano Plane",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "State",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Three",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 7,
+    "vec7_phase": 0,
+    "source_documents": []
+  }
+]

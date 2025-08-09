@@ -1,0 +1,154 @@
+{
+    "domain": {
+	"name": "Knowledge College",
+	"version": "1"
+    },
+    "types": {
+	"CIDv1": [
+	    {
+		"name": "link",
+		"type": "string"
+	    }
+	],
+	"Delegate": [
+	    "name": "wallet",
+	    "type": "address"
+	],
+	"Question": [
+	    {
+		"name": "title",
+		"type": "string"
+	    },
+	    {
+		"name": "summary",
+		"type": "string"
+	    }
+	],
+	"Answer": [
+	    {
+		"name": "signature",
+		"type": "string"
+	    }
+	],
+	"Test": [
+	    {
+		"name": "question",
+		"type": "Question"
+	    },
+	    {
+		"name": "answer",
+		"type": "Answer"
+	    },
+	    {
+		"name": "description",
+		"type": "CIDv1"
+	    }
+	],
+	"Task": [
+	    {
+		"name": "question",
+		"type": "Question"
+	    },
+	    {
+		"name": "delegate",
+		"type": "Delegate"
+	    },
+	    {
+		"name": "description",
+		"type": "CIDv1"
+	    }
+	],
+	"Exam": [
+	    {
+		"name": "test",
+		"type": "Test[]"
+	    },
+	    {
+		"name": "task",
+		"type": "Task[]"
+	    },
+	    {
+		"name": "description",
+		"type": "CIDv1"
+	    }
+	],
+	"Course": [
+	    {
+		"name": "title",
+		"type": "string"
+	    },
+	    {
+		"name": "summary",
+		"type": "string"
+	    },
+	    {
+		"name": "description",
+		"type": "CIDv1"
+	    },
+	    {
+		"name": "exams",
+		"type": "Exam[]"
+	    }
+	],
+	"Achievement": [
+	    {
+		"name": "student",
+		"type": "Registration"
+	    },
+	    {
+		"name": "results",
+		"type": "CIDv1"
+	    }
+	],
+	"Assessment": [
+	    {
+		"name": "student",
+		"type": "Registration"
+	    },
+	    {
+		"name": "results",
+		"type": "CIDv1"
+	    }
+
+	],
+	"Transcript": [
+	    {
+		"name": "student",
+		"type": "Registration"
+	    },
+	    {
+		"name": "signature",
+		"type": "signature"
+	    },
+	    {
+		"name": "results",
+		"type": "CIDv1"
+	    }
+	],
+	"Registration": [
+	    {
+		"name": "wallet",
+		"type": "address"
+	    },
+	    {
+		"name": "course",
+		"type": "Course"
+	    }
+	    
+	],
+	"Submission": [
+	    {
+		"name": "wallet",
+		"type": "address"
+	    },
+	    {
+		"name": "course",
+		"type": "Course"
+	    },
+	    {
+		"name": "signature",
+		"type": "signature"
+	    }
+	]
+    }
+}

@@ -1,0 +1,5 @@
+{
+  "credentialId": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuvjLtHQa6N/YAGeOgM9i\n5LRblugjZU/8jmrzrUjItgrCLbcVi/VRgCXnemTW2gDWtZwiWXcovAnj48qkRnbp\nAKvwgSoLnyJQkXztYV+upCYkvBaLpd7s4NQYScYMC6BugWmurOCgLq19Yb9stNkU\nr5NBqH8EwUzivmtHqR/3ak9U5rzfOh3jZx4rkd67q1SJiEUVWDpF9H1rEfcdYwqM\nQLQwiXrT70qk5Ax6IPAjNLGUPB+0lCZv6C8d4/JsgBgzJ4x4Mv7p6GTFZysBxl72\nIkd3nvsnQ7m7tfmJbmHrVEMYL9scf4MRjamR6y0d8QsZqPgsjKegswIx+5DSHg0t\n/QIDAQAB\n-----END PUBLIC KEY-----\n",
+  "privateKey": "USE_ENV:CUE_PROVIDER_PRIVATE_KEY",
+  "tokenLedger": []
+}

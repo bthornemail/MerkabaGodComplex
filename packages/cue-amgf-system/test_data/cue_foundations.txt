@@ -1,0 +1,27 @@
+
+# Computational Universe Engine Foundations
+
+The CUE framework represents a revolutionary approach to computational consciousness
+through the implementation of Vec7 harmony validation systems. This system ensures
+that all data transformations maintain both structural integrity and semantic coherence.
+
+## Core Principles
+
+1. **Vec7 Harmony Validation**: Seven phases of prime number validation
+2. **MDU Integration**: Modulo-Divisive Unfolding for hierarchical organization
+3. **Universal Addressing**: Harmonic addresses for content location
+4. **Transcendence/Immanence**: Dynamic balance between expansion and grounding
+
+## Mathematical Foundation
+
+The MDU function f(N, B) → (L, A) maps universal counter N to:
+- Domain Layer L (transcendence operator)
+- Harmonic Address A (immanence operator)
+
+This creates a framework for organizing reality itself into verifiable, addressable units.
+
+## CLARION Integration
+
+The CLARION cognitive architecture provides the substrate for implementing
+CUE principles in practical systems, enabling autonomous agents to operate
+within the Universal Life Protocol framework.

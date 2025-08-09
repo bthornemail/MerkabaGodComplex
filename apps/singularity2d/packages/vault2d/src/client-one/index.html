@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vault 2D</title>
+  <link href="modules/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="modules/easymde/easymde.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <!-- <script src="node_modules/eruda/eruda.js"></script>
+  <script>eruda.init();</script> -->
+</head>
+
+<body>
+  <nav class="navbar mt-1">
+    <div class="container-fluid">
+      <!-- <a href="#" class="navbar-brand"> -->
+      <img src="images/shield-svgrepo-com.svg" alt="Logo" width="36"
+        onclick="document.getElementById('wallet-dialog').showModal()">
+      <!-- </a> -->
+      <div>
+        <form class="form">
+          <div class="input-group">
+            <input type="text" class="form-control form-control-sm" value="Not Connected"
+              style="background-color: transparent;color: white;border-color: white;" disabled>
+            <button class="btn btn-outline-warning btn-sm" style="color: white;border-color: #ffc107;">Connect</button>
+          </div>
+        </form>
+        <form class="form" hidden>
+          <div class="input-group">
+            <button type="button" class="btn btn-outline-warning btn-sm badge rounded-pill"
+              style="color:white;margin: 2px 2px;"><span style="font-size: xx-small;">Swap</span></button>
+            <!-- <button type="button" class="btn btn-outline-secondary btn-sm" style="color:white;border-color: lightgrey;"><span style="font-size: xx-small;">Swap</span></button> -->
+            <select name="search-options" id="search-options" class="form-select form-select-sm"
+              style="background-color: transparent;color: white;border-color: white;">
+              <option value="">Recent</option>
+            </select>
+            <input type="text" class="form-control form-control-sm" placeholder="Extended Key"
+              style="background-color: transparent;color: white;border-color: white;">
+            <button class="btn btn-outline-primary btn-sm" style="color: white;border-color: #0d6efd;">Search</button>
+          </div>
+        </form>
+        <form class="form" hidden>
+          <div class="btn-group" style="font-size: 1.25rem;gap:.25;font-style: italic;">
+            <!-- <button class="btn btn-outline-danger btn-sm" style="color:white;"
+              onclick="document.querySelector('alert-message-form').setAttribute('hidden','hidden')">X</button> -->
+            <button type="button" class="btn btn-outline-warning btn-sm badge rounded-pill"
+              style="color:white;margin: 2px 2px;"><span style="font-size: xx-small;">Swap</span></button>
+
+            <!-- <img src="images/arrow-circle-left-svgrepo-com.svg" width="36px"> -->
+            <!-- <i>&#8645;</i> -->
+            <i>&#9198;</i>
+            <i>&#9664;</i>
+            <div class="card-footer">No New Messages</div>
+            <i>&#9210;</i>
+            <i>&#9208;</i>
+            <i>&#9199;</i>
+            <!-- <button class="btn btn-outline-light btn-sm">&#9658;</button> -->
+            <i>&#9193;</i>
+          </div>
+        </form>
+        <form action="#" id="alert-message-form" hidden>
+          <div class="input-group">
+            <button type="button" class="btn btn-outline-warning btn-sm badge rounded-pill"
+              style="color:white;margin: 2px 2px;"><span style="font-size: xx-small;">Swap</span></button>
+
+            <!-- <button class="btn btn-outline-danger btn-sm" style="color:white;"
+              onclick="document.querySelector('#alert-message-form').setAttribute('hidden','hidden')">X</button> -->
+            <input type="text" class="form-control form-control-sm" placeholder="Extended Key"
+              style="background-color: transparent;color: white;border-color: white;">
+            <button class="btn btn-outline-light btn-sm" type="submit">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <header style="text-align: center;" class="mb-2">
+    <h1 class="card-title">Vault 2D</h1>
+    <sub class="card-footer">Private,Public, & Protected Immutable Graph Network</sub>
+  </header>
+  <!-- <nav class="nav-bar">
+    <form class="form">
+      <div class="input-form-selector-bar">
+        <select name="search-options" id="search-options" class="form-select form-select-sm" style="background-color: transparent;color: white;border-color: white;">
+          <option value="">Recent</option>
+        </select>
+        <input type="text" class="form-control form-control-sm" placeholder="Extended Key" style="background-color: transparent;color: white;border-color: white;">
+        <button class="btn btn-outline-light btn-sm">Search</button>
+      </div>
+    </form>
+  </nav> -->
+  <main class="container">
+    <section id="graph-display-container">
+      <div id="graph-display-card" class="card" style="border-radius: 15px;padding: 1rem;width: 100%;">
+        <div id="graph-3d"></div>
+      </div>
+    </section>
+    <section>
+      <div style="width:100%;text-align: center;" class="mb-1"><sub>Layers</sub></div>
+      <div class="container" style="display: block;overflow-x: auto;width: 100% !important;max-width: 80vw;">
+        <div style="display: flex;justify-content: space-evenly;gap: 1rem;">
+          <button onclick="document.getElementById('markdown-editor').showModal()" class="btn btn-sm btn-outline-primary" style="color: white !important;">
+            Identites
+            <img src="./images/user-id-svgrepo-com.svg" alt="lock" width="24">
+          </button>
+          <button onclick="document.getElementById('markdown-editor').showModal()" class="btn btn-sm btn-outline-warning" style="color: white !important;">
+            Documents
+            <img src="./images/file-svgrepo-com (2).svg" alt="lock" width="24"
+              onclick="document.getElementById('edit-dialog').showModal()">
+          </button>
+          <button onclick="document.getElementById('markdown-editor').showModal()" class="btn btn-sm btn-outline-danger" style="color: white !important;">
+            Assets
+            <img src="./images/key-svgrepo-com.svg" alt="lock" width="24">
+          </button>
+          <button onclick="document.getElementById('markdown-editor').showModal()" class="btn btn-sm btn-outline-success" style="color: white !important;">
+            Services
+            <img src="./images/tetrahedron-svgrepo-com.svg" alt="lock" width="24">
+          </button>
+          <!-- <button class="btn btn-sm btn-outline-primary" style="color: white !important;">Identites</button>
+        <button class="btn btn-sm btn-outline-warning" style="color: white !important;">Documents</button>
+        <button class="btn btn-sm btn-outline-danger" style="color: white !important;">Assets</button>
+        <button class="btn btn-sm btn-outline-success" style="color: white !important;">Services</button>
+        <button class="btn btn-sm btn-outline-primary" style="color: white !important;">Identites</button>
+        <button class="btn btn-sm btn-outline-warning" style="color: white !important;">Documents</button>
+        <button class="btn btn-sm btn-outline-danger" style="color: white !important;">Assets</button>
+        <button class="btn btn-sm btn-outline-success" style="color: white !important;">Services</button> -->
+        </div>
+      </div>
+      <!-- <div>
+        <label for="input-children" style="width: 100%;">
+          <sub style="float: right;margin-bottom: 4px;">Layers</sub>
+        </label>
+        <div
+          style="display: flex;align-items:center;justify-content: flex-end;padding-top: 4px;padding-right: 4px;gap: 1rem;">
+          <img src="./images/security-shield-svgrepo-com.svg" alt="lock" width="24">
+          <img src="./images/availability-svgrepo-com.svg" alt="lock" width="24">
+          <img src="./images/lock-svgrepo-com (1).svg" alt="lock" width="24">
+          <img src="./images/qr-code-svgrepo-com.svg" alt="lock" width="24">
+          <img src="./images/lock-svgrepo-com (2).svg" alt="lock" width="24">
+          <img src="./images/file-svgrepo-com (1).svg" alt="lock" width="24">
+          <img src="./images/map-map-marker-svgrepo-com.svg" alt="lock" width="24">
+          <img src="./images/social-media-branding-advertising-promotion-svgrepo-com.svg" alt="lock" width="24">
+          <img src="./images/user-data-svgrepo-com.svg" alt="lock" width="24">
+        </div>
+      </div> -->
+    </section>
+    <section>
+      <form action="#" id="input-form" class="form container m-2">
+        <div id="input-form-selector-bar">
+          <div>
+            <label for="input-topc"><sub style="margin-bottom: 4px;">Parent</sub></label>
+            <select id="input-topic" class="form-select form-select-sm"
+              style="background-color: rgba(255,255,255,0.15);color: white;">
+              <option value="" selected>Identities</option>
+            </select>
+            <style>
+              select,
+              option {
+                background-color: transparent;
+                color: white;
+              }
+
+              option {
+                color: black;
+              }
+            </style>
+          </div>
+          <div style="overflow-x: hidden;overflow-y: auto;">
+            <label for="input-children" style="width: 100%;">
+              <sub style="float: right;margin-bottom: 4px;">Root</sub>
+              <sub style="float: right;margin-bottom: 4px;" hidden>Genesis</sub>
+            </label>
+            <!-- <div style="display: flex;flex-direction: column;font-size: xx-small;width: max-content;">
+            <span>Hey</span>
+            <span>Hey this is coo and so saucy</span>
+            <span>Hey this is coo</span>
+            <span>Hey this is coo</span>
+            <span>Hey this is coo</span>
+            <span>Hey this is coo</span>
+            <span>Hey this is coo</span>
+          </div> -->
+            <div style="display: flex;align-items:center;justify-content: flex-end;padding-top: 4px;gap: 1rem;">
+              <!-- <img src="./images/listing-mark-svgrepo-com.svg" alt="lock" width="24"> -->
+              <img src="./images/wireframe-globe-svgrepo-com (1).svg" alt="lock" width="24"
+                onclick="document.getElementById('graph2d-dialog').showModal()">
+            </div>
+          </div>
+          <div>
+            <label for="input-children" style="width: 100%;"><sub
+                style="float: right;margin-bottom: 4px;">Links</sub></label>
+            <div
+              style="display: flex;align-items:center;justify-content: flex-end;padding-top: 4px;padding-right: 4px;gap: 1rem;">
+              <img src="./images/network-share-svgrepo-com (2).svg" alt="lock" width="24"
+                onclick="document.getElementById('graph2d-dialog').showModal()">
+              <!-- <img src="./images/security-shield-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/user-id-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/availability-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/file-svgrepo-com (2).svg" alt="lock" width="24"
+                onclick="document.getElementById('edit-dialog').showModal()"> -->
+              <!-- <img src="./images/key-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/lock-svgrepo-com (1).svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/qr-code-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/lock-svgrepo-com (2).svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/tetrahedron-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/file-svgrepo-com (1).svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/map-map-marker-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/social-media-branding-advertising-promotion-svgrepo-com.svg" alt="lock" width="24"> -->
+              <!-- <img src="./images/user-data-svgrepo-com.svg" alt="lock" width="24"> -->
+            </div>
+          </div>
+        </div>
+        <div id="input-form-bar">
+          <div>
+            <label for="input-children" style="width: 100%;margin-bottom: 4px;"><sub>Entity</sub></label>
+            <select type="text" id="input-type" class="form-select form-select-sm"
+              style="max-width: fit-content;background-color: rgba(0, 0, 255, .15);color: white;">
+              <option value="">Type</option>
+              <option value="message">Message</option>
+              <option value="identity">Identity</option>
+              <option value="document">Document</option>
+              <option value="asset">Asset</option>
+              <option value="service">Service</option>
+            </select>
+          </div>
+          <div>
+            <label for="input-children" style="width: 100%;margin-bottom: 4px;"><sub>Identity</sub><sub
+                style="margin-left: 75%;">Set</sub></label>
+            <div class="input-group">
+              <!-- <input type="text" id="input-topic" class="form-control form-control-lg" placeholder="Topic" /> -->
+              <input type="text" id="input" class="form-control form-control-sm"
+                style="background-color: rgba(0, 0, 0, .15);color: white;" />
+              <!-- <button type="submit" class="btn btn-secondary btn-sm" style="background-color: transparent;">&#10060;</button> -->
+              <!-- <button type="submit" class="btn btn-secondary btn-sm" style="background-color: transparent;">&#10133;</button> -->
+              <!-- <button type="submit" class="btn btn-secondary btn-sm" style="background-color: transparent;">&#10010;</button> -->
+              <!-- <button type="submit" class="btn btn-secondary btn-sm" style="background-color: transparent;">&#9940;</button> -->
+              <button type="submit" class="btn btn-light btn-sm" style="background-color: transparent;">
+                <!-- &#9898; -->
+                <img src="./images/wireframe-globe-svgrepo-com.green.svg" alt="&#9898;" width="20px">
+              </button>
+              <!-- <button type="submit" class="btn btn-secondary btn-sm" hidden>&#9899;</button> -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+    <hr>
+    <section>
+      <div style="display: flex;flex-direction: column;">
+        <sup class="mb-1">Get a observations of the current view</sup>
+        <button class="btn btn-outline-success btn-sm" style="color: white;"
+          onclick="document.getElementById('snapshot-dialog').showModal()">Snapshot</button>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <span class="badge rounded-pill text-bg-danger" id="register-sw" style="color: red;">Worker</span>
+    <span class="card-footer" style="font-size: 12px;">Responsible Content Delivery & Discovery</span>
+    <span class="badge rounded-pill text-bg-primary" id="reload-sw" style="color: blue;">Reload</span>
+    <span class="badge rounded-pill text-bg-warning" id="save-sw" style="color: white;">Save</span>
+    <span class="badge rounded-pill text-bg-success" id="download-sw" style="color: green;">Download</span>
+  </footer>
+  <dialog id="markdown-editor">
+    <div class="container">
+      <textarea name="main-identity-text" id="main-identity-text"
+        style="border-radius: 15px;padding: 1rem;width: 100%;height: 100%;"></textarea>
+    </div>
+  </dialog>
+  <dialog id="edit-dialog">
+    <div>
+      <select name="" id=""></select>
+    </div>
+    <!-- <textarea name="edit-input" id="edit-input"
+      style="background-color: rgba(255,255,255,0.25);border-radius: 15px;padding: 1rem;"></textarea> -->
+    <div class="card m-2" style="background-color: transparent;">
+      <input type="file" id="fileElem" multiple accept="text/*" style="display:none" />
+      <button class="btn btn-outline-light" id="fileSelect" type="button">Select some files</button>
+    </div>
+    <button class="btn btn-danger m-2" type="button"
+      onclick="document.getElementById('edit-dialog').close()">Close</button>
+  </dialog>
+  <dialog id="graph2d-dialog">
+    <!-- <textarea name="edit-input" id="edit-input"
+      style="background-color: rgba(255,255,255,0.25);border-radius: 15px;padding: 1rem;"></textarea> -->
+    <div id="graph-2d" class="card m-2" style="background-color: transparent;"></div>
+    <button class="btn btn-danger m-2" type="button"
+      onclick="document.getElementById('graph2d-dialog').close()">Close</button>
+  </dialog>
+  <dialog id="snapshot-dialog">
+    <section class="container">
+      <h1>Snapshot</h1>
+      <div class="input-group">
+        <button class="btn btn-success btn-sm">Connect</button>
+        <input type="text" placeholder="url" class="form-control form-control-sm">
+        <input type="text" placeholder="address" class="form-control form-control-sm">
+      </div>
+    </section>
+    <button class="btn btn-danger m-2" type="button"
+      onclick="document.getElementById('snapshot-dialog').close()">Close</button>
+  </dialog>
+  <dialog id="wallet-dialog">
+    <section class="container">
+      <h1>Vault 2D</h1>
+      <!-- <div id="qrcode"></div> -->
+      <div class="input-group">
+        <button id="connect" class="btn btn-success btn-sm">Connect</button>
+        <input type="text" placeholder="url" class="form-control form-control-sm" id="host-url">
+        <input type="text" placeholder="address" class="form-control form-control-sm" id="host-address">
+      </div>
+      <div id="wallet-graph"></div>
+      <button id="create" class="btn btn-warning btn-sm">Create</button>
+      <input type="text" placeholder="ExtendedKey" class="form-control form-control-sm" id="key">
+      <button id="register" class="btn btn-success btn-sm">Register</button>
+      <button id="activate" class="btn btn-primary btn-sm">Activate</button>
+    </section>
+    <button class="btn btn-danger m-2" type="button"
+      onclick="document.getElementById('wallet-dialog').close()">Close</button>
+  </dialog>
+  <dialog id="login-dialog">
+    <section id="login" class='container'>
+      <div id="qrcode">
+        <img src="src/images/http.wallet.png" id="get-qrcode"></img>
+      </div>
+      <hr>
+      <button id='createWalletBtn' class='btn btn-primary'>Create Wallet</button>
+    </section>
+  </dialog>
+  <dialog id="sign-dialog">
+    <section id="sign" class='container' style="display: flex;flex-direction: column;">
+      <textarea class="form-control">Ethers.js Operations</textarea>
+      <div class='btn-group'>
+        <button id='signMessageBtn' class='btn btn-secondary'>Sign Message</button>
+        <button id='verifyMessageBtn' class='btn btn-success'>Verify Message</button>
+      </div>
+    </section>
+  </dialog>
+  <dialog id="block-dialog">
+    <section id="block" class='container' style="display: flex;flex-direction: column;align-items: center;">
+      <!-- MerkleTree.js Section -->
+      <h4>Verify Block</h4>
+      <div class='btn-group' style="width: fit-content;">
+        <input id='root' class='form-control form-control-sm' placeholder='root'></input>
+        <input id='hash' class='form-control form-control-sm' placeholder='hash'></input>
+        <input id='key' class='form-control form-control-sm' placeholder='key'></input>
+        <input id='signature' class='form-control form-control-sm' placeholder='signature'></input>
+      </div>
+      <hr>
+      <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+      <hr>
+      <input id='entity' class='form-control form-control-sm' placeholder='entity'></input>
+      <hr>
+      <button id='verifyProofBtn' class='btn btn-primary btn-sm'>Verify</button>
+    </section>
+  </dialog>
+  <dialog id="transaction-dialog">
+    <section id="transaction" class='container' style="display: flex;flex-direction: column;align-items: center;">
+      <div id='title-input' class='card-title'>Title</div>
+      <div id='body-input' class='card-body'>
+        <p id='text-input' class='card-text'>Text</p>
+      </div>
+      <div id='footer-input' class='card-footer'>
+        <button id='card-action' class='btn btn-primary btn-sm'>Verify</button>
+        <button id='card-anti-action' class='btn btn-primary btn-sm'>Verify</button>
+      </div>
+    </section>
+  </dialog>
+  <script type="importmap">
+    {
+      "imports": {
+        "blockstore-core": "/node_modules/blockstore-core/dist/src/memory.js",
+        "datastore-core": "/node_modules/datastore-core/dist/src/memory.js",
+        "ethers": "/node_modules/ethers/dist/ethers.js",
+        "marked": "/node_modules/marked/lib/marked.esm.js",
+        "merkletreejs": "/node_modules/merkletreejs/merkletree.js",
+        "mqtt": "/modules/mqtt/mqtt.esm.js",
+        "socket.io-client":"/node_modules/socket.io-client/dist/socket.io.esm.min.js",
+        "three": "/node_modules/three/build/three.module.js",
+        "three/addons/":"/node_modules/three/examples/jsm/",
+        "three-spritetext": "/node_modules/three-spritetext/dist/three-spritetext.mjs"
+      }
+    }
+  </script>
+  <script src="modules/force-graph/dist/force-graph.js"></script>
+  <script src="modules/graphology/dist/graphology.umd.min.js"></script>
+  <script src="modules/marked/marked.min.js"></script>
+  <script src="modules/html5-qrcode/html5-qrcode.min.js"></script>
+  <script src="modules/davidshimjs-qrcodejs-04f46c6/qrcode.js"></script>
+  <script src="modules/3d-force-graph/dist/3d-force-graph.js"></script>
+  <script src="modules/easymde/easymde.min.js"></script>
+  <script src="bin/handle.file.input.js"></script>
+  <script type="module">
+    const easyMDE = new EasyMDE({ element: document.getElementById('main-identity-text') });
+  </script>
+  <!-- File select script for uploading files -->
+  <script type="module" src="main.js"></script>
+</body>
+
+	<i style="font-size: 2rem;">&#9881;</i>
+	<i style="font-size: 2rem;">&#11446;</i>
+	<i style="font-size: 2rem;">&#11447;</i>
+	<i style="font-size: 2rem;">&#11452;</i>
+	<i style="font-size: 2rem;">&#6145;</i>
+	<i style="font-size: 2rem;">&#8942;</i>
+	<i style="font-size: 2rem;">&#8942;</i>
+	<i style="font-size: 2rem;">&#8801;</i>
+	<i style="font-size: 2rem;">&#10226;</i>
+	<i style="font-size: 2rem;">&#10227;</i>
+</html>

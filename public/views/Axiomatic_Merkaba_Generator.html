@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axiomatic Merkaba Generator</title>
+    <style>
+        body {
+            margin: 0;
+            background: radial-gradient(circle at center, #0a0a2e 0%, #000000 100%);
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            color: #00ffff;
+        }
+        
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #00ffff;
+            backdrop-filter: blur(10px);
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ffff;
+            font-size: 12px;
+        }
+        
+        input, button, select {
+            background: rgba(0, 100, 100, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 8px;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        button {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 10px #00ffff;
+        }
+        
+        #info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #00ffff;
+            backdrop-filter: blur(10px);
+            max-width: 300px;
+            font-size: 11px;
+        }
+        
+        .sacred-text {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .fibonacci-glow {
+            text-shadow: 0 0 5px #00ffff;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ffff;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="loading">
+            <div>✧ Initializing Sacred Geometry ✧</div>
+            <div>◊ Loading Axiomatic Merkaba ◊</div>
+        </div>
+        
+        <div id="controls">
+            <div class="control-group">
+                <label>Pascal Levels:</label>
+                <input type="range" id="levels" min="3" max="12" value="6">
+                <span id="levelsValue">6</span>
+            </div>
+            
+            <div class="control-group">
+                <label>Growth Mode:</label>
+                <select id="growthMode">
+                    <option value="fibonacci">Fibonacci Spiral</option>
+                    <option value="pascal">Pascal Expansion</option>
+                    <option value="golden">Golden Ratio</option>
+                    <option value="sacred">Sacred Geometry</option>
+                    <option value="sphere">Sphere Mode</option>
+                    <option value="tetrahedral_complex">Tetrahedral Complex</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="view2D"> 2D View
+                </label>
+            </div>
+            
+            <div class="control-group">
+                <label>Animation Speed:</label>
+                <input type="range" id="speed" min="0.1" max="3" step="0.1" value="1">
+                <span id="speedValue">1.0</span>
+            </div>
+            
+            <div class="control-group">
+                <button id="regenerate">◊ Regenerate Merkaba ◊</button>
+                <button id="animate">▶ Start Evolution</button>
+                <button id="export">⬇ Export SVG</button>
+            </div>
+        </div>
+        
+        <div id="info">
+            <div class="sacred-text">✦ Axiomatic Merkaba ✦</div>
+            <div>Vertices: <span id="vertexCount">0</span></div>
+            <div>Edges: <span id="edgeCount">0</span></div>
+            <div>Current Level: <span id="currentLevel">0</span></div>
+            <div class="fibonacci-glow">Fibonacci Step: <span id="fibStep">0</span></div>
+            <div style="margin-top: 10px; font-size: 10px;">
+                <div>◊ Each vertex represents an axiom</div>
+                <div>◊ Connections follow sacred ratios</div>
+                <div>◊ Growth guided by Pascal & Fibonacci</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Sacred Geometry Mathematics
+        function fibonacci(n) {
+            const fib = [0, 1];
+            for (let i = 2; i < n; i++) {
+                fib[i] = fib[i - 1] + fib[i - 2];
+            }
+            return fib;
+        }
+
+        function generatePascal(levels) {
+            const pascal = [];
+            for (let n = 0; n <= levels; n++) {
+                pascal[n] = [];
+                for (let k = 0; k <= n; k++) {
+                    pascal[n][k] = k === 0 || k === n ? 1 : pascal[n - 1][k - 1] + pascal[n - 1][k];
+                }
+            }
+            return pascal;
+        }
+
+        const goldenRatio = (1 + Math.sqrt(5)) / 2;
+
+        // Vertex and Edge Types
+        class Vertex {
+            constructor(id, label, level, fibIndex, position) {
+                this.id = id;
+                this.label = label;
+                this.level = level;
+                this.fibIndex = fibIndex;
+                this.position = position;
+                this.connections = [];
+                this.mesh = null;
+                this.visible = false;
+            }
+        }
+
+        class Edge {
+            constructor(from, to, type = 'axiom') {
+                this.from = from;
+                this.to = to;
+                this.type = type;
+                this.mesh = null;
+                this.visible = false;
+            }
+        }
+
+        // Merkaba Generator
+        class AxiomaticMerkaba {
+            constructor() {
+                this.vertices = [];
+                this.edges = [];
+                this.pascal = [];
+                this.fibonacci = [];
+                this.scene = new THREE.Scene();
+                this.camera = null;
+                this.renderer = null;
+                this.animationId = null;
+                this.currentStep = 0;
+                this.isAnimating = false;
+                this.is2DView = false; // New state for 2D view
+                // New: Phase shift condition function
+                this.phaseShiftCondition = (level) => ((level * -level) % 3 + 3) % 3 === 0;
+                
+                this.initThreeJS();
+                this.setupControls();
+            }
+
+            initThreeJS() {
+                // Camera setup
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.camera.position.set(0, 0, 20);
+
+                // Renderer setup
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setClearColor(0x000000, 0);
+                document.getElementById('container').appendChild(this.renderer.domElement);
+
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+                this.scene.add(ambientLight);
+
+                const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
+                pointLight.position.set(10, 10, 10);
+                this.scene.add(pointLight);
+
+                // Hide loading screen
+                document.getElementById('loading').style.display = 'none';
+
+                this.animate();
+            }
+
+            generateStructure(levels) {
+                this.vertices = [];
+                this.edges = [];
+                this.pascal = generatePascal(levels);
+                this.fibonacci = fibonacci(levels + 5);
+
+                const axiomLabels = [
+                    "Origin", "Word", "Of", "God", "Image", "Mirror", "Light", "Truth",
+                    "Logos", "Sophia", "Alpha", "Omega", "Unity", "Duality", "Trinity",
+                    "Tetrad", "Pentad", "Hexad", "Heptad", "Ogdoad", "Ennead", "Decad",
+                    "Aether", "Void", "Form", "Essence", "Pattern", "Rhythm", "Harmony",
+                    "Resonance", "Vibration", "Frequency", "Amplitude", "Phase", "Wave",
+                    "Particle", "Field", "Quantum", "Classical", "String", "Membrane",
+                    "Dimension", "Singularity", "Multiverse", "Consciousness", "Observer"
+                ];
+
+                let id = 0;
+                const baseRadius = 10;
+                const growthMode = document.getElementById('growthMode').value;
+
+                // Generate vertices based on selected growth mode
+                if (growthMode === 'sphere') {
+                    const totalVertices = this.pascal.flat().length; // Use total count from Pascal
+                    for (let i = 0; i < totalVertices; i++) {
+                        // Fibonacci spiral on a sphere (golden spiral)
+                        const phi = Math.acos(1 - 2 * i / totalVertices);
+                        const theta = Math.PI * 2 * i * goldenRatio;
+
+                        const x = baseRadius * Math.sin(phi) * Math.cos(theta);
+                        const y = baseRadius * Math.sin(phi) * Math.sin(theta);
+                        const z = baseRadius * Math.cos(phi);
+
+                        const position = new THREE.Vector3(x, y, z);
+                        const label = axiomLabels[id % axiomLabels.length];
+                        const vertex = new Vertex(id, label, Math.floor(i / (levels + 1)), i, position); // Approximate level
+                        this.vertices.push(vertex);
+                        id++;
+                    }
+                } else if (growthMode === 'tetrahedral_complex') {
+                    // Placeholder for the complex tetrahedral structure
+                    // This section would define the precise coordinates for the vertices
+                    // of the 5 superimposed tetrahedrons and the central one.
+                    // For now, it will generate a simple central point to indicate the mode.
+                    const center = new THREE.Vector3(0,0,0);
+                    this.vertices.push(new Vertex(id++, "Complex Center", 0, 0, center));
+                    // More vertices and connections would be added here in a full implementation.
+                    console.warn("Tetrahedral Complex mode is a placeholder. Geometry needs to be defined.");
+
+                } else { // Default Pascal/Fibonacci/Golden/Sacred modes
+                    for (let level = 0; level < this.pascal.length; level++) {
+                        const levelRadius = baseRadius * (level + 1) / levels;
+                        const angleStep = (Math.PI * 2) / Math.max(this.pascal[level].length, 1);
+                        
+                        for (let i = 0; i < this.pascal[level].length; i++) {
+                            const angle = angleStep * i;
+                            const fibValue = this.fibonacci[level % this.fibonacci.length];
+                            
+                            // Sacred geometry positioning
+                            const x = levelRadius * Math.cos(angle + level * goldenRatio);
+                            const y = levelRadius * Math.sin(angle + level * goldenRatio);
+                            const z = (level - levels/2) * 2;
+
+                            const position = new THREE.Vector3(x, y, z);
+                            const label = axiomLabels[id % axiomLabels.length];
+                            
+                            const vertex = new Vertex(id, label, level, fibValue, position);
+                            this.vertices.push(vertex);
+                            id++;
+                        }
+                    }
+                }
+
+                this.generateConnections();
+                this.updateInfo();
+            }
+
+            generateConnections() {
+                const growthMode = document.getElementById('growthMode').value;
+                
+                for (let i = 0; i < this.vertices.length; i++) {
+                    const vertex = this.vertices[i];
+                    
+                    switch (growthMode) {
+                        case 'fibonacci':
+                            this.createFibonacciConnections(vertex, i);
+                            break;
+                        case 'pascal':
+                            this.createPascalConnections(vertex, i);
+                            break;
+                        case 'golden':
+                            this.createGoldenConnections(vertex, i);
+                            break;
+                        case 'sacred':
+                            this.createSacredConnections(vertex, i);
+                            break;
+                        case 'sphere':
+                            this.createSphereConnections(vertex, i); // New sphere connection logic
+                            break;
+                        case 'tetrahedral_complex':
+                            // Connections for the tetrahedral complex would go here.
+                            // For now, no specific connections are generated in this placeholder mode.
+                            break;
+                    }
+                }
+            }
+
+            createFibonacciConnections(vertex, index) {
+                for (let i = 1; i <= 3; i++) {
+                    const fibStep = this.fibonacci[i % this.fibonacci.length];
+                    const targetIndex = (index + fibStep) % this.vertices.length;
+                    if (targetIndex !== index && targetIndex < this.vertices.length) {
+                        const edge = new Edge(vertex, this.vertices[targetIndex], 'fibonacci');
+                        this.edges.push(edge);
+                        vertex.connections.push(targetIndex);
+                    }
+                }
+            }
+
+            createPascalConnections(vertex, index) {
+                // Connect to vertices in adjacent Pascal levels
+                const nextLevelStart = this.getlevelStartIndex(vertex.level + 1);
+                const prevLevelStart = vertex.level > 0 ? this.getlevelStartIndex(vertex.level - 1) : -1;
+                
+                if (nextLevelStart !== -1) {
+                    const connectionsCount = Math.min(3, this.vertices.length - nextLevelStart);
+                    for (let i = 0; i < connectionsCount; i++) {
+                        const targetIndex = nextLevelStart + i;
+                        if (targetIndex < this.vertices.length) {
+                            const edge = new Edge(vertex, this.vertices[targetIndex], 'pascal');
+                            this.edges.push(edge);
+                            vertex.connections.push(targetIndex);
+                        }
+                    }
+                }
+            }
+
+            createGoldenConnections(vertex, index) {
+                const goldenStep = Math.floor(goldenRatio * (index + 1));
+                const targetIndex = goldenStep % this.vertices.length;
+                if (targetIndex !== index) {
+                    const edge = new Edge(vertex, this.vertices[targetIndex], 'golden');
+                    this.edges.push(edge);
+                    vertex.connections.push(targetIndex);
+                }
+            }
+
+            createSacredConnections(vertex, index) {
+                // Create sacred geometry patterns (triangles, hexagons)
+                const sacredNumbers = [3, 6, 9, 12]; // Sacred numbers
+                sacredNumbers.forEach(num => {
+                    const targetIndex = (index + num) % this.vertices.length;
+                    if (targetIndex !== index) {
+                        const edge = new Edge(vertex, this.vertices[targetIndex], 'sacred');
+                        this.edges.push(edge);
+                        vertex.connections.push(targetIndex);
+                    }
+                });
+            }
+
+            createSphereConnections(vertex, index) {
+                // Connect to immediate neighbors
+                const numVertices = this.vertices.length;
+                const connectionsMade = new Set();
+
+                // Connect to a few nearest neighbors (circularly)
+                for (let i = 1; i <= 2; i++) {
+                    const neighbor1 = (index + i) % numVertices;
+                    const neighbor2 = (index - i + numVertices) % numVertices;
+
+                    if (neighbor1 !== index && !connectionsMade.has(neighbor1)) {
+                        const edge = new Edge(vertex, this.vertices[neighbor1], 'sphere');
+                        this.edges.push(edge);
+                        vertex.connections.push(neighbor1);
+                        connectionsMade.add(neighbor1);
+                    }
+                    if (neighbor2 !== index && !connectionsMade.has(neighbor2)) {
+                        const edge = new Edge(vertex, this.vertices[neighbor2], 'sphere');
+                        this.edges.push(edge);
+                        vertex.connections.push(neighbor2);
+                        connectionsMade.add(neighbor2);
+                    }
+                }
+
+                // Connect based on a golden ratio spiral step for "spiral" effect
+                const spiralStep = Math.floor(goldenRatio * 5); // A larger step for more distant connections
+                const spiralTarget = (index + spiralStep) % numVertices;
+                if (spiralTarget !== index && !connectionsMade.has(spiralTarget)) {
+                    const edge = new Edge(vertex, this.vertices[spiralTarget], 'sphere');
+                    this.edges.push(edge);
+                    vertex.connections.push(spiralTarget);
+                    connectionsMade.add(spiralTarget);
+                }
+            }
+
+            getlevelStartIndex(level) {
+                let startIndex = 0;
+                for (let i = 0; i < level && i < this.pascal.length; i++) {
+                    startIndex += this.pascal[i].length;
+                }
+                return level < this.pascal.length ? startIndex : -1;
+            }
+
+            createVertexMesh(vertex) {
+                const geometry = new THREE.SphereGeometry(0.2, 8, 6);
+                
+                // Base color based on level and Fibonacci value
+                const hue = (vertex.level * 60 + vertex.fibIndex * 30) % 360;
+                let color = new THREE.Color().setHSL(hue / 360, 0.8, 0.6);
+                
+                // Apply phase shift color if condition met
+                if (this.phaseShiftCondition(vertex.level)) {
+                    color = new THREE.Color(0x00ff00); // Bright green for phase-shifted layers
+                }
+
+                const material = new THREE.MeshPhongMaterial({ 
+                    color: color,
+                    shininess: 100,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                
+                const sphere = new THREE.Mesh(geometry, material);
+                sphere.position.copy(vertex.position);
+                
+                // Add glow effect
+                const glowGeometry = new THREE.SphereGeometry(0.3, 8, 6);
+                const glowMaterial = new THREE.MeshBasicMaterial({
+                    color: color, // Glow color matches vertex color
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+                sphere.add(glow);
+                
+                return sphere;
+            }
+
+            createEdgeMesh(edge) {
+                const points = [edge.from.position, edge.to.position];
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                
+                let color;
+                switch (edge.type) {
+                    case 'fibonacci': color = 0x00ffff; break;
+                    case 'pascal': color = 0xff6600; break;
+                    case 'golden': color = 0xffd700; break;
+                    case 'sacred': color = 0xff00ff; break;
+                    case 'sphere': color = 0x00ff00; break; // New color for sphere mode
+                    default: color = 0x666666;
+                }
+                
+                const material = new THREE.LineBasicMaterial({ 
+                    color: color,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                
+                return new THREE.Line(geometry, material);
+            }
+
+            showNext() {
+                if (this.currentStep < this.vertices.length) {
+                    const vertex = this.vertices[this.currentStep];
+                    
+                    if (!vertex.visible) {
+                        vertex.mesh = this.createVertexMesh(vertex);
+                        this.scene.add(vertex.mesh);
+                        vertex.visible = true;
+                        
+                        // Add connected edges
+                        vertex.connections.forEach(connIndex => {
+                            // Ensure the connected vertex is already visible or is the current one being processed
+                            // This prevents edges appearing before both connected vertices are rendered
+                            if (connIndex < this.currentStep) {
+                                const edge = this.edges.find(e => 
+                                    (e.from === vertex && e.to === this.vertices[connIndex]) ||
+                                    (e.to === vertex && e.from === this.vertices[connIndex])
+                                );
+                                
+                                if (edge && !edge.visible) {
+                                    edge.mesh = this.createEdgeMesh(edge);
+                                    this.scene.add(edge.mesh);
+                                    edge.visible = true;
+                                }
+                            }
+                        });
+                    }
+                    
+                    this.currentStep++;
+                    this.updateInfo();
+                    return true;
+                }
+                return false;
+            }
+
+            reset() {
+                // Clear scene
+                this.vertices.forEach(vertex => {
+                    if (vertex.mesh) {
+                        this.scene.remove(vertex.mesh);
+                        vertex.mesh.geometry.dispose();
+                        vertex.mesh.material.dispose();
+                        vertex.mesh = null;
+                        vertex.visible = false;
+                    }
+                });
+                
+                this.edges.forEach(edge => {
+                    if (edge.mesh) {
+                        this.scene.remove(edge.mesh);
+                        edge.mesh.geometry.dispose();
+                        edge.mesh.material.dispose();
+                        edge.mesh = null;
+                        edge.visible = false;
+                    }
+                });
+                
+                this.currentStep = 0;
+                this.updateInfo(); // Update info after reset
+            }
+
+            updateInfo() {
+                document.getElementById('vertexCount').textContent = this.vertices.length;
+                document.getElementById('edgeCount').textContent = this.edges.length;
+                document.getElementById('currentLevel').textContent = 
+                    this.currentStep < this.vertices.length ? this.vertices[this.currentStep - 1]?.level || 0 : 'Complete';
+                document.getElementById('fibStep').textContent = 
+                    this.currentStep < this.vertices.length ? this.vertices[this.currentStep - 1]?.fibIndex || 0 : 'Final';
+            }
+
+            setupControls() {
+                const levelsSlider = document.getElementById('levels');
+                const levelsValue = document.getElementById('levelsValue');
+                const speedSlider = document.getElementById('speed');
+                const speedValue = document.getElementById('speedValue');
+                const view2DCheckbox = document.getElementById('view2D');
+                const growthModeSelect = document.getElementById('growthMode');
+                
+                levelsSlider.addEventListener('input', (e) => {
+                    levelsValue.textContent = e.target.value;
+                });
+                
+                speedSlider.addEventListener('input', (e) => {
+                    speedValue.textContent = parseFloat(e.target.value).toFixed(1);
+                });
+
+                view2DCheckbox.addEventListener('change', () => {
+                    this.is2DView = view2DCheckbox.checked;
+                    this.toggle2DView();
+                });
+
+                growthModeSelect.addEventListener('change', () => {
+                    // Regenerate structure when growth mode changes
+                    this.reset();
+                    this.generateStructure(parseInt(levelsSlider.value));
+                });
+                
+                document.getElementById('regenerate').addEventListener('click', () => {
+                    this.reset();
+                    this.generateStructure(parseInt(levelsSlider.value));
+                });
+                
+                document.getElementById('animate').addEventListener('click', () => {
+                    if (!this.isAnimating) {
+                        this.startAnimation();
+                    } else {
+                        this.stopAnimation();
+                    }
+                });
+                
+                document.getElementById('export').addEventListener('click', () => {
+                    this.exportSVG();
+                });
+            }
+
+            toggle2DView() {
+                const aspect = window.innerWidth / window.innerHeight;
+                const frustumSize = 25; // Adjust this value for zoom in 2D
+
+                if (this.is2DView) {
+                    // Switch to OrthographicCamera for 2D view
+                    this.camera = new THREE.OrthographicCamera(
+                        frustumSize * aspect / -2,
+                        frustumSize * aspect / 2,
+                        frustumSize / 2,
+                        frustumSize / -2,
+                        0.1,
+                        1000
+                    );
+                    this.camera.position.set(0, 0, 50); // Look down from above
+                    this.camera.lookAt(0, 0, 0);
+                } else {
+                    // Switch back to PerspectiveCamera for 3D view
+                    this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+                    this.camera.position.set(0, 0, 20); // Original 3D position
+                }
+                this.camera.updateProjectionMatrix();
+            }
+
+            startAnimation() {
+                this.isAnimating = true;
+                document.getElementById('animate').textContent = '⏸ Pause Evolution';
+                
+                const speed = parseFloat(document.getElementById('speed').value);
+                const interval = 1000 / speed;
+                
+                const evolve = () => {
+                    if (this.isAnimating && this.showNext()) {
+                        setTimeout(evolve, interval);
+                    } else {
+                        this.stopAnimation();
+                    }
+                };
+                
+                evolve();
+            }
+
+            stopAnimation() {
+                this.isAnimating = false;
+                document.getElementById('animate').textContent = '▶ Start Evolution';
+            }
+
+            exportSVG() {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('width', '800');
+                svg.setAttribute('height', '600');
+                // Adjust viewBox based on current camera projection
+                const scaleFactor = 20; // Scale for SVG output
+                const centerX = 400;
+                const centerY = 300;
+
+                let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+                // Calculate bounds for visible vertices
+                this.vertices.forEach(vertex => {
+                    if (vertex.visible) {
+                        const vector = vertex.position.clone().project(this.camera);
+                        const x = (vector.x * 0.5 + 0.5) * 800; // Map to SVG coordinates
+                        const y = (-vector.y * 0.5 + 0.5) * 600; // Invert Y for SVG
+
+                        minX = Math.min(minX, x);
+                        maxX = Math.max(maxX, x);
+                        minY = Math.min(minY, y);
+                        maxY = Math.max(maxY, y);
+                    }
+                });
+
+                const padding = 50; // Add some padding
+                const viewBoxWidth = (maxX - minX) + 2 * padding;
+                const viewBoxHeight = (maxY - minY) + 2 * padding;
+                const viewBoxX = minX - padding;
+                const viewBoxY = minY - padding;
+
+                if (isFinite(viewBoxX) && isFinite(viewBoxY) && viewBoxWidth > 0 && viewBoxHeight > 0) {
+                    svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+                } else {
+                    // Fallback if no vertices are visible or bounds are invalid
+                    svg.setAttribute('viewBox', '-400 -300 800 600');
+                }
+                
+                svg.style.background = 'black';
+                
+                // Draw edges
+                this.edges.forEach(edge => {
+                    if (edge.visible) {
+                        const fromVector = edge.from.position.clone().project(this.camera);
+                        const toVector = edge.to.position.clone().project(this.camera);
+
+                        const x1 = (fromVector.x * 0.5 + 0.5) * 800;
+                        const y1 = (-fromVector.y * 0.5 + 0.5) * 600;
+                        const x2 = (toVector.x * 0.5 + 0.5) * 800;
+                        const y2 = (-toVector.y * 0.5 + 0.5) * 600;
+
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', x1);
+                        line.setAttribute('y1', y1);
+                        line.setAttribute('x2', x2);
+                        line.setAttribute('y2', y2);
+                        line.setAttribute('stroke', '#00ffff');
+                        line.setAttribute('stroke-width', '1');
+                        line.setAttribute('opacity', '0.6');
+                        svg.appendChild(line);
+                    }
+                });
+                
+                // Draw vertices
+                this.vertices.forEach(vertex => {
+                    if (vertex.visible) {
+                        const vector = vertex.position.clone().project(this.camera);
+                        const cx = (vector.x * 0.5 + 0.5) * 800;
+                        const cy = (-vector.y * 0.5 + 0.5) * 600;
+
+                        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        circle.setAttribute('cx', cx);
+                        circle.setAttribute('cy', cy);
+                        circle.setAttribute('r', '4');
+                        circle.setAttribute('fill', '#00ffff');
+                        circle.setAttribute('opacity', '0.8');
+                        svg.appendChild(circle);
+                        
+                        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        text.setAttribute('x', cx + 6);
+                        text.setAttribute('y', cy + 3);
+                        text.setAttribute('fill', '#ffffff');
+                        text.setAttribute('font-size', '8');
+                        text.setAttribute('font-family', 'monospace');
+                        text.textContent = vertex.label;
+                        svg.appendChild(text);
+                    }
+                });
+                
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'axiomatic_merkaba.svg';
+                link.click();
+                
+                URL.revokeObjectURL(url);
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                // Rotate camera around the structure only if not in 2D view
+                if (!this.is2DView) {
+                    const time = Date.now() * 0.0005;
+                    this.camera.position.x = Math.cos(time) * 25;
+                    this.camera.position.z = Math.sin(time) * 25;
+                    this.camera.lookAt(0, 0, 0);
+                }
+                
+                // Rotate individual vertices slightly
+                this.vertices.forEach(vertex => {
+                    if (vertex.mesh) {
+                        vertex.mesh.rotation.y += 0.01;
+                        vertex.mesh.rotation.x += 0.005;
+                    }
+                });
+                
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        // Initialize the Merkaba
+        const merkaba = new AxiomaticMerkaba();
+        merkaba.generateStructure(6);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            merkaba.camera.aspect = window.innerWidth / window.innerHeight;
+            merkaba.camera.updateProjectionMatrix();
+            merkaba.renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

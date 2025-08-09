@@ -1,0 +1,70 @@
+---
+"identity": "peer"
+"title": "Peer"
+"address": ":address"
+...
+---
+"identity": "connection"
+"title": "Connection"
+"service": ":service"
+"status": "status"
+...
+---
+"identity": "listing"
+"title": "listing"
+"service": ":service"
+...
+---
+"identity": "post"
+"title": "post"
+"merchandise": ":merchandise"
+...
+---
+"identity": "merchandise"
+"title": "merchandise"
+"content": ":content"
+"value": ":value"
+...
+---
+"identity": "transaction"
+"title": "transaction"
+"source": ":peer"
+"target": ":peer"
+"asset": ":asset"
+...
+---
+"identity": "asset"
+"content": ":content"
+"owner": ":identity"
+"signature": ":signature"
+...
+---
+"identity": "service"
+"asset": ":asset"
+"provider": ":peer"
+"consumer": ":peer"
+...
+---
+"identity": "content"
+"title": ":title"
+"summary": ":summary"
+"description": ":description"
+"time": ":time"
+...
+---
+"identity": "chat"
+"title": "chat"
+"message": ":message"
+"sender": ":identity"
+"reciever": ":identity"
+...
+---
+"identity": "topic"
+"title": "topic"
+"history": ":history"
+...
+---
+"identity": "history"
+"environment": ":environment"
+"time": ":time"
+...

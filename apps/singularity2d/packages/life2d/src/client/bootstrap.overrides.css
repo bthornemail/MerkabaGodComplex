@@ -1,0 +1,91 @@
+:root {
+  --primary-color: #5b5fed;
+  --secondary-color: #b4239d;
+  --background-color: #ffffff;
+  --text-color: #1a1a1a;
+  --border-color: #3a3a3a;
+  --accent-color: linear-gradient(45deg, #5b5fed, #b4239d);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Override React Bootstrap default styles */
+.btn {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.card {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-header {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.nav-link {
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--secondary-color);
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.badge {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.alert {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.form-control {
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(91, 95, 237, 0.25);
+}
+
+/* Add any other component styles you want to override */

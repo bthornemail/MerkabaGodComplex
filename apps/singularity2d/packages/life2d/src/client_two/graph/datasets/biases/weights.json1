@@ -1,0 +1,48 @@
+[
+    {
+        "id": "action",
+        "color": "blue"
+    },
+    {
+        "id": "actor",
+        "color": "blue"
+    },
+    {
+        "id": "environment",
+        "color": "blue"
+    },
+    {
+        "id": "time",
+        "color": "blue"
+    },
+    {
+        "id": "object",
+        "color": "red"
+    },
+    {
+        "id": "objective",
+        "color": "red"
+    },
+    {
+        "id": "observer",
+        "color": "red"
+    },
+    {
+        "id": "entropy",
+        "color": "red"
+    },
+    {
+        "id": "bias",
+        "color": "yellow",
+        "label": "<h1>Bais for model</h1>",
+        "val": "18"
+    },
+    {
+        "id": "storage",
+        "color": "purple"
+    },
+    {
+        "id": "memory",
+        "color": "green"
+    }
+]

@@ -1,0 +1,386 @@
+[
+  {
+      "privateKey": "mE7ubHFhqXo8LBdeAX9vkB4T2aG72QW7V2t8i1IFchQ2iB4aVoc/aaF2q65DO1/mF7wNmNxZnBm9gyrAHxjfWrzAccaynznlSCf0CmXgRoNM",
+      "key": "0x6f8be82b88e5701232210c2b3b0a447e5dbffc6afe79faa8f34ad0f79fb5210a",
+    "name": "Alice Johnson",
+    "age": 28,
+    "location": {
+      "address": "123 Main St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.052235,
+        "longitude": -118.243683
+      }
+    },
+    "job_description": "Software Engineer",
+    "personal_description": "Passionate about fitness and personal growth.",
+    "goals": "To get in shape and lead a healthier lifestyle.",
+    "known_skills": [
+      "Web development",
+      "Data analysis"
+    ],
+    "desired_skills": [
+      "Personal training",
+      "Nutrition planning"
+    ],
+    "services_provided": [
+      "Web development consulting",
+      "Data analysis services"
+    ],
+    "educational_background": "Bachelor's in Computer Science",
+    "things_owned": [
+      "Treadmill",
+      "Dumbbells",
+      "Yoga mat"
+    ],
+    "coin2D_balance": 1000,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "password": "QWxpY2UgSm9obnNvbg=="
+  },
+  {
+    "name": "Bob Martinez",
+    "age": 35,
+    "location": {
+      "address": "456 Elm St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.074201,
+        "longitude": -118.247572
+      }
+    },
+    "job_description": "Fitness Trainer",
+    "personal_description": "Committed to helping others achieve their fitness goals.",
+    "goals": "To earn a stable income as a fitness trainer.",
+    "known_skills": [
+      "Personal training",
+      "Nutrition planning"
+    ],
+    "desired_skills": [
+      "Marketing",
+      "Client management"
+    ],
+    "services_provided": [
+      "Personal training sessions",
+      "Customized meal plans"
+    ],
+    "educational_background": "Certified Personal Trainer",
+    "things_owned": [
+      "Resistance bands",
+      "Medicine balls",
+      "Fitness studio space"
+    ],
+    "coin2D_balance": 500,
+    "assets": [],
+    "exams_completed": [],
+      "transactions": [],
+      "key": "0xf10210d484b7f04b456f0ffc88cf5efee748de7c7544807974d436e687146310",
+    "privateKey": "mUDZ1JZ7RsMVAiyRCDKxvmnUMNTKDqrezywWc/CPjadccEnf3UqY05OgmKEXUI/QETictPRgS3kCBFRNrKsA/LPX1aozKl9VWZLPxx3fjPvg",
+    "password": "Qm9iIE1hcnRpbmV6"
+  },
+  {
+      "name": "Charlie Wilson",
+      "key": "0x07639f91b3575d66a3032e82bd889caad964f7d8ad793306290c7e0a3702444e",
+    "age": 40,
+    "location": {
+      "address": "789 Oak St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.059868,
+        "longitude": -118.27254
+      }
+    },
+    "job_description": "Entrepreneur",
+    "personal_description": "Passionate about fitness equipment and business.",
+    "goals": "To profit from buying and selling fitness equipment.",
+    "known_skills": [
+      "Business management",
+      "Market research"
+    ],
+    "desired_skills": [
+      "Equipment appraisal",
+      "Online marketing"
+    ],
+    "services_provided": [
+      "Fitness equipment sales",
+      "Equipment maintenance"
+    ],
+    "educational_background": "Master's in Business Administration",
+    "things_owned": [
+      "Elliptical machine",
+      "Weightlifting bench",
+      "Inventory of fitness equipment"
+    ],
+    "coin2D_balance": 750,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mb21mlhBUxDGQ1y7BprEX+a0+8PnkeFARacSER/kJrWwxg0Kq8rITdrMLXvpfdcjpwJlgrcVXP3nSc+3cRLDi1Nm/NBgdW4Guc0krTpDAp7I",
+    "password": "Q2hhcmxpZSBXaWxzb24="
+  },
+  {
+    "name": "Eva Smith",
+      "age": 32,
+      "key": "0x0a54899260428ab0a7d3cf7090b393bfd146b9cc0ff0c776a826a55c206cea05",
+    "location": {
+      "address": "101 Pine St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.045581,
+        "longitude": -118.241073
+      }
+    },
+    "job_description": "Marketing Specialist",
+    "personal_description": "Interested in fitness and looking to get fit.",
+    "goals": "To improve fitness and overall health.",
+    "known_skills": [
+      "Digital marketing",
+      "Social media"
+    ],
+    "desired_skills": [
+      "Fitness coaching",
+      "Nutrition guidance"
+    ],
+    "services_provided": [
+      "Digital marketing services",
+      "Social media promotions"
+    ],
+    "educational_background": "Bachelor's in Marketing",
+    "things_owned": [
+      "Yoga mat",
+      "Resistance bands",
+      "Fitness tracker"
+    ],
+    "coin2D_balance": 200,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mPhnyCH3MyUVtCxJahVHeHmvu8Am5DtJQwHtvQbZAUpvjH5hsffrOZA0OMajY4ZpPD2A/7EAsN2yxVunOAzv+Sd2hDDqdmi0B6tPqPh0O4tI",
+    "password": "RXZhIFNtaXRo"
+  },
+  {
+    "name": "David Lee",
+    "age": 45,
+    "location": {
+      "address": "222 Maple St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.068563,
+        "longitude": -118.26542
+      }
+    },
+    "job_description": "Personal Trainer",
+    "personal_description": "Dedicated to helping clients reach their fitness goals.",
+    "goals": "To expand the client base and improve fitness knowledge.",
+    "known_skills": [
+      "Personal training",
+      "Nutrition planning"
+    ],
+    "desired_skills": [
+      "Client retention",
+      "Advanced workout programming"
+    ],
+    "services_provided": [
+      "Personal training sessions",
+      "Fitness assessments"
+    ],
+    "educational_background": "Certified Personal Trainer",
+    "things_owned": [
+      "Kettlebells",
+      "Fitness studio equipment",
+      "Fitness certifications"
+    ],
+    "coin2D_balance": 300,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mTXsivRUjEJro52Hxl3pMR/oJ817UZFpZBBI638Ctz1Ae5dbAiSMBPbC5cDuI5pOUQ3v7uSaG9SZiMxnSUBw/rYhX9SLx4xm7qfhkiRhRHVw",
+    "password": "RGF2aWQgTGVl"
+  },
+  {
+    "name": "Olivia Wilson",
+    "age": 31,
+    "location": {
+      "address": "333 Elm St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.074201,
+        "longitude": -118.247572
+      }
+    },
+    "job_description": "Yoga Instructor",
+    "personal_description": "Promotes holistic health through yoga and mindfulness.",
+    "goals": "To create an online yoga course and reach a global audience.",
+    "known_skills": [
+      "Yoga instruction",
+      "Mindfulness meditation"
+    ],
+    "desired_skills": [
+      "Online course creation",
+      "Global audience outreach"
+    ],
+    "services_provided": [
+      "Yoga classes",
+      "Meditation sessions"
+    ],
+    "educational_background": "Certified Yoga Instructor",
+    "things_owned": [
+      "Yoga mats",
+      "Meditation cushions",
+      "Online teaching platform"
+    ],
+    "coin2D_balance": 400,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mf6WzVbydc4M7ygYSgtKc8HZeMJqEP1qK+ppFPBZ7nwcVEF1m7dHIlkLrU461NQbbpzccHCeSv650HXaInLOnuh851/Jp1/km17mF7sKYPXI",
+    "password": "T2xpdmlhIFdpbHNvbg=="
+  },
+  {
+    "name": "Emily Davis",
+    "age": 29,
+    "location": {
+      "address": "222 Pine St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.045581,
+        "longitude": -118.241073
+      }
+    },
+    "job_description": "Personal Trainer",
+    "personal_description": "Dedicated to helping clients achieve their fitness goals.",
+    "goals": "To open a fitness studio in Los Angeles.",
+    "known_skills": [
+      "Personal training",
+      "Nutrition planning"
+    ],
+    "desired_skills": [
+      "Business management",
+      "Studio ownership"
+    ],
+    "services_provided": [
+      "Personal training sessions",
+      "Customized meal plans"
+    ],
+    "educational_background": "Certified Personal Trainer",
+    "things_owned": [
+      "Weights",
+      "Fitness equipment",
+      "Certifications"
+    ],
+    "coin2D_balance": 300,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mdD7DijHyuLFUIiRFbMfibdMDk5t6Ic/pWJRbBBFotSTHBE2qV2qlw50NvpVtMPaq8MC+TgMxlZtbILSqSsksKaSPhn19rCpcOmKygZr73TU",
+    "password": "RW1pbHkgRGF2aXM="
+  },
+  {
+    "name": "Michael Brown",
+    "age": 38,
+    "location": {
+      "address": "101 Maple St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.068563,
+        "longitude": -118.26542
+      }
+    },
+    "job_description": "Fitness Blogger",
+    "personal_description": "Shares fitness tips and motivation with a growing online audience.",
+    "goals": "To write a fitness book and get it published.",
+    "known_skills": [
+      "Blogging",
+      "Fitness content creation"
+    ],
+    "desired_skills": [
+      "Book publishing",
+      "Public speaking"
+    ],
+    "services_provided": [
+      "Fitness blog articles",
+      "Online fitness challenges"
+    ],
+    "educational_background": "Bachelor's in Journalism",
+    "things_owned": [
+      "Camera",
+      "Laptop",
+      "Fitness blog website"
+    ],
+    "coin2D_balance": 200,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mxN5vDCmbD34wbLeC8Q+6kKCbXMAt8OaYLVVRy3Jv6DzxGfE9fJGHSsNdDopvvabc+sK7SKP0ohHB9rpmxUOdlK81OLpguq5TqrLbXkoR8Zo",
+    "password": "TWljaGFlbCBCcm93bg=="
+  },
+  {
+    "name": "Sarah Johnson",
+    "age": 28,
+    "location": {
+      "address": "789 Elm St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.074201,
+        "longitude": -118.247572
+      }
+    },
+    "job_description": "Digital Marketer",
+    "personal_description": "Loves fitness and wants to market fitness products and services.",
+    "goals": "To build a successful online fitness store.",
+    "known_skills": [
+      "Digital marketing",
+      "Social media advertising"
+    ],
+    "desired_skills": [
+      "E-commerce management",
+      "Product sourcing"
+    ],
+    "services_provided": [
+      "Digital marketing consulting",
+      "Social media ad campaigns"
+    ],
+    "educational_background": "Bachelor's in Marketing",
+    "things_owned": [
+      "Laptop",
+      "Smartphone",
+      "Home gym equipment"
+    ],
+    "coin2D_balance": 500,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "m9ltOZlvgSEtQdUKVE7aLmkc0WIOmPigypkZ9FnZou0sG6jPfGne4ySHE6HJidbf8QopDCZUGrnAOAVz8FdWExUMBUrj5IApU69sEwN96knk",
+    "password": "U2FyYWggSm9obnNvbg=="
+  },
+  {
+    "name": "John Smith",
+    "age": 32,
+    "location": {
+      "address": "456 Oak St, Los Angeles, CA",
+      "coordinates": {
+        "latitude": 34.059868,
+        "longitude": -118.27254
+      }
+    },
+    "job_description": "Fitness Instructor",
+    "personal_description": "Passionate about helping people achieve their fitness goals.",
+    "goals": "To become a certified nutritionist and offer personalized diet plans.",
+    "known_skills": [
+      "Personal training",
+      "Cardio workouts"
+    ],
+    "desired_skills": [
+      "Nutrition planning",
+      "Certified nutritionist"
+    ],
+    "services_provided": [
+      "Personal training sessions",
+      "Cardio fitness classes"
+    ],
+    "educational_background": "Bachelor's in Sports Science",
+    "things_owned": [
+      "Exercise bike",
+      "Resistance bands",
+      "Yoga mat"
+    ],
+    "coin2D_balance": 750,
+    "assets": [],
+    "exams_completed": [],
+    "transactions": [],
+    "privateKey": "mN5y5fwRD35ymWkS3yjS2x0iOpcmulGqrokUgMQE1EZQlma7ltDnTO/s8yxSPvP0aaIlrLEHqDOGjHhIXJYjPun44x1+6JdmpQkgsxGxlbHI",
+    "password": "Sm9obiBTbWl0aA=="
+  }
+]

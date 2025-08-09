@@ -1,0 +1,45 @@
+{
+	"nodes": [
+		{
+			"id": "doordash",
+			"label": "<h1>Door Dash</h1>",
+			"group": "jobs",
+			"text": "Door Dash",
+			"data": {
+				"hello": "world"
+			},
+			"imgSrc": "/images/woman.png"
+		},
+		{
+			"id": "brian",
+			"label": "<h1>Brian</h1>",
+			"group": "people",
+			"val": 4,
+			"text": "Myself",
+			"data": {
+				"hello": "world"
+			},
+			"imgSrc": "/images/man.png"
+		},
+		{
+			"id": "smokeweed",
+			"label": "<h1>Smoke Weed</h1>",
+			"group": "activity",
+			"val": 0,
+			"text": "I've been damn near smoking weed everyday",
+			"imgSrc": "/images/man.png"
+		}
+	],
+	"links": [
+		{
+			"source": "brian",
+			"target": "doordash",
+			"value": 4
+		},
+		{
+			"source": "brian",
+			"target": "smokeweed",
+			"value": 10
+		}
+	]
+}

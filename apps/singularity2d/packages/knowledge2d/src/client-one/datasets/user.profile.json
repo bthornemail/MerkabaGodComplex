@@ -1,0 +1,68 @@
+{
+	"nodes": [
+		{
+			"id": "token:0x4343242342342343242343232",
+			"img": "coin-svgrepo-com.svg",
+			"name": "Token",
+			"title": "Token",
+			"color": "yellow",
+			"val": 2,
+			"value": 100
+		},
+		{
+			"id": "asset:0x1232321323213",
+			"img": "barcode-svgrepo-com.svg",
+			"name": "Asset Registration",
+			"title": "Asset Registration",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "agreement:0x1232321323213",
+			"img": "and-contract-document-svgrepo-com.svg",
+			"name": "Contract Agreement",
+			"title": "Contract Agreement",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "delegate:0x1232321323213",
+			"img": "auction-gavel-judge-svgrepo-com.svg",
+			"name": "Jack Smith",
+			"title": "Delegate",
+			"color": "red",
+			"val": 2
+		},
+		{
+			"id": "peer:0x65675757",
+			"img": "user-id-svgrepo-com (1).svg",
+			"name": "Jane Smith",
+			"title": "PeerId",
+			"color": "red",
+			"val": 2
+		}
+		
+	],
+	"links": [
+		{
+			"source": "Wallet",
+			"target": "token:0x4343242342342343242343232"
+		},
+		{
+			"source": "Wallet",
+			"target": "asset:0x1232321323213"
+		},
+		{
+			"source": "Wallet",
+			"target": "agreement:0x1232321323213"
+		},
+		{
+			"source": "agreement:0x1232321323213",
+			"target": "delegate:0x1232321323213"
+		},
+		{
+			"source": "Peer_Connections",
+			"target": "peer:0x65675757"
+		}
+	]
+}

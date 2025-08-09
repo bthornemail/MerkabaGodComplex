@@ -1,0 +1,819 @@
+{
+  "knowledgeTries": {
+    "llama3.2:3b": {
+      "Core Documentation": {
+        "has a reference to": "Technical Specification"
+      },
+      "Implementations": {
+        "has a blueprint": "Blueprints"
+      },
+      "Testing": {
+        "has a benchmark": "Benchmarks"
+      },
+      "Each": {
+        "has": "its"
+      },
+      "Every": {
+        "contains": "a"
+      },
+      "Related": {
+        "are": "grouped"
+      },
+      "category": {
+        "prefixes": "where applicable"
+      },
+      "file": {
+        "name": "kebab-case"
+      },
+      "Single": {
+        "per file": "H1 heading"
+      },
+      "Logical": {
+        "heading hierarchy": ""
+      },
+      "Code blocks": {
+        "with appropriate language tags": ""
+      },
+      "Core Package": {
+        "=": "#core-package"
+      },
+      "Consciousness Module": {
+        "=": "#consciousness-module"
+      },
+      "Living Knowledge Module": {
+        "=": "#living-knowledge-module"
+      },
+      "AI Training System": {
+        "=": "#ai-training-system"
+      },
+      "Protocols & Utilities": {
+        "=": "#protocols--utilities"
+      },
+      "ULP": {
+        "createConsciousnessSystem": null,
+        "createLivingKnowledgeEcosystem": null,
+        "startCompleteDemo": null,
+        "testConsciousness": null,
+        "version": "string",
+        "name": "string",
+        "description": "string"
+      },
+      "Main": {
+        "provides": "ULP",
+        "access": "systems"
+      },
+      "document": {
+        "provides": "specification"
+      },
+      "node": {
+        "is": "Peer"
+      },
+      "network": {
+        "is": "CUE"
+      },
+      "objective": {
+        "is": "provide unambiguous blueprint"
+      },
+      "developers": {
+        "need": "ensure interoperability"
+      },
+      "protocol": {
+        "has": "core axiomatic principles"
+      }
+    }
+  },
+  "incidenceTrie": {
+    "[\"Core Documentation\",\"has a reference to\",\"API Reference\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "### 📚 Core Documentation\n- [API Reference](api/README.md)\n- [CUE Compendium](compendium/README.md)\n- [Technical Specification](technical/README.md)",
+          "signatureId": "CUE-1131.43-0.445-0.896"
+        }
+      }
+    ],
+    "[\"Core Documentation\",\"has a reference to\",\"CUE Compendium\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "### 📚 Core Documentation\n- [API Reference](api/README.md)\n- [CUE Compendium](compendium/README.md)\n- [Technical Specification](technical/README.md)",
+          "signatureId": "CUE-1131.43-0.445-0.896"
+        }
+      }
+    ],
+    "[\"Core Documentation\",\"has a reference to\",\"Technical Specification\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "### 📚 Core Documentation\n- [API Reference](api/README.md)\n- [CUE Compendium](compendium/README.md)\n- [Technical Specification](technical/README.md)",
+          "signatureId": "CUE-1131.43-0.445-0.896"
+        }
+      }
+    ],
+    "[\"Implementations\",\"has a blueprint\",\"Blueprints\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 2,
+          "text": "### 🛠 Implementation & Testing\n- [Implementation Blueprints](implementations/README.md)\n- [Testing & Benchmarks](testing/README.md)",
+          "signatureId": "CUE-1122.47--0.799--0.601"
+        }
+      }
+    ],
+    "[\"Testing\",\"has a benchmark\",\"Benchmarks\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 2,
+          "text": "### 🛠 Implementation & Testing\n- [Implementation Blueprints](implementations/README.md)\n- [Testing & Benchmarks](testing/README.md)",
+          "signatureId": "CUE-1122.47--0.799--0.601"
+        }
+      }
+    ],
+    "[\"Each\",\"has\",\"its\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 4,
+          "text": "1. **File Structure**\n   - Each section has its own directory\n   - Every directory contains a README.md\n   - Related files are grouped together",
+          "signatureId": "CUE-1087.97-0.828-0.560"
+        }
+      }
+    ],
+    "[\"Every\",\"contains\",\"a\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 4,
+          "text": "1. **File Structure**\n   - Each section has its own directory\n   - Every directory contains a README.md\n   - Related files are grouped together",
+          "signatureId": "CUE-1087.97-0.828-0.560"
+        }
+      }
+    ],
+    "[\"Related\",\"are\",\"grouped\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 4,
+          "text": "1. **File Structure**\n   - Each section has its own directory\n   - Every directory contains a README.md\n   - Related files are grouped together",
+          "signatureId": "CUE-1087.97-0.828-0.560"
+        }
+      }
+    ],
+    "[\"category\",\"prefixes\",\"where applicable\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 5,
+          "text": "2. **File Naming**\n   - Use kebab-case for filenames\n   - Include category prefixes where applicable\n   - End all documentation files with .md",
+          "signatureId": "CUE-1083.40-0.431--0.903"
+        }
+      }
+    ],
+    "[\"file\",\"name\",\"kebab-case\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 5,
+          "text": "2. **File Naming**\n   - Use kebab-case for filenames\n   - Include category prefixes where applicable\n   - End all documentation files with .md",
+          "signatureId": "CUE-1083.40-0.431--0.903"
+        }
+      }
+    ],
+    "[\"Single\",\"per file\",\"H1 heading\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "3. **Content Structure**\n   - Single H1 heading per file\n   - Logical heading hierarchy\n   - Code blocks with appropriate language tags\n   - Tables for structured data\n",
+          "signatureId": "CUE-1179.07--0.825--0.565"
+        }
+      }
+    ],
+    "[\"Logical\",\"heading hierarchy\",\"\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "3. **Content Structure**\n   - Single H1 heading per file\n   - Logical heading hierarchy\n   - Code blocks with appropriate language tags\n   - Tables for structured data\n",
+          "signatureId": "CUE-1179.07--0.825--0.565"
+        }
+      }
+    ],
+    "[\"Code blocks\",\"with appropriate language tags\",\"\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "3. **Content Structure**\n   - Single H1 heading per file\n   - Logical heading hierarchy\n   - Code blocks with appropriate language tags\n   - Tables for structured data\n",
+          "signatureId": "CUE-1179.07--0.825--0.565"
+        }
+      }
+    ],
+    "[\"Core Package\",\"=\",\"#core-package\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "1. [Core Package](#core-package)\n2. [Consciousness Module](#consciousness-module)\n3. [Living Knowledge Module](#living-knowledge-module)\n4. [AI Training System](#ai-training-system)\n5. [Protocols & Utilities](#protocols--utilities)",
+          "signatureId": "CUE-1441.89-0.100--0.995"
+        }
+      }
+    ],
+    "[\"Consciousness Module\",\"=\",\"#consciousness-module\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "1. [Core Package](#core-package)\n2. [Consciousness Module](#consciousness-module)\n3. [Living Knowledge Module](#living-knowledge-module)\n4. [AI Training System](#ai-training-system)\n5. [Protocols & Utilities](#protocols--utilities)",
+          "signatureId": "CUE-1441.89-0.100--0.995"
+        }
+      }
+    ],
+    "[\"Living Knowledge Module\",\"=\",\"#living-knowledge-module\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "1. [Core Package](#core-package)\n2. [Consciousness Module](#consciousness-module)\n3. [Living Knowledge Module](#living-knowledge-module)\n4. [AI Training System](#ai-training-system)\n5. [Protocols & Utilities](#protocols--utilities)",
+          "signatureId": "CUE-1441.89-0.100--0.995"
+        }
+      }
+    ],
+    "[\"AI Training System\",\"=\",\"#ai-training-system\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "1. [Core Package](#core-package)\n2. [Consciousness Module](#consciousness-module)\n3. [Living Knowledge Module](#living-knowledge-module)\n4. [AI Training System](#ai-training-system)\n5. [Protocols & Utilities](#protocols--utilities)",
+          "signatureId": "CUE-1441.89-0.100--0.995"
+        }
+      }
+    ],
+    "[\"Protocols & Utilities\",\"=\",\"#protocols--utilities\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 1,
+          "text": "1. [Core Package](#core-package)\n2. [Consciousness Module](#consciousness-module)\n3. [Living Knowledge Module](#living-knowledge-module)\n4. [AI Training System](#ai-training-system)\n5. [Protocols & Utilities](#protocols--utilities)",
+          "signatureId": "CUE-1441.89-0.100--0.995"
+        }
+      }
+    ],
+    "[\"ULP\",\"createConsciousnessSystem\",\"consciousnessSystem\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 4,
+          "text": "// Quick access to main systems\nconst consciousnessSystem = await ULP.createConsciousnessSystem();\nconst livingKnowledge = await ULP.createLivingKnowledgeEcosystem();\n```",
+          "signatureId": "CUE-1279.31--0.632--0.775"
+        }
+      }
+    ],
+    "[\"ULP\",\"createLivingKnowledgeEcosystem\",\"livingKnowledge\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 4,
+          "text": "// Quick access to main systems\nconst consciousnessSystem = await ULP.createConsciousnessSystem();\nconst livingKnowledge = await ULP.createLivingKnowledgeEcosystem();\n```",
+          "signatureId": "CUE-1279.31--0.632--0.775"
+        }
+      }
+    ],
+    "[\"Main\",\"provides\",\"ULP\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 5,
+          "text": "The main ULP object provides convenient access to all systems:",
+          "signatureId": "CUE-773.68-0.751-0.660"
+        }
+      }
+    ],
+    "[\"Main\",\"access\",\"systems\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 5,
+          "text": "The main ULP object provides convenient access to all systems:",
+          "signatureId": "CUE-773.68-0.751-0.660"
+        }
+      }
+    ],
+    "[\"ULP\",\"createConsciousnessSystem\",null]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"ULP\",\"createLivingKnowledgeEcosystem\",null]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"ULP\",\"startCompleteDemo\",null]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"ULP\",\"testConsciousness\",null]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"ULP\",\"version\",\"string\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"ULP\",\"name\",\"string\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"ULP\",\"description\",\"string\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 6,
+          "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+          "signatureId": "CUE-1743.54-0.040--0.999"
+        }
+      }
+    ],
+    "[\"document\",\"provides\",\"specification\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 0,
+          "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+          "signatureId": "CUE-1740.02--0.413-0.911"
+        }
+      }
+    ],
+    "[\"node\",\"is\",\"Peer\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 0,
+          "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+          "signatureId": "CUE-1740.02--0.413-0.911"
+        }
+      }
+    ],
+    "[\"network\",\"is\",\"CUE\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 0,
+          "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+          "signatureId": "CUE-1740.02--0.413-0.911"
+        }
+      }
+    ],
+    "[\"objective\",\"is\",\"provide unambiguous blueprint\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 0,
+          "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+          "signatureId": "CUE-1740.02--0.413-0.911"
+        }
+      }
+    ],
+    "[\"developers\",\"need\",\"ensure interoperability\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 0,
+          "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+          "signatureId": "CUE-1740.02--0.413-0.911"
+        }
+      }
+    ],
+    "[\"protocol\",\"has\",\"core axiomatic principles\"]": [
+      {
+        "transform": {
+          "model": "llama3.2:3b",
+          "chunkingStrategy": "paragraph"
+        },
+        "source": {
+          "file": "README.md",
+          "chunkIndex": 0,
+          "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+          "signatureId": "CUE-1740.02--0.413-0.911"
+        }
+      }
+    ]
+  },
+  "harmonicSignatures": {
+    "CUE-834.71--0.816-0.577": {
+      "id": "CUE-834.71--0.816-0.577",
+      "text": "Welcome to the rectified documentation for the Universal Life Protocol.",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        -109.01834812467312,
+        -48.12522493742646,
+        192.7789724406665
+      ],
+      "h": 834.7083322933826,
+      "sin": -0.8164948161823332,
+      "cos": 0.5773527649084031,
+      "tan": -1.4142043925465049
+    },
+    "CUE-1131.43-0.445-0.896": {
+      "id": "CUE-1131.43-0.445-0.896",
+      "text": "### 📚 Core Documentation\n- [API Reference](api/README.md)\n- [CUE Compendium](compendium/README.md)\n- [Technical Specification](technical/README.md)",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        196.97487864055304,
+        -189.36832649550453,
+        199.9865548410946
+      ],
+      "h": 1131.434045802052,
+      "sin": 0.44456673404321817,
+      "cos": 0.8957457334434513,
+      "tan": 0.49630907236834054
+    },
+    "CUE-1122.47--0.799--0.601": {
+      "id": "CUE-1122.47--0.799--0.601",
+      "text": "### 🛠 Implementation & Testing\n- [Implementation Blueprints](implementations/README.md)\n- [Testing & Benchmarks](testing/README.md)",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        -118.11193115913588,
+        -62.67192532318183,
+        -171.5995384274485
+      ],
+      "h": 1122.4740531522323,
+      "sin": -0.7989070381246566,
+      "cos": -0.6014545239956954,
+      "tan": 1.3282916766794064
+    },
+    "CUE-751.58--0.671--0.742": {
+      "id": "CUE-751.58--0.671--0.742",
+      "text": "### 🌐 Ecosystem\n- [Vision & Roadmap](ecosystem/README.md)",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        -171.95223571381464,
+        -137.73531009992558,
+        59.393821336012145
+      ],
+      "h": 751.5756781588931,
+      "sin": -0.6706123410972523,
+      "cos": -0.741807985915535,
+      "tan": 0.9040241596611912
+    },
+    "CUE-1087.97-0.828-0.560": {
+      "id": "CUE-1087.97-0.828-0.560",
+      "text": "1. **File Structure**\n   - Each section has its own directory\n   - Every directory contains a README.md\n   - Related files are grouped together",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        102.65191443384094,
+        -37.526286478674415,
+        -199.57065340508453
+      ],
+      "h": 1087.9673708342543,
+      "sin": 0.8284378157429392,
+      "cos": 0.5600810525692402,
+      "tan": 1.479139156632197
+    },
+    "CUE-1083.40-0.431--0.903": {
+      "id": "CUE-1083.40-0.431--0.903",
+      "text": "2. **File Naming**\n   - Use kebab-case for filenames\n   - Include category prefixes where applicable\n   - End all documentation files with .md",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        195.2592781758507,
+        -190.70291982406997,
+        -199.47979143887272
+      ],
+      "h": 1083.4043566462153,
+      "sin": 0.4305561199387191,
+      "cos": -0.9025638080398057,
+      "tan": -0.4770367658257911
+    },
+    "CUE-1179.07--0.825--0.565": {
+      "id": "CUE-1179.07--0.825--0.565",
+      "text": "3. **Content Structure**\n   - Single H1 heading per file\n   - Logical heading hierarchy\n   - Code blocks with appropriate language tags\n   - Tables for structured data\n",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        -104.37714591862992,
+        -40.43357852477336,
+        -198.50856944409793
+      ],
+      "h": 1179.0678521611892,
+      "sin": -0.8252287348900035,
+      "cos": -0.5647986677674128,
+      "tan": 1.46110248126477
+    },
+    "CUE-818.08-0.955-0.298": {
+      "id": "CUE-818.08-0.955-0.298",
+      "text": "🌌 The complete API reference for the Universal Life Protocol.",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        28.408642459416466,
+        118.679865877987,
+        -120.4721723288888
+      ],
+      "h": 818.082514175679,
+      "sin": 0.9546328031574136,
+      "cos": 0.2977855119642639,
+      "tan": 3.205773164921386
+    },
+    "CUE-1441.89-0.100--0.995": {
+      "id": "CUE-1441.89-0.100--0.995",
+      "text": "1. [Core Package](#core-package)\n2. [Consciousness Module](#consciousness-module)\n3. [Living Knowledge Module](#living-knowledge-module)\n4. [AI Training System](#ai-training-system)\n5. [Protocols & Utilities](#protocols--utilities)",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        61.8557270980665,
+        -199.9751151589001,
+        -62.1574606188881
+      ],
+      "h": 1441.8907725621937,
+      "sin": 0.10008757279492218,
+      "cos": -0.9949786318167949,
+      "tan": -0.1005926857063914
+    },
+    "CUE-724.08-0.998-0.058": {
+      "id": "CUE-724.08-0.998-0.058",
+      "text": "```bash\nnpm install @universal-life-protocol/core\n```",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        1.0453106039003968,
+        196.7277388601817,
+        -166.97356566899262
+      ],
+      "h": 724.0794155339591,
+      "sin": 0.9983363289287929,
+      "cos": 0.05765912192343036,
+      "tan": 17.314455989367207
+    },
+    "CUE-793.84-0.834--0.551": {
+      "id": "CUE-793.84-0.834--0.551",
+      "text": "```javascript\nconst ULP = require('@universal-life-protocol/core');",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        99.52632839899456,
+        -32.19091497666422,
+        199.84020914700503
+      ],
+      "h": 793.8362551559358,
+      "sin": 0.8342031444172073,
+      "cos": -0.5514572638423071,
+      "tan": -1.5127249183460814
+    },
+    "CUE-1279.31--0.632--0.775": {
+      "id": "CUE-1279.31--0.632--0.775",
+      "text": "// Quick access to main systems\nconst consciousnessSystem = await ULP.createConsciousnessSystem();\nconst livingKnowledge = await ULP.createLivingKnowledgeEcosystem();\n```",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        -183.12993061566758,
+        -152.1757234500519,
+        109.89733058479874
+      ],
+      "h": 1279.3119244343811,
+      "sin": -0.6316769139233614,
+      "cos": -0.7752317565839638,
+      "tan": 0.8148233203278815
+    },
+    "CUE-773.68-0.751-0.660": {
+      "id": "CUE-773.68-0.751-0.660",
+      "text": "The main ULP object provides convenient access to all systems:",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        140.94959531089046,
+        -96.47947975602581,
+        -83.77000720129975
+      ],
+      "h": 773.6814589997617,
+      "sin": 0.7510600719233511,
+      "cos": 0.6602338739889757,
+      "tan": 1.1375667040311415
+    },
+    "CUE-1743.54-0.040--0.999": {
+      "id": "CUE-1743.54-0.040--0.999",
+      "text": "```typescript\ninterface ULP {\n  createConsciousnessSystem(): Promise<ConsciousnessSystem>;\n  createLivingKnowledgeEcosystem(): Promise<LivingKnowledgeEcosystem>;\n  startCompleteDemo(): Promise<void>;\n  testConsciousness(): Promise<ConsciousnessTestResult>;\n  version: string;\n  name: string;\n  description: string;\n}\n```\n",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        25.133325830295956,
+        -199.99936104776629,
+        -25.153457247869877
+      ],
+      "h": 1743.5438050132263,
+      "sin": 0.0401069688474038,
+      "cos": -0.9991953918277813,
+      "tan": -0.040139265228233294
+    },
+    "CUE-1740.02--0.413-0.911": {
+      "id": "CUE-1740.02--0.413-0.911",
+      "text": "This document provides the complete technical specification for implementing a compliant node (a \"Peer\") on the Computational Universe Engine (CUE) network. The objective is to provide an unambiguous blueprint for developers, ensuring interoperability and adherence to the protocol's core axiomatic principles.",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        -192.51889648918606,
+        -192.21288348767277,
+        -197.82712829663564
+      ],
+      "h": 1740.0169539403919,
+      "sin": -0.41266343828564583,
+      "cos": 0.9108835747241625,
+      "tan": -0.45303642500152697
+    },
+    "CUE-1027.17-0.135--0.991": {
+      "id": "CUE-1027.17-0.135--0.991",
+      "text": "All data structures exchanged between peers MUST conform to the following Protocol Buffer (Protobuf 3) schemas.",
+      "sourceFile": "README.md",
+      "sExpr": {},
+      "vector": [
+        82.50351188424362,
+        -199.91642928595596,
+        -83.22238393673067
+      ],
+      "h": 1027.1650305574076,
+      "sin": 0.13535045758791386,
+      "cos": -0.9907977864482451,
+      "tan": -0.13660754943055575
+    }
+  }
+}

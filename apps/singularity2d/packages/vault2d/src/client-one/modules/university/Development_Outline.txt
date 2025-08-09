@@ -1,0 +1,59 @@
+# Exam Verification System: Development Outline
+
+## Phase 1: Core Components
+
+### Answer Class
+1. Create a class to represent individual answers.
+2. Add attributes for ID, answer text, score, and weight.
+3. Implement methods to sign and verify answers.
+
+### Test Class
+1. Create a class to represent a test with multiple questions and answers.
+2. Add attributes for questions, answers, total score, and weight within the exam.
+3. Implement methods to add answers, sign answers, verify answers, and calculate the total score.
+
+### Task Class
+1. Create a class to represent individual tasks.
+2. Add attributes for the task objective, completion status, delegate signature, weight, and score.
+3. Implement methods to mark a task as completed and verify completion.
+
+### Exam Class
+1. Create a class to represent an exam that includes a test and a task.
+2. Add attributes to store the test and task instances, as well as Content IDs (CIDs) for immutable storage.
+3. Implement methods to save and load exam states, and to determine if the exam is passed or failed.
+
+## Phase 2: Storage Integration (Helia / IPFS)
+
+1. Implement the `add` method to save the current state of an exam to Helia.
+2. Implement the `get` method to retrieve the state of an exam from Helia using a CID.
+
+## Phase 3: User Interface (Optional)
+
+1. Develop a simple user interface to create tests and tasks.
+2. Add functionality to sign and verify answers and tasks.
+3. Display the results of the exam and whether it is passed or failed.
+
+## Phase 4: Testing and Quality Assurance
+
+1. Write unit tests for all core components.
+2. Perform integration testing to ensure all components work together as expected.
+3. Conduct security audits to identify any vulnerabilities.
+
+## Phase 5: Deployment
+
+1. Prepare the code for production deployment.
+2. Deploy the application to a server or cloud service.
+3. Ensure that the application is scalable and can handle multiple users.
+
+## Phase 6: Documentation and Training
+
+1. Write comprehensive documentation for the application.
+2. Create user guides and tutorials.
+3. Train end-users and administrators on how to use the application effectively.
+
+## Additional Features (Optional)
+
+1. Add support for multiple types of questions (e.g., fill-in-the-blank, short answer).
+2. Implement a grading system with customizable grading criteria.
+3. Add analytics to track user performance over time.
+

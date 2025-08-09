@@ -1,0 +1,66 @@
+{
+	"nodes": [
+		{
+			"id": "Lock",
+			"img": "lock-svgrepo-com.svg",
+			"name": "Save",
+			"title": "Save",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Sign_Up",
+			"img": "key-svgrepo-com.svg",
+			"name": "Sign Up",
+			"title": "Sign Up",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Sign_In",
+			"img": "lock-svgrepo-com (1).svg",
+			"name": "Sign In",
+			"title": "Sign In",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Sign_Out",
+			"img": "lock-wrong-svgrepo-com.svg",
+			"name": "Sign Out",
+			"title": "Sign Out",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Save",
+			"img": "lock-correct-svgrepo-com.svg",
+			"name": "Save",
+			"title": "Save",
+			"color": "black",
+			"val": 1
+		}
+	],
+	"links": [
+		{
+			"source": "Vault",
+			"target": "Lock"
+		},
+		{
+			"source": "Vault",
+			"target": "Sign_Up"
+		},
+		{
+			"source": "Vault",
+			"target": "Sign_In"
+		},
+		{
+			"source": "Lock",
+			"target": "Save"
+		},
+		{
+			"source": "Lock",
+			"target": "Sign_Out"
+		}
+	]
+}

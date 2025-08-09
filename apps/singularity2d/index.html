@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singularity2D - Sacred Geometry Consensus</title>
+    <meta name="description" content="Sacred Geometry Consensus Visualization integrated with Computational Universe Engine">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- App icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="src/components/seed/seed/public/app-icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="60x60" href="src/components/seed/seed/public/app-icons/icon-60.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="src/components/seed/seed/public/app-icons/icon-128.png">
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="src/components/seed/seed/public/manifest.webapp">
+    
+    <!-- Meta tags for social sharing -->
+    <meta property="og:title" content="Singularity2D - Sacred Geometry Consensus">
+    <meta property="og:description" content="Experience the convergence of sacred geometry and distributed consensus in a living digital reality">
+    <meta property="og:type" content="website">
+    
+    <!-- Security and performance -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <style>
+        /* Critical CSS for loading screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1e1b4b 0%, #581c87 50%, #be185d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            z-index: 9999;
+        }
+        
+        .loading-content {
+            text-align: center;
+        }
+        
+        .sacred-spinner {
+            width: 64px;
+            height: 64px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .loading-subtitle {
+            color: #cbd5e1;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="sacred-spinner"></div>
+            <div class="loading-text">Singularity2D</div>
+            <div class="loading-subtitle">Initializing Sacred Consensus...</div>
+        </div>
+    </div>
+    
+    <!-- React app mount point -->
+    <div id="root"></div>
+    
+    <!-- Remove loading screen when React app loads -->
+    <script>
+        // Remove loading screen once the React app is ready
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.transition = 'opacity 0.5s ease-out';
+                    setTimeout(function() {
+                        loadingScreen.remove();
+                    }, 500);
+                }
+            }, 1000); // Give React time to initialize
+        });
+        
+        // Global error handler for production debugging
+        window.addEventListener('error', function(e) {
+            console.error('Singularity2D Global Error:', e.error);
+        });
+        
+        // Unhandled promise rejection handler
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled Promise Rejection:', e.reason);
+        });
+    </script>
+    
+    <!-- Vite dev server script injection point -->
+    <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

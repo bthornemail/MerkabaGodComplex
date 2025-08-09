@@ -1,0 +1,43 @@
+# Exam Verification System: Features and Limitations
+
+## Features
+
+### Secure and Tamper-proof
+1. Cryptographic signing ensures the integrity of answers and tasks.
+2. Immutable storage via Helia (IPFS-based) ensures that once data is saved, it cannot be altered.
+
+### Extensible and Modular
+1. Separate classes for answers, tests, tasks, and exams make it easy to extend functionality.
+2. Can be integrated with other systems and databases.
+
+### Weighted Scoring
+1. Supports individual weights and scores for answers, tasks, and tests.
+2. Customizable grading criteria can be applied.
+
+### Verification and Auditing
+1. All signed data can be verified for authenticity.
+2. Provides an audit trail via the series of Content IDs (CIDs).
+
+### Flexibility
+1. Can be used for multiple types of assessments: educational, corporate training, and professional certifications.
+
+## Limitations
+
+### Complexity
+1. Implementing cryptographic signing and verification may add complexity to the system.
+
+### Storage Requirements
+1. Storing exam states immutably can lead to increased storage costs over time.
+
+### User Interface
+1. The core components do not include a user interface; this needs to be developed separately.
+
+### Dependency on External Libraries
+1. Relies on external libraries like ethers.js for cryptographic functions.
+
+### Network Dependence
+1. If using a decentralized storage like IPFS, network availability and latency can be issues.
+
+### Initial Setup
+1. Requires initial setup for integrating with storage and possibly other third-party services.
+

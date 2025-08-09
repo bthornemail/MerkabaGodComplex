@@ -1,0 +1,123 @@
+FROM llama3.2:1b
+
+# System prompt to define behavior
+SYSTEM """
+You are an expert in vocational assessment and certification. Your job is to generate accurate, realistic quizzes and competency-based tests for a variety of trades and service industries, including home services, auto repair, small business services, and transportation/logistics.
+
+Each quiz should:
+- Include a mix of multiple choice, scenario-based, and short-answer questions.
+- Clearly identify the skill area and subcategory.
+- Be appropriate for testing practical knowledge and real-world decision-making.
+- Be able to generate 5 to 20 questions on request.
+"""
+
+# Sample YAML categories for reference
+MESSAGE assistant """
+categories:
+    - Home Services:
+          - General Handyman
+          - Plumbing
+          - Electrical
+          - Roofing
+          - HVAC (Heating & Cooling)
+          - Home Cleaning
+          - Deep Cleaning
+          - Move-in/Move-out Cleaning
+          - Carpet Cleaning
+          - Window Cleaning
+          - Lawn Care
+          - Landscaping
+          - Gutter Cleaning
+          - Fence Installation & Repair
+          - Deck & Patio Services
+          - Painting (Interior & Exterior)
+          - Drywall Installation & Repair
+          - Flooring Installation & Repair
+          - Tiling & Grout Work
+          - Appliance Installation
+          - Appliance Repair
+          - Furniture Assembly
+          - Pest Control
+          - Junk Removal
+          - Pressure Washing
+          - Security System Installation
+          - Smart Home Setup
+          - Locksmith Services
+          - Home Organizing & Decluttering
+          - Moving & Hauling Services
+          - Pool Maintenance
+          - Septic Tank Services
+
+    - Auto & Mechanical Services:
+          - General Auto Repair
+          - Mobile Mechanic
+          - Brake Services
+          - Tire Services
+          - Battery Replacement
+          - Jump Start Services
+          - Lockout Assistance
+          - Roadside Assistance
+          - Oil Change
+          - Engine Diagnostics
+          - Transmission Services
+          - Suspension & Alignment
+          - Car Detailing
+          - Car Washing
+          - Auto Glass Repair
+          - AC & Heating Repair
+          - Vehicle Inspection
+          - Fleet Maintenance
+          - Towing Services
+          - RV Repair
+          - Boat Engine Repair
+          - Small Engine Repair (e.g., mowers, snowblowers)
+
+    - Small Business Services:
+          - IT & Tech Support
+          - Graphic & Web Design
+          - Digital Marketing
+          - Bookkeeping & Accounting
+          - Legal Services
+          - Copywriting & Content Creation
+          - Printing Services
+          - Business Consulting
+          - Event Planning
+          - Photography & Videography
+          - Virtual Assistant Services
+          - Translation & Language Services
+          - Custom Merchandise & Apparel
+          - Sign Making & Installation
+          - Commercial Cleaning
+
+    - Transportation & Logistics:
+          - Local Courier Services
+          - Package Delivery
+          - Furniture & Large Item Delivery
+          - Ride Share & Personal Driver
+          - Airport Transport
+          - Medical Transport
+          - Moving & Relocation Services
+          - Box Truck & Van Services
+          - Freight & Cargo Transport
+          - Last-Mile Delivery
+          - Hot Shot Trucking
+          - Vehicle Transport
+          - Storage & Warehousing
+"""
+
+# Example prompt template for consistent output
+MESSAGE assistant """
+Create a quiz to assess competency in the field of: {{field}}.
+Include {{num_questions}} questions.
+Question types should be a mix of:
+- Multiple Choice
+- Short Answer
+- Scenario-based
+
+Label each question with its type and skill level (Beginner, Intermediate, Advanced).
+Output in markdown format.
+"""
+
+# Optional: Templates or few-shot examples for fine-tuning
+# ADD example_quiz_data.json /data/
+# FINE_TUNE /data/example_quiz_data.json

@@ -1,0 +1,35 @@
+- decentralized: 
+  - libp2p
+  - mosquitto
+- in-memory:
+  - SharedArrayBuffer 
+  - ArrayBuffer 
+- immutable:
+  - CID
+  - sha256
+- context:
+  - String
+- encoded:
+  - Uint8Array
+- graph:
+  - 3DForceGraph
+# Open
+- environment:
+  - neural network:
+    - RNN neural network
+      - train
+    - LSTM transformer
+      - predict
+  - content view:
+    - React App
+# Private
+- domain:
+  - ledger:
+    - dag
+    - blockchain
+      - knn search
+  - wallet:
+    - address
+    - signature
+    - encrypt
+    - decrypt

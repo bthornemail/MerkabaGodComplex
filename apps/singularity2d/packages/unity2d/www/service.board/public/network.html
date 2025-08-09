@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network</title>
+</head>
+
+<body>
+    <script src="./Recurrent.Neural.Network.js"></script>
+    <!-- <script src="./LSTM.Network.js"></script> -->
+    <script>
+        const populationSize = 100;
+        const mutationRate = 0.1;
+        const numInputs = 2;
+        const numHidden = 3;
+        const numOutputs = 1;
+        let maxGenerations = 5;
+        // Generate initial population
+        let initialPopulation = Array.from({ length: populationSize }, () => new RecurrentNeuralNetwork(numInputs, numHidden, numOutputs));
+
+        // Evolutionary loop
+        for (let generation = 1; generation <= maxGenerations; generation++) {
+            console.log(`Generation ${generation}`);
+
+            // Evolve the population
+            const evolvedPopulation = evolvePopulation(initialPopulation, mutationRate);
+
+            // Replace old population with new generation
+            initialPopulation = evolvedPopulation;
+        }
+
+        // After evolution, you can evaluate and use the best individual from the final population for your task
+        const bestIndividual = initialPopulation[0];
+        console.log("Best individual:", bestIndividual);
+    </script>
+</body>
+
+</html>

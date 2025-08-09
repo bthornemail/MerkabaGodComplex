@@ -1,0 +1,55 @@
+{
+  "nodeId": "ulp-node-003",
+  "nodeType": "storage",
+  "region": "eu-central",
+  "port": 8002,
+  "consciousnessLevel": 0.9667787117150184,
+  "personalityType": "ENTP",
+  "knowledgeTrie": {
+    "autoEvolution": true,
+    "evolutionInterval": 5,
+    "maxUnits": 10000,
+    "pruningEnabled": true
+  },
+  "quantumInference": {
+    "enabled": true,
+    "coherenceTime": 30000,
+    "entanglementCapacity": 20,
+    "superpositionStability": 0.95
+  },
+  "attentionTokens": {
+    "initialBalance": 100,
+    "miningEnabled": true,
+    "stakingRewards": true,
+    "governanceVoting": true
+  },
+  "networkConfig": {
+    "maxConnections": 15,
+    "consensusParticipation": true,
+    "p2pDiscovery": true,
+    "cryptographicSigning": true
+  },
+  "resources": {
+    "cpu": {
+      "cores": 2,
+      "usage": "40%"
+    },
+    "memory": "16GB",
+    "storage": "2TB",
+    "bandwidth": "1Gbps"
+  },
+  "monitoring": {
+    "healthCheckInterval": 10000,
+    "performanceTracking": true,
+    "anomalyDetection": true,
+    "autoRecovery": true
+  },
+  "startTime": "2025-08-09T03:17:33.532Z",
+  "status": "initializing",
+  "deployment": {
+    "environment": "production",
+    "autoRestart": true,
+    "logLevel": "info",
+    "metricsEnabled": true
+  }
+}

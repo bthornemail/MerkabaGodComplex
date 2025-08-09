@@ -1,0 +1,1810 @@
+{
+  "timestamp": "2025-08-06T15:56:51.867Z",
+  "agent": {
+    "id": "cue-amgf-training-agent",
+    "learningRate": 0.1,
+    "discountFactor": 0.9,
+    "explicitRules": [],
+    "activeBases": {
+      "manuscript_generation": 7,
+      "vec7_harmony": 11,
+      "quality_assessment": 17,
+      "training_optimization": 13
+    },
+    "implicitKnowledge": {
+      "0-0": {
+        "increase_content_density": 0.06772709348135152
+      },
+      "1-0": {
+        "increase_content_density": 0.06800397792755447
+      },
+      "2-0": {
+        "increase_content_density": 0.0657264576000913
+      },
+      "3-0": {
+        "increase_content_density": 0.07825810950497124
+      },
+      "4-0": {
+        "increase_content_density": 0.08226750835706587
+      },
+      "5-0": {
+        "increase_content_density": 0.0871476648626093
+      },
+      "6-0": {
+        "increase_content_density": 0.07692292946177137
+      },
+      "7-0": {
+        "increase_content_density": 0.06885078927380035
+      },
+      "8-0": {
+        "increase_content_density": 0.07594751671384659
+      },
+      "9-0": {
+        "increase_content_density": 0.0732182848481723
+      },
+      "10-0": {
+        "increase_content_density": 0.0681417004110717
+      },
+      "11-0": {
+        "increase_content_density": 0.07611364735555402
+      },
+      "12-0": {
+        "increase_content_density": 0.07508652113531755
+      },
+      "13-0": {
+        "increase_content_density": 0.07655405097877548
+      },
+      "14-0": {
+        "increase_content_density": 0.05926463076698279
+      },
+      "15-0": {
+        "increase_content_density": 0.05706019146946037
+      },
+      "16-0": {
+        "increase_content_density": 0.061263327623924724
+      },
+      "17-0": {
+        "increase_content_density": 0.061112895622004226
+      },
+      "18-0": {
+        "increase_content_density": 0.06082820646169613
+      },
+      "19-0": {
+        "increase_content_density": 0.06096174684157147
+      },
+      "20-0": {
+        "increase_content_density": 0.062429954966692784
+      },
+      "21-0": {
+        "increase_content_density": 0.0643938031402159
+      },
+      "22-0": {
+        "increase_content_density": 0.05900835932161984
+      },
+      "23-0": {
+        "increase_content_density": 0.05368013787579461
+      },
+      "24-0": {
+        "increase_content_density": 0.05969512289111043
+      },
+      "25-0": {
+        "increase_content_density": 0.053284423089415105
+      },
+      "26-0": {
+        "increase_content_density": 0.05235005609089106
+      },
+      "27-0": {
+        "increase_content_density": 0.052813979424985454
+      },
+      "28-0": {
+        "increase_content_density": 0.05381576956037855
+      },
+      "29-0": {
+        "increase_content_density": 0.05357881894384819
+      },
+      "30-0": {
+        "increase_content_density": 0.04952635465586664
+      },
+      "31-0": {
+        "increase_content_density": 0.0584142466457298
+      },
+      "32-0": {
+        "increase_content_density": 0.0430513475196428
+      },
+      "33-0": {
+        "increase_content_density": 0.05445827717278941
+      },
+      "34-0": {
+        "increase_content_density": 0.0591847094710071
+      },
+      "35-0": {
+        "increase_content_density": 0.04053106053259982
+      },
+      "36-0": {
+        "increase_content_density": 0.0607090960487336
+      },
+      "37-0": {
+        "increase_content_density": 0.05744139366792185
+      },
+      "38-0": {
+        "increase_content_density": 0.05570563990625745
+      },
+      "39-0": {
+        "increase_content_density": 0.05490153606196767
+      },
+      "40-0": {
+        "increase_content_density": 0.05682006957694023
+      },
+      "41-0": {
+        "increase_content_density": 0.06956604113497895
+      },
+      "42-0": {
+        "increase_content_density": 0.048621295150569024
+      },
+      "43-0": {
+        "increase_content_density": 0.06559977059684585
+      },
+      "44-0": {
+        "increase_content_density": 0.06314922019731856
+      },
+      "45-0": {
+        "increase_content_density": 0.056814312087831755
+      },
+      "46-0": {
+        "increase_content_density": 0.06136139927718161
+      },
+      "47-0": {
+        "increase_content_density": 0.05301842467667472
+      },
+      "48-0": {
+        "increase_content_density": 0.05651039985496631
+      },
+      "49-0": {
+        "increase_content_density": 0.057738686096741286
+      },
+      "50-0": {
+        "increase_content_density": 0.054748272013489155
+      },
+      "51-0": {
+        "increase_content_density": 0.058509962581707535
+      },
+      "52-0": {
+        "increase_content_density": 0.05522323822263416
+      },
+      "53-0": {
+        "increase_content_density": 0.05718294268949331
+      },
+      "54-0": {
+        "increase_content_density": 0.05608490546411406
+      },
+      "55-0": {
+        "increase_content_density": 0.05482107104552789
+      },
+      "56-0": {
+        "increase_content_density": 0.05438158781782798
+      },
+      "57-0": {
+        "increase_content_density": 0.05885587332636882
+      },
+      "58-0": {
+        "increase_content_density": 0.052710865989080743
+      },
+      "59-0": {
+        "increase_content_density": 0.04119592608098908
+      },
+      "60-0": {
+        "increase_content_density": 0.056676686362758404
+      },
+      "61-0": {
+        "increase_content_density": 0.04117880893338345
+      },
+      "62-0": {
+        "increase_content_density": 0.06175848971935299
+      },
+      "63-0": {
+        "increase_content_density": 0.05155162109244803
+      },
+      "64-0": {
+        "increase_content_density": 0.045564378899888354
+      },
+      "65-0": {
+        "increase_content_density": 0.04679559569691095
+      },
+      "66-0": {
+        "increase_content_density": 0.053076177256640766
+      },
+      "67-0": {
+        "increase_content_density": 0.048038197199993325
+      },
+      "68-0": {
+        "increase_content_density": 0.057107441086374215
+      },
+      "69-0": {
+        "increase_content_density": 0.057285087054285144
+      },
+      "70-0": {
+        "increase_content_density": 0.0552560089843978
+      },
+      "71-0": {
+        "increase_content_density": 0.054149830056857334
+      },
+      "72-0": {
+        "increase_content_density": 0.04520206429623922
+      },
+      "73-0": {
+        "increase_content_density": 0.05932106391744162
+      },
+      "74-0": {
+        "increase_content_density": 0.05502805412406207
+      },
+      "75-0": {
+        "increase_content_density": 0.05494441763111336
+      },
+      "76-0": {
+        "increase_content_density": 0.0596430338846557
+      },
+      "77-0": {
+        "increase_content_density": 0.058279412439239724
+      },
+      "78-0": {
+        "increase_content_density": 0.038971181406626525
+      },
+      "79-0": {
+        "increase_content_density": 0.054675096061438916
+      },
+      "80-0": {
+        "increase_content_density": 0.062252287403918194
+      },
+      "81-0": {
+        "increase_content_density": 0.053937546218308714
+      },
+      "82-0": {
+        "increase_content_density": 0.060253454526681696
+      },
+      "83-0": {
+        "increase_content_density": 0.07759656046396382
+      },
+      "84-0": {
+        "increase_content_density": 0.051940616819995705
+      },
+      "85-0": {
+        "increase_content_density": 0.07583668404110444
+      },
+      "86-0": {
+        "increase_content_density": 0.07328642567698358
+      },
+      "87-0": {
+        "increase_content_density": 0.07310874964437175
+      },
+      "88-0": {
+        "increase_content_density": 0.077986483176165
+      },
+      "89-0": {
+        "increase_content_density": 0.07785616424414571
+      },
+      "90-0": {
+        "increase_content_density": 0.07460256505704191
+      },
+      "91-0": {
+        "increase_content_density": 0.07219901348226376
+      },
+      "92-0": {
+        "increase_content_density": 0.07793140793761817
+      },
+      "93-0": {
+        "increase_content_density": 0.08218296728197627
+      },
+      "94-0": {
+        "increase_content_density": 0.07486152867526208
+      },
+      "95-0": {
+        "increase_content_density": 0.07251654020672839
+      },
+      "96-0": {
+        "increase_content_density": 0.07391902168427265
+      },
+      "97-0": {
+        "increase_content_density": 0.07709941278431726
+      },
+      "98-0": {
+        "increase_content_density": 0.07969282284681663
+      },
+      "99-0": {
+        "increase_content_density": 0.0738094826706636
+      },
+      "100-0": {
+        "increase_content_density": 0.07677370299479441
+      },
+      "101-0": {
+        "increase_content_density": 0.08346717106819011
+      },
+      "102-0": {
+        "increase_content_density": 0.07992599431141946
+      },
+      "103-0": {
+        "increase_content_density": 0.07557476045033258
+      },
+      "104-0": {
+        "increase_content_density": 0.07378579378231341
+      },
+      "105-0": {
+        "increase_content_density": 0.08281683342858703
+      },
+      "106-0": {
+        "increase_content_density": 0.08310779478468697
+      },
+      "107-0": {
+        "increase_content_density": 0.0697774077678015
+      },
+      "108-0": {
+        "increase_content_density": 0.08009554249833922
+      },
+      "109-0": {
+        "increase_content_density": 0.05195488513696744
+      },
+      "110-0": {
+        "increase_content_density": 0.08561645362594535
+      },
+      "111-0": {
+        "increase_content_density": 0.085896543063886
+      },
+      "112-0": {
+        "increase_content_density": 0.09195323212969689
+      },
+      "113-0": {
+        "standard_chapter_generation": 0.11675581934692972
+      },
+      "114-0": {
+        "standard_chapter_generation": 0.11276363436414294
+      },
+      "115-0": {
+        "increase_content_density": 0.08482361242098922
+      },
+      "116-0": {
+        "increase_content_density": 0.08000203147178092
+      },
+      "117-0": {
+        "increase_content_density": 0.07045110964888934
+      },
+      "118-0": {
+        "increase_content_density": 0.08045587163522422
+      },
+      "119-0": {
+        "increase_content_density": 0.08521580441369545
+      },
+      "120-0": {
+        "increase_content_density": 0.08943896242679188
+      },
+      "121-0": {
+        "standard_chapter_generation": 0.11644156617159657
+      },
+      "122-0": {
+        "standard_chapter_generation": 0.11171876654957838
+      },
+      "123-0": {
+        "increase_content_density": 0.07702579447614169
+      },
+      "124-0": {
+        "increase_content_density": 0.07970627222625003
+      },
+      "125-0": {
+        "increase_content_density": 0.07835683821199511
+      },
+      "126-0": {
+        "increase_content_density": 0.07376306636759505
+      },
+      "127-0": {
+        "increase_content_density": 0.07481461440085828
+      },
+      "128-0": {
+        "increase_content_density": 0.07681245229248118
+      },
+      "129-0": {
+        "standard_chapter_generation": 0.09887859057842592
+      },
+      "130-0": {
+        "increase_content_density": 0.08416653492937058
+      },
+      "131-0": {
+        "increase_content_density": 0.08605347241369543
+      },
+      "132-0": {
+        "increase_content_density": 0.09023601118274102
+      },
+      "133-0": {
+        "increase_content_density": 0.08720031611777221
+      },
+      "134-0": {
+        "standard_chapter_generation": 0.09918359964185353
+      },
+      "135-0": {
+        "increase_content_density": 0.08544253915201304
+      },
+      "136-0": {
+        "increase_content_density": 0.08534675963528594
+      },
+      "137-0": {
+        "increase_content_density": 0.08388714278119562
+      },
+      "138-0": {
+        "increase_content_density": 0.075267789435062
+      },
+      "139-0": {
+        "increase_content_density": 0.09052138393729471
+      },
+      "140-0": {
+        "increase_content_density": 0.09068314502549055
+      },
+      "141-0": {
+        "increase_content_density": 0.08526236329660299
+      },
+      "142-0": {
+        "increase_content_density": 0.08463544087562123
+      },
+      "143-0": {
+        "increase_content_density": 0.08308598314614601
+      },
+      "144-0": {
+        "increase_content_density": 0.05411628138365597
+      },
+      "145-0": {
+        "increase_content_density": 0.0910001107780319
+      },
+      "146-0": {
+        "increase_content_density": 0.08532999531009035
+      },
+      "147-0": {
+        "increase_content_density": 0.08576335638687563
+      },
+      "148-0": {
+        "increase_content_density": 0.08964436071388189
+      },
+      "149-0": {
+        "increase_content_density": 0.08419065130060069
+      },
+      "150-0": {
+        "increase_content_density": 0.07595240754272795
+      },
+      "151-0": {
+        "increase_content_density": 0.07269304480716703
+      },
+      "152-0": {
+        "increase_content_density": 0.08385741688632885
+      },
+      "153-0": {
+        "increase_content_density": 0.07126240838978391
+      },
+      "154-0": {
+        "increase_content_density": 0.07029107113724425
+      },
+      "155-0": {
+        "increase_content_density": 0.07708930767213124
+      },
+      "156-0": {
+        "increase_content_density": 0.08058896547555565
+      },
+      "157-0": {
+        "increase_content_density": 0.07289644882327505
+      },
+      "158-0": {
+        "increase_content_density": 0.07947523955942394
+      },
+      "159-0": {
+        "increase_content_density": 0.07702380335873124
+      },
+      "160-0": {
+        "increase_content_density": 0.07658964379389432
+      },
+      "161-0": {
+        "increase_content_density": 0.07638382461935708
+      },
+      "162-0": {
+        "increase_content_density": 0.06907684815337295
+      },
+      "163-0": {
+        "increase_content_density": 0.07365896466013283
+      },
+      "164-0": {
+        "increase_content_density": 0.0733154154898786
+      },
+      "165-0": {
+        "increase_content_density": 0.07105378067052484
+      },
+      "166-0": {
+        "increase_content_density": 0.07840108206640996
+      },
+      "167-0": {
+        "increase_content_density": 0.06053471352462869
+      },
+      "168-0": {
+        "increase_content_density": 0.07451799885339516
+      },
+      "169-0": {
+        "increase_content_density": 0.07675080344920758
+      },
+      "170-0": {
+        "increase_content_density": 0.07273590001040488
+      },
+      "171-0": {
+        "increase_content_density": 0.07220028898064157
+      },
+      "172-0": {
+        "increase_content_density": 0.07271508526307921
+      },
+      "173-0": {
+        "increase_content_density": 0.07376265380510078
+      },
+      "174-0": {
+        "increase_content_density": 0.07489811159221231
+      },
+      "175-0": {
+        "increase_content_density": 0.07746752899513087
+      },
+      "176-0": {
+        "increase_content_density": 0.07563430927425567
+      },
+      "177-0": {
+        "increase_content_density": 0.08827511676869604
+      },
+      "178-0": {
+        "increase_content_density": 0.08244626124127705
+      },
+      "179-0": {
+        "standard_chapter_generation": 0.1123185752156126
+      },
+      "180-0": {
+        "increase_content_density": 0.07953513318720193
+      },
+      "181-0": {
+        "increase_content_density": 0.05341680754580101
+      },
+      "182-0": {
+        "increase_content_density": 0.08641976771590144
+      },
+      "183-0": {
+        "increase_content_density": 0.07751332201526034
+      },
+      "184-0": {
+        "increase_content_density": 0.0687608935686374
+      },
+      "185-0": {
+        "increase_content_density": 0.07341126942187613
+      },
+      "186-0": {
+        "increase_content_density": 0.06886302474079875
+      },
+      "187-0": {
+        "increase_content_density": 0.07323101257696198
+      },
+      "188-0": {
+        "increase_content_density": 0.0740442098419764
+      },
+      "189-0": {
+        "increase_content_density": 0.06938120049877011
+      },
+      "190-0": {
+        "increase_content_density": 0.07548790085193435
+      },
+      "191-0": {
+        "increase_content_density": 0.07106099290239423
+      },
+      "192-0": {
+        "increase_content_density": 0.0841679163523073
+      },
+      "193-0": {
+        "increase_content_density": 0.08880223854636134
+      },
+      "194-0": {
+        "increase_content_density": 0.07555498015064897
+      },
+      "195-0": {
+        "increase_content_density": 0.06923521241695868
+      },
+      "196-0": {
+        "increase_content_density": 0.08407842250069086
+      },
+      "197-0": {
+        "increase_content_density": 0.076706221628887
+      },
+      "198-0": {
+        "increase_content_density": 0.08442537972076294
+      },
+      "199-0": {
+        "increase_content_density": 0.06748715109489897
+      },
+      "200-0": {
+        "increase_content_density": 0.07780124804370549
+      },
+      "201-0": {
+        "increase_content_density": 0.08680597642841417
+      },
+      "202-0": {
+        "increase_content_density": 0.08347601907662795
+      },
+      "203-0": {
+        "increase_content_density": 0.07409263771982821
+      },
+      "204-0": {
+        "standard_chapter_generation": 0.11189594144667543
+      },
+      "205-0": {
+        "increase_content_density": 0.07721580463992164
+      },
+      "206-0": {
+        "increase_content_density": 0.05174997752737603
+      },
+      "207-0": {
+        "increase_content_density": 0.07795989340761611
+      },
+      "208-0": {
+        "increase_content_density": 0.0784258244607309
+      },
+      "209-0": {
+        "increase_content_density": 0.07938895449539499
+      },
+      "210-0": {
+        "increase_content_density": 0.07697923952868005
+      },
+      "211-0": {
+        "increase_content_density": 0.062766750702836
+      },
+      "212-0": {
+        "increase_content_density": 0.08433554490198236
+      },
+      "213-0": {
+        "increase_content_density": 0.06297672446974766
+      },
+      "214-0": {
+        "increase_content_density": 0.08612056305778153
+      },
+      "215-0": {
+        "increase_content_density": 0.08949007063877609
+      },
+      "216-0": {
+        "increase_content_density": 0.07326224907674456
+      },
+      "217-0": {
+        "increase_content_density": 0.07507215187260956
+      },
+      "218-0": {
+        "increase_content_density": 0.0851402174463553
+      },
+      "219-0": {
+        "increase_content_density": 0.0852634389907878
+      },
+      "220-0": {
+        "increase_content_density": 0.08425697226065496
+      },
+      "221-0": {
+        "increase_content_density": 0.06086568099624472
+      },
+      "222-0": {
+        "increase_content_density": 0.07662568141179209
+      },
+      "223-0": {
+        "increase_content_density": 0.06389561007051195
+      },
+      "224-0": {
+        "increase_content_density": 0.06584719283051196
+      },
+      "225-0": {
+        "increase_content_density": 0.06390118600777588
+      },
+      "226-0": {
+        "increase_content_density": 0.06745204086172475
+      },
+      "227-0": {
+        "increase_content_density": 0.0631044379339738
+      },
+      "228-0": {
+        "increase_content_density": 0.042265740409824844
+      },
+      "229-0": {
+        "increase_content_density": 0.06713721430222068
+      },
+      "230-0": {
+        "increase_content_density": 0.06890064765533487
+      },
+      "231-0": {
+        "increase_content_density": 0.06635527123027636
+      },
+      "232-0": {
+        "increase_content_density": 0.06402262208320103
+      },
+      "233-0": {
+        "increase_content_density": 0.06494205370488547
+      },
+      "234-0": {
+        "increase_content_density": 0.0672656500416696
+      },
+      "235-0": {
+        "increase_content_density": 0.06745678687532018
+      },
+      "236-0": {
+        "increase_content_density": 0.06618111675165762
+      },
+      "237-0": {
+        "increase_content_density": 0.06558307952200268
+      },
+      "238-0": {
+        "increase_content_density": 0.0655546998734784
+      },
+      "239-0": {
+        "increase_content_density": 0.06332914924465322
+      },
+      "240-0": {
+        "increase_content_density": 0.06011427163989687
+      },
+      "241-0": {
+        "increase_content_density": 0.06668220246158578
+      },
+      "242-0": {
+        "increase_content_density": 0.06672845975751489
+      },
+      "243-0": {
+        "increase_content_density": 0.0616350862568039
+      },
+      "244-0": {
+        "increase_content_density": 0.06133270248970518
+      },
+      "245-0": {
+        "increase_content_density": 0.0681196616949349
+      },
+      "246-0": {
+        "increase_content_density": 0.06525307280658339
+      },
+      "247-0": {
+        "increase_content_density": 0.06990382800122098
+      },
+      "248-0": {
+        "increase_content_density": 0.06499757422528471
+      },
+      "249-0": {
+        "increase_content_density": 0.06324539412053541
+      },
+      "250-0": {
+        "increase_content_density": 0.06366041911384063
+      },
+      "251-0": {
+        "increase_content_density": 0.06702423982461655
+      },
+      "252-0": {
+        "increase_content_density": 0.06882519299704865
+      },
+      "253-0": {
+        "increase_content_density": 0.07736125567186711
+      },
+      "254-0": {
+        "increase_content_density": 0.07539638760897496
+      },
+      "255-0": {
+        "increase_content_density": 0.07617440012786036
+      },
+      "256-0": {
+        "increase_content_density": 0.07930456163967914
+      },
+      "257-0": {
+        "increase_content_density": 0.08516278938429014
+      },
+      "258-0": {
+        "increase_content_density": 0.07811992914986345
+      },
+      "259-0": {
+        "increase_content_density": 0.07622118114289629
+      },
+      "260-0": {
+        "increase_content_density": 0.06961706664690895
+      },
+      "261-0": {
+        "increase_content_density": 0.05324843882141714
+      },
+      "262-0": {
+        "increase_content_density": 0.0853260050454293
+      },
+      "263-0": {
+        "increase_content_density": 0.07487276267953409
+      },
+      "264-0": {
+        "increase_content_density": 0.07537529944779078
+      },
+      "265-0": {
+        "increase_content_density": 0.08374419032977337
+      },
+      "266-0": {
+        "increase_content_density": 0.07534289943007852
+      },
+      "267-0": {
+        "increase_content_density": 0.07793146499216791
+      },
+      "268-0": {
+        "increase_content_density": 0.07588065209296377
+      },
+      "269-0": {
+        "increase_content_density": 0.0686611730491935
+      },
+      "270-0": {
+        "increase_content_density": 0.07472826615749754
+      },
+      "271-0": {
+        "increase_content_density": 0.07504249094536186
+      },
+      "272-0": {
+        "increase_content_density": 0.08017988822581673
+      },
+      "273-0": {
+        "increase_content_density": 0.08601383081021523
+      },
+      "274-0": {
+        "increase_content_density": 0.06952188366385663
+      },
+      "275-0": {
+        "increase_content_density": 0.08405942945071831
+      },
+      "276-0": {
+        "increase_content_density": 0.05366872057309691
+      },
+      "277-0": {
+        "increase_content_density": 0.08549822862789179
+      },
+      "278-0": {
+        "increase_content_density": 0.0856693588134392
+      },
+      "279-0": {
+        "increase_content_density": 0.08897973326485994
+      },
+      "280-0": {
+        "standard_chapter_generation": 0.11245422145120505
+      },
+      "281-0": {
+        "increase_content_density": 0.08307225879440444
+      },
+      "282-0": {
+        "increase_content_density": 0.08523996963922856
+      },
+      "283-0": {
+        "increase_content_density": 0.08360123963575607
+      },
+      "284-0": {
+        "increase_content_density": 0.07235845462207668
+      },
+      "285-0": {
+        "increase_content_density": 0.07840650003193017
+      },
+      "286-0": {
+        "increase_content_density": 0.06883868812724207
+      },
+      "287-0": {
+        "increase_content_density": 0.067047762378494
+      },
+      "288-0": {
+        "increase_content_density": 0.07010823479072006
+      },
+      "289-0": {
+        "increase_content_density": 0.07914163678157071
+      },
+      "290-0": {
+        "increase_content_density": 0.07504997525495571
+      },
+      "291-0": {
+        "increase_content_density": 0.08519818510360488
+      },
+      "292-0": {
+        "increase_content_density": 0.08477605559635204
+      },
+      "293-0": {
+        "increase_content_density": 0.08663132930881
+      },
+      "294-0": {
+        "increase_content_density": 0.08534304005410123
+      },
+      "295-0": {
+        "increase_content_density": 0.0862897621155303
+      },
+      "296-0": {
+        "increase_content_density": 0.0911539659965623
+      },
+      "297-0": {
+        "increase_content_density": 0.0843226795047181
+      },
+      "298-0": {
+        "increase_content_density": 0.08591055104799254
+      },
+      "299-0": {
+        "increase_content_density": 0.08850526327856745
+      },
+      "300-0": {
+        "increase_content_density": 0.08655109595307138
+      },
+      "301-0": {
+        "increase_content_density": 0.08847278437831581
+      },
+      "302-0": {
+        "increase_content_density": 0.06420588329699972
+      },
+      "303-0": {
+        "increase_content_density": 0.08215617066324525
+      },
+      "304-0": {
+        "increase_content_density": 0.08419410158691748
+      },
+      "305-0": {
+        "increase_content_density": 0.0755231823685609
+      },
+      "306-0": {
+        "increase_content_density": 0.05508973080068616
+      },
+      "307-0": {
+        "increase_content_density": 0.08074143143192511
+      },
+      "308-0": {
+        "increase_content_density": 0.0682608425898576
+      },
+      "309-0": {
+        "increase_content_density": 0.0785955170754957
+      },
+      "310-0": {
+        "increase_content_density": 0.08569519174961285
+      },
+      "311-0": {
+        "increase_content_density": 0.07728218403261576
+      },
+      "312-0": {
+        "increase_content_density": 0.07275395702255785
+      },
+      "313-0": {
+        "increase_content_density": 0.07318347022478663
+      },
+      "314-0": {
+        "increase_content_density": 0.0769975491020719
+      },
+      "315-0": {
+        "increase_content_density": 0.08654841570848161
+      },
+      "316-0": {
+        "increase_content_density": 0.08665428596316871
+      },
+      "317-0": {
+        "increase_content_density": 0.08476089397730907
+      },
+      "318-0": {
+        "increase_content_density": 0.0773478353780857
+      },
+      "319-0": {
+        "increase_content_density": 0.06873134940243908
+      },
+      "320-0": {
+        "increase_content_density": 0.07091464166175895
+      },
+      "321-0": {
+        "increase_content_density": 0.06937697139887675
+      },
+      "322-0": {
+        "increase_content_density": 0.07170500639884739
+      },
+      "323-0": {
+        "increase_content_density": 0.07007434619945044
+      },
+      "324-0": {
+        "increase_content_density": 0.07103860810513792
+      },
+      "325-0": {
+        "increase_content_density": 0.06590943626692594
+      },
+      "326-0": {
+        "increase_content_density": 0.07405393115836176
+      },
+      "327-0": {
+        "increase_content_density": 0.06699294022885036
+      },
+      "328-0": {
+        "increase_content_density": 0.07294519585080671
+      },
+      "329-0": {
+        "increase_content_density": 0.07034047427298547
+      },
+      "330-0": {
+        "increase_content_density": 0.07396531638610071
+      },
+      "331-0": {
+        "increase_content_density": 0.07687471102222068
+      },
+      "332-0": {
+        "increase_content_density": 0.07153020787903072
+      },
+      "333-0": {
+        "increase_content_density": 0.07095558294534389
+      },
+      "334-0": {
+        "increase_content_density": 0.07707201069954231
+      },
+      "335-0": {
+        "increase_content_density": 0.07689271141565762
+      },
+      "336-0": {
+        "increase_content_density": 0.06997110220316798
+      },
+      "337-0": {
+        "increase_content_density": 0.0717937948691652
+      },
+      "338-0": {
+        "increase_content_density": 0.07218240517763899
+      },
+      "339-0": {
+        "increase_content_density": 0.0712024563205271
+      },
+      "340-0": {
+        "increase_content_density": 0.07315628308751176
+      },
+      "341-0": {
+        "increase_content_density": 0.0701099571333789
+      },
+      "342-0": {
+        "increase_content_density": 0.06881404461061151
+      },
+      "343-0": {
+        "increase_content_density": 0.06950876029136996
+      },
+      "344-0": {
+        "increase_content_density": 0.07072700324355286
+      },
+      "345-0": {
+        "increase_content_density": 0.06690796058213812
+      },
+      "346-0": {
+        "increase_content_density": 0.0656209664398623
+      },
+      "347-0": {
+        "increase_content_density": 0.06589578317617778
+      },
+      "348-0": {
+        "increase_content_density": 0.06879884165643539
+      },
+      "349-0": {
+        "increase_content_density": 0.0684893091339799
+      },
+      "350-0": {
+        "increase_content_density": 0.07208265857808524
+      },
+      "351-0": {
+        "increase_content_density": 0.07699333570138399
+      },
+      "352-0": {
+        "increase_content_density": 0.07765569876552006
+      },
+      "353-0": {
+        "increase_content_density": 0.07205194995565979
+      },
+      "354-0": {
+        "increase_content_density": 0.07585748804608791
+      },
+      "355-0": {
+        "increase_content_density": 0.07325564587176268
+      },
+      "356-0": {
+        "increase_content_density": 0.07841034406456243
+      },
+      "357-0": {
+        "increase_content_density": 0.07614465253715184
+      },
+      "358-0": {
+        "increase_content_density": 0.07777423557735352
+      },
+      "359-0": {
+        "increase_content_density": 0.07620160516593298
+      },
+      "360-0": {
+        "increase_content_density": 0.07057095333861915
+      },
+      "361-0": {
+        "increase_content_density": 0.08009145237068502
+      },
+      "362-0": {
+        "increase_content_density": 0.06939861244822812
+      },
+      "363-0": {
+        "increase_content_density": 0.06736337423896341
+      },
+      "364-0": {
+        "increase_content_density": 0.07488583751887368
+      },
+      "365-0": {
+        "increase_content_density": 0.06709378409087739
+      },
+      "366-0": {
+        "increase_content_density": 0.07063420629752983
+      },
+      "367-0": {
+        "increase_content_density": 0.07131145220829227
+      },
+      "368-0": {
+        "increase_content_density": 0.07387871790549419
+      },
+      "369-0": {
+        "increase_content_density": 0.07515330601467983
+      },
+      "370-0": {
+        "increase_content_density": 0.051543954564749445
+      },
+      "371-0": {
+        "increase_content_density": 0.07338390178008178
+      },
+      "372-0": {
+        "standard_chapter_generation": 0.11250101700306028
+      },
+      "373-0": {
+        "increase_content_density": 0.08428236588341903
+      },
+      "374-0": {
+        "increase_content_density": 0.08507250764296503
+      },
+      "375-0": {
+        "increase_content_density": 0.08385235530611565
+      },
+      "376-0": {
+        "increase_content_density": 0.07182097665153028
+      },
+      "377-0": {
+        "increase_content_density": 0.060191869967009606
+      },
+      "378-0": {
+        "increase_content_density": 0.07559777230266779
+      },
+      "379-0": {
+        "increase_content_density": 0.08272388090381481
+      },
+      "380-0": {
+        "increase_content_density": 0.07462818089914863
+      },
+      "381-0": {
+        "increase_content_density": 0.07674379614944711
+      },
+      "382-0": {
+        "increase_content_density": 0.08004319974302543
+      },
+      "383-0": {
+        "increase_content_density": 0.06944568882033361
+      },
+      "384-0": {
+        "increase_content_density": 0.07572132553432112
+      },
+      "385-0": {
+        "increase_content_density": 0.08699746059178112
+      },
+      "386-0": {
+        "increase_content_density": 0.08486978048108373
+      },
+      "387-0": {
+        "increase_content_density": 0.08176518279079853
+      },
+      "388-0": {
+        "increase_content_density": 0.07744373642222069
+      },
+      "389-0": {
+        "increase_content_density": 0.06259567680233497
+      },
+      "390-0": {
+        "increase_content_density": 0.05235341031089251
+      },
+      "391-0": {
+        "increase_content_density": 0.05386624705490905
+      },
+      "392-0": {
+        "increase_content_density": 0.06611399054357053
+      },
+      "393-0": {
+        "increase_content_density": 0.06724064940868296
+      },
+      "394-0": {
+        "increase_content_density": 0.06538753049486008
+      },
+      "395-0": {
+        "increase_content_density": 0.06345245783684193
+      },
+      "396-0": {
+        "increase_content_density": 0.06921064134087114
+      },
+      "397-0": {
+        "increase_content_density": 0.06642728350718982
+      },
+      "398-0": {
+        "increase_content_density": 0.06552847877759663
+      },
+      "399-0": {
+        "increase_content_density": 0.040288125725601004
+      },
+      "400-0": {
+        "increase_content_density": 0.05500847089292968
+      },
+      "401-0": {
+        "increase_content_density": 0.05970273069901462
+      },
+      "402-0": {
+        "increase_content_density": 0.055028772374779454
+      },
+      "403-0": {
+        "increase_content_density": 0.06809697380144687
+      },
+      "404-0": {
+        "increase_content_density": 0.06812584034385702
+      },
+      "405-0": {
+        "increase_content_density": 0.06481903979856513
+      },
+      "406-0": {
+        "increase_content_density": 0.06088449795802777
+      },
+      "407-0": {
+        "increase_content_density": 0.07237843438957212
+      },
+      "408-0": {
+        "increase_content_density": 0.06354997272099656
+      },
+      "409-0": {
+        "increase_content_density": 0.0443037496642622
+      },
+      "410-0": {
+        "increase_content_density": 0.04795714593916631
+      },
+      "411-0": {
+        "increase_content_density": 0.0635315852378071
+      },
+      "412-0": {
+        "increase_content_density": 0.058890694672452344
+      },
+      "413-0": {
+        "increase_content_density": 0.04832227621032964
+      },
+      "414-0": {
+        "increase_content_density": 0.0686832406213214
+      },
+      "415-0": {
+        "increase_content_density": 0.06795088774782528
+      },
+      "416-0": {
+        "increase_content_density": 0.06880138782865161
+      },
+      "417-0": {
+        "increase_content_density": 0.06968345816020749
+      },
+      "418-0": {
+        "increase_content_density": 0.06704413563145184
+      },
+      "419-0": {
+        "increase_content_density": 0.07059431812167413
+      },
+      "420-0": {
+        "increase_content_density": 0.06722434638405562
+      },
+      "421-0": {
+        "increase_content_density": 0.0698576687620568
+      },
+      "422-0": {
+        "increase_content_density": 0.06483888141295699
+      },
+      "423-0": {
+        "increase_content_density": 0.07074701468310197
+      },
+      "424-0": {
+        "increase_content_density": 0.06934429222665954
+      },
+      "425-0": {
+        "increase_content_density": 0.06983395416912522
+      },
+      "426-0": {
+        "increase_content_density": 0.06745212818872427
+      },
+      "427-0": {
+        "increase_content_density": 0.0701463664300985
+      },
+      "428-0": {
+        "increase_content_density": 0.07151372259925719
+      },
+      "429-0": {
+        "increase_content_density": 0.0699965643740171
+      },
+      "430-0": {
+        "increase_content_density": 0.06871594690731636
+      },
+      "431-0": {
+        "increase_content_density": 0.07020164685707947
+      },
+      "432-0": {
+        "increase_content_density": 0.07017540525011308
+      },
+      "433-0": {
+        "increase_content_density": 0.07424307960002839
+      },
+      "434-0": {
+        "increase_content_density": 0.07284350664699854
+      },
+      "435-0": {
+        "increase_content_density": 0.06917110386502649
+      },
+      "436-0": {
+        "increase_content_density": 0.06747479603150813
+      },
+      "437-0": {
+        "increase_content_density": 0.06044335359559517
+      },
+      "438-0": {
+        "increase_content_density": 0.07251349858917817
+      },
+      "439-0": {
+        "increase_content_density": 0.06888167419613761
+      },
+      "440-0": {
+        "increase_content_density": 0.07282492274602256
+      },
+      "441-0": {
+        "increase_content_density": 0.0710299560772577
+      },
+      "442-0": {
+        "increase_content_density": 0.07213619136855871
+      },
+      "443-0": {
+        "increase_content_density": 0.059774308240349974
+      },
+      "444-0": {
+        "increase_content_density": 0.07986376512639708
+      },
+      "445-0": {
+        "standard_chapter_generation": 0.09606372862520118
+      },
+      "446-0": {
+        "increase_content_density": 0.06306765286125872
+      },
+      "447-0": {
+        "increase_content_density": 0.042879660551303836
+      },
+      "448-0": {
+        "increase_content_density": 0.05980004314848862
+      },
+      "449-0": {
+        "increase_content_density": 0.06647270946368641
+      },
+      "450-0": {
+        "increase_content_density": 0.07838433597416879
+      },
+      "451-0": {
+        "increase_content_density": 0.07397037946431903
+      },
+      "452-0": {
+        "increase_content_density": 0.06381502745991095
+      },
+      "453-0": {
+        "increase_content_density": 0.0603323528708202
+      },
+      "454-0": {
+        "increase_content_density": 0.06527066342912936
+      },
+      "455-0": {
+        "increase_content_density": 0.06624008285060219
+      },
+      "456-0": {
+        "increase_content_density": 0.072583637249023
+      },
+      "457-0": {
+        "increase_content_density": 0.07093483084688784
+      },
+      "458-0": {
+        "increase_content_density": 0.06753880277705801
+      },
+      "459-0": {
+        "increase_content_density": 0.0609528611711222
+      },
+      "460-0": {
+        "increase_content_density": 0.0640519639217224
+      },
+      "461-0": {
+        "increase_content_density": 0.06774368254343308
+      },
+      "462-0": {
+        "increase_content_density": 0.06693124003921848
+      },
+      "463-0": {
+        "increase_content_density": 0.0702053550280545
+      },
+      "464-0": {
+        "increase_content_density": 0.0645855467116527
+      },
+      "465-0": {
+        "increase_content_density": 0.05999483680450596
+      },
+      "466-0": {
+        "increase_content_density": 0.060564176988138416
+      },
+      "467-0": {
+        "increase_content_density": 0.06415126185760969
+      },
+      "468-0": {
+        "increase_content_density": 0.053704207209334776
+      },
+      "469-0": {
+        "increase_content_density": 0.0652830559149132
+      },
+      "470-0": {
+        "increase_content_density": 0.07170363436671595
+      },
+      "471-0": {
+        "increase_content_density": 0.06987284216722123
+      },
+      "472-0": {
+        "increase_content_density": 0.07581738599827269
+      },
+      "473-0": {
+        "increase_content_density": 0.07037378598106546
+      },
+      "474-0": {
+        "increase_content_density": 0.06820966871512919
+      },
+      "475-0": {
+        "increase_content_density": 0.06765867187823765
+      },
+      "476-0": {
+        "increase_content_density": 0.061908535794713046
+      },
+      "477-0": {
+        "increase_content_density": 0.06255309207462476
+      },
+      "478-0": {
+        "increase_content_density": 0.06491386687612367
+      },
+      "479-0": {
+        "increase_content_density": 0.06192027882590144
+      },
+      "480-0": {
+        "increase_content_density": 0.06298266426094573
+      },
+      "481-0": {
+        "increase_content_density": 0.06840299483524737
+      },
+      "482-0": {
+        "increase_content_density": 0.07027155917292661
+      },
+      "483-0": {
+        "increase_content_density": 0.07361117917072424
+      },
+      "484-0": {
+        "increase_content_density": 0.0671865803949684
+      },
+      "485-0": {
+        "increase_content_density": 0.07452748910492843
+      },
+      "486-0": {
+        "increase_content_density": 0.06918007104415777
+      },
+      "487-0": {
+        "increase_content_density": 0.07289382171728712
+      },
+      "488-0": {
+        "increase_content_density": 0.07457968735637957
+      },
+      "489-0": {
+        "increase_content_density": 0.06884125537172367
+      },
+      "490-0": {
+        "increase_content_density": 0.07194920917043066
+      },
+      "491-0": {
+        "increase_content_density": 0.07417962063635176
+      },
+      "492-0": {
+        "increase_content_density": 0.06827990650178203
+      },
+      "493-0": {
+        "increase_content_density": 0.06342178936541636
+      },
+      "494-0": {
+        "increase_content_density": 0.06864195711663829
+      },
+      "495-0": {
+        "increase_content_density": 0.06830515535178379
+      },
+      "496-0": {
+        "increase_content_density": 0.06463734937803778
+      },
+      "497-0": {
+        "increase_content_density": 0.07224577220136237
+      },
+      "498-0": {
+        "increase_content_density": 0.06660653069040405
+      },
+      "499-0": {
+        "increase_content_density": 0.06469039139642546
+      },
+      "500-0": {
+        "increase_content_density": 0.06832520478352773
+      },
+      "501-0": {
+        "increase_content_density": 0.06493504131830685
+      },
+      "502-0": {
+        "increase_content_density": 0.04662171592001507
+      },
+      "503-0": {
+        "increase_content_density": 0.06952053185125866
+      },
+      "504-0": {
+        "increase_content_density": 0.06909218131971857
+      },
+      "505-0": {
+        "increase_content_density": 0.07013698690859248
+      },
+      "506-0": {
+        "increase_content_density": 0.06592978388935003
+      },
+      "507-0": {
+        "increase_content_density": 0.06398394554892675
+      },
+      "508-0": {
+        "increase_content_density": 0.05575035754439956
+      },
+      "509-0": {
+        "increase_content_density": 0.07579512189168024
+      },
+      "510-0": {
+        "increase_content_density": 0.07396719406841291
+      },
+      "511-0": {
+        "standard_chapter_generation": 0.09645148861230912
+      },
+      "512-0": {
+        "increase_content_density": 0.06777209405309373
+      },
+      "513-0": {
+        "increase_content_density": 0.06657814112630892
+      },
+      "514-0": {
+        "increase_content_density": 0.06790568542830556
+      },
+      "515-0": {
+        "increase_content_density": 0.06898948971949753
+      },
+      "516-0": {
+        "increase_content_density": 0.06320652969168426
+      },
+      "517-0": {
+        "increase_content_density": 0.061190900724087165
+      },
+      "518-0": {
+        "increase_content_density": 0.0616168914474415
+      },
+      "519-0": {
+        "increase_content_density": 0.06486300250899478
+      },
+      "520-0": {
+        "increase_content_density": 0.06046883714482318
+      },
+      "521-0": {
+        "increase_content_density": 0.06943735330064806
+      },
+      "522-0": {
+        "increase_content_density": 0.0643277809683164
+      },
+      "523-0": {
+        "increase_content_density": 0.05318983622310103
+      },
+      "524-0": {
+        "increase_content_density": 0.06227561653802487
+      },
+      "525-0": {
+        "increase_content_density": 0.06122609790802977
+      },
+      "526-0": {
+        "increase_content_density": 0.04171390355616034
+      },
+      "527-0": {
+        "increase_content_density": 0.06740522387100574
+      },
+      "528-0": {
+        "increase_content_density": 0.07686447522908213
+      },
+      "529-0": {
+        "increase_content_density": 0.08249946211528172
+      },
+      "530-0": {
+        "increase_content_density": 0.06572951221588455
+      },
+      "531-0": {
+        "increase_content_density": 0.07527415267817048
+      },
+      "532-0": {
+        "increase_content_density": 0.07464433756534103
+      },
+      "533-0": {
+        "increase_content_density": 0.061477335705455806
+      },
+      "534-0": {
+        "increase_content_density": 0.056748931047055834
+      },
+      "535-0": {
+        "increase_content_density": 0.06048208837605344
+      },
+      "536-0": {
+        "increase_content_density": 0.06801632050961151
+      },
+      "537-0": {
+        "increase_content_density": 0.06465656563524354
+      },
+      "538-0": {
+        "increase_content_density": 0.06750411422327407
+      },
+      "539-0": {
+        "increase_content_density": 0.06471631127192648
+      },
+      "540-0": {
+        "increase_content_density": 0.06715019283608514
+      },
+      "541-0": {
+        "increase_content_density": 0.06572202421914884
+      },
+      "542-0": {
+        "increase_content_density": 0.06744987804658226
+      },
+      "543-0": {
+        "increase_content_density": 0.06933556514723586
+      },
+      "544-0": {
+        "increase_content_density": 0.07113886337416449
+      },
+      "545-0": {
+        "increase_content_density": 0.06029993738584045
+      },
+      "546-0": {
+        "increase_content_density": 0.05344872700456296
+      },
+      "547-0": {
+        "increase_content_density": 0.056073596809418896
+      },
+      "548-0": {
+        "increase_content_density": 0.05791095589376696
+      },
+      "549-0": {
+        "increase_content_density": 0.055726150142679086
+      },
+      "550-0": {
+        "increase_content_density": 0.05452547653720895
+      },
+      "551-0": {
+        "increase_content_density": 0.05485869143797036
+      },
+      "552-0": {
+        "increase_content_density": 0.055909141173237316
+      },
+      "553-0": {
+        "increase_content_density": 0.05272478142681734
+      },
+      "554-0": {
+        "increase_content_density": 0.05645305694516279
+      },
+      "555-0": {
+        "increase_content_density": 0.061137610946271174
+      },
+      "556-0": {
+        "increase_content_density": 0.05665343602419933
+      },
+      "557-0": {
+        "increase_content_density": 0.06603843909980521
+      },
+      "558-0": {
+        "increase_content_density": 0.06505927404580696
+      },
+      "559-0": {
+        "increase_content_density": 0.06748976266947933
+      },
+      "560-0": {
+        "increase_content_density": 0.06581766110212345
+      },
+      "561-0": {
+        "increase_content_density": 0.06626451894173088
+      },
+      "562-0": {
+        "increase_content_density": 0.07226237575450302
+      },
+      "563-0": {
+        "increase_content_density": 0.06843429636397522
+      },
+      "564-0": {
+        "increase_content_density": 0.0656952616465784
+      },
+      "565-0": {
+        "increase_content_density": 0.05917868418191553
+      },
+      "566-0": {
+        "increase_content_density": 0.05405386409464618
+      },
+      "567-0": {
+        "increase_content_density": 0.07546885672782415
+      },
+      "568-0": {
+        "increase_content_density": 0.07937061874105734
+      },
+      "569-0": {
+        "increase_content_density": 0.06756297553249727
+      },
+      "570-0": {
+        "increase_content_density": 0.07063764796184123
+      },
+      "571-0": {
+        "increase_content_density": 0.07478200890000695
+      },
+      "572-0": {
+        "increase_content_density": 0.06119255875657364
+      },
+      "573-0": {
+        "increase_content_density": 0.06795304300981754
+      },
+      "574-0": {
+        "increase_content_density": 0.07237997312724975
+      },
+      "575-0": {
+        "increase_content_density": 0.059927150698531925
+      },
+      "576-0": {
+        "increase_content_density": 0.06457869072902699
+      },
+      "577-0": {
+        "increase_content_density": 0.0639669325887583
+      },
+      "578-0": {
+        "increase_content_density": 0.06740354351488524
+      },
+      "579-0": {
+        "increase_content_density": 0.07016784295783693
+      },
+      "580-0": {
+        "increase_content_density": 0.06179030595054359
+      },
+      "581-0": {
+        "increase_content_density": 0.060507160655094816
+      },
+      "582-0": {
+        "increase_content_density": 0.06313548901513172
+      },
+      "583-0": {
+        "increase_content_density": 0.06503393752457853
+      },
+      "584-0": {
+        "increase_content_density": 0.05563241585300981
+      },
+      "585-0": {
+        "increase_content_density": 0.07700238576522525
+      },
+      "586-0": {
+        "standard_chapter_generation": 0.09619188809654212
+      },
+      "587-0": {
+        "increase_content_density": 0.06617972329627136
+      },
+      "588-0": {
+        "increase_content_density": 0.06463944922327877
+      },
+      "589-0": {
+        "increase_content_density": 0.05969311037607167
+      },
+      "590-0": {
+        "increase_content_density": 0.0649161116200065
+      },
+      "591-0": {
+        "increase_content_density": 0.059364893257305915
+      },
+      "592-0": {
+        "increase_content_density": 0.06177578113231312
+      },
+      "593-0": {
+        "increase_content_density": 0.05513908247999958
+      },
+      "594-0": {
+        "increase_content_density": 0.05559387375258068
+      },
+      "595-0": {
+        "increase_content_density": 0.04521709944371103
+      }
+    }
+  },
+  "stats": {
+    "totalRules": 0,
+    "knowledgeStates": 596,
+    "adaptedBases": 4
+  }
+}

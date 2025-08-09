@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src/types",
+    "outDir": "dist/types", // Compiled output folder
+    "target": "ES6", // or a compatible target for your use case
+    "module": "preserve", // Ensures compatibility with ESNext
+    // "moduleResolution": "NodeNext" // Resolves ESM modules
+  },
+  "include": ["src/types/**/*"],
+  "exclude": ["public/modules", "node_modules", "dist"] // Exclude these folders
+}

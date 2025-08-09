@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=10,shrink-to-fit=yes">
+	<title>Socket.IO whiteboard</title>
+	<link href="src/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="src/css/vertical.node.list.bar.css">
+
+</head>
+
+<body>
+	<div id="log"></div>
+	<section id="canvas-container">
+		<canvas id="neural-net-graph-view" width="3840" height="2160"></canvas>
+		<!-- <img id="neural-net-graph-view" src="http://localhost:3000/stream" alt="Streamed Image"> -->
+	</section>
+	<div id="ui-layout">
+		<section class="vertical-node-list-bar">
+			<nav>
+				<ul class="nav nav-pills flex-column">
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="#">Active</a>
+						<!-- <a class="nav-link active" aria-current="page" href="#">Active</a> -->
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+					</li>
+				</ul>
+			</nav>
+		</section>
+		<section id="zoom-control-bar">
+			<div class="btn-group-vertical" aria-label="Vertical button group">
+				<button id="zoom-in-canvas-btn" class="btn btn-outline-primary">+</button>
+				<button id="center-canvas-btn" class="btn btn-outline-primary">o</button>
+				<button id="zoom-out-canvas-btn" class="btn btn-outline-primary">-</button>
+			</div>
+		</section>
+		<section style="position:fixed;top:15px;right:30px">
+			<nav class="navbar bg-body-light">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#">Day Vault</a>
+
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<!-- <a class="nav-link active" aria-current="page" href="#">Home</a> -->
+								<button class="btn btn-outline-light" id="add-node">++Node</button>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Link</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+							</li>
+						</ul>
+						<form class="d-flex" role="search">
+							<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">Search</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+		</section>
+		<section id="chat-interface-bar">
+			<footer style="position:fixed;bottom:15px;right:30px" class="footer">
+				<div class="input-group">
+					<button class="btn btn-outline-primary">Attachments</button>
+					<input type="text" class="form-control" />
+					<button class="btn btn-outline-primary">Submit</button>
+					<button class="btn btn-outline-primary">Settings</button>
+				</div>
+			</footer>
+		</section>
+	</div>
+	<!-- <script src="src/js/draw.js"></script> -->
+	<script src="src/js/draw.graph.js"></script>
+	<script src="src/js/bootstrap.bundle.min.js"></script>
+	<script src="src/js/show.touches.js"></script>
+	<script src="src/js/zoom.button.input.js"></script>
+	<!-- <script src="src/js/node.bar.js"></script> -->
+	<script src="src/js/server.side.events.js"></script>
+	<script src="src/js/auto-resize-canvas.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		// Client-side code (JavaScript)
+		const socket = io('http://localhost:3000');
+		// const canvas = document.querySelector("#neural-net-graph-view");
+		const ctx = canvas.getContext("2d");
+		socket.on('frame', (frame) => {
+			console.log(frame)
+			const blob = new Blob([frame], { type: 'image/png' });
+			const url = URL.createObjectURL(blob);
+			const img = new Image();
+			let lastImageData;
+			img.onload = () => {
+				ctx.drawImage(img, 0, 0);
+				URL.revokeObjectURL(url); // Clean up the object URL
+			};
+			img.src = url;
+			animate = () => {
+				if (lastImageData) {
+					ctx.drawImage(lastImageData, 0, 0, canvas.width, canvas.height);
+				}
+				requestAnimationFrame(animate);
+			}
+
+			animate();
+		});
+	</script>
+	<!-- <script>
+		document.addEventListener("DOMContentLoaded", () => {
+			// Client-side code (JavaScript)
+			const socket = io('http://localhost:3000');
+			const canvas = document.getElementById('neural-net-graph-view');
+			const ctx = canvas.getContext('2d');
+			let lastImageData;
+
+			socket.on('canvas image', (base64Image) => {
+				const img = new Image();
+				img.onload = () => {
+					lastImageData = img;
+				};
+				img.src = `data:image/png;base64,${base64Image}`;
+			});
+
+			animate = () => {
+				if (lastImageData) {
+					ctx.drawImage(lastImageData, 0, 0, canvas.width, canvas.height);
+				}
+				requestAnimationFrame(animate);
+			}
+
+			animate();
+		});
+	</script> -->
+	<!-- <script>
+		async function fetchAndDisplayImageStream() {
+			const canvas = document.getElementById('neural-net-graph-view');
+			const ctx = canvas.getContext('2d');
+			const response = await fetch('http://localhost:3000/stream');
+
+			const reader = response.body.getReader();
+			let receivedLength = 0;
+			let chunks = []; // Array to hold received chunks
+
+			while (true) {
+				const { done, value } = await reader.read();
+
+				if (done) {
+					break;
+				}
+
+				chunks.push(value);
+				receivedLength += value.length;
+
+				// Assuming each chunk is a complete image frame
+				const blob = new Blob(chunks, { type: 'image/png' });
+				const img = new Image();
+				img.onload = function () {
+					ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+				};
+				img.src = URL.createObjectURL(blob);
+
+				// Prepare for the next frame
+				chunks = [];
+			}
+		}
+
+		fetchAndDisplayImageStream();
+
+	</script> -->
+</body>
+
+</html>

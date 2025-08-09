@@ -1,0 +1,114 @@
+import * as THREE from 'three'
+import { useEffect, useRef, useState } from 'react'
+import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
+import { useWs } from '../hooks/useSocket'
+import { Html, Text } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
+import Graphology from 'graphology';
+import { Attributes, EdgeEntry, NodeEntry, SerializedGraph } from 'graphology-types';
+
+function Tetrahedron(props: ThreeElements['mesh']) {
+    const ref = useRef<THREE.Mesh>(null!)
+    const [hovered, hover] = useState(false)
+    const [clicked, click] = useState(false)
+    useFrame((state, delta) => (ref.current.rotation.x += delta));
+    return <mesh
+        {...props}
+        ref={ref}
+        scale={clicked ? 1.5 : 1}
+        onClick={(event) => click(!clicked)}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}>
+        <tetrahedronGeometry args={[1]} />
+        <meshStandardMaterial color={hovered ? 'hotpink' : 'green'} />
+        <Html distanceFactor={10}>
+            <div className="label">
+                {props.children}
+            </div>
+        </Html>
+    </mesh>;
+}
+
+// html
+function Sphere(props) {
+    const ref = useRef<THREE.Mesh>(null!)
+    const [hovered, hover] = useState(false)
+    const [clicked, click] = useState(false)
+    useFrame((state, delta) => (ref.current.rotation.x += delta))
+
+    return (
+        <mesh
+            {...props}
+            ref={ref}
+            scale={clicked ? 1.5 : 1}
+            onClick={(event) => click(!clicked)}
+            onPointerOver={(event) => hover(true)}
+            onPointerOut={(event) => hover(false)}>
+            <sphereGeometry args={[1, 64, 32]} />
+            <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+            <Html distanceFactor={10}>
+                <div className="label">
+                    {props.children}
+                </div>
+            </Html>
+        </mesh>
+    )
+}
+export default function Graph({ entity, identity }: { entity: string; identity: string; }) {
+    const [ready, data, send] = useWs({ url: "ws://127.0.0.1:8000" }) as any;
+    const [attributes, setAttributes] = useState<Attributes>({});
+    const [options, setOptions] = useState<Attributes>({});
+    const [nodes, setNodes] = useState<NodeEntry[]>([]);
+    const [edges, setEdges] = useState<EdgeEntry[]>([]);
+
+    useEffect(() => {
+        if (ready) {
+            send({ entity, identity, message: data })
+        }
+    }, [entity, identity, ready, send])
+    useEffect(() => {
+        if (data) {
+            const graphData = JSON.parse(data);
+            graphData.attributes && setAttributes(graphData.attributes)
+            graphData.options && setOptions(graphData.options)
+            graphData.nodes && setNodes(graphData.nodes)
+            graphData.edges && setEdges(graphData.edges)
+        }
+    }, [data])
+    return <Canvas>
+        <ambientLight intensity={Math.PI / 2} />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
+        <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
+
+        {/* Orbit Controls */}
+        <OrbitControls
+            enablePan={true}
+            enableZoom={true}
+            enableRotate={true}
+            minDistance={2}
+            maxDistance={20}
+            panSpeed={0.5}
+            zoomSpeed={0.5}
+            rotateSpeed={0.5}
+            makeDefault={true}
+        />
+        <Text
+            position={[0, 0, 0]}
+            color="black"
+            fontSize={.15}
+            anchorX="center"
+            anchorY="middle">
+            {entity || "Semantic Graph"}
+        </Text>
+        <Sphere position={[1, 1, 0]}>
+            <div>{identity}</div>
+        </Sphere>
+        
+        {nodes.map((node) => {
+            <Tetrahedron position={[3, 3, 0]}>
+                {node.node}
+                {JSON.stringify(node.attributes)}
+            </Tetrahedron>
+        })}
+    </Canvas>
+}

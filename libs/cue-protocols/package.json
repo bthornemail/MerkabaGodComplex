@@ -1,0 +1,31 @@
+{
+  "name": "@ulp/cue-protocols",
+  "version": "1.0.0",
+  "description": "CUE protocol implementations - UBHP, harmonic geometry, and cryptographic primitives",
+  "main": "index.ts",
+  "exports": {
+    ".": "./axioms.ts",
+    "./ubhp": "./ubhp_types.ts",
+    "./geometry": "./harmonic_geometry.ts",
+    "./crypto": "./crypto.ts",
+    "./canonical": "./canonical_sexpr.ts",
+    "./sandbox": "./sandbox.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo 'Protocol tests not yet implemented'"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.16",
+    "typescript": "^5.8.3",
+    "ts-node": "^10.9.0"
+  },
+  "keywords": [
+    "UBHP",
+    "harmonic-geometry",
+    "cryptography",
+    "protocols"
+  ],
+  "author": "Universal Life Protocol Team",
+  "license": "ISC"
+}

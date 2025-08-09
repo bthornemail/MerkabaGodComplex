@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Canvas Whiteboard (Mobile Friendly)</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body>
+  <canvas id="nodeCanvas" width="800" height="600"></canvas>
+  <script src="data.js"></script>
+    <script>
+        const canvas = document.getElementById('nodeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Variables for panning and zooming
+        let isPanning = false;
+        let startX = 0;
+        let startY = 0;
+        let panX = 0;
+        let panY = 0;
+        let scale = 1;
+        let initialDistance = null; // For pinch-to-zoom
+
+      const nodes = graphData.nodes;
+
+      const edges = graphData.edges;
+
+        function draw() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Apply transformations (panning and zooming)
+            ctx.save();
+            ctx.translate(panX, panY);
+            ctx.scale(scale, scale);
+
+            // Draw nodes and edges
+            edges.forEach(edge => {
+                const fromNode = findNodeById(edge.fromNode);
+                const toNode = findNodeById(edge.toNode);
+                if (fromNode && toNode) {
+                    drawEdge(fromNode, toNode);
+                }
+            });
+
+            nodes.forEach(drawNode);
+
+            ctx.restore(); // Restore the transformation state
+        }
+
+        function drawNode(node) {
+            ctx.fillStyle = node.color;
+            ctx.fillRect(node.x, node.y, node.width, node.height);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(node.text, node.x + node.width / 2, node.y + node.height / 2);
+        }
+
+        function drawEdge(fromNode, toNode) {
+            const fromX = fromNode.x + fromNode.width;
+            const fromY = fromNode.y + fromNode.height / 2;
+            const toX = toNode.x;
+            const toY = toNode.y + toNode.height / 2;
+
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+        }
+
+        function findNodeById(id) {
+            return nodes.find(node => node.id === id);
+        }
+
+        // Handle panning for desktop
+        canvas.addEventListener('mousedown', (e) => {
+            isPanning = true;
+            startX = e.clientX - panX;
+            startY = e.clientY - panY;
+            canvas.style.cursor = 'grabbing';
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            panX = e.clientX - startX;
+            panY = e.clientY - startY;
+            draw();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        });
+
+        // Handle touch panning for mobile
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isPanning = true;
+                const touch = e.touches[0];
+                startX = touch.clientX - panX;
+                startY = touch.clientY - panY;
+            } else if (e.touches.length === 2) {
+                isPanning = false;
+                initialDistance = getDistanceBetweenTouches(e.touches);
+            }
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // Prevent scrolling
+
+            if (isPanning && e.touches.length === 1) {
+                const touch = e.touches[0];
+                panX = touch.clientX - startX;
+                panY = touch.clientY - startY;
+                draw();
+            } else if (e.touches.length === 2) {
+                const currentDistance = getDistanceBetweenTouches(e.touches);
+                if (initialDistance !== null) {
+                    // Calculate the zoom scale based on pinch distance change
+                    const scaleChange = currentDistance / initialDistance;
+                    scale *= scaleChange;
+                    initialDistance = currentDistance;
+                }
+                draw();
+            }
+        });
+
+        canvas.addEventListener('touchend', () => {
+            isPanning = false;
+            initialDistance = null;
+        });
+
+        // Handle zooming for desktop
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const scaleAmount = 1.1;
+            const mouseX = e.clientX - canvas.offsetLeft;
+            const mouseY = e.clientY - canvas.offsetTop;
+
+            if (e.deltaY < 0) {
+                // Zoom in
+                scale *= scaleAmount;
+                panX = mouseX - (mouseX - panX) * scaleAmount;
+                panY = mouseY - (mouseY - panY) * scaleAmount;
+            } else {
+                // Zoom out
+                scale /= scaleAmount;
+                panX = mouseX - (mouseX - panX) / scaleAmount;
+                panY = mouseY - (mouseY - panY) / scaleAmount;
+            }
+            draw();
+        });
+
+        function getDistanceBetweenTouches(touches) {
+            const [touch1, touch2] = touches;
+            const dx = touch1.clientX - touch2.clientX;
+            const dy = touch1.clientY - touch2.clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        // Initial draw
+        draw();
+    </script>
+</body>
+</html>

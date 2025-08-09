@@ -1,0 +1,3 @@
+# The CUE Compendium (Unified Whitepaper)
+
+// ...merged and deduplicated content from philosophical, mathematical, and architectural documents...

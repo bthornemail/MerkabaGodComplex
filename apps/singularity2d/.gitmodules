@@ -1,0 +1,48 @@
+[submodule "packages/chat2d"]
+	path = packages/chat2d
+	url = git@github.com:bthornemail/chat2d.git
+[submodule "packages/locals2d"]
+	path = packages/locals2d
+	url = git@github.com:bthornemail/locals2d.git
+[submodule "packages/marketplace2d"]
+	path = packages/marketplace2d
+	url = git@github.com:bthornemail/marketplace2d.git
+[submodule "packages/life2d"]
+	path = packages/life2d
+	url = git@github.com:bthornemail/life2d.git
+[submodule "packages/agent2d"]
+	path = packages/agent2d
+	url = git@github.com:bthornemail/agent2d.git
+[submodule "packages/hypergraph2d"]
+	path = packages/hypergraph2d
+	url = git@github.com:bthornemail/hypergraph2d.git
+[submodule "packages/map2d"]
+	path = packages/map2d
+	url = git@github.com:bthornemail/map2d.git
+[submodule "packages/universe2d"]
+	path = packages/universe2d
+	url = git@github.com:bthornemail/universe2d.git
+[submodule "packages/journal2d"]
+	path = packages/journal2d
+	url = git@github.com:bthornemail/journal2d.git
+[submodule "packages/network2d"]
+	path = packages/network2d
+	url = git@github.com:bthornemail/network2d.git
+[submodule "packages/vault2d"]
+	path = packages/vault2d
+	url = git@github.com:bthornemail/vault2d.git
+[submodule "packages/auth2d"]
+	path = packages/auth2d
+	url = git@github.com:bthornemail/auth2d.git
+[submodule "packages/ledger2d"]
+	path = packages/ledger2d
+	url = git@github.com:bthornemail/ledger2d.git
+[submodule "packages/broker2d"]
+	path = packages/broker2d
+	url = git@github.com:bthornemail/broker2d.git
+[submodule "packages/unity2d"]
+	path = packages/unity2d
+	url = git@github.com:bthornemail/unity2d.git
+[submodule "packages/knowledge2d"]
+	path = packages/knowledge2d
+	url = git@github.com:bthornemail/knowledge2d.git

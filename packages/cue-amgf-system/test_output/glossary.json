@@ -1,0 +1,402 @@
+[
+  {
+    "term": "CUE",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "UBHP",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "MDU",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "This",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Integration",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Modulo",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Divisive Unfolding",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 0,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Harmonic",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Domain Layer",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Harmonic Address",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "CLARION",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Reality",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Computational Universe Engine Foundations The",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Core Principles",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 1,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Harmony Validation",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Seven",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Universal Addressing",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Transcendence",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Immanence",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Dynamic",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Mathematical Foundation The",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 2,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Integration The",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Universal Life Protocol",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Analysis",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Theoretical Expansion",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Core Function Analysis The Principle",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Where",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Universal Counter",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 3,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Domain Base",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Extension",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Complex Systems Multi",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "The Chinese Remainder Theorem",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Philosophical Implications",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Framework",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Universal Binary Hypergraph Protocol",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 4,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Triadic Domain Principle",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Perception",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Geometry",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Validation Each",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Read",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Validate",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Write",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 5,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Enforce",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 0,
+    "source_documents": []
+  },
+  {
+    "term": "Transform",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 1,
+    "source_documents": []
+  },
+  {
+    "term": "Mandate",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 2,
+    "source_documents": []
+  },
+  {
+    "term": "Render",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 3,
+    "source_documents": []
+  },
+  {
+    "term": "Prevent",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 4,
+    "source_documents": []
+  },
+  {
+    "term": "Serialize",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 5,
+    "source_documents": []
+  },
+  {
+    "term": "Create",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 6,
+    "vec7_phase": 6,
+    "source_documents": []
+  },
+  {
+    "term": "Verify",
+    "definition": "DEFINITION PENDING - Orchestrator input required",
+    "cue_validation": false,
+    "mdu_layer": 7,
+    "vec7_phase": 0,
+    "source_documents": []
+  }
+]

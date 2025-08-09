@@ -1,0 +1,224 @@
+import { MerkleTree } from 'merkletreejs';
+import { keccak256 } from 'ethers';
+import Graphology from 'graphology';
+import { UndirectedGraph } from 'graphology';
+import { Attributes } from 'graphology-types';
+
+// Basic Patricia Trie Implementation
+class PatriciaTrieNode {
+  children: Map<string, PatriciaTrieNode>;
+  value: string | null;
+  isEnd: boolean;
+
+  constructor() {
+    this.children = new Map();
+    this.value = null;
+    this.isEnd = false;
+  }
+}
+
+class PatriciaTrie {
+  root: PatriciaTrieNode;
+
+  constructor() {
+    this.root = new PatriciaTrieNode();
+  }
+
+  insert(key: string, value: string): void {
+    let node = this.root;
+    for (const char of key) {
+      if (!node.children.has(char)) {
+        node.children.set(char, new PatriciaTrieNode());
+      }
+      node = node.children.get(char)!;
+    }
+    node.isEnd = true;
+    node.value = value;
+  }
+
+  get(key: string): string | null {
+    let node = this.root;
+    for (const char of key) {
+      if (!node.children.has(char)) {
+        return null;
+      }
+      node = node.children.get(char)!;
+    }
+    return node.isEnd ? node.value : null;
+  }
+
+  getAllKeys(): string[] {
+    const keys: string[] = [];
+    this._traverse(this.root, '', keys);
+    return keys;
+  }
+
+  private _traverse(node: PatriciaTrieNode, prefix: string, keys: string[]): void {
+    if (node.isEnd) {
+      keys.push(prefix);
+    }
+    for (const [char, child] of node.children) {
+      this._traverse(child, prefix + char, keys);
+    }
+  }
+}
+
+// Graph Service Implementation
+class GraphAggregatorService {
+  private trie: PatriciaTrie;
+  private merkleTree: MerkleTree;
+  private graph: Graphology;
+  private nodeHashes: Map<string, string>;
+
+  constructor() {
+    this.trie = new PatriciaTrie();
+    this.merkleTree = new MerkleTree([], keccak256, { sortPairs: true });
+    this.graph = new UndirectedGraph();
+    this.nodeHashes = new Map();
+  }
+
+  addNode(nodeId: string, attributes: Attributes = {}): void {
+    // Add to trie
+    const serialized = JSON.stringify(attributes);
+    this.trie.insert(nodeId, serialized);
+
+    // Add to graph
+    this.graph.addNode(nodeId, attributes);
+
+    // Update Merkle tree
+    this.updateMerkleTree();
+  }
+
+  addEdge(source: string, target: string, attributes: Attributes = {}): void {
+    if (!this.graph.hasNode(source) || !this.graph.hasNode(target)) {
+      throw new Error('Both nodes must exist before adding edge');
+    }
+
+    this.graph.addEdge(source, target, attributes);
+    this.updateMerkleTree();
+  }
+
+  private updateMerkleTree(): void {
+    // Update node hashes
+    this.graph.forEachNode((node, attr) => {
+      const hash = keccak256(Buffer.from(JSON.stringify(attr)));
+      this.nodeHashes.set(node, hash);
+    });
+
+    // Rebuild Merkle tree
+    const leaves = Array.from(this.nodeHashes.values()).map(h => Buffer.from(h.slice(2), 'hex'));
+    this.merkleTree = new MerkleTree(leaves, keccak256, { sortPairs: true });
+  }
+
+  getGraphData(): any {
+    return {
+      nodes: this.graph.mapNodes((node) => ({
+        id: node,
+        attributes: this.graph.getNodeAttributes(node)
+      })),
+      edges: this.graph.mapEdges((edge, attr, source, target) => ({
+        source,
+        target,
+        attributes: attr
+      })),
+      merkleRoot: this.merkleTree.getHexRoot()
+    };
+  }
+
+  verifyNode(nodeId: string): boolean {
+    if (!this.nodeHashes.has(nodeId)) return false;
+    
+    const nodeHash = this.nodeHashes.get(nodeId)!;
+    const proof = this.merkleTree.getHexProof(Buffer.from(nodeHash.slice(2), 'hex'));
+    
+    return this.merkleTree.verify(
+      proof,
+      Buffer.from(nodeHash.slice(2), 'hex'),
+      this.merkleTree.getHexRoot()
+    );
+  }
+
+  getFromTrie(key: string): string | null {
+    return this.trie.get(key);
+  }
+
+  getAllTrieKeys(): string[] {
+    return this.trie.getAllKeys();
+  }
+}
+
+// UI Integration Example (React Component)
+import React, { useEffect, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+
+const GraphVisualizer = ({ graphData }: { graphData: ReturnType<GraphAggregatorService['getGraphData']> }) => {
+  return (
+    <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      
+      <OrbitControls enablePan enableZoom enableRotate />
+      
+      {/* Render nodes */}
+      {graphData.nodes.map((node) => (
+        <mesh key={node.id} position={[Math.random() * 5, Math.random() * 5, Math.random() * 5]}>
+          <sphereGeometry args={[0.5, 16, 16]} />
+          <meshStandardMaterial color="orange" />
+        </mesh>
+      ))}
+      
+      {/* Render edges */}
+      {graphData.edges.map((edge, index) => (
+        <line key={index}>
+          <bufferGeometry attach="geometry" />
+          <lineBasicMaterial attach="material" color="white" />
+        </line>
+      ))}
+    </Canvas>
+  );
+};
+
+// Example Usage
+const ExampleUsage = () => {
+  const [graphService] = useState(() => new GraphAggregatorService());
+  const [graphData, setGraphData] = useState<any>(null);
+
+  useEffect(() => {
+    // Initialize with some data
+    graphService.addNode('user1', { type: 'user', name: 'Alice' });
+    graphService.addNode('device1', { type: 'device', model: 'iPhone' });
+    graphService.addNode('service1', { type: 'service', name: 'AuthService' });
+    
+    graphService.addEdge('user1', 'device1', { relation: 'owns' });
+    graphService.addEdge('user1', 'service1', { relation: 'uses' });
+    
+    setGraphData(graphService.getGraphData());
+
+    // Verify a node
+    console.log('Verification result:', graphService.verifyNode('user1'));
+  }, [graphService]);
+
+  return (
+    <div>
+      <h1>Graph Visualization</h1>
+      {graphData && <GraphVisualizer graphData={graphData} />}
+      
+      <div>
+        <h2>Merkle Root</h2>
+        <code>{graphData?.merkleRoot}</code>
+        
+        <h2>Trie Contents</h2>
+        <ul>
+          {graphService.getAllTrieKeys().map(key => (
+            <li key={key}>
+              {key}: {graphService.getFromTrie(key)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default ExampleUsage;

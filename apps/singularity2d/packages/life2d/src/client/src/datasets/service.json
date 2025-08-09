@@ -1,0 +1,58 @@
+{
+    "domain": {
+	"name": "Service Board",
+	"version": "1"
+    },
+    "types": {
+	"CIDv1": [
+	    {
+		"name": "link",
+		"type": "string"
+	    }
+	],
+	"Service": [
+	    {
+		"name": "title",
+		"type": "string"
+	    },
+	    {
+		"name": "summary",
+		"type": "string"
+	    },
+	    {
+		"name": "description",
+		"type": "CIDv1"
+	    } 
+	],
+	"Post": [
+	    {
+		"name": "service",
+		"type": "Service"
+	    },
+	    {
+		"name": "value",
+		"type": "uint256"
+	    }
+	],
+	"Announcement": [
+	    {
+		"name": "service",
+		"type": "Service"
+	    } 
+	],
+	"Consideration": [
+	    {
+		"name": "service",
+		"type": "Service"
+	    },
+	    {
+		"name": "min",
+		"type": "uint256"
+	    },
+	    {
+		"name": "max",
+		"type": "uint256"
+	    } 
+	]
+    }
+}

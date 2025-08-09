@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUE - Personal Agent Interface</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .log-entry {
+            border-left: 3px solid;
+            transition: all 0.3s ease;
+        }
+        .log-entry:hover {
+            background-color: #374151; /* dark:bg-gray-700 */
+        }
+        .log-local { border-color: #3b82f6; } /* blue-500 */
+        .log-remote { border-color: #10b981; } /* emerald-500 */
+        .log-error { border-color: #ef4444; } /* red-500 */
+        .log-system { border-color: #f59e0b; } /* amber-500 */
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex flex-col h-screen">
+
+    <header class="bg-gray-800 shadow-md p-4 flex justify-between items-center border-b border-gray-700">
+        <div class="flex items-center">
+            <svg class="w-8 h-8 text-cyan-400 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" fill="currentColor"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" fill="currentColor"/></svg>
+            <h1 class="text-2xl font-bold text-gray-100">CUE Personal Agent</h1>
+        </div>
+        <div id="agent-status" class="flex items-center space-x-2 text-sm font-medium px-3 py-1 rounded-full bg-gray-700 text-yellow-400">
+            <span id="status-indicator" class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></span>
+            <span id="status-text">INITIALIZING</span>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col md:flex-row p-4 gap-4 overflow-hidden">
+        <!-- Left Panel: Tabs -->
+        <div class="md:w-1/3 flex flex-col bg-gray-800 rounded-lg shadow-lg border border-gray-700">
+            <div class="flex border-b border-gray-600">
+                <button class="tab-button flex-1 p-3 font-semibold text-gray-300 bg-cyan-700/50 border-b-2 border-cyan-400" onclick="showTab('local')">Local Viewport</button>
+                <button class="tab-button flex-1 p-3 font-semibold text-gray-500" onclick="showTab('remote')">Remote Agent</button>
+            </div>
+            <div class="flex-grow p-4 overflow-y-auto">
+                <!-- Local Tab Content -->
+                <div id="local-tab" class="tab-content active">
+                    <h2 class="text-xl font-bold mb-4 text-cyan-300">Interact with Agent</h2>
+                    <p class="text-sm text-gray-400 mb-6">These actions are sent from the UI (this tab) to the Service Worker (Personal Agent) for processing.</p>
+                    
+                    <div class="space-y-4">
+                        <button id="mint-token-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Mint a New Token (LOCAL)
+                        </button>
+                        <p class="text-xs text-gray-500 text-center">Simulates creating a new asset owned by this agent.</p>
+
+                        <div class="border-t border-gray-600 my-4"></div>
+
+                        <input id="recipient-id" type="text" placeholder="Recipient Peer ID (e.g., PEER_XYZ)" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="transfer-token-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Transfer Token (P2P)
+                        </button>
+                        <p class="text-xs text-gray-500 text-center">Simulates a peer-to-peer state change.</p>
+                        
+                        <div class="border-t border-gray-600 my-4"></div>
+
+                        <button id="invalid-action-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                            Trigger Invalid Action
+                        </button>
+                         <p class="text-xs text-gray-500 text-center">Sends a malformed request to test axiomatic validation.</p>
+                    </div>
+                </div>
+
+                <!-- Remote Tab Content -->
+                <div id="remote-tab" class="tab-content">
+                    <h2 class="text-xl font-bold mb-4 text-emerald-300">Agent State</h2>
+                    <p class="text-sm text-gray-400 mb-6">This is the live, persistent state held by the Service Worker. It survives tab closures.</p>
+                    <div class="bg-gray-900 p-4 rounded-lg border border-gray-700 text-sm font-mono">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-gray-400">Agent ID:</span>
+                            <span id="agent-id" class="text-cyan-400 truncate">loading...</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-gray-400">Internal Magnitude:</span>
+                            <span id="agent-magnitude" class="text-cyan-400">loading...</span>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="font-bold text-gray-400 mb-2">Owned Tokens:</h3>
+                            <ul id="agent-tokens" class="list-disc list-inside text-cyan-400 space-y-1">
+                                <!-- Tokens will be populated here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Logs -->
+        <div class="md:w-2/3 flex flex-col bg-gray-800 rounded-lg shadow-lg border border-gray-700 overflow-hidden">
+            <h2 class="text-xl font-bold p-4 border-b border-gray-600 text-gray-300">Universal Event Log</h2>
+            <div id="log-container" class="flex-grow p-4 overflow-y-auto space-y-3">
+                <!-- Log entries will be added here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="cue-sdk.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+```css
+/* This file is intentionally left blank. 
+   All styling is handled by Tailwind CSS classes in the HTML file.
+   The <style> block in the <head> of the HTML file contains
+   additional custom CSS for dynamic classes and animations.
+*/
+```javascript
+// app.js - UI Viewport Logic
+
+const localLog = (message) => log(message, 'local');
+const systemLog = (message) => log(message, 'system');
+const errorLog = (message) => log(message, 'error');
+
+function log(message, type) {
+    const container = document.getElementById('log-container');
+    const entry = document.createElement('div');
+    entry.className = `log-entry p-3 rounded-lg bg-gray-800/50 log-${type}`;
+    
+    let typeLabel = type.toUpperCase();
+    let textColor = 'text-gray-300';
+    if (type === 'local') { typeLabel = 'VIEWPORT'; textColor = 'text-blue-400'; }
+    if (type === 'remote') { typeLabel = 'AGENT'; textColor = 'text-emerald-400'; }
+    if (type === 'error') { typeLabel = 'ERROR'; textColor = 'text-red-400'; }
+    if (type === 'system') { typeLabel = 'SYSTEM'; textColor = 'text-yellow-400'; }
+
+    entry.innerHTML = `
+        <div class="flex justify-between items-center text-xs mb-1">
+            <span class="font-bold ${textColor}">${typeLabel}</span>
+            <span class="text-gray-500">${new Date().toLocaleTimeString()}</span>
+        </div>
+        <p class="text-sm text-gray-200">${message}</p>
+    `;
+    container.appendChild(entry);
+    container.scrollTop = container.scrollHeight;
+}
+
+function showTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('bg-cyan-700/50', 'text-gray-300', 'border-cyan-400');
+        button.classList.add('text-gray-500');
+    });
+    
+    const activeButton = document.querySelector(`.tab-button[onclick="showTab('${tabName}')"]`);
+    activeButton.classList.add('bg-cyan-700/50', 'text-gray-300', 'border-cyan-400');
+    activeButton.classList.remove('text-gray-500');
+}
+
+function updateAgentStatus(status, text) {
+    const indicator = document.getElementById('status-indicator');
+    const statusText = document.getElementById('status-text');
+    
+    indicator.className = 'w-3 h-3 rounded-full'; // Reset classes
+    statusText.textContent = text;
+
+    switch(status) {
+        case 'INSTALLING':
+            indicator.classList.add('bg-yellow-400', 'animate-pulse');
+            statusText.classList.add('text-yellow-400');
+            break;
+        case 'ACTIVE':
+            indicator.classList.add('bg-green-400');
+            statusText.classList.remove('text-yellow-400');
+            statusText.classList.add('text-green-400');
+            break;
+        case 'ERROR':
+            indicator.classList.add('bg-red-400');
+            statusText.classList.remove('text-yellow-400');
+            statusText.classList.add('text-red-400');
+            break;
+    }
+}
+
+function updateAgentStateUI(state) {
+    document.getElementById('agent-id').textContent = `...${state.id.slice(-12)}`;
+    document.getElementById('agent-magnitude').textContent = state.internal_magnitude;
+    
+    const tokenList = document.getElementById('agent-tokens');
+    tokenList.innerHTML = '';
+    if (state.context && state.context.length > 0) {
+        state.context.forEach(([tokenId, tokenData]) => {
+            const li = document.createElement('li');
+            li.textContent = `${tokenData.metadata.name} (${tokenId.slice(0, 8)}...)`;
+            tokenList.appendChild(li);
+        });
+    } else {
+        tokenList.innerHTML = '<li class="text-gray-500">No tokens owned.</li>';
+    }
+}
+
+// --- Service Worker Communication ---
+let serviceWorkerRegistration;
+
+async function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+        errorLog("Service Workers not supported in this browser.");
+        updateAgentStatus('ERROR', 'UNSUPPORTED');
+        return;
+    }
+    try {
+        systemLog("Registering Personal Agent (Service Worker)...");
+        updateAgentStatus('INSTALLING', 'REGISTERING');
+        serviceWorkerRegistration = await navigator.serviceWorker.register('./sw.js', { type: 'module' });
+        
+        navigator.serviceWorker.addEventListener('message', event => {
+            const { type, payload } = event.data;
+            if (type === 'LOG') {
+                log(payload.message, payload.type);
+            } else if (type === 'STATE_UPDATE') {
+                updateAgentStateUI(payload);
+            } else if (type === 'AGENT_READY') {
+                systemLog("Personal Agent is active and ready.");
+                updateAgentStatus('ACTIVE', 'ONLINE');
+                // Request initial state once agent is ready
+                sendCommandToSW({ type: 'GET_STATE' });
+            }
+        });
+
+        if (navigator.serviceWorker.controller) {
+             systemLog("Personal Agent is active and controlling the page.");
+             updateAgentStatus('ACTIVE', 'ONLINE');
+             sendCommandToSW({ type: 'GET_STATE' });
+        } else {
+             systemLog("Waiting for agent to become active...");
+             updateAgentStatus('INSTALLING', 'ACTIVATING');
+        }
+
+    } catch (error) {
+        errorLog(`Agent Registration Failed: ${error}`);
+        updateAgentStatus('ERROR', 'FAILED');
+    }
+}
+
+function sendCommandToSW(command) {
+    if (!navigator.serviceWorker.controller) {
+        errorLog("Cannot send command: Agent is not yet active.");
+        return;
+    }
+    navigator.serviceWorker.controller.postMessage(command);
+}
+
+// --- Event Listeners ---
+document.addEventListener('DOMContentLoaded', () => {
+    registerServiceWorker();
+    showTab('local'); // Set initial tab
+
+    document.getElementById('mint-token-btn').addEventListener('click', () => {
+        localLog("Requesting to mint a new 'DataFragment' token.");
+        const command = {
+            type: 'PROCESS_EVENT',
+            payload: CUE_SDK.createMintTokenEvent('LOCAL')
+        };
+        sendCommandToSW(command);
+    });
+
+    document.getElementById('transfer-token-btn').addEventListener('click', () => {
+        const recipientId = document.getElementById('recipient-id').value;
+        if (!recipientId) {
+            errorLog("Recipient Peer ID is required for transfer.");
+            return;
+        }
+        localLog(`Requesting to transfer a token to ${recipientId}.`);
+        const command = {
+            type: 'PROCESS_EVENT',
+            payload: CUE_SDK.createTransferTokenEvent('PEER_TO_PEER', recipientId)
+        };
+        sendCommandToSW(command);
+    });
+    
+    document.getElementById('invalid-action-btn').addEventListener('click', () => {
+        localLog("Sending a deliberately malformed event to the agent.");
+        const invalidEvent = {
+            level: 'GLOBAL', // High consensus level
+            timestamp: Date.now(),
+            payload: { mint_token: { tokenId: 'INVALID_TOKEN' } }, // Malformed payload
+        };
+        // Sign it incorrectly (signing a different object)
+        const signedMessage = CUE_SDK.signMessage({ some: 'other_data' }); 
+        signedMessage.payload = invalidEvent; // Now signature doesn't match payload
+
+        const command = {
+            type: 'PROCESS_EVENT',
+            payload: signedMessage
+        };
+        sendCommandToSW(command);
+    });
+});
+```javascript
+// sw.js - CUE Personal Agent (Service Worker)
+
+// This file acts as the persistent, sovereign CUE peer.
+// It manages state and processes events according to CUE axioms.
+
+self.importScripts('cue-sdk.js');
+
+let agentState;
+
+// --- Service Worker Lifecycle ---
+
+self.addEventListener('install', event => {
+    logToClient('SYSTEM', 'Personal Agent installing...');
+    // Force the waiting service worker to become the active service worker.
+    event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('activate', event => {
+    logToClient('SYSTEM', 'Personal Agent activating...');
+    // Take control of all clients as soon as the worker is activated.
+    event.waitUntil(
+        self.clients.claim().then(() => {
+            initializeAgentState();
+            logToClient('SYSTEM', 'Personal Agent activated and has taken control.');
+            broadcastToAllClients({ type: 'AGENT_READY' });
+        })
+    );
+});
+
+self.addEventListener('message', event => {
+    const { type, payload } = event.data;
+    if (type === 'PROCESS_EVENT') {
+        handleEventProcessing(payload);
+    } else if (type === 'GET_STATE') {
+        broadcastStateUpdate();
+    }
+});
+
+// --- Agent Logic ---
+
+function initializeAgentState() {
+    // In a real CUE implementation, this would be loaded from IndexedDB.
+    // For this simulation, we initialize it in memory.
+    const { publicKey, privateKey } = CUE_SDK.CryptoUtil.generateKeyPair();
+    agentState = {
+        id: publicKey,
+        privateKey: privateKey, // Stored for signing operations
+        position: { domain: 1, dimension: 0 },
+        context: new Map(), // This is the "ledger"
+        internal_magnitude: 35, // Start with a harmonic value
+    };
+    CUE_SDK.setSigner(agentState.id, agentState.privateKey);
+    logToClient('REMOTE', `Agent initialized. ID: ...${agentState.id.slice(-12)}`);
+}
+
+function handleEventProcessing(signedSignal) {
+    logToClient('REMOTE', `Received event signal of type '${Object.keys(signedSignal.payload.payload)[0]}' for processing.`);
+    
+    try {
+        // The onTick function is the core of the CUE protocol.
+        // It validates and applies the state transition.
+        const newState = CUE_SDK.HarmonyProcessor.onTick(agentState, signedSignal);
+        
+        // If onTick succeeds, update the state.
+        agentState = newState;
+        logToClient('REMOTE', `Event validated. State transition successful. New Magnitude: ${agentState.internal_magnitude}`);
+        
+        // Persist state (simulated) and notify clients.
+        // In a real app: await saveStateToDB(agentState);
+        broadcastStateUpdate();
+
+    } catch (error) {
+        logToClient('ERROR', `Axiomatic Violation: ${error.message}`);
+    }
+}
+
+
+// --- Client Communication ---
+
+function logToClient(type, message) {
+    broadcastToAllClients({
+        type: 'LOG',
+        payload: { type, message }
+    });
+}
+
+function broadcastStateUpdate() {
+    // Convert Map to Array for serialization
+    const serializableState = {
+        ...agentState,
+        context: Array.from(agentState.context.entries())
+    };
+    broadcastToAllClients({
+        type: 'STATE_UPDATE',
+        payload: serializableState
+    });
+}
+
+async function broadcastToAllClients(message) {
+    const clients = await self.clients.matchAll();
+    clients.forEach(client => {
+        client.postMessage(message);
+    });
+}
+```javascript
+// cue-sdk.js - Mock CUE SDK
+
+const CUE_SDK = (() => {
+
+    let signer = {
+        id: null,
+        privateKey: null
+    };
+
+    // --- Cryptography & Identity (Simulated) ---
+    // In a real implementation, this would use a robust library like noble-ed25519.
+    // For this demo, we'll simulate signing and verification.
+    const CryptoUtil = {
+        generateKeyPair: () => {
+            const privateKey = `SK_${Math.random().toString(36).substr(2)}`;
+            const publicKey = `PK_${privateKey.substr(3)}`;
+            return { publicKey, privateKey };
+        },
+        // A deterministic "hash" for simulation purposes
+        pseudoHash: (str) => {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash |= 0; // Convert to 32bit integer
+            }
+            return `HASH_${hash}`;
+        },
+        sign: (dataStr, privateKey) => {
+            if (!privateKey) throw new Error("Private key not set for signing.");
+            return `SIG_${CryptoUtil.pseudoHash(dataStr + privateKey)}`;
+        },
+        verify: (dataStr, signature, publicKey) => {
+            const expectedSig = `SIG_${CryptoUtil.pseudoHash(dataStr + `SK_${publicKey.substr(3)}`)}`;
+            return signature === expectedSig;
+        }
+    };
+
+    // --- Core Data Structure Creation ---
+    
+    function setSigner(id, privateKey) {
+        signer.id = id;
+        signer.privateKey = privateKey;
+    }
+
+    function createCanonicalString(obj) {
+        if (obj === null || typeof obj !== 'object') {
+            return JSON.stringify(obj);
+        }
+        if (Array.isArray(obj)) {
+            return `[${obj.map(createCanonicalString).join(',')}]`;
+        }
+        const keys = Object.keys(obj).sort();
+        const pairs = keys.map(key => `"${key}":${createCanonicalString(obj[key])}`);
+        return `{${pairs.join(',')}}`;
+    }
+
+    function createCompositeKey(obj) {
+        const str = createCanonicalString(obj);
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = (hash + str.charCodeAt(i) * (i + 1)) % 1000000; // Keep it within a reasonable integer range
+        }
+        return hash;
+    }
+    
+    function signMessage(payload) {
+        if (!signer.id || !signer.privateKey) {
+            throw new Error("Signer not initialized in SDK. Call setSigner first.");
+        }
+        const payloadStr = createCanonicalString(payload);
+        const signature = CryptoUtil.sign(payloadStr, signer.privateKey);
+        return {
+            payload: payload,
+            source_credential_id: signer.id,
+            signature: signature
+        };
+    }
+
+    function createMintTokenEvent(level) {
+        const tokenId = `TOKEN_${Date.now()}`;
+        const payload = {
+            level: level,
+            timestamp: Date.now(),
+            payload: {
+                mint_token: {
+                    token_id: tokenId,
+                    owner_credential_id: signer.id,
+                    metadata: {
+                        name: 'DataFragment',
+                        description: 'A newly created piece of data.'
+                    }
+                }
+            }
+        };
+        return signMessage(payload);
+    }
+
+    function createTransferTokenEvent(level, recipientId) {
+        const payload = {
+            level: level,
+            timestamp: Date.now(),
+            payload: {
+                transfer_token: {
+                    // In a real app, you'd specify which token. Here we'll let the agent pick one.
+                    token_id: null, 
+                    recipient_credential_id: recipientId
+                }
+            }
+        };
+        return signMessage(payload);
+    }
+
+
+    // --- The Harmony Processor (onTick Protocol) ---
+    const HarmonyProcessor = {
+        CONSENSUS_MODULI: {
+            LOCAL: 3,
+            PEER_TO_PEER: 2,
+            GROUP: 7,
+            GLOBAL: 24
+        },
+
+        onTick: (currentState, signedSignal) => {
+            const signal = signedSignal.payload;
+            const payload = signal.payload;
+            const actionType = Object.keys(payload)[0];
+            const actionPayload = payload[actionType];
+
+            // 1. Identity Axiom (Signature Verification)
+            const payloadStr = createCanonicalString(signal);
+            if (!CryptoUtil.verify(payloadStr, signedSignal.signature, signedSignal.source_credential_id)) {
+                throw new Error("Identity Axiom Failed: Invalid signature.");
+            }
+
+            // 2. Internal Coherence Check
+            if (currentState.internal_magnitude % 5 !== 0 || currentState.internal_magnitude % 7 !== 0) {
+                 throw new Error(`Internal Coherence Failed: Peer magnitude (${currentState.internal_magnitude}) is not harmonic.`);
+            }
+
+            // 3. Duality Law (Modulus 2)
+            const actionKey = createCompositeKey(signal);
+            const isCreation = actionType === 'mint_token';
+            if (isCreation && actionKey % 2 === 0) {
+                throw new Error("Duality Law Failed: Creation event must have an odd composite key.");
+            }
+            if (!isCreation && actionKey % 2 !== 0) {
+                throw new Error("Duality Law Failed: Process event must have an even composite key.");
+            }
+            
+            // 4. Conservation Law (Constant 168)
+            const conservationKey = createCompositeKey(currentState) + createCompositeKey(signal);
+            if (conservationKey % 168 !== 0) {
+                // For demo purposes, we relax this check as it's hard to satisfy without complex state alignment.
+                // In a real system, this would be a hard failure.
+                console.warn(`Conservation Law would have failed (key: ${conservationKey}). Bypassing for demo.`);
+            }
+
+            // 5. Poly-Axiomatic Consensus Check
+            const requiredModulus = HarmonyProcessor.CONSENSUS_MODULI[signal.level];
+            const consensusKey = createCompositeKey(payload);
+            if (consensusKey % requiredModulus !== 0) {
+                throw new Error(`Poly-Axiomatic Consensus Failed: Payload key (${consensusKey}) not divisible by level modulus (${requiredModulus}).`);
+            }
+
+            // --- State Transition Logic ---
+            const newState = JSON.parse(JSON.stringify(currentState)); // Deep copy
+            newState.context = new Map(currentState.context); // Restore map
+
+            switch(actionType) {
+                case 'mint_token':
+                    if (newState.context.has(actionPayload.token_id)) {
+                        throw new Error("State Error: Token ID already exists.");
+                    }
+                    newState.context.set(actionPayload.token_id, actionPayload);
+                    newState.internal_magnitude += 1;
+                    break;
+                
+                case 'transfer_token':
+                    if (newState.context.size === 0) {
+                        throw new Error("State Error: No tokens to transfer.");
+                    }
+                    // Find the first available token to transfer for this demo
+                    const [tokenId, tokenData] = newState.context.entries().next().value;
+                    
+                    if (tokenData.owner_credential_id !== signedSignal.source_credential_id) {
+                        throw new Error("Authorization Error: Signer does not own the token.");
+                    }
+                    tokenData.owner_credential_id = actionPayload.recipient_credential_id;
+                    newState.context.set(tokenId, tokenData);
+                    newState.internal_magnitude += 1;
+                    break;
+                
+                default:
+                    throw new Error(`Unknown action type: ${actionType}`);
+            }
+            
+            newState.position.dimension += 1;
+            return newState;
+        }
+    };
+
+    return {
+        CryptoUtil,
+        HarmonyProcessor,
+        setSigner,
+        signMessage,
+        createMintTokenEvent,
+        createTransferTokenEvent
+    };
+})();

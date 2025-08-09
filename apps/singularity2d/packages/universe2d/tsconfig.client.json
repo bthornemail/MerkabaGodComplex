@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src/app",
+    "outDir": "dist/app", // Compiled output folder
+    "target": "ES2020",// or a compatible target for your use case
+    "module": "ESNext", // Ensures compatibility with ESNext
+    "moduleResolution": "bundler",  // Resolves ESM modules
+    "allowJs": true,
+    "lib": ["DOM"] // Include both server-side and DOM libs if you're also working with the client
+  },
+  "include": ["src/app/**/*"],
+  "exclude": ["public/modules", "node_modules", "dist"] // Exclude these folders
+}

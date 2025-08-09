@@ -1,0 +1,63 @@
+{
+  "name": "@universal-life-protocol/mcp-bridge",
+  "version": "0.1.5",
+  "description": "ULP MCP Bridge: JSON-RPC server and personality profiling for Model Context Protocol",
+  "type": "module",
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./server": {
+      "import": "./dist/ulp-mcp-server.js",
+      "require": "./dist/ulp-mcp-server.js",
+      "types": "./dist/ulp-mcp-server.d.ts"
+    },
+    "./http": {
+      "import": "./dist/ulp-mcp-http-server.js",
+      "require": "./dist/ulp-mcp-http-server.js",
+      "types": "./dist/ulp-mcp-http-server.d.ts"
+    },
+    "./personality": {
+      "import": "./dist/personality-profiling-mcp.js",
+      "require": "./dist/personality-profiling-mcp.js",
+      "types": "./dist/personality-profiling-mcp.d.ts"
+    }
+  },
+  "bin": {
+    "mcp-bridge": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "ws": "^8.14.0"
+  },
+  "peerDependenciesMeta": {
+    "ws": {
+      "optional": true
+    }
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol"
+  },
+  "bugs": {
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol/issues"
+  }
+}

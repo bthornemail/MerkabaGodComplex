@@ -1,0 +1,46 @@
+<head>
+    <style> body { margin: 0; } </style>
+  
+    <script src="//unpkg.com/3d-force-graph"></script>
+    <!--<script src="../../dist/3d-force-graph.js"></script>-->
+  </head>
+  
+  <body>
+    <div id="3d-graph"></div>
+  
+    <script>
+      // Random tree
+      const N = 300;
+      const gData = {
+        nodes: [{
+            "id": "Unity_Cloud_Vault"
+        },{
+            "id":"Marketplace"
+        },{
+            "id":"Peer"
+        },{
+            "id":"Wallet"
+        },{
+            "id":"Token"
+        }
+        ],
+        links: [{
+            "source": "Unity_Cloud_Vault",
+            "target": "Marketplace"
+          },{
+            "source": "Unity_Cloud_Vault",
+            "target": "Peer"
+          },{
+            "source": "Peer",
+            "target": "Wallet"
+          },{
+            "source": "Marketplace",
+            "target": "Token"
+          }]
+      };
+  
+      const Graph = ForceGraph3D()
+        (document.getElementById('3d-graph'))
+          .graphData(gData);
+    </script>
+  </body>

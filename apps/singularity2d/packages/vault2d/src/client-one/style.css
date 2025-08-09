@@ -1,0 +1,119 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url('/images/ahmad-pishnamazi-MpsnUssDwFo-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav {
+  width: 100%
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+dialog {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 15px;
+  padding: 1rem;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* font-size:calc(10vw - 36px) */
+  font-size: small;
+  gap: .25rem;
+  margin-bottom: 1rem;
+  /* margin: 2rem auto; */
+}
+
+.node-label {
+  font-size: 12px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+#graph-display-container {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#graph-display-card {
+  width: 480px;
+  height: 360px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#graph-3d canvas {
+  border-radius: 15px;
+}
+
+.edit-mode {
+  /* background-color: #222; */
+  /* Base background color */
+  background-image:
+    linear-gradient(90deg, rgba(0, 255, 0, 0.2) 1px, transparent 1px),
+    /* Vertical lines */
+    linear-gradient(rgba(0, 255, 0, 0.2) 1px, transparent 1px);
+  /* Horizontal lines */
+  background-size: 36px 36px;
+}
+
+#input-form-selector-bar {
+  display: grid;
+  grid-template-columns: .45fr 36px 1fr;
+  gap: .25rem;
+}
+
+.input-form-selector-bar {
+  display: grid;
+  grid-template-columns: .45fr 1fr .25fr;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  color: white;
+  /* gap:.25rem; */
+}
+
+#input-form-bar {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+}

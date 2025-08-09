@@ -1,0 +1,137 @@
+#+TITLE: Ollama Chat History with RSS in Emacs
+#+AUTHOR: Your Name
+#+DESCRIPTION: Logging Ollama chat conversations as an RSS feed inside Emacs using Org Mode.
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+* Introduction
+This document sets up a system where chat conversations with the Ollama API are logged in an Emacs buffer called *chat-history*, formatted as an RSS feed.
+
+You can tangle this document to export the necessary `.el` files and use them within your Emacs setup.
+
+* Setting Up the Chat History Buffer
+
+#+NAME: ollama-log-chat-to-rss
+#+BEGIN_SRC emacs-lisp :tangle chat-history.el
+(defun ollama-log-chat-to-rss (message role)
+  "Append a chat MESSAGE with ROLE ('user' or 'assistant') to the 'chat-history' buffer in RSS format."
+  (let ((buffer (get-buffer-create "chat-history")))
+    (with-current-buffer buffer
+      (goto-char (point-max))
+      (unless (re-search-backward "<channel>" nil t)
+        (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+        (insert "<rss version=\"2.0\">\n<channel>\n")
+        (insert "<title>Ollama Chat History</title>\n")
+        (insert "<link>http://localhost</link>\n")
+        (insert "<description>Chat conversation stored as RSS feed</description>\n"))
+      (insert "\n<item>\n")
+      (insert (format "<title>%s</title>\n" (if (string= role "user") "User" "Assistant")))
+      (insert (format "<description><![CDATA[%s]]></description>\n" message))
+      (insert (format "<pubDate>%s</pubDate>\n" (format-time-string "%a, %d %b %Y %H:%M:%S %z")))
+      (insert "</item>\n")
+      (save-buffer))))
+#+END_SRC
+
+* Closing and Initializing RSS Feeds
+
+#+NAME: ollama-close-rss
+#+BEGIN_SRC emacs-lisp :tangle chat-history.el
+(defun ollama-close-rss ()
+  "Close the RSS feed properly in the 'chat-history' buffer."
+  (let ((buffer (get-buffer "chat-history")))
+    (when buffer
+      (with-current-buffer buffer
+        (goto-char (point-max))
+        (unless (re-search-backward "</channel>" nil t)
+          (insert "</channel>\n</rss>\n")
+          (save-buffer))))))
+#+END_SRC
+
+#+NAME: ollama-start-new-chat-history
+#+BEGIN_SRC emacs-lisp :tangle chat-history.el
+(defun ollama-start-new-chat-history ()
+  "Clear and initialize a new RSS-based chat history."
+  (interactive)
+  (let ((buffer (get-buffer-create "chat-history")))
+    (with-current-buffer buffer
+      (erase-buffer)
+      (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+      (insert "<rss version=\"2.0\">\n<channel>\n")
+      (insert "<title>Ollama Chat History</title>\n")
+      (insert "<link>http://localhost</link>\n")
+      (insert "<description>Chat conversation stored as RSS feed</description>\n"))))
+#+END_SRC
+
+* Sending Messages to Ollama and Logging Chats
+
+#+NAME: ollama-send-and-log
+#+BEGIN_SRC emacs-lisp :tangle chat-history.el
+(defun ollama-api-call (model prompt)
+  "Send a prompt to the Ollama model and return the response."
+  (let* ((url "http://127.0.0.1:11434/api/generate")
+         (data (json-encode `(("model" . ,model) ("prompt" . ,prompt))))
+         (url-request-method "POST")
+         (url-request-data data)
+         (url-request-extra-headers '(("Content-Type" . "application/json"))))
+    (with-temp-buffer
+      (url-retrieve-synchronously url t t)
+      (goto-char (point-min))
+      (re-search-forward "\n\n")
+      (buffer-substring-no-properties (point) (point-max)))))
+
+(defun ollama-send-and-log (user-input)
+  "Send USER-INPUT to Ollama API, log both input and response in chat-history."
+  (interactive "sEnter your message: ")
+  (ollama-log-chat-to-rss user-input "user") ;; Log user message
+  (let ((response (ollama-api-call "deepseek-r1:1.5b" user-input))) ;; Replace with your Ollama model
+    (ollama-log-chat-to-rss response "assistant") ;; Log AI response
+    (message "Ollama says: %s" response)))
+#+END_SRC
+
+* Viewing and Exporting Chat History
+
+#+NAME: ollama-view-chat-history
+#+BEGIN_SRC emacs-lisp :tangle chat-history.el
+(defun ollama-view-chat-history ()
+  "Open the chat-history buffer to view the RSS-formatted conversation."
+  (interactive)
+  (switch-to-buffer "chat-history"))
+#+END_SRC
+
+#+NAME: ollama-save-chat-history-to-file
+#+BEGIN_SRC emacs-lisp :tangle chat-history.el
+(defun ollama-save-chat-history-to-file (filename)
+  "Save the 'chat-history' buffer to an RSS file."
+  (interactive "FSave chat history as: ")
+  (with-current-buffer "chat-history"
+    (write-file filename)))
+#+END_SRC
+
+* Using This Setup
+1. To generate and use the Emacs Lisp file, run:
+   #+BEGIN_SRC emacs-lisp
+   (org-babel-tangle)
+   #+END_SRC
+   This will create `chat-history.el` containing all functions.
+
+2. To start a fresh chat log:
+   #+BEGIN_SRC emacs-lisp
+   (ollama-start-new-chat-history)
+   #+END_SRC
+
+3. To send a message and log the conversation:
+   #+BEGIN_SRC emacs-lisp
+   (ollama-send-and-log "Hello, Ollama!")
+   #+END_SRC
+
+4. To view chat history:
+   #+BEGIN_SRC emacs-lisp
+   (ollama-view-chat-history)
+   #+END_SRC
+
+5. To export chat history to a file:
+   #+BEGIN_SRC emacs-lisp
+   (ollama-save-chat-history-to-file "~/ollama-chat.rss")
+   #+END_SRC
+
+* Conclusion
+This setup allows you to interact with Ollama and store your chat conversations as an RSS feed, all within Emacs using Org Mode. You can evaluate code blocks to test features or tangle the document to generate `.el` files for use in your Emacs configuration.

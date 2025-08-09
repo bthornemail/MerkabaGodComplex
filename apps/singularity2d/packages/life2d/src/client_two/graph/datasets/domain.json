@@ -1,0 +1,15 @@
+{
+    "nodes":[
+	{ "id":"Identity", "encoding":"String" },
+	{ "id":"Peer", "encoding":"Address" },
+	{ "id":"Connection", "encoding":"Map" },
+	{ "id":"Network", "encoding":"Function" },
+	{ "id":"Domain", "encoding":"String" }
+    ],
+    "links":[
+	{ "source":"Identity", "target":"Peer" },
+	{ "source":"Peer", "target":"Connection" },
+	{ "source":"Connection", "target":"Network" },
+	{ "source":"Network", "target":"Domain" }
+    ]
+}

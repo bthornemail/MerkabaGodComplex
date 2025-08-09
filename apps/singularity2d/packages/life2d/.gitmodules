@@ -1,0 +1,3 @@
+[submodule "docs/unity-vault"]
+	path = docs/unity-vault
+	url = git@github.com:bthornemail/unity-vault

@@ -1,0 +1,198 @@
+import * as THREE from 'three'
+import { useEffect, useRef, useState, useMemo } from 'react'
+import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
+import { useWs } from '../hooks/useSocket'
+import { Html, Text, OrbitControls, Line } from '@react-three/drei'
+import Graphology from 'graphology'
+import { Attributes, EdgeEntry, NodeEntry, SerializedGraph } from 'graphology-types'
+
+// Node component for graph visualization
+function GraphNode({ node, position, color = 'orange', label = '', ...props }: {
+  node: string
+  position: [number, number, number]
+  color?: string
+  label?: string
+} & ThreeElements['mesh']) {
+  const ref = useRef<THREE.Mesh>(null!)
+  const [hovered, hover] = useState(false)
+  const [clicked, click] = useState(false)
+  
+  useFrame((state, delta) => {
+    ref.current.rotation.x += delta * 0.2
+    ref.current.rotation.y += delta * 0.1
+  })
+
+  return (
+    <mesh
+      {...props}
+      ref={ref}
+      position={position}
+      scale={clicked ? 1.2 : 1}
+      onClick={(event) => click(!clicked)}
+      onPointerOver={(event) => hover(true)}
+      onPointerOut={(event) => hover(false)}>
+      <sphereGeometry args={[0.5, 32, 32]} />
+      <meshStandardMaterial color={hovered ? 'hotpink' : color} />
+      <Html distanceFactor={10} position={[0, 0.8, 0]}>
+        <div className="label" style={{
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white',
+          padding: '4px 8px',
+          borderRadius: '4px',
+          fontSize: '12px'
+        }}>
+          {label || node}
+        </div>
+      </Html>
+    </mesh>
+  )
+}
+
+// Edge component for graph visualization
+function GraphEdge({ source, target, sourcePos, targetPos }: {
+  source: string
+  target: string
+  sourcePos: [number, number, number]
+  targetPos: [number, number, number]
+}) {
+  const lineRef = useRef<THREE.Line>(null)
+  
+  const points = useMemo(() => [
+    new THREE.Vector3(...sourcePos),
+    new THREE.Vector3(...targetPos)
+  ], [sourcePos, targetPos])
+
+  return (
+    <Line
+      ref={lineRef}
+      points={points}
+      color="white"
+      lineWidth={1}
+      dashed={false}
+    />
+  )
+}
+
+export default function Graph({ entity, identity }: { entity: string; identity: string }) {
+  const [ready, data, send] = useWs({ url: "ws://127.0.0.1:8000" }) as any
+  const [graph, setGraph] = useState<Graphology | null>(null)
+  const [nodePositions, setNodePositions] = useState<Record<string, [number, number, number]>>({})
+
+  // Initialize graph from WebSocket data
+  useEffect(() => {
+    if (ready) {
+      send({ entity, identity, message: data })
+    }
+  }, [entity, identity, ready, send])
+
+  // Parse graph data and compute layout
+  useEffect(() => {
+    if (data) {
+      try {
+        const graphData = JSON.parse(data)
+        const newGraph = new Graphology()
+        
+        // Add nodes
+        if (graphData.nodes) {
+          graphData.nodes.forEach((node: NodeEntry) => {
+            newGraph.addNode(node.node, node.attributes)
+          })
+        }
+        
+        // Add edges
+        if (graphData.edges) {
+          graphData.edges.forEach((edge: EdgeEntry) => {
+            newGraph.addEdge(edge.source, edge.target, edge.attributes)
+          })
+        }
+        
+        setGraph(newGraph)
+        
+        // Compute simple 3D layout
+        const positions: Record<string, [number, number, number]> = {}
+        const nodeCount = newGraph.order
+        const radius = Math.max(3, Math.sqrt(nodeCount))
+        const angleStep = (2 * Math.PI) / nodeCount
+        
+        let i = 0
+        newGraph.forEachNode((node) => {
+          const angle = i * angleStep
+          positions[node] = [
+            radius * Math.cos(angle),
+            radius * Math.sin(angle),
+            (Math.random() - 0.5) * 2 // Some random z for depth
+          ]
+          i++
+        })
+        
+        setNodePositions(positions)
+      } catch (error) {
+        console.error('Error parsing graph data:', error)
+      }
+    }
+  }, [data])
+
+  return (
+    <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      <pointLight position={[-10, -10, -10]} />
+      
+      <OrbitControls
+        enablePan={true}
+        enableZoom={true}
+        enableRotate={true}
+        minDistance={5}
+        maxDistance={20}
+        makeDefault
+      />
+      
+      <Text
+        position={[0, 5, 0]}
+        color="white"
+        fontSize={0.5}
+        anchorX="center"
+        anchorY="middle">
+        {entity || "Semantic Graph"}
+      </Text>
+      
+      {graph && (
+        <>
+          {/* Render nodes */}
+          {graph.mapNodes((node) => {
+            const position = nodePositions[node] || [0, 0, 0]
+            const attributes = graph.getNodeAttributes(node)
+            
+            return (
+              <GraphNode
+                key={node}
+                node={node}
+                position={position}
+                color={attributes.color || 'orange'}
+                label={attributes.label || node}
+              />
+            )
+          })}
+          
+          {/* Render edges */}
+          {graph.mapEdges((edge) => {
+            const source = graph.source(edge)
+            const target = graph.target(edge)
+            const sourcePos = nodePositions[source] || [0, 0, 0]
+            const targetPos = nodePositions[target] || [0, 0, 0]
+            
+            return (
+              <GraphEdge
+                key={edge}
+                source={source}
+                target={target}
+                sourcePos={sourcePos}
+                targetPos={targetPos}
+              />
+            )
+          })}
+        </>
+      )}
+    </Canvas>
+  )
+}

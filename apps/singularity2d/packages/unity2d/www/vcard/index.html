@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="row">
+    <div class="col" id="userInfoDisplay">
+        <h2>User Information</h2>
+        <ul id="userInfoDisplayList" class="list-group">
+            <!-- <li class="list-group-item">First Name: <span id="displayFirstName"></span></li>
+            <li class="list-group-item">Middle Name: <span id="displayMiddleName"></span></li>
+            <li class="list-group-item">Last Name: <span id="displayLastName"></span></li>
+            <li class="list-group-item">Birthday: <span id="displayBirthday"></span></li>
+            <li class="list-group-item">Gender: <span id="displayGender"></span></li>
+            <li class="list-group-item">Nickname: <span id="displayNickname"></span></li>
+            <li class="list-group-item">Email: <span id="displayEmail"></span></li>
+            <li class="list-group-item">Cell Phone: <span id="displayCellPhone"></span></li>
+            <li class="list-group-item">Home Address: <span id="displayHomeAddress"></span></li> -->
+        </ul>
+    </div>
+    <div class="col">
+        <h2 class="mb-4">User Information Form</h2>
+        <form id="userForm" method="post" action="/vcard">
+            <label for="password">password</label>
+            <div class="input-group">
+                <input type="password" class="form-control" name="password" placeholder="Password Required" required/>
+                <button type="submit" class="btn btn-success">Post</button>
+            </div>
+        </form>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

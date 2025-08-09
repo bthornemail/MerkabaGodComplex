@@ -1,0 +1,14 @@
+#ui-layout {
+    display: grid;
+    grid-template-rows: 2rem 100% 2rem;
+    grid-template-columns: 1fr;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.vertical-node-list-bar {
+    position: fixed;
+    top: 15px;
+    left: 30px;
+}

@@ -1,0 +1,32 @@
+{
+	"nodes": [
+		{
+			"id": "Vault_User",
+			"img": "security-shield-svgrepo-com.svg",
+			"name": "Brian",
+			"title": "Brian",
+			"color": "black",
+			"val": 1
+		},
+		{
+			"id": "Vault_Wallet",
+			"img": "wallet-wallet-svgrepo-com.svg",
+			"name": "Wallet",
+			"title": "Wallet",
+			"color": "yellow",
+			"val": 2
+		}
+	],
+	"links": [
+		{
+			"source": "Vault_User",
+			"target": "Vault_Wallet"
+		}
+	],
+	"entanglements": [
+		{
+			"source": "Vault_User",
+			"target": "User_Auth"
+		}
+	]
+}

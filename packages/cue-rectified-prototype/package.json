@@ -1,0 +1,36 @@
+{
+  "name": "cue-rectified-prototype",
+  "version": "4.0.0",
+  "description": "The final, rectified CUE prototype integrating UBHP, CAR, and Agentic RPC.",
+  "scripts": {
+    "build:ts": "tsc",
+    "build:asc": "asc assembly/compute_job.ts --target release --outFile assembly/build/compute_job.wasm",
+    "build:agent": "asc assembly/agent_thermostat.ts --target release --outFile assembly/build/agent_thermostat.wasm",
+    "build": "npm run build:asc && npm run build:agent && npm run build:ts",
+    "demo": "npm run build && node dist/demo.js",
+    "test-components": "npm run build && node test-components.js",
+    "interactive": "npm run build && node interactive-test.js",
+    "start:bootstrap": "node dist/nodes/bootstrap-node.js",
+    "start:provider": "node dist/nodes/compute-provider.js",
+    "start:client": "node dist/nodes/user-client.js",
+    "start:agent": "node dist/nodes/agent-thermostat-node.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "clean": "rm -rf dist assembly/build"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "crypto-js": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.1",
+    "@types/node": "^20.17.16",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.8.3",
+    "vitest": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
+    "assemblyscript": "^0.27.22"
+  }
+}

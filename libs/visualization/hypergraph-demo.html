@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUE Hypergraph Visualization Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+        
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        select, button {
+            padding: 8px 16px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        select:focus, button:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+            border-color: #5a67d8;
+            transform: translateY(-1px);
+        }
+        
+        button.secondary {
+            background: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        button.secondary:hover {
+            background: #5a6268;
+            border-color: #5a6268;
+        }
+        
+        .visualization-container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #hypergraphCanvas {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .stats {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 10px;
+            color: #495057;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 0;
+        }
+        
+        .info-panel {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-panel h3 {
+            margin: 0 0 15px;
+            color: #2c3e50;
+        }
+        
+        .info-panel ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .legend {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .legend h4 {
+            margin: 0 0 15px;
+            color: #495057;
+        }
+        
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CUE Hypergraph Visualization</h1>
+            <p>Interactive visualization of theoretical models and computational structures</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="dataType">Data Type:</label>
+                <select id="dataType">
+                    <option value="random">Random Graph</option>
+                    <option value="mdu">MDU States</option>
+                    <option value="axioms">Axiomatic Systems</option>
+                    <option value="fano">Fano Plane</option>
+                    <option value="consciousness">Consciousness Model</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="layout">Layout:</label>
+                <select id="layout">
+                    <option value="force">Force-Directed</option>
+                    <option value="circular">Circular</option>
+                    <option value="grid">Grid</option>
+                    <option value="hierarchical">Hierarchical</option>
+                    <option value="spiral">Spiral</option>
+                </select>
+            </div>
+            
+            <button id="generateBtn">Generate</button>
+            <button id="applyLayoutBtn" class="secondary">Apply Layout</button>
+            <button id="exportBtn" class="secondary">Export Image</button>
+            <button id="animateBtn" class="secondary">Toggle Animation</button>
+        </div>
+        
+        <div class="visualization-container">
+            <canvas id="hypergraphCanvas" width="1000" height="700"></canvas>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Nodes</h3>
+                    <div class="value" id="nodeCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Edges</h3>
+                    <div class="value" id="edgeCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Connectivity</h3>
+                    <div class="value" id="connectivity">0.0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Complexity</h3>
+                    <div class="value" id="complexity">0.0</div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <h4>Interaction Guide</h4>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #3498db;"></span>
+                        <span>Drag nodes to reposition</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #e74c3c;"></span>
+                        <span>Scroll to zoom in/out</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #2ecc71;"></span>
+                        <span>Click nodes for details</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3>About CUE Hypergraph Visualization</h3>
+            <ul>
+                <li><strong>Random Graphs:</strong> Test the visualization with randomly generated hypergraph structures</li>
+                <li><strong>MDU States:</strong> Visualize Modulo-Divisive Unfolding states showing layer and amplitude relationships</li>
+                <li><strong>Axiomatic Systems:</strong> Display logical relationships between axioms in mathematical systems</li>
+                <li><strong>Fano Plane:</strong> Perfect example of finite projective geometry with 7 points and 7 lines</li>
+                <li><strong>Consciousness Model:</strong> Represent emergent properties and interactions in consciousness theory</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the visualization classes (in a real implementation, these would be properly built modules)
+        class HypergraphVisualizer {
+            constructor(config) {
+                this.config = config;
+                this.nodes = new Map();
+                this.edges = new Map();
+                this.canvas = null;
+                this.context = null;
+                this.animationFrame = null;
+                this.draggedNode = null;
+                this.mouseOffset = { x: 0, y: 0 };
+                this.isAnimating = false;
+            }
+            
+            initialize(canvasElement) {
+                this.canvas = canvasElement;
+                this.context = canvasElement.getContext('2d');
+                this.setupInteractionHandlers();
+            }
+            
+            addNode(node) {
+                this.nodes.set(node.id, node);
+            }
+            
+            addEdge(edge) {
+                this.edges.set(edge.id, edge);
+            }
+            
+            clear() {
+                this.nodes.clear();
+                this.edges.clear();
+                if (this.context && this.canvas) {
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                }
+            }
+            
+            applyLayout() {
+                const algorithm = this.config.layout.algorithm;
+                const nodes = Array.from(this.nodes.values());
+                
+                if (algorithm === 'force') {
+                    this.applyForceLayout();
+                } else if (algorithm === 'circular') {
+                    this.applyCircularLayout();
+                } else if (algorithm === 'grid') {
+                    this.applyGridLayout();
+                } else if (algorithm === 'hierarchical') {
+                    this.applyHierarchicalLayout();
+                } else if (algorithm === 'spiral') {
+                    this.applySpiralLayout();
+                }
+            }
+            
+            applyForceLayout() {
+                const iterations = 50;
+                const nodes = Array.from(this.nodes.values());
+                const spacing = this.config.layout.spacing;
+                
+                for (let iter = 0; iter < iterations; iter++) {
+                    // Repulsive forces
+                    for (let i = 0; i < nodes.length; i++) {
+                        for (let j = i + 1; j < nodes.length; j++) {
+                            const node1 = nodes[i];
+                            const node2 = nodes[j];
+                            
+                            const dx = node2.position.x - node1.position.x;
+                            const dy = node2.position.y - node1.position.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy) || 0.1;
+                            
+                            const force = spacing * spacing / (distance * distance);
+                            const fx = (dx / distance) * force;
+                            const fy = (dy / distance) * force;
+                            
+                            node1.position.x -= fx * 0.1;
+                            node1.position.y -= fy * 0.1;
+                            node2.position.x += fx * 0.1;
+                            node2.position.y += fy * 0.1;
+                        }
+                    }
+                    
+                    // Attractive forces for edges
+                    for (const edge of this.edges.values()) {
+                        if (edge.nodeIds.length >= 2) {
+                            const edgeNodes = edge.nodeIds
+                                .map(id => this.nodes.get(id))
+                                .filter(node => node !== undefined);
+                                
+                            if (edgeNodes.length >= 2) {
+                                const centroid = this.calculateCentroid(edgeNodes);
+                                
+                                for (const node of edgeNodes) {
+                                    const dx = centroid.x - node.position.x;
+                                    const dy = centroid.y - node.position.y;
+                                    const distance = Math.sqrt(dx * dx + dy * dy) || 0.1;
+                                    
+                                    const force = distance / spacing * 0.01;
+                                    node.position.x += (dx / distance) * force;
+                                    node.position.y += (dy / distance) * force;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Keep nodes within bounds
+                    for (const node of nodes) {
+                        node.position.x = Math.max(50, Math.min(this.canvas.width - 50, node.position.x));
+                        node.position.y = Math.max(50, Math.min(this.canvas.height - 50, node.position.y));
+                    }
+                }
+            }
+            
+            applyCircularLayout() {
+                const nodes = Array.from(this.nodes.values());
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const radius = Math.min(centerX, centerY) * 0.7;
+                
+                nodes.forEach((node, index) => {
+                    const angle = (2 * Math.PI * index) / nodes.length;
+                    node.position.x = centerX + radius * Math.cos(angle);
+                    node.position.y = centerY + radius * Math.sin(angle);
+                });
+            }
+            
+            applyGridLayout() {
+                const nodes = Array.from(this.nodes.values());
+                const cols = Math.ceil(Math.sqrt(nodes.length));
+                const spacing = this.config.layout.spacing;
+                
+                const startX = (this.canvas.width - (cols - 1) * spacing) / 2;
+                const startY = (this.canvas.height - (Math.ceil(nodes.length / cols) - 1) * spacing) / 2;
+                
+                nodes.forEach((node, index) => {
+                    const col = index % cols;
+                    const row = Math.floor(index / cols);
+                    
+                    node.position.x = startX + col * spacing;
+                    node.position.y = startY + row * spacing;
+                });
+            }
+            
+            applyHierarchicalLayout() {
+                // Simple hierarchical layout - just arrange in levels
+                const nodes = Array.from(this.nodes.values());
+                const levels = Math.ceil(nodes.length / 5);
+                
+                nodes.forEach((node, index) => {
+                    const level = Math.floor(index / 5);
+                    const position = index % 5;
+                    
+                    node.position.x = 150 + position * 180;
+                    node.position.y = 100 + level * 120;
+                });
+            }
+            
+            applySpiralLayout() {
+                const nodes = Array.from(this.nodes.values());
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                
+                nodes.forEach((node, index) => {
+                    const t = index * 0.5;
+                    const radius = 50 + t * 10;
+                    const angle = t * 2;
+                    
+                    node.position.x = centerX + radius * Math.cos(angle);
+                    node.position.y = centerY + radius * Math.sin(angle);
+                });
+            }
+            
+            calculateCentroid(nodes) {
+                if (nodes.length === 0) return { x: 0, y: 0 };
+                
+                const sum = nodes.reduce((acc, node) => ({
+                    x: acc.x + node.position.x,
+                    y: acc.y + node.position.y
+                }), { x: 0, y: 0 });
+                
+                return {
+                    x: sum.x / nodes.length,
+                    y: sum.y / nodes.length
+                };
+            }
+            
+            render() {
+                if (!this.context || !this.canvas) return;
+                
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Render edges first
+                this.renderEdges();
+                // Render nodes on top
+                this.renderNodes();
+            }
+            
+            renderEdges() {
+                for (const edge of this.edges.values()) {
+                    const style = edge.style || {};
+                    const color = style.color || '#95a5a6';
+                    const width = style.width || 2;
+                    
+                    this.context.strokeStyle = color;
+                    this.context.lineWidth = width;
+                    
+                    const edgeNodes = edge.nodeIds
+                        .map(id => this.nodes.get(id))
+                        .filter(node => node !== undefined);
+                    
+                    if (edgeNodes.length >= 2) {
+                        if (edgeNodes.length === 2) {
+                            const [node1, node2] = edgeNodes;
+                            this.context.beginPath();
+                            this.context.moveTo(node1.position.x, node1.position.y);
+                            this.context.lineTo(node2.position.x, node2.position.y);
+                            this.context.stroke();
+                        } else {
+                            // Hyperedge: connect all nodes to centroid
+                            const centroid = this.calculateCentroid(edgeNodes);
+                            
+                            // Draw centroid
+                            this.context.fillStyle = color;
+                            this.context.beginPath();
+                            this.context.arc(centroid.x, centroid.y, 4, 0, 2 * Math.PI);
+                            this.context.fill();
+                            
+                            // Connect nodes to centroid
+                            for (const node of edgeNodes) {
+                                this.context.beginPath();
+                                this.context.moveTo(node.position.x, node.position.y);
+                                this.context.lineTo(centroid.x, centroid.y);
+                                this.context.stroke();
+                            }
+                        }
+                    }
+                }
+            }
+            
+            renderNodes() {
+                for (const node of this.nodes.values()) {
+                    const style = node.style || {};
+                    const size = style.size || 15;
+                    const color = style.color || '#3498db';
+                    const shape = style.shape || 'circle';
+                    
+                    this.context.fillStyle = color;
+                    this.context.strokeStyle = '#2c3e50';
+                    this.context.lineWidth = 2;
+                    
+                    if (shape === 'circle') {
+                        this.context.beginPath();
+                        this.context.arc(node.position.x, node.position.y, size, 0, 2 * Math.PI);
+                        this.context.fill();
+                        this.context.stroke();
+                    } else if (shape === 'square') {
+                        this.context.fillRect(
+                            node.position.x - size,
+                            node.position.y - size,
+                            size * 2,
+                            size * 2
+                        );
+                        this.context.strokeRect(
+                            node.position.x - size,
+                            node.position.y - size,
+                            size * 2,
+                            size * 2
+                        );
+                    }
+                    
+                    // Render label
+                    if (this.config.rendering.showLabels) {
+                        this.context.fillStyle = '#2c3e50';
+                        this.context.font = '12px Arial';
+                        this.context.textAlign = 'center';
+                        this.context.fillText(
+                            node.label,
+                            node.position.x,
+                            node.position.y + size + 15
+                        );
+                    }
+                }
+            }
+            
+            setupInteractionHandlers() {
+                this.canvas.addEventListener('mousedown', (event) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mouseX = event.clientX - rect.left;
+                    const mouseY = event.clientY - rect.top;
+                    
+                    for (const node of this.nodes.values()) {
+                        const distance = Math.sqrt(
+                            (mouseX - node.position.x) ** 2 + (mouseY - node.position.y) ** 2
+                        );
+                        
+                        if (distance <= (node.style?.size || 15)) {
+                            this.draggedNode = node;
+                            this.mouseOffset = {
+                                x: mouseX - node.position.x,
+                                y: mouseY - node.position.y
+                            };
+                            break;
+                        }
+                    }
+                });
+                
+                this.canvas.addEventListener('mousemove', (event) => {
+                    if (!this.draggedNode) return;
+                    
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mouseX = event.clientX - rect.left;
+                    const mouseY = event.clientY - rect.top;
+                    
+                    this.draggedNode.position.x = mouseX - this.mouseOffset.x;
+                    this.draggedNode.position.y = mouseY - this.mouseOffset.y;
+                    
+                    if (!this.isAnimating) {
+                        this.render();
+                    }
+                });
+                
+                this.canvas.addEventListener('mouseup', () => {
+                    this.draggedNode = null;
+                });
+            }
+            
+            startAnimation() {
+                if (!this.isAnimating) {
+                    this.isAnimating = true;
+                    const animate = () => {
+                        if (this.isAnimating) {
+                            this.render();
+                            this.animationFrame = requestAnimationFrame(animate);
+                        }
+                    };
+                    animate();
+                }
+            }
+            
+            stopAnimation() {
+                this.isAnimating = false;
+                if (this.animationFrame) {
+                    cancelAnimationFrame(this.animationFrame);
+                    this.animationFrame = null;
+                }
+            }
+            
+            getStats() {
+                const nodeCount = this.nodes.size;
+                const edgeCount = this.edges.size;
+                
+                let totalConnections = 0;
+                for (const edge of this.edges.values()) {
+                    totalConnections += edge.nodeIds.length;
+                }
+                
+                const averageConnectivity = nodeCount > 0 ? totalConnections / nodeCount : 0;
+                const complexity = nodeCount * Math.log2(edgeCount + 1) * averageConnectivity;
+                
+                return {
+                    nodeCount,
+                    edgeCount,
+                    averageConnectivity: parseFloat(averageConnectivity.toFixed(2)),
+                    complexity: parseFloat(complexity.toFixed(2))
+                };
+            }
+        }
+        
+        // Data generators
+        class HypergraphGenerator {
+            static generateRandom(nodeCount, edgeCount) {
+                const nodes = [];
+                const edges = [];
+                
+                // Generate nodes
+                for (let i = 0; i < nodeCount; i++) {
+                    nodes.push({
+                        id: `node_${i}`,
+                        label: `N${i}`,
+                        position: {
+                            x: Math.random() * 800 + 100,
+                            y: Math.random() * 500 + 100
+                        },
+                        data: { value: Math.random() * 100 },
+                        style: {
+                            color: this.getRandomColor(),
+                            size: Math.random() * 10 + 10,
+                            shape: 'circle'
+                        }
+                    });
+                }
+                
+                // Generate edges
+                for (let i = 0; i < edgeCount; i++) {
+                    const edgeSize = Math.floor(Math.random() * 3) + 2;
+                    const selectedNodes = [];
+                    
+                    for (let j = 0; j < edgeSize; j++) {
+                        const nodeIndex = Math.floor(Math.random() * nodeCount);
+                        const nodeId = `node_${nodeIndex}`;
+                        if (!selectedNodes.includes(nodeId)) {
+                            selectedNodes.push(nodeId);
+                        }
+                    }
+                    
+                    if (selectedNodes.length >= 2) {
+                        edges.push({
+                            id: `edge_${i}`,
+                            label: `E${i}`,
+                            nodeIds: selectedNodes,
+                            data: { strength: Math.random() },
+                            style: {
+                                color: this.getRandomColor(),
+                                width: Math.random() * 2 + 1
+                            }
+                        });
+                    }
+                }
+                
+                return { nodes, edges };
+            }
+            
+            static generateMDU() {
+                const nodes = [];
+                const edges = [];
+                
+                // Create MDU states for N = 0 to 20, B = 7
+                for (let N = 0; N <= 20; N++) {
+                    const L = Math.floor(N / 7);
+                    const A = N % 7;
+                    
+                    nodes.push({
+                        id: `mdu_${N}`,
+                        label: `${N}`,
+                        position: {
+                            x: A * 120 + 150,
+                            y: L * 80 + 100
+                        },
+                        data: { N, L, A, B: 7 },
+                        style: {
+                            color: `hsl(${A * 51.43}, 70%, ${Math.max(30, 70 - L * 5)}%)`,
+                            size: Math.max(8, L * 2 + 12),
+                            shape: 'circle'
+                        }
+                    });
+                }
+                
+                // Layer connections
+                const layers = new Map();
+                for (let N = 0; N <= 20; N++) {
+                    const L = Math.floor(N / 7);
+                    if (!layers.has(L)) layers.set(L, []);
+                    layers.get(L).push(`mdu_${N}`);
+                }
+                
+                layers.forEach((nodeIds, layer) => {
+                    if (nodeIds.length > 1) {
+                        edges.push({
+                            id: `layer_${layer}`,
+                            label: `L${layer}`,
+                            nodeIds,
+                            data: { layer },
+                            style: {
+                                color: `hsl(${layer * 45}, 60%, 50%)`,
+                                width: 2
+                            }
+                        });
+                    }
+                });
+                
+                return { nodes, edges };
+            }
+            
+            static generateFanoPlane() {
+                const nodes = [
+                    { id: 'p0', label: 'P₀', pos: { x: 500, y: 200 } },
+                    { id: 'p1', label: 'P₁', pos: { x: 300, y: 300 } },
+                    { id: 'p2', label: 'P₂', pos: { x: 700, y: 300 } },
+                    { id: 'p3', label: 'P₃', pos: { x: 250, y: 500 } },
+                    { id: 'p4', label: 'P₄', pos: { x: 750, y: 500 } },
+                    { id: 'p5', label: 'P₅', pos: { x: 400, y: 600 } },
+                    { id: 'p6', label: 'P₆', pos: { x: 600, y: 600 } }
+                ].map(point => ({
+                    id: point.id,
+                    label: point.label,
+                    position: point.pos,
+                    data: { type: 'fano_point' },
+                    style: { color: '#e74c3c', size: 18, shape: 'circle' }
+                }));
+                
+                const lines = [
+                    { id: 'l0', label: 'L₀', points: ['p0', 'p1', 'p2'], color: '#e74c3c' },
+                    { id: 'l1', label: 'L₁', points: ['p3', 'p4', 'p5'], color: '#3498db' },
+                    { id: 'l2', label: 'L₂', points: ['p0', 'p3', 'p6'], color: '#2ecc71' },
+                    { id: 'l3', label: 'L₃', points: ['p1', 'p4', 'p6'], color: '#f39c12' },
+                    { id: 'l4', label: 'L₄', points: ['p2', 'p3', 'p4'], color: '#9b59b6' },
+                    { id: 'l5', label: 'L₅', points: ['p0', 'p4', 'p5'], color: '#1abc9c' },
+                    { id: 'l6', label: 'L₆', points: ['p1', 'p5', 'p6'], color: '#34495e' }
+                ];
+                
+                const edges = lines.map(line => ({
+                    id: line.id,
+                    label: line.label,
+                    nodeIds: line.points,
+                    data: { type: 'fano_line' },
+                    style: { color: line.color, width: 3 }
+                }));
+                
+                return { nodes, edges };
+            }
+            
+            static generateConsciousness() {
+                const components = [
+                    { id: 'awareness', label: 'Awareness', pos: { x: 500, y: 200 } },
+                    { id: 'attention', label: 'Attention', pos: { x: 400, y: 300 } },
+                    { id: 'memory', label: 'Memory', pos: { x: 600, y: 300 } },
+                    { id: 'perception', label: 'Perception', pos: { x: 300, y: 400 } },
+                    { id: 'cognition', label: 'Cognition', pos: { x: 700, y: 400 } },
+                    { id: 'emotion', label: 'Emotion', pos: { x: 450, y: 500 } },
+                    { id: 'intention', label: 'Intention', pos: { x: 550, y: 500 } }
+                ];
+                
+                const emergent = [
+                    { id: 'self_awareness', label: 'Self-Awareness', pos: { x: 350, y: 150 } },
+                    { id: 'metacognition', label: 'Metacognition', pos: { x: 650, y: 150 } },
+                    { id: 'consciousness', label: 'Consciousness', pos: { x: 500, y: 100 } }
+                ];
+                
+                const nodes = [
+                    ...components.map(comp => ({
+                        id: comp.id,
+                        label: comp.label,
+                        position: comp.pos,
+                        data: { type: 'component' },
+                        style: { color: '#9b59b6', size: 20, shape: 'circle' }
+                    })),
+                    ...emergent.map(prop => ({
+                        id: prop.id,
+                        label: prop.label,
+                        position: prop.pos,
+                        data: { type: 'emergent' },
+                        style: { color: '#f39c12', size: 15, shape: 'diamond' }
+                    }))
+                ];
+                
+                const edges = [
+                    {
+                        id: 'core_network',
+                        label: 'Core Network',
+                        nodeIds: ['awareness', 'attention', 'memory', 'perception', 'cognition'],
+                        data: { type: 'core' },
+                        style: { color: '#3498db', width: 3 }
+                    },
+                    {
+                        id: 'emotional_integration',
+                        label: 'Emotional Integration',
+                        nodeIds: ['emotion', 'attention', 'memory', 'cognition'],
+                        data: { type: 'emotional' },
+                        style: { color: '#e74c3c', width: 2 }
+                    },
+                    {
+                        id: 'consciousness_emergence',
+                        label: 'Consciousness Emergence',
+                        nodeIds: ['consciousness', 'self_awareness', 'metacognition'],
+                        data: { type: 'emergence' },
+                        style: { color: '#9b59b6', width: 4 }
+                    }
+                ];
+                
+                return { nodes, edges };
+            }
+            
+            static getRandomColor() {
+                const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+        }
+        
+        // Initialize the demo
+        const canvas = document.getElementById('hypergraphCanvas');
+        const config = {
+            canvas: { width: 1000, height: 700, background: '#ffffff' },
+            layout: { algorithm: 'force', spacing: 100 },
+            rendering: { mode: '2d', showLabels: true, animation: false },
+            interaction: { draggable: true, zoomable: true, clickable: true }
+        };
+        
+        const visualizer = new HypergraphVisualizer(config);
+        visualizer.initialize(canvas);
+        
+        // Control handlers
+        document.getElementById('generateBtn').addEventListener('click', generateGraph);
+        document.getElementById('applyLayoutBtn').addEventListener('click', applyLayout);
+        document.getElementById('exportBtn').addEventListener('click', exportImage);
+        document.getElementById('animateBtn').addEventListener('click', toggleAnimation);
+        
+        function generateGraph() {
+            const dataType = document.getElementById('dataType').value;
+            let data;
+            
+            switch (dataType) {
+                case 'random':
+                    data = HypergraphGenerator.generateRandom(15, 8);
+                    break;
+                case 'mdu':
+                    data = HypergraphGenerator.generateMDU();
+                    break;
+                case 'fano':
+                    data = HypergraphGenerator.generateFanoPlane();
+                    break;
+                case 'consciousness':
+                    data = HypergraphGenerator.generateConsciousness();
+                    break;
+                default:
+                    data = HypergraphGenerator.generateRandom(10, 5);
+            }
+            
+            visualizer.clear();
+            
+            data.nodes.forEach(node => visualizer.addNode(node));
+            data.edges.forEach(edge => visualizer.addEdge(edge));
+            
+            visualizer.render();
+            updateStats();
+        }
+        
+        function applyLayout() {
+            const layout = document.getElementById('layout').value;
+            visualizer.config.layout.algorithm = layout;
+            visualizer.applyLayout();
+            visualizer.render();
+        }
+        
+        function exportImage() {
+            const dataURL = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = 'hypergraph.png';
+            link.href = dataURL;
+            link.click();
+        }
+        
+        function toggleAnimation() {
+            if (visualizer.isAnimating) {
+                visualizer.stopAnimation();
+                document.getElementById('animateBtn').textContent = 'Start Animation';
+            } else {
+                visualizer.startAnimation();
+                document.getElementById('animateBtn').textContent = 'Stop Animation';
+            }
+        }
+        
+        function updateStats() {
+            const stats = visualizer.getStats();
+            document.getElementById('nodeCount').textContent = stats.nodeCount;
+            document.getElementById('edgeCount').textContent = stats.edgeCount;
+            document.getElementById('connectivity').textContent = stats.averageConnectivity;
+            document.getElementById('complexity').textContent = stats.complexity;
+        }
+        
+        // Generate initial graph
+        generateGraph();
+    </script>
+</body>
+</html>

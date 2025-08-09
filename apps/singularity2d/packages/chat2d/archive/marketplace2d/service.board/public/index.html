@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vault AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="header" class="nav-bar-header">
+    <a class="nav-brand" style="text-decoration: none;" href="/">Marketplace 2D</a>
+    <button id="connect-wallet-button" class="btn btn-sm btn-outline-secondary">Connect Wallet</button>
+  </div>
+  <!-- <nav id="recent-topics-nav"> -->
+  <nav id="recent-topics-nav" class="breadcrumb" aria-label="breadcrumb"></nav>
+  <!-- </nav> -->
+  <form id="topics-form" class="form input-group">
+    <select  id="topics-select" name="topics" class="form-select form-select-sm" aria-label="Small select example">
+      <option name="Topics" value=""><i>🍅🍊🍏</i>Topics</option>
+      <option name="Connections" value="">Connections</option>
+      <optgroup label="Services">
+        <option value="Listings">&#1F34A;Listings</option>
+        <option value="Service">Service</option>
+      </optgroup>
+      <optgroup label="Consumer">
+        <option value="Customer" path="Customer">Customer</option>
+        <option value="Order">Order</option>
+        <option value="Order">Consideration</option>
+        <option value="Order">Confirmation</option>
+        <option value="Order">Declaration</option>
+        <option value="Order">Invoice</option>
+      </optgroup>
+      <optgroup label="Provider">
+        <option value="Customer">Customer</option>
+        <option value="Customer">Contract</option>
+        <option value="Customer">Fulfillment</option>
+        <option value="Customer">Resolution</option>
+        <option value="Customer">Proposal</option>
+        <option value="Customer">Agreement</option>
+      </optgroup>
+    </select>
+    <input type="text" class="form-control" name="topic" />
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+  <div id="broadcast">
+    <div id="channel">
+    </div>
+    <div id="latest-topics">
+      Recent Happenings
+    </div>
+  </div>
+  <form id="chat-form" class="formm input-group">
+    <input id="chat-form-input-message" type="text" class="form-control" name="message" />
+    <button id="chat-form-button" type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div class="footer" id="footer">
+    <p>Valult AI</p>
+    <small>A Store of Active Knowledge</small>
+    <a href="mailto:contact@vault-ai.com">contact@vault-ai.com</a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <!-- <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script> -->
+  <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/tinyneat/dist/index.js"></script> -->
+  <script src="https://unpkg.com/multiformats/dist/index.min.js"></script>
+  <script src="node_modules/mqtt/dist/mqtt.min.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+version: '3.8'
+
+services:
+  # CUE API Server
+  cue-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cue-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-staging}
+      - CUE_API_HOST=0.0.0.0
+      - CUE_API_PORT=3000
+      - CUE_LOG_LEVEL=${CUE_LOG_LEVEL:-info}
+    volumes:
+      - cue-data:/app/data
+      - cue-logs:/app/logs
+      - ../cue-config.json:/app/cue-config.json:ro
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+  # CUE Visualization Server
+  cue-viz:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.visualization
+    container_name: cue-viz
+    ports:
+      - "8080:80"
+    environment:
+      - CUE_API_URL=http://cue-api:3000
+    depends_on:
+      cue-api:
+        condition: service_healthy
+    volumes:
+      - ../libs/visualization:/usr/share/nginx/html/visualization:ro
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+  # Redis for caching and session storage
+  redis:
+    image: redis:7-alpine
+    container_name: cue-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - cue-redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+  # PostgreSQL for persistent data storage
+  postgres:
+    image: postgres:15-alpine
+    container_name: cue-postgres
+    environment:
+      - POSTGRES_DB=cue_system
+      - POSTGRES_USER=cue_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-cue_password_change_me}
+    ports:
+      - "5432:5432"
+    volumes:
+      - cue-postgres-data:/var/lib/postgresql/data
+      - ../sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+  # Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cue-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - cue-prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: cue-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - cue-grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+  # NGINX reverse proxy and load balancer
+  nginx:
+    image: nginx:alpine
+    container_name: cue-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - cue-logs:/var/log/cue
+    depends_on:
+      - cue-api
+      - cue-viz
+    restart: unless-stopped
+    networks:
+      - cue-network
+
+# Named volumes for persistent data
+volumes:
+  cue-data:
+    driver: local
+  cue-logs:
+    driver: local
+  cue-redis-data:
+    driver: local
+  cue-postgres-data:
+    driver: local
+  cue-prometheus-data:
+    driver: local
+  cue-grafana-data:
+    driver: local
+
+# Custom network
+networks:
+  cue-network:
+    driver: bridge

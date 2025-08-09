@@ -1,0 +1,79 @@
+{
+    "nodes": [
+        {
+            "id": "center1",
+            "x": 74,
+            "y": 471,
+            "z": 395
+        },
+        {
+            "id": "vertex0",
+            "x": 75,
+            "y": 471,
+            "z": 395
+        },
+        {
+            "id": "vertex1",
+            "x": 73.5,
+            "y": 471.8660254037844,
+            "z": 395
+        },
+        {
+            "id": "vertex2",
+            "x": 73.5,
+            "y": 470.1339745962156,
+            "z": 395
+        },
+        {
+            "id": "apex",
+            "x": 74,
+            "y": 471,
+            "z": 395.8164965809277
+        },
+        {
+            "id": "center1",
+            "x": 74,
+            "y": 471,
+            "z": 395,
+            "color": "green",
+            "group": "center"
+        }
+    ],
+    "links": [
+        {
+            "source": "vertex0",
+            "target": "center1",
+            "color": "gray"
+        },
+        {
+            "source": "vertex1",
+            "target": "center1",
+            "color": "gray"
+        },
+        {
+            "source": "vertex2",
+            "target": "center1",
+            "color": "gray"
+        },
+        {
+            "source": "apex",
+            "target": "center1",
+            "color": "gray"
+        },
+        {
+            "source": "center1",
+            "target": "vertex0",
+            "color": "gray"
+        },
+        {
+            "source": "center1",
+            "target": "vertex1",
+            "color": "gray"
+        },
+        {
+            "source": "center1",
+            "target": "vertex2",
+            "color": "gray"
+        }
+    ]
+}

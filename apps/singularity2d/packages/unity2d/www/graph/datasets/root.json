@@ -1,0 +1,55 @@
+{
+    "nodes":[
+	{ "id":"Person", "encoding":"Intelligence" },
+	{ "id":"Path", "encoding":"String" },
+
+	{ "id":"Bytes", "encoding":"UInt8Array" },
+	{ "id":"String", "encoding":"Bytes" },
+	{ "id":"Function", "encoding":"String" },
+	
+	{ "id":"Encode", "encoding":"Function" },
+	{ "id":"Set", "encoding":"Function" },
+	{ "id":"Post", "encoding":"Function" },
+	{ "id":"Get", "encoding":"Function" },
+	{ "id":"View", "encoding":"Function" },
+
+	{ "id":"Encrypt", "encoding":"Function" },
+	{ "id":"Decrypt", "encoding":"Function" },	
+	{ "id":"Sign", "encoding":"Function" },
+	{ "id":"Verify", "encoding":"Function" },
+	{ "id":"Signature", "encoding":"Signature" },
+	{ "id":"Address", "encoding":"Address" },
+	{ "id":"Wallet", "encoding":"Map" },
+
+	{ "id":"Peer", "encoding":"Address" },
+	{ "id":"Connection", "encoding":"Map" },
+	{ "id":"Network", "encoding":"Function" },
+	{ "id":"Domain", "encoding":"String" },
+	{ "id":"Environment", "encoding":"Typescript" }
+    ],
+    "links":[
+	{ "source":"Sign", "target":"Signature"},
+	{ "source":"Signature", "target":"Verify"},
+	{ "source":"Verify", "target":"Wallet"},
+	{ "source":"Encrypt", "target":"Wallet" },
+	{ "source":"Decrypt", "target":"Wallet" },
+	{ "source":"Wallet", "target":"Address"},
+	{ "source":"Address", "target":"Peer"},
+	
+
+	{ "source":"Peer", "target":"Connection" },
+	{ "source":"Connection", "target":"Network" },
+	{ "source":"Network", "target":"Domain" },
+	{ "source":"Domain", "target":"Environment" }, 
+
+	{ "source":"Set", "target":"Environment" },
+	{ "source":"Post", "target":"Environment" },
+	{ "source":"Get", "target":"Environment" },
+	{ "source":"View", "target":"Environment" },
+
+	{ "source":"Person", "target":"String"},
+	{ "source":"String", "target":"Encode"},
+	{ "source":"Encode", "target":"Path" },
+	{ "source":"Path", "target":"Environment" }
+    ]
+}

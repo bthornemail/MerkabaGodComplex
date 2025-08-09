@@ -1,0 +1,66 @@
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+
+  <script src="//unpkg.com/force-graph"></script>
+  <!--<script src="../../dist/3d-force-graph.js"></script>-->
+</head>
+
+<body>
+  <div id="graph"></div>
+  <script type="importmap">{ "imports": { "three": "//unpkg.com/three/build/three.module.js" }}</script>
+  <script type="module">
+    // import SpriteText from "//unpkg.com/three-spritetext/dist/three-spritetext.mjs";
+    import { Wallet } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+    const address = Wallet.createRandom().address//nodes.length;
+    fetch('datasets/asset.json').then(res => res.json()).then(data => {
+      const Graph = ForceGraph()
+        (document.getElementById('graph'))
+        .graphData(data)
+        .backgroundColor("black")
+        .nodeId('id')
+        // .nodeVal('val')
+        .nodeLabel('id')
+        .nodeAutoColorBy('group')
+        .nodeCanvasObject((node, ctx, globalScale) => {
+          const label = node.id;
+          const fontSize = 12 / globalScale;
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width;
+          const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = node.color;
+          ctx.fillText(label, node.x, node.y);
+
+          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+        })
+        .onNodeDragEnd(node => {
+          node.fx = node.x;
+          node.fy = node.y;
+          node.fz = node.z;
+        })
+        .onNodeClick(node => {
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(8, 2000);
+        })
+        .linkSource('source')
+        .linkTarget('target')
+        .linkWidth(2)
+        .linkDirectionalParticles(2)
+        .linkDirectionalParticleWidth(1.4)
+        .cooldownTicks(100)
+        .onEngineStop(() => Graph.zoomToFit(100));
+        //.cooldownTime(300);
+    });
+    Graph.d3Force('charge').strength(-120);
+  </script>
+</body>

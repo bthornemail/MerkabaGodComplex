@@ -1,0 +1,51 @@
+---
+"identity": "context"
+"environment": ":environment"
+"actor": ":actor"
+"action": ":action"
+"time": ":time"
+...
+---
+"identity": "path"
+"environment": ":observer"
+"actor": ":object"
+"action": ":objective"
+"time": ":index"
+...
+
+---
+"identity": "environment"
+"actor": ":actor"
+"time": ":time"
+...
+---
+"identity": "time"
+"actor": ":actor"
+"action": ":action"
+...
+---
+"identity": "actor"
+"environment": ":environment"
+"time": ":time"
+...
+---
+"identity": "action"
+"actor": ":actor"
+"time": ":time"
+...
+
+---
+"identity": "observer"
+"observer": ":observer"
+...
+---
+"identity": "object"
+"object": ":object"
+...
+"id": "objective"
+"objective": ":objective"
+...
+---
+"id": "index"
+"index": ":index"
+...

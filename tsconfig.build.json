@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  },
+  "include": [
+    "index.ts",
+    "libs/mcp-bridge/ulp-mcp-server.ts",
+    "libs/mcp-bridge/personality-profiling-mcp.ts",
+    "libs/cue-protocols/living-knowledge.ts"
+  ],
+  "exclude": [
+    "**/*.test.*",
+    "**/__tests__/**",
+    "apps/**",
+    "packages/**",
+    "tools/**",
+    "dist/**",
+    "node_modules/**"
+  ]
+}

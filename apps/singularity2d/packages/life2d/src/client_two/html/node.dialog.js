@@ -1,0 +1,73 @@
+document.querySelector("#node-dialog").innerHTML = `<div class="container">
+    <h1>IPFS in the Browser via Helia</h1>
+    <div>
+      <button class="btn btn-success" onclick="window.helia.start();alert(heliaInstance)">Start Helia</button>
+      <button class="btn btn-danger" onclick="window.helia.stop()">Stop Helia</button>
+    </div>
+    <!-- <form class="form"> -->
+    <div class="input-group">
+      <button id="connect-button" class="btn btn-primary"
+        onclick="window.helia.libp2p.dialProtocol(document.querySelector('#connect-input-multiaddr').value,document.querySelector('#connect-input-protocol').value);">Dial
+        Protocol</button>
+      <input id="connect-input-multiaddr" placeholder="Multiaddr"
+        value="/ip4/127.0.0.1/tcp/35354/p2p/16Uiu2HAmVboqPtEibQihzkYNQq7gKjfbqPQFziqdU2xDv2ZEN7R3/ws"
+        class="form-control" type="text">
+      <input id="connect-input-protocol" placeholder="Protocol" value="/vault_ai/0.0.1" class="form-control"
+        type="text">
+    </div>
+    <!-- </form> -->
+    <h1 id="status">Node status: <span id="statusValue">Not Started</span></h1>
+    <div id="nodeInfo">
+      <h3>ID: <span id="nodeId">unknown</span></h3>
+      <h3>Discovered Peers: <span id="discoveredPeerCount">0</span></h3>
+      <h3>Connected Peers: <span id="connectedPeerCount">0</span></h3>
+      <button class="btn btn-danger" style="float: right;"
+        onclick="document.querySelector('#node-dialog').close()">Close</button>
+    </div>
+    <ul id="connectedPeersList"></ul>
+
+    <details>
+      <summary class="btn btn-warning" style="width: 100%;">View Log</summary>
+      <div id="runningLog"></div>
+      <style>
+        #runningLog span {
+          display: block;
+        }
+      </style>
+    </details>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/helia@^1.0.0/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/blockstore-core@^4.0.1/dist/index.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/datastore-core@^9.0.3/dist/index.min.js" defer></script>
+  <script src="https://unpkg.com/libp2p/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/libp2p@^0.43.0/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@chainsafe/libp2p-yamux@^3.0.7/dist/index.min.js" defer></script>
+<script src="https://unpkg.com/@multiformats/multiaddr/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@libp2p/peer-id-factory@^9.0.3/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@libp2p/bootstrap@^6.0.0/dist/index.min.js" defer></script>
+<script src="https://unpkg.com/@libp2p/kad-dht/dist/index.min.js"></script>
+-->
+<script src="https://unpkg.com/@multiformats/mafmt/dist/index.min.js"></script>
+<script src="https://unpkg.com/@libp2p/webtransport/dist/index.min.js"></script>
+<script src="https://unpkg.com/@libp2p/webrtc/dist/index.min.js"></script>
+<!-- <script src="https://unpkg.com/@libp2p/webrtc-direct/dist/index.min.js"></script> -->
+<script src="https://unpkg.com/interface-datastore/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@chainsafe/libp2p-noise@^11.0.2/dist/index.min.js" defer></script>
+<script src="https://unpkg.com/@libp2p/websockets/dist/index.min.js"></script>
+<script src="https://unpkg.com/multiformats/dist/index.min.js" defer></script>
+<script src="https://unpkg.com/@helia/dag-json/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/helia@^1.0.0/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@helia/unixfs@^1.1.0/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/libp2p@^0.43.0/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@chainsafe/libp2p-yamux@^3.0.7/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@chainsafe/libp2p-noise@^11.0.2/dist/index.min.js" defer></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@libp2p/websockets@^5.0.5/dist/index.min.js" defer></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@libp2p/bootstrap@^6.0.0/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/blockstore-core@^4.0.1/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/datastore-core@^9.0.3/dist/index.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@libp2p/kad-dht@^8.0.0/dist/index.min.js" defer></script>
+<script src="https://unpkg.com/@libp2p/interface/dist/index.min.js"></script>
+
+</div>`

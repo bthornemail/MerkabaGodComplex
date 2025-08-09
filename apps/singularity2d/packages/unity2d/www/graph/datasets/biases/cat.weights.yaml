@@ -1,0 +1,10 @@
+---
+"action": "get/listings"
+"actor": "cat"
+"environment": "marketplace"
+"object": "identity"
+"objective": "authorization"
+"observer": "marketplace"
+"storage": "record"
+"memory": "buffer"
+...

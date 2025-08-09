@@ -1,0 +1,101 @@
+{
+  "version": "0.1",
+  "short_name": "universe2d",
+  "name": "Universe 2D",
+  "description": "A sample MDN app that uses getUserMedia and MediaRecorder API for recording audio snippets, and The Web Audio API for visualizations.",
+  "type": "privileged",
+  "launch_path": "/index.html",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "minimal-ui",
+  "display_override": ["window-control-overlay", "fullscreen"],
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "icons": [
+    {
+      "src": "/app-icons/icon-60.png",
+      "sizes": "60x60",
+      "type": "image/png"
+    },
+    {
+      "src": "/app-icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/images/id.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["people", "places", "things"],
+  "shortcuts": [
+    {
+      "name": "How's the weather today?",
+      "short_name": "Today",
+      "description": "View weather information for today",
+      "url": "/today?source=pwa",
+      "icons": [{ "src": "/src/images/icons8-13-nodes-58.png", "sizes": "58x58" }]
+    },
+    {
+      "name": "How's the weather tomorrow?",
+      "short_name": "Tomorrow",
+      "description": "View weather information for tomorrow",
+      "url": "/tomorrow?source=pwa",
+      "icons": [{ "src": "/src/images/big-data-connection-network-svgrepo-com.svg", "sizes": "800x800" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/src/images/http.wallet.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/src/images/wallet.png",
+      "type": "image/jpg",
+      "sizes": "128x128",
+      "form_factor": "wide"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+tea",
+      "url": "/tea?type=%s"
+    },
+    {
+      "protocol": "web+coffee",
+      "url": "/coffee?type=%s"
+    }
+  ],
+  "developer": {
+    "name": "Brian Thorne",
+    "url": "https://bthorne.org"
+  },
+  "locales": {
+    "es": {
+      "description": "A sample MDN app that uses getUserMedia and MediaRecorder API for recording audio snippets, and The Web Audio API for visualizations.",
+      "developer": {
+        "url": "https://developer.mozila.org"
+      }
+    },
+    "it": {
+      "description": "A sample MDN app that uses getUserMedia and MediaRecorder API for recording audio snippets, and The Web Audio API for visualizations.",
+      "developer": {
+        "url": "https://developer.mozila.org"
+      }
+    }
+  },
+  "default_locale": "en",
+  "permissions": {
+    "audio-capture": {
+      "description": "Required to capture audio via getUserMedia"
+    },
+    "speech-recognition" : {
+      "description" : "Speech recognition"
+    }
+  },
+  "orientation": "portrait"
+}

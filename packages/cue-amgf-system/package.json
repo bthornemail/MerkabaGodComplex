@@ -1,0 +1,37 @@
+{
+  "name": "@ulp/cue-amgf-system",
+  "version": "1.0.0",
+  "description": "CUE-integrated Agentic Manuscript Generation Framework for Universal Life Protocol book creation",
+  "main": "cue-amgf-orchestrator.ts",
+  "scripts": {
+    "build": "tsc",
+    "cue-amgf:init": "npx ts-node cue-amgf-orchestrator.ts init",
+    "cue-amgf:train": "npx ts-node cue-training-program.ts",
+    "cue-amgf:train:quick": "npx ts-node cue-training-program.ts --quick",
+    "cue-amgf:train:deep": "npx ts-node cue-training-program.ts --deep", 
+    "cue-amgf:generate": "npx ts-node manuscript-generator.ts",
+    "cue-amgf:book": "npx ts-node manuscript-generator.ts",
+    "cue-amgf:demo:pipeline": "npx ts-node pipeline-demo.ts",
+    "cue-amgf:benchmark": "npx ts-node quick-benchmark.ts",
+    "cue-amgf:test:real": "npx ts-node run-real-test.ts",
+    "cue-amgf:harmonize": "npx ts-node vec7-harmony-agents.ts",
+    "cue-amgf:clarion-training": "npx ts-node clarion-mdu-training-demo.ts",
+    "test": "npx ts-node test-cue-amgf.ts",
+    "test:autonomous": "npx ts-node autonomous-test-suite.ts",
+    "demo": "npx ts-node quick-benchmark.ts"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.0"
+  },
+  "keywords": [
+    "CUE",
+    "AMGF", 
+    "Universal Life Protocol",
+    "Vec7 Harmony",
+    "MDU",
+    "Manuscript Generation",
+    "Computational Universe Engine"
+  ],
+  "author": "CUE-AMGF System",
+  "license": "MIT"
+}

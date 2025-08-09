@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Project Hyperion - Decentralized P2P Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .hyperion-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .trust-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        .marketplace-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .marketplace-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .trust-level-0 { border-left: 4px solid #ef4444; }
+        .trust-level-1 { border-left: 4px solid #f97316; }
+        .trust-level-2 { border-left: 4px solid #eab308; }
+        .trust-level-3 { border-left: 4px solid #22c55e; }
+        .trust-level-4 { border-left: 4px solid #3b82f6; }
+        .trust-level-5 { border-left: 4px solid #8b5cf6; }
+        
+        .pulse-dot {
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-mono">
+    
+    <!-- Header -->
+    <header class="hyperion-gradient p-6">
+        <div class="container mx-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">🚀 Project Hyperion</h1>
+                    <p class="text-lg opacity-90">Decentralized P2P Marketplace</p>
+                    <p class="text-sm opacity-75">Global Better Business Bureau • Trust-Verified Trading</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm opacity-75">Network Status</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full pulse-dot"></div>
+                        <span class="text-green-400 font-bold">OPERATIONAL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App -->
+    <div class="container mx-auto p-6" x-data="hyperionMarketplaceApp()">
+        
+        <!-- Navigation Tabs -->
+        <div class="mb-6">
+            <div class="border-b border-gray-700">
+                <nav class="-mb-px flex space-x-8">
+                    <button @click="activeTab = 'marketplace'" 
+                            :class="activeTab === 'marketplace' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-white'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        🏪 Marketplace
+                    </button>
+                    <button @click="activeTab = 'my-listings'" 
+                            :class="activeTab === 'my-listings' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-white'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        📦 My Listings
+                    </button>
+                    <button @click="activeTab = 'transactions'" 
+                            :class="activeTab === 'transactions' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-white'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        💰 Transactions
+                    </button>
+                    <button @click="activeTab = 'trust-network'" 
+                            :class="activeTab === 'trust-network' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-white'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        🛡️ Trust Network
+                    </button>
+                    <button @click="activeTab = 'analytics'" 
+                            :class="activeTab === 'analytics' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-white'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        📊 Analytics
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- User Profile Bar -->
+        <div class="bg-gray-800 p-4 rounded-lg mb-6 border border-gray-700">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
+                        <span class="text-xl">👤</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold" x-text="userProfile.displayName"></h3>
+                        <p class="text-sm text-gray-400">
+                            Trust Level: <span :class="'text-' + getTrustLevelColor(userProfile.trustLevel)" x-text="getTrustLevelName(userProfile.trustLevel)"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex space-x-6 text-center">
+                    <div>
+                        <div class="text-2xl font-bold text-green-400" x-text="userProfile.overallRating.toFixed(1)"></div>
+                        <div class="text-xs text-gray-400">Rating</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-blue-400" x-text="userProfile.attentionTokens"></div>
+                        <div class="text-xs text-gray-400">ATN</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-purple-400" x-text="userProfile.totalTransactions"></div>
+                        <div class="text-xs text-gray-400">Deals</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marketplace Tab -->
+        <div x-show="activeTab === 'marketplace'">
+            <!-- Search and Filters -->
+            <div class="bg-gray-800 p-6 rounded-lg mb-6 border border-gray-700">
+                <div class="grid md:grid-cols-4 gap-4">
+                    <input type="text" placeholder="Search assets, services..." 
+                           x-model="searchQuery"
+                           class="bg-gray-700 border border-gray-600 rounded px-4 py-2 text-white placeholder-gray-400">
+                    
+                    <select x-model="filterAssetType" class="bg-gray-700 border border-gray-600 rounded px-4 py-2 text-white">
+                        <option value="">All Asset Types</option>
+                        <option value="real_estate">🏠 Real Estate</option>
+                        <option value="vehicle">🚗 Vehicles</option>
+                        <option value="equipment">⚙️ Equipment</option>
+                        <option value="consulting">👨‍💼 Consulting</option>
+                        <option value="development">💻 Development</option>
+                        <option value="software">📱 Software</option>
+                    </select>
+                    
+                    <select x-model="filterTrustLevel" class="bg-gray-700 border border-gray-600 rounded px-4 py-2 text-white">
+                        <option value="">All Trust Levels</option>
+                        <option value="2">✅ Network Verified+</option>
+                        <option value="3">🏆 Delegate Endorsed+</option>
+                        <option value="4">🛡️ Insurance Backed+</option>
+                        <option value="5">💎 Platinum Trusted</option>
+                    </select>
+                    
+                    <button @click="searchListings()" 
+                            class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded font-bold transition-colors">
+                        🔍 Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Featured Listings -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="listing in filteredListings" :key="listing.listingId">
+                    <div class="marketplace-card bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500"
+                         :class="'trust-level-' + listing.trustLevel">
+                        <!-- Asset Type Badge -->
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-xs font-bold" x-text="getAssetTypeIcon(listing.assetType) + ' ' + listing.assetType.replace('_', ' ').toUpperCase()"></span>
+                            <div class="flex items-center space-x-2">
+                                <div :class="'w-3 h-3 rounded-full bg-' + getTrustLevelColor(listing.trustLevel)"></div>
+                                <span class="text-xs" x-text="getTrustLevelName(listing.trustLevel)"></span>
+                            </div>
+                        </div>
+
+                        <!-- Title and Description -->
+                        <h3 class="text-lg font-bold mb-2" x-text="listing.title"></h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3" x-text="listing.description"></p>
+
+                        <!-- Price and Seller Info -->
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <div class="text-2xl font-bold text-green-400">
+                                    <span x-text="listing.price"></span> 
+                                    <span class="text-sm" x-text="listing.currency"></span>
+                                </div>
+                                <div class="text-xs text-gray-400" x-show="listing.negotiable">💬 Negotiable</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="flex items-center space-x-1">
+                                    <span x-text="'⭐'.repeat(Math.floor(listing.sellerRating))"></span>
+                                    <span class="text-sm" x-text="listing.sellerRating.toFixed(1)"></span>
+                                </div>
+                                <div class="text-xs text-gray-400" x-text="listing.totalTransactions + ' deals'"></div>
+                            </div>
+                        </div>
+
+                        <!-- Location (if available) -->
+                        <div x-show="listing.location" class="text-xs text-gray-400 mb-4">
+                            📍 <span x-text="listing.location?.address || 'Location available'"></span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex space-x-3">
+                            <button @click="viewListing(listing)" 
+                                    class="flex-1 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded font-bold transition-colors">
+                                👁️ View Details
+                            </button>
+                            <button @click="contactSeller(listing)" 
+                                    class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold transition-colors">
+                                💬 Contact
+                            </button>
+                        </div>
+
+                        <!-- Trust Indicators -->
+                        <div class="flex justify-between mt-3 text-xs">
+                            <span x-show="listing.insuranceRequired" class="text-blue-400">🛡️ Insured</span>
+                            <span x-show="listing.verificationProofs.length > 0" class="text-green-400">✅ Verified</span>
+                            <span x-show="listing.trackingEnabled" class="text-purple-400">📡 Tracked</span>
+                            <span class="text-gray-400" x-text="'Created ' + formatDate(listing.createdAt)"></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- My Listings Tab -->
+        <div x-show="activeTab === 'my-listings'">
+            <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">My Listings</h2>
+                    <button @click="showCreateListing = true" 
+                            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold transition-colors">
+                        ➕ Create Listing
+                    </button>
+                </div>
+            </div>
+
+            <!-- User's Listings -->
+            <div class="space-y-4">
+                <template x-for="listing in userListings" :key="listing.listingId">
+                    <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold mb-2" x-text="listing.title"></h3>
+                                <p class="text-gray-400 mb-2" x-text="listing.description"></p>
+                                <div class="flex items-center space-x-4 text-sm">
+                                    <span class="text-green-400 font-bold" x-text="listing.price + ' ' + listing.currency"></span>
+                                    <span :class="'text-' + getTrustLevelColor(listing.trustLevel)" x-text="getTrustLevelName(listing.trustLevel)"></span>
+                                    <span x-text="listing.isActive ? '🟢 Active' : '🔴 Inactive'"></span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm">✏️ Edit</button>
+                                <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">🗑️ Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div x-show="activeTab === 'transactions'">
+            <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                <h2 class="text-2xl font-bold">Transaction History</h2>
+                <p class="text-gray-400">Your buying and selling activity</p>
+            </div>
+
+            <div class="space-y-4">
+                <template x-for="transaction in userTransactions" :key="transaction.transactionId">
+                    <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <h3 class="font-bold" x-text="transaction.description"></h3>
+                                    <span :class="getStatusBadgeClass(transaction.status)" 
+                                          class="px-2 py-1 rounded text-xs font-bold" 
+                                          x-text="transaction.status.toUpperCase()"></span>
+                                </div>
+                                <div class="text-sm text-gray-400 space-y-1">
+                                    <div>Amount: <span class="text-green-400 font-bold" x-text="transaction.amount + ' ' + transaction.currency"></span></div>
+                                    <div>Type: <span x-text="transaction.buyerId === userProfile.userId ? '📥 Purchase' : '📤 Sale'"></span></div>
+                                    <div>Date: <span x-text="formatDate(transaction.createdAt)"></span></div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="bg-purple-600 hover:bg-purple-700 px-3 py-1 rounded text-sm">👁️ View</button>
+                                <button x-show="transaction.status === 'completed' && !transaction.buyerRating && !transaction.sellerRating"
+                                        class="bg-yellow-600 hover:bg-yellow-700 px-3 py-1 rounded text-sm">⭐ Rate</button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Trust Network Tab -->
+        <div x-show="activeTab === 'trust-network'">
+            <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                <h2 class="text-2xl font-bold mb-4">🛡️ Trust Network</h2>
+                <p class="text-gray-400">Network verification and reputation leaderboard</p>
+            </div>
+
+            <!-- Trust Leaderboard -->
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                    <h3 class="text-lg font-bold mb-4">🏆 Top Trusted Users</h3>
+                    <div class="space-y-3">
+                        <template x-for="(user, index) in trustLeaderboard" :key="user.userId">
+                            <div class="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <div class="flex items-center space-x-3">
+                                    <div class="text-lg font-bold" x-text="'#' + (index + 1)"></div>
+                                    <div>
+                                        <div class="font-bold" x-text="user.displayName"></div>
+                                        <div class="text-sm text-gray-400" x-text="getTrustLevelName(user.trustLevel)"></div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-green-400" x-text="user.overallRating.toFixed(1)"></div>
+                                    <div class="text-xs text-gray-400" x-text="user.totalRatings + ' reviews'"></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Network Statistics -->
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                    <h3 class="text-lg font-bold mb-4">📊 Network Health</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span>Network Health Score</span>
+                            <span class="font-bold text-green-400" x-text="(networkStats.networkHealth * 100).toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Active Users</span>
+                            <span class="font-bold" x-text="networkStats.activeUsers"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Total Volume</span>
+                            <span class="font-bold text-green-400" x-text="networkStats.totalVolume + ' ATN'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Success Rate</span>
+                            <span class="font-bold text-blue-400" x-text="((1 - networkStats.disputeRate) * 100).toFixed(1) + '%'"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Average Rating</span>
+                            <span class="font-bold text-purple-400" x-text="networkStats.averageRating.toFixed(1) + '/5'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div x-show="activeTab === 'analytics'">
+            <div class="bg-gray-800 p-6 rounded-lg mb-6">
+                <h2 class="text-2xl font-bold mb-4">📊 Marketplace Analytics</h2>
+                <p class="text-gray-400">Comprehensive market insights and trends</p>
+            </div>
+
+            <!-- Market Statistics -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 text-center">
+                    <div class="text-3xl font-bold text-blue-400" x-text="networkStats.totalUsers"></div>
+                    <div class="text-sm text-gray-400">Total Users</div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 text-center">
+                    <div class="text-3xl font-bold text-green-400" x-text="networkStats.activeListings"></div>
+                    <div class="text-sm text-gray-400">Active Listings</div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 text-center">
+                    <div class="text-3xl font-bold text-purple-400" x-text="networkStats.totalTransactions"></div>
+                    <div class="text-sm text-gray-400">Transactions</div>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 text-center">
+                    <div class="text-3xl font-bold text-yellow-400" x-text="networkStats.totalVolume.toFixed(0)"></div>
+                    <div class="text-sm text-gray-400">Volume (ATN)</div>
+                </div>
+            </div>
+
+            <!-- Volume by Asset Type -->
+            <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                <h3 class="text-lg font-bold mb-4">💹 Volume by Asset Type</h3>
+                <div class="space-y-3">
+                    <template x-for="[assetType, volume] in Object.entries(networkStats.volumeByAssetType || {})" :key="assetType">
+                        <div class="flex justify-between items-center">
+                            <span x-text="getAssetTypeIcon(assetType) + ' ' + assetType.replace('_', ' ').toUpperCase()"></span>
+                            <span class="font-bold text-green-400" x-text="volume.toFixed(0) + ' ATN'"></span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function hyperionMarketplaceApp() {
+            return {
+                activeTab: 'marketplace',
+                searchQuery: '',
+                filterAssetType: '',
+                filterTrustLevel: '',
+                showCreateListing: false,
+                
+                // User Profile
+                userProfile: {
+                    userId: 'user_demo_001',
+                    displayName: 'Demo Trader',
+                    trustLevel: 2,
+                    overallRating: 4.7,
+                    attentionTokens: 1250,
+                    totalTransactions: 23
+                },
+                
+                // Sample Data
+                listings: [
+                    {
+                        listingId: 'list_001',
+                        title: 'Professional Web Development Services',
+                        description: 'Full-stack web application development using modern frameworks. Specialized in React, Node.js, and blockchain integration.',
+                        assetType: 'development',
+                        price: 50.0,
+                        currency: 'ATN',
+                        trustLevel: 4,
+                        sellerRating: 4.9,
+                        totalTransactions: 47,
+                        negotiable: true,
+                        insuranceRequired: true,
+                        verificationProofs: ['github', 'portfolio'],
+                        trackingEnabled: false,
+                        createdAt: new Date('2025-08-01'),
+                        location: { address: 'Remote Worldwide' }
+                    },
+                    {
+                        listingId: 'list_002',
+                        title: '2019 Tesla Model 3 - Excellent Condition',
+                        description: 'Low mileage Tesla Model 3 with autopilot, premium interior, and extended warranty. Well maintained, one owner.',
+                        assetType: 'vehicle',
+                        price: 450.0,
+                        currency: 'ATN',
+                        trustLevel: 3,
+                        sellerRating: 4.8,
+                        totalTransactions: 12,
+                        negotiable: false,
+                        insuranceRequired: true,
+                        verificationProofs: ['dmv', 'inspection'],
+                        trackingEnabled: true,
+                        createdAt: new Date('2025-08-05'),
+                        location: { address: 'San Francisco, CA' }
+                    },
+                    {
+                        listingId: 'list_003',
+                        title: 'Commercial Real Estate - Downtown Office',
+                        description: 'Prime downtown office space, 5000 sq ft, modern amenities, parking included. Perfect for tech companies.',
+                        assetType: 'real_estate',
+                        price: 2500.0,
+                        currency: 'ATN',
+                        trustLevel: 5,
+                        sellerRating: 4.95,
+                        totalTransactions: 8,
+                        negotiable: true,
+                        insuranceRequired: true,
+                        verificationProofs: ['title', 'appraisal', 'inspection'],
+                        trackingEnabled: false,
+                        createdAt: new Date('2025-08-03'),
+                        location: { address: 'Austin, TX' }
+                    },
+                    {
+                        listingId: 'list_004',
+                        title: 'AI Consulting & Strategy Services',
+                        description: 'Expert AI/ML consulting for businesses. Implementation strategy, model selection, and deployment guidance.',
+                        assetType: 'consulting',
+                        price: 150.0,
+                        currency: 'ATN',
+                        trustLevel: 4,
+                        sellerRating: 4.7,
+                        totalTransactions: 31,
+                        negotiable: true,
+                        insuranceRequired: false,
+                        verificationProofs: ['linkedin', 'certifications'],
+                        trackingEnabled: false,
+                        createdAt: new Date('2025-08-07'),
+                        location: { address: 'Remote Worldwide' }
+                    }
+                ],
+                
+                userListings: [
+                    {
+                        listingId: 'user_list_001',
+                        title: 'MacBook Pro M2 - Like New',
+                        description: 'Barely used MacBook Pro with M2 chip, 16GB RAM, 512GB SSD.',
+                        assetType: 'equipment',
+                        price: 200.0,
+                        currency: 'ATN',
+                        trustLevel: 2,
+                        isActive: true
+                    }
+                ],
+                
+                userTransactions: [
+                    {
+                        transactionId: 'tx_001',
+                        description: 'Purchased: Professional Logo Design',
+                        amount: 25.0,
+                        currency: 'ATN',
+                        status: 'completed',
+                        buyerId: 'user_demo_001',
+                        createdAt: new Date('2025-08-01')
+                    },
+                    {
+                        transactionId: 'tx_002',
+                        description: 'Sold: MacBook Pro M2',
+                        amount: 200.0,
+                        currency: 'ATN',
+                        status: 'shipped',
+                        sellerId: 'user_demo_001',
+                        createdAt: new Date('2025-08-06')
+                    }
+                ],
+                
+                trustLeaderboard: [
+                    { userId: 'trust_001', displayName: 'Alice Cooper', trustLevel: 5, overallRating: 4.98, totalRatings: 127 },
+                    { userId: 'trust_002', displayName: 'Bob Builder', trustLevel: 4, overallRating: 4.92, totalRatings: 89 },
+                    { userId: 'trust_003', displayName: 'Carol Coder', trustLevel: 4, overallRating: 4.87, totalRatings: 156 },
+                    { userId: 'trust_004', displayName: 'David Designer', trustLevel: 3, overallRating: 4.81, totalRatings: 203 },
+                    { userId: 'trust_005', displayName: 'Eva Engineer', trustLevel: 3, overallRating: 4.76, totalRatings: 78 }
+                ],
+                
+                networkStats: {
+                    totalUsers: 1247,
+                    activeUsers: 892,
+                    totalListings: 3456,
+                    activeListings: 2103,
+                    totalTransactions: 8923,
+                    completedTransactions: 8145,
+                    totalVolume: 45678.50,
+                    averageRating: 4.73,
+                    disputeRate: 0.023,
+                    networkHealth: 0.847,
+                    volumeByAssetType: {
+                        'development': 15420.0,
+                        'consulting': 12350.0,
+                        'vehicle': 8900.0,
+                        'real_estate': 6780.0,
+                        'equipment': 2228.5
+                    }
+                },
+                
+                get filteredListings() {
+                    return this.listings.filter(listing => {
+                        if (this.searchQuery && !listing.title.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+                            !listing.description.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                            return false;
+                        }
+                        if (this.filterAssetType && listing.assetType !== this.filterAssetType) {
+                            return false;
+                        }
+                        if (this.filterTrustLevel && listing.trustLevel < parseInt(this.filterTrustLevel)) {
+                            return false;
+                        }
+                        return true;
+                    });
+                },
+                
+                searchListings() {
+                    // In a real implementation, this would make API calls
+                    console.log('Searching listings with filters:', {
+                        query: this.searchQuery,
+                        assetType: this.filterAssetType,
+                        trustLevel: this.filterTrustLevel
+                    });
+                },
+                
+                viewListing(listing) {
+                    alert(`Viewing listing: ${listing.title}\n\nPrice: ${listing.price} ${listing.currency}\nSeller Rating: ${listing.sellerRating}/5\n\n${listing.description}`);
+                },
+                
+                contactSeller(listing) {
+                    alert(`Contacting seller for: ${listing.title}\n\nIn a real implementation, this would open a secure P2P messaging interface.`);
+                },
+                
+                getTrustLevelName(level) {
+                    const names = ['Unverified', 'Basic', 'Network Verified', 'Delegate Endorsed', 'Insurance Backed', 'Platinum Trusted'];
+                    return names[level] || 'Unknown';
+                },
+                
+                getTrustLevelColor(level) {
+                    const colors = ['red-400', 'orange-400', 'yellow-400', 'green-400', 'blue-400', 'purple-400'];
+                    return colors[level] || 'gray-400';
+                },
+                
+                getAssetTypeIcon(assetType) {
+                    const icons = {
+                        'real_estate': '🏠',
+                        'vehicle': '🚗',
+                        'equipment': '⚙️',
+                        'consulting': '👨‍💼',
+                        'development': '💻',
+                        'software': '📱',
+                        'data': '📊',
+                        'design': '🎨'
+                    };
+                    return icons[assetType] || '📦';
+                },
+                
+                getStatusBadgeClass(status) {
+                    const classes = {
+                        'initiated': 'bg-blue-600 text-blue-100',
+                        'accepted': 'bg-green-600 text-green-100',
+                        'paid': 'bg-purple-600 text-purple-100',
+                        'shipped': 'bg-orange-600 text-orange-100',
+                        'delivered': 'bg-indigo-600 text-indigo-100',
+                        'completed': 'bg-green-700 text-green-100',
+                        'disputed': 'bg-red-600 text-red-100',
+                        'cancelled': 'bg-gray-600 text-gray-100'
+                    };
+                    return classes[status] || 'bg-gray-600 text-gray-100';
+                },
+                
+                formatDate(date) {
+                    return new Date(date).toLocaleDateString();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

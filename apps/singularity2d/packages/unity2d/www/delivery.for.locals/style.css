@@ -1,0 +1,40 @@
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+ #map {
+    height: 100%;
+  }
+  
+  /* 
+   * Optional: Makes the sample page fill the window. 
+   */
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    /* align-items: center; */
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  small { 
+    text-align: center;
+    width: 100%;
+  }
+  .cash-accepted {
+    font-size: 3rem;
+  }
+  @media (min-width: 1250px) {
+    section {
+      width: 60%;
+    }
+  }

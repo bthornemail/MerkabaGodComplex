@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<polygon style="fill:#424242;" points="32,34 16,34 8,47 40,47 "/>
+<rect x="16" y="32" style="fill:#7B1FA2;" width="16" height="15"/>
+<path style="fill:#A0530E;" d="M29,39l-5,8l-5-8H29z M12,16c0,0-2.583-1-4-1s-1,3-1,3s0.75,7.667,2,8l1,1L12,16z M37.943,27l1-1
+	c1.25-0.333,2-8,2-8s0.417-3-1-3S35,16,35,16L37.943,27z"/>
+<path style="fill:#7A3A0F;" d="M8.104,17.354c0,0,0.729-1.437,2.896,1.646c2.037,2.899-2,0-2,0v4C9,23,7.688,17.854,8.104,17.354z
+	 M39.839,17.354c0,0-0.729-1.437-2.896,1.646c-2.037,2.899,2,0,2,0v4C38.943,23,40.255,17.854,39.839,17.354z"/>
+<path style="fill:#C16E14;" d="M32.943,4C30.724,2.558,26.995,1,24,1s-6.781,1.558-9,3c-3.029,1.968-5,4.344-5,8c0,6.333,0,9,0,9
+	s0,2.917,0,8c0,3.685,4.826,7.334,7.428,9.613C18.455,39.512,19.77,40,21.135,40h2.961H27c1.365,0,2.68-0.488,3.707-1.387
+	c2.602-2.278,7.236-5.927,7.236-9.613c0-5.083,0-8,0-8s0-2.667,0-9C37.943,8.344,35.972,5.968,32.943,4z"/>
+<rect x="19" y="30" style="fill:#A0530E;" width="10" height="2"/>
+<path style="fill:none;stroke:#A0530E;stroke-width:2;stroke-miterlimit:10;" d="M26,17l6-1c0,0,3,1.25,3,3 M22,17l-6-1
+	c0,0-3,1.25-3,3"/>
+<g>
+	<ellipse style="fill:#424242;" cx="29.5" cy="20" rx="4.5" ry="3"/>
+	<rect x="21" y="19" style="fill:#424242;" width="6" height="1"/>
+	<ellipse style="fill:#424242;" cx="18.5" cy="20" rx="4.5" ry="3"/>
+</g>
+<path style="fill:none;stroke:#B0BEC5;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" d="M30,19
+	c0.531,0,1.437,0.281,2,1 M21,20c-0.563-0.719-1.469-1-2-1"/>
+</svg>

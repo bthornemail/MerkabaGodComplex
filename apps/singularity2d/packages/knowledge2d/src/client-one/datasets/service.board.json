@@ -1,0 +1,18 @@
+{
+	"nodes": [
+		{
+			"title": "Marketplace_3D",
+			"summary": "a decentralied marketplace"
+		},
+		{
+			"title": "Service_Board",
+			"summary": "a decentralized service board"
+		}
+	],
+	"links": [
+		{
+			"source": "Marketplace_3D",
+			"target": "Service_Board"
+		}
+	]
+}

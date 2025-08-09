@@ -1,0 +1,108 @@
+{
+  "staging": {
+    "name": "ULP-CUE-Staging",
+    "version": "v0.1-audit",
+    "environment": "third-party-verification",
+    "endpoints": {
+      "websockets": {
+        "control_center": "wss://staging.ulp.dev/control-center/ws",
+        "dashboard": "wss://staging.ulp.dev/dashboard/ws", 
+        "knowledge_trie": "wss://staging.ulp.dev/knowledge-trie/ws",
+        "mcp_bridge": "wss://staging.ulp.dev/mcp/ws"
+      },
+      "http": {
+        "api_server": "https://staging.ulp.dev/api",
+        "public_portal": "https://staging.ulp.dev",
+        "control_center": "https://staging.ulp.dev/control",
+        "dashboard": "https://staging.ulp.dev/dashboard"
+      },
+      "monitoring": {
+        "grafana": "https://staging.ulp.dev/grafana",
+        "prometheus": "https://staging.ulp.dev/prometheus",
+        "jaeger": "https://staging.ulp.dev/jaeger"
+      }
+    },
+    "test_credentials": {
+      "read_only_monitoring": {
+        "username": "third-party-auditor",
+        "note": "Credentials provided to verified security firms"
+      },
+      "load_testing": {
+        "api_key_header": "X-ULP-Test-Key",
+        "note": "Rate-limited API access for load testing"
+      }
+    },
+    "performance_targets": {
+      "websocket": {
+        "max_concurrent_connections": 1000,
+        "target_message_throughput": 10000,
+        "p95_latency_ms": 50,
+        "p99_latency_ms": 100
+      },
+      "http_api": {
+        "p95_response_ms": 200,
+        "p99_response_ms": 500,
+        "max_requests_per_second": 5000
+      },
+      "consensus": {
+        "quorum_activation_p95_ms": 500,
+        "state_convergence_max_seconds": 30
+      },
+      "pwa": {
+        "lighthouse_performance_min": 90,
+        "lighthouse_accessibility_min": 95,
+        "tti_max_ms": 3000,
+        "inp_max_ms": 200
+      }
+    },
+    "audit_configuration": {
+      "state_snapshots": {
+        "frequency": "daily",
+        "retention_days": 90,
+        "merkle_root_publishing": true
+      },
+      "event_logging": {
+        "append_only": true,
+        "cryptographic_signing": true,
+        "hash_chaining": true,
+        "retention_days": 365
+      },
+      "replay_capability": {
+        "independent_verification": true,
+        "state_derivation_from_logs": true,
+        "consensus_validation": true
+      }
+    },
+    "third_party_access": {
+      "security_firms": [
+        "Trail of Bits",
+        "NCC Group", 
+        "Bishop Fox",
+        "Zellic"
+      ],
+      "load_testing_providers": [
+        "k6 Cloud",
+        "Artillery Pro",
+        "Loader.io"
+      ],
+      "accessibility_auditors": [
+        "Deque",
+        "UsableNet"
+      ]
+    }
+  },
+  "local_development": {
+    "websockets": {
+      "control_center": "ws://localhost:8083",
+      "dashboard": "ws://localhost:8081",
+      "knowledge_trie": "ws://localhost:8082",
+      "dashboard_bridge": "ws://localhost:8080"
+    },
+    "http": {
+      "public_portal_dev": "http://localhost:3000",
+      "public_portal_preview": "http://localhost:3001", 
+      "control_center": "http://localhost:5173",
+      "api_server": "http://localhost:3002"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@universal-life-protocol/observability",
+  "version": "1.0.0",
+  "description": "OpenTelemetry instrumentation for ULP WebSocket and database operations",
+  "main": "telemetry.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node telemetry.ts"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/auto-instrumentation-node": "^0.51.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.51.0",
+    "@opentelemetry/sdk-trace-node": "^1.23.0",
+    "@opentelemetry/sdk-metrics": "^1.23.0",
+    "@opentelemetry/resources": "^1.23.0",
+    "@opentelemetry/semantic-conventions": "^1.23.0",
+    "@opentelemetry/exporter-prometheus": "^0.51.1",
+    "@opentelemetry/exporter-jaeger": "^1.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.16",
+    "typescript": "^5.8.3",
+    "ts-node": "^10.9.2"
+  },
+  "keywords": [
+    "opentelemetry",
+    "observability",
+    "websocket",
+    "metrics",
+    "tracing"
+  ],
+  "author": "Universal Life Protocol Team",
+  "license": "ISC"
+}

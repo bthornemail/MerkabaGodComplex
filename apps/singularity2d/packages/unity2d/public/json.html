@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>JSON Editor App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="json.css">
+</head>
+<body>
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-3" id="json-outline">
+            <h5 class="mt-3">JSON Outline</h5>
+            <input type="text" id="search-bar" class="form-control mb-3" placeholder="Search...">
+            <ul class="list-group" id="outline-list"></ul>
+        </div>
+        <div class="col-9" id="editor-container">
+            <h5 class="mt-3">JSON Editor</h5>
+            <div id="editor-area" class="border p-3 rounded">
+                <!-- JSON elements will be displayed here -->
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-primary" onclick="addElement()">Add Element</button>
+                <button class="btn btn-success" onclick="importJSON()">Import JSON</button>
+                <button class="btn btn-secondary" onclick="exportJSON()">Export JSON</button>
+                <input type="file" id="json-file-input" style="display: none;" onchange="loadFile(event)">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="./json.js"></script>
+</body>
+</html>

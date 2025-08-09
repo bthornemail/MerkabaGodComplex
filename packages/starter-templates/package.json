@@ -1,0 +1,44 @@
+{
+  "name": "@universal-life-protocol/starter-templates",
+  "version": "2.0.0",
+  "description": "Ready-to-use templates for Universal Life Protocol applications",
+  "bin": {
+    "create-ulp-app": "bin/create-ulp-app.js"
+  },
+  "files": [
+    "templates",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node test-templates.js"
+  },
+  "keywords": [
+    "templates",
+    "starter-kit",
+    "consciousness-app",
+    "living-knowledge-app",
+    "attention-economy",
+    "ulp-scaffold",
+    "ai-consciousness",
+    "quick-start"
+  ],
+  "author": "Brian Thorne",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol.git",
+    "directory": "packages/starter-templates"
+  },
+  "homepage": "https://github.com/universallifeprotocol/UniversalLifeProtocol/tree/main/packages/starter-templates#readme",
+  "bugs": {
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol/issues"
+  },
+  "peerDependencies": {
+    "@universal-life-protocol/core": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

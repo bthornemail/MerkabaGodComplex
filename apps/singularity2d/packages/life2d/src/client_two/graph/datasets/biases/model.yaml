@@ -1,0 +1,48 @@
+---
+# Identity File (String UTF-8):
+identity
+JohnDoe123
+...
+---
+# CSV File:
+identity: JohnDoe123
+...
+---
+# JSON File:
+{
+  "id": "JohnDoe123"
+}
+...
+---
+# Sankey Graph File
+{
+  "nodes": [
+    {"id": "JohnDoe123"}
+  ],
+  "links": []
+}
+...
+---
+# Gantt Chart File (assuming a simple format with tasks):
+{
+  "tasks": [
+    {"id": "JohnDoe123", "name": "Task 1", "start": "2024-03-17", "end": "2024-03-21"}
+  ]
+}
+...
+---
+# Force Graph Data File (assuming a simple format with nodes and links):
+{
+  "tasks": [
+    {"id": "JohnDoe123", "name": "Task 1", "start": "2024-03-17", "end": "2024-03-21"}
+  ]
+}
+...
+---
+# Gantt Chart File (assuming a simple format with tasks):
+{
+  "tasks": [
+    {"id": "JohnDoe123", "name": "Task 1", "start": "2024-03-17", "end": "2024-03-21"}
+  ]
+}
+...

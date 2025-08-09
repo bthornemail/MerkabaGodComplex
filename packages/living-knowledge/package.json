@@ -1,0 +1,55 @@
+{
+  "name": "@universal-life-protocol/living-knowledge",
+  "version": "2.0.0",
+  "description": "Information with genuine survival instincts using Conway's Game of Life rules and attention economics",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node build.js",
+    "test": "node test-living-knowledge.js",
+    "demo": "node demo-living-knowledge.js",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "keywords": [
+    "living-knowledge",
+    "conway-game-of-life",
+    "attention-economics",
+    "knowledge-evolution",
+    "information-lifecycle",
+    "survival-instincts",
+    "proof-of-relevance",
+    "attention-tokens"
+  ],
+  "author": "Brian Thorne",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol.git",
+    "directory": "packages/living-knowledge"
+  },
+  "homepage": "https://github.com/universallifeprotocol/UniversalLifeProtocol/tree/main/packages/living-knowledge#readme",
+  "bugs": {
+    "url": "https://github.com/universallifeprotocol/UniversalLifeProtocol/issues"
+  },
+  "dependencies": {
+    "@types/node": "^20.17.16"
+  },
+  "peerDependencies": {
+    "@universal-life-protocol/protocols": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

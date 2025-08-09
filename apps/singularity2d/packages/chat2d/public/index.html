@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Life 2D Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div id="chat-container" class="container">
+      <div id="chat-messages-box">
+        <div id="chat-messages"></div>
+      </div>
+      <div class="chat-messages-input input-group mb-3">
+        <textarea type="text" id="chat-input-message" class="form-control" placeholder="Type your message..."></textarea>
+        <div class="input-group-append">
+          <button id="chat-send-button" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      fetch('https://source.unsplash.com/random')
+        .then((response) => {
+          document.body.style.backgroundImage = `url(${response.url})`;
+        });
+    </script>
+    <script type="module" src="chat.js"></script>
+  </body>
+</html>

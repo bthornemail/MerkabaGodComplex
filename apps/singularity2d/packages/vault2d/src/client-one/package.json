@@ -1,0 +1,40 @@
+{
+  "name": "three",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "optionalDependencies": {
+    "@helia/strings": "^3.0.0",
+    "blockstore-core": "^4.4.0",
+    "multiformats": "^13.1.0",
+    "showdown": "^2.1.0"
+  },
+  "dependencies": {
+    "3d-force-graph": "^1.74.5",
+    "d3-force-3d": "^3.0.5",
+    "ethers": "^6.13.4",
+    "fontawesome-free": "^1.0.4",
+    "force-graph": "^1.47.2",
+    "front-matter": "^4.0.2",
+    "graphology": "^0.25.4",
+    "html5-qrcode": "^2.3.8",
+    "marked": "^12.0.1",
+    "merkletreejs": "^0.4.0",
+    "mqtt": "^5.5.5",
+    "nn": "^0.0.7",
+    "ollama": "^0.5.9",
+    "openpgp": "^5.11.1",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "three": "^0.171.0",
+    "three-spritetext": "^1.9.3",
+    "tinyneat": "^1.1.0"
+  }
+}

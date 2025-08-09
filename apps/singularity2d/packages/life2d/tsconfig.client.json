@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src/client",
+    "outDir": "dist/client",
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "lib": ["DOM"] // Include both server-side and DOM libs if you're also working with the client
+  },
+  "include": ["src/client/**/*"],
+  "exclude": ["dist/client/**/*"]
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Landing Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form {
+      margin-bottom: 20px;
+    }
+    .form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .form button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .success {
+      background-color: #DFF2BF;
+      color: #4F8A10;
+    }
+    .error {
+      background-color: #FFBABA;
+      color: #D8000C;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>API Landing Page</h1>
+    <div class="form">
+      <label for="assetId">Asset ID:</label>
+      <input type="text" id="assetId" name="assetId">
+
+      <label for="to">To:</label>
+      <input type="text" id="to" name="to">
+
+      <button onclick="mintAsset()">Mint Asset</button>
+    </div>
+
+    <div class="form">
+      <label for="tokenId">Token ID:</label>
+      <input type="text" id="tokenId" name="tokenId">
+
+      <button onclick="getAsset()">Get Asset</button>
+    </div>
+
+    <div class="form">
+      <label for="transferTokenId">Token ID:</label>
+      <input type="text" id="transferTokenId" name="transferTokenId">
+
+      <label for="transferTo">To:</label>
+      <input type="text" id="transferTo" name="transferTo">
+
+      <button onclick="transferAsset()">Transfer Asset</button>
+    </div>
+
+    <div class="form">
+      <label for="uploadImage">Upload Image:</label>
+      <input type="file" id="uploadImage" name="uploadImage">
+
+      <button onclick="uploadImage()">Upload</button>
+    </div>
+
+    <div id="messageContainer"></div>
+  </div>
+
+  <script>
+    function showMessage(message, type) {
+      const messageContainer = document.getElementById('messageContainer');
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(type);
+      messageDiv.textContent = message;
+      messageContainer.appendChild(messageDiv);
+    }
+
+    async function mintAsset() {
+      const assetId = document.getElementById('assetId').value;
+      const to = document.getElementById('to').value;
+
+      const response = await fetch('/assetNFT/mint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ assetId, to })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        showMessage('Asset minted successfully', 'success');
+        console.log(data.receipt);
+      } else {
+        showMessage(`Error: ${data.error}`, 'error');
+        console.error(data.error);
+      }
+    }
+
+    async function getAsset() {
+      const tokenId = document.getElementById('tokenId').value;
+
+      const response = await fetch(`/assetNFT/${tokenId}`);
+
+      const data = await response.json();
+      if (response.ok) {
+        showMessage('Asset retrieved successfully', 'success');
+        console.log(data.asset);
+      } else {
+        showMessage(`Error: ${data.error}`, 'error');
+        console.error(data.error);
+      }
+    }
+
+    async function transferAsset() {
+      const tokenId = document.getElementById('transferTokenId').value;
+      const to = document.getElementById('transferTo').value;
+
+      const response = await fetch('/assetNFT/transfer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tokenId, to })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        showMessage('Asset transferred successfully', 'success');
+        console.log(data.receipt);
+      } else {
+        showMessage(`Error: ${data.error}`, 'error');
+        console.error(data.error);
+      }
+    }
+
+    async function uploadImage() {
+      const fileInput = document.getElementById('uploadImage');
+      const file = fileInput.files[0];
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        showMessage('Image uploaded successfully', 'success');
+        console.log(data.message);
+      } else {
+        showMessage(`Error: ${data.error}`, 'error');
+        console.error(data.error);
+      }
+    }
+  </script>
+</body>
+</html>

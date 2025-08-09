@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Net Graph View</title>
+    <link rel="stylesheet" href="src/css/canvas.css">
+</head>
+
+<body>
+    <img id="neural-net-graph-view" src="http://localhost:3000/stream" alt="Streamed Image">
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Your data URL
+            const sse = new EventSource("http://localhost:3000/sse");
+
+            sse.addEventListener("message", ({ data }) => {
+                console.log(data);
+            });
+
+            // sse.addEventListener("createPNGStream", ({data}) => {
+            //     console.log(data);
+            //     const data = JSON.parse(data);
+            //     console.log(data);
+            //     // Create an image element and set its source to the received data
+            //     const img = new Image();
+            //     img.src = 'data:image/png;base64,' + data.base64;
+            //     img.onload = function () {
+            //         console.log(img)
+            //         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            //     };
+            // });
+        })
+    </script>
+    <script>
+        window.addEventListener('resize', resizeImage);
+        function resizeImage() {
+            const image = document.getElementById('neural-net-graph-view');
+            if (window.innerWidth / window.innerHeight > image.width / image.height) {
+                image.style.width = 'auto';
+                image.style.height = '100%';
+            } else {
+                image.style.width = '100%';
+                image.style.height = 'auto';
+            }
+        }
+        // Initial resize
+        resizeImage();
+    </script>
+</body>
+
+</html>

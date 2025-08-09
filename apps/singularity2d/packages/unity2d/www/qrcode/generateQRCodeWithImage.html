@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code with Image</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="256" height="256"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+        async function generateQRCodeWithImage(imagePath, qrContent) {
+            const canvasSize = 256;
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Generate QR code
+            const qrOptions = {
+                width: canvasSize,
+                margin: 1,
+                errorCorrectionLevel: "H",
+                // Uncomment and adjust colors if needed
+                // color: {
+                //     dark: "#133fd7",
+                //     light: "#d7c613"
+                // }
+            };
+
+            QRCode.toDataURL(qrContent, qrOptions, async (err, qrDataURL) => {
+                if (err) throw err;
+                const qrImage = new Image();
+                qrImage.src = qrDataURL;
+                qrImage.onload = () => {
+                    // Draw QR code
+                    ctx.drawImage(qrImage, 0, 0, canvasSize, canvasSize);
+                    ctx.globalAlpha = 0.75;
+
+                    // Load the main image
+                    const image = new Image();
+                    image.src = imagePath;
+                    image.onload = () => {
+                        const imageSize = Math.min(canvasSize / 1.5, image.width, image.height);
+                        const centerX = (canvasSize - imageSize) / 2;
+                        const centerY = (canvasSize - imageSize) / 2;
+
+                        // Draw the image at the center
+                        ctx.drawImage(image, centerX, centerY, imageSize, imageSize);
+                    };
+                };
+            });
+        }
+
+        // Example usage
+        generateQRCodeWithImage('input.svg', 'Your QR Code Content');
+    </script>
+</body>
+</html>

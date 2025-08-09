@@ -1,0 +1,37 @@
+{
+    "nodes": [
+        {
+            "id": "Unity_Cloud_Vault"
+        },
+        {
+            "id": "Marketplace"
+        },
+        {
+            "id": "Peer"
+        },
+        {
+            "id": "Wallet"
+        },
+        {
+            "id": "Token"
+        }
+    ],
+    "links": [
+        {
+            "source": "Unity_Cloud_Vault",
+            "target": "Marketplace"
+        },
+        {
+            "source": "Unity_Cloud_Vault",
+            "target": "Peer"
+        },
+        {
+            "source": "Peer",
+            "target": "Wallet"
+        },
+        {
+            "source": "Marketplace",
+            "target": "Token"
+        }
+    ]
+}

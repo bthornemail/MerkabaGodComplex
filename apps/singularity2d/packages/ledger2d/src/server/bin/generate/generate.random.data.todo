@@ -1,0 +1,172 @@
+import { HDNodeWallet } from "ethers";
+
+import { RECORD, STATE, DEFINITION, MEMORY } from "../../types/memory";
+import { CONTENT } from "../../types/content";
+import { ASSET } from "../../types/asset";
+import { SERVICE } from "../../types/service";
+import { CONTEXT } from "../../types/context";
+import { CLIENT } from "../../types/client";
+import { NODE } from "../../types/node";
+import { PEER } from "../../types/peer";
+
+import getContentString from "../commands/get.content.string";
+
+export class RandomDataGenerator {
+    isStarted?: NodeJS.Timeout;
+    record: RECORD = new Map();
+    state: STATE = new Map();
+    definitions: DEFINITION = new Map();
+    contents: CONTENT[]//HDNodeVoidWallet["extendedKey"][];
+    assets: ASSET[]//HDNodeVoidWallet["extendedKey"][];
+    services: SERVICE[]//HDNodeVoidWallet["extendedKey"][];
+    contexts: CONTEXT[]//HDNodeVoidWallet["extendedKey"][];
+    nodes: NODE[]//HDNodeVoidWallet["extendedKey"][];
+    peers: PEER[]//HDNodeVoidWallet["extendedKey"][];
+    clients: CLIENT[]//HDNodeVoidWallet["extendedKey"][];
+
+    async *generate(init: Record<string,any>) {
+        this.isStarted = setInterval(() => {
+            // const protocol = this.protocols[Math.floor(Math.random() * this.protocols.length)];
+            // const host = this.hosts[Math.floor(Math.random() * this.hosts.length)];
+            const peer = this.peers[Math.floor(Math.random() * this.peers.length)];
+            const context = this.contexts[Math.floor(Math.random() * this.contexts.length)];
+            // const randomURL = new URL(`${protocol}://${host.extendedKey}/${context.extendedKey}/${peer.extendedKey}`).href;
+            // console.log(randomURL);
+        }, Math.PI * 1000)
+        return {
+            record: this.record,
+            definitions: this.definitions
+        }
+    }
+    async export(): Promise<MEMORY> {
+        return {
+            record: this.record,
+            definitions: this.definitions,
+            state: this.state,
+
+        }
+    }
+    async import(memory: MEMORY): Promise<number> {
+        console.log("Importing",{memory})
+        return 1;
+    }
+    constructor(protocols: string[] = ["http", "mqtt"], hostQty: number = 3, peerQty: number = 9) {
+        this.protocols = protocols;
+        this.hosts = Array.from({ length: hostQty }, (_, i) => {
+            return {
+                extendedKey: HDNodeWallet.createRandom().extendedKey,
+                graph: { nodes: [], links: [] }
+            }
+        });
+        this.peers = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const peer = Object.assign({
+                extendedKey: wallet.extendedKey,
+            }, new URL(`${faker.internet.domainWord()}/${wallet.extendedKey}`, faker.internet.url()))
+            return peer;
+        });
+        this.contexts = Array.from({ length: hostQty }, (_, i) => {
+            return {
+                extendedKey: HDNodeWallet.createRandom().extendedKey
+            }
+        });
+        this.contents = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const content = {
+                // extendedKey: wallet.extendedKey,
+                title: "Content"
+            }
+            return Object.assign(content, {
+                content: getContentString({ title: "Content" })
+            });
+        });
+        this.assets = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const asset: ASSET = {
+                data: new TextEncoder().encode("New Asset " + crypto.randomUUID()),
+                mime: "text/plain"
+            }
+            return Object.assign(asset, wallet);
+        });
+        this.services = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const service: SERVICE = {
+                inputs: ["one"],
+                outputs: []
+            }
+            return Object.assign(service, wallet);
+        });
+        // this.contexts = ["context1", "context2", "context3"]; // You can add more contexts here
+    }
+};
+export class RandomURLGenerator {
+    isStarted?: NodeJS.Timeout;
+    protocols: string[];
+    // hosts: HOST[]//HDNodeWallet["extendedKey"][];
+    clients: CLIENT[]//HDNodeVoidWallet["extendedKey"][];
+    peers: PEER[]//HDNodeVoidWallet["extendedKey"][];
+    nodes: NODE[]//HDNodeVoidWallet["extendedKey"][];
+    contexts: CONTEXT[]//HDNodeVoidWallet["extendedKey"][];
+    contents: CONTENT[]//HDNodeVoidWallet["extendedKey"][];
+    assets: ASSET[]//HDNodeVoidWallet["extendedKey"][];
+    services: SERVICE[]//HDNodeVoidWallet["extendedKey"][];
+    generate() {
+        this.isStarted = setInterval(() => {
+            const protocol = this.protocols[Math.floor(Math.random() * this.protocols.length)];
+            // const host = this.hosts[Math.floor(Math.random() * this.hosts.length)];
+            const peer = this.peers[Math.floor(Math.random() * this.peers.length)];
+            const context = this.contexts[Math.floor(Math.random() * this.contexts.length)];
+            // const randomURL = new URL(`${protocol}://${host.extendedKey}/${context.extendedKey}/${peer.extendedKey}`).href;
+            // console.log(randomURL);
+            
+        }, Math.PI * 1000)
+    }
+    constructor(protocols: string[] = ["http", "mqtt"], hostQty: number = 3, peerQty: number = 9) {
+        this.protocols = protocols;
+        this.hosts = Array.from({ length: hostQty }, (_, i) => {
+            return {
+                extendedKey: HDNodeWallet.createRandom().extendedKey,
+                graph: { nodes: [], links: [] }
+            }
+        });
+        this.peers = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const peer = Object.assign({
+                extendedKey: wallet.extendedKey,
+            }, new URL(`${faker.internet.domainWord()}/${wallet.extendedKey}`, faker.internet.url()))
+            return peer;
+        });
+        this.contexts = Array.from({ length: hostQty }, (_, i) => {
+            return {
+                extendedKey: HDNodeWallet.createRandom().extendedKey
+            }
+        });
+        this.contents = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const content = {
+                // extendedKey: wallet.extendedKey,
+                title: "Content"
+            }
+            return Object.assign(content, {
+                content: getContentString({ title: "Content" })
+            });
+        });
+        this.assets = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const asset: ASSET = {
+                data: new TextEncoder().encode("New Asset " + crypto.randomUUID()),
+                mime: "text/plain"
+            }
+            return Object.assign(asset, wallet);
+        });
+        this.services = Array.from({ length: hostQty }, (_, i) => {
+            const wallet = HDNodeWallet.createRandom();
+            const service: SERVICE = {
+                inputs: ["one"],
+                outputs: []
+            }
+            return Object.assign(service, wallet);
+        });
+        // this.contexts = ["context1", "context2", "context3"]; // You can add more contexts here
+    }
+};

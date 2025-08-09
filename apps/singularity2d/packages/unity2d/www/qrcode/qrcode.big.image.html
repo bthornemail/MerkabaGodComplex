@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+</head>
+
+<body>
+    <canvas id="qrCanvas" width="256" height="256"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
+    <script>
+        async function generateQRCodeWithBigImage(imagePath, qrContent) {
+            const canvas = document.getElementById('qrCanvas');
+            const ctx = canvas.getContext('2d');
+            const canvasSize = 256; // Adjust as needed
+
+            // Generate QR code
+            // const qr = qrcode(0, 'H');
+            // qr.addData(qrContent);
+            // qr.make();
+
+            // // Draw QR code
+            // qr.renderTo2dContext(ctx, 0, 0, canvasSize, canvasSize);
+            // ctx.globalAlpha = .75;
+
+            // Load and draw the image at the center
+            const image = new Image(canvasSize, canvasSize);
+            image.src = imagePath;
+            image.onload = function () {
+
+                // const imageSize = Math.min(qrSize / 4, image.width, image.height); // Limit the image size
+                // const centerX = canvasSize / 2;
+                // const centerY = canvasSize / 2;
+                // const radius = imageSize / 2 + 4; // Adjust as needed
+                // ctx.beginPath();
+                // ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                // ctx.strokeStyle = 'black'; // Change color as needed
+                // ctx.fillStyle = 'white'; // Change color as needed
+                // ctx.lineWidth = imageSize * .25; // Adjust thickness as needed
+                // ctx.stroke();
+                // ctx.fill();
+                // ctx.drawImage(image, centerX - imageSize / 2, centerY - imageSize / 2, imageSize, imageSize);
+            };
+        }
+
+        const canvas = document.getElementById('qrCanvas');
+        const ctx = canvas.getContext('2d');
+        const imagePath = 'data/input.svg';
+        const canvasSize = 256; // Adjust as needed
+        const qrContent = 'Your QR Code Content';
+        const qr = qrcode(0, 'H');
+        qr.addData(qrContent);
+        qr.make();
+
+        // Draw QR code
+        qr.renderTo2dContext(ctx, 0, 0, canvasSize, canvasSize);
+        ctx.globalAlpha = .75;
+
+        const image = new Image(canvasSize, canvasSize);
+        image.src = imagePath;
+        image.onload = () => {
+            // Load and draw the image at the center
+            const imageSize = Math.min(canvasSize / 1.5, image.width, image.height); // Limit the image size
+            console.log(imageSize)
+            const centerX = (canvasSize - imageSize) / 2;
+            const centerY = (canvasSize - imageSize) / 2;
+            console.log(image, centerX, centerY, imageSize, imageSize);
+            ctx.drawImage(image, centerX, centerY, imageSize, imageSize);
+        }
+        // // Load and draw the image at the center
+        // const imageSize = Math.min(canvasSize / 1.5, image.width, image.height); // Limit the image size
+        // console.log(imageSize)
+        // const centerX = (canvasSize - imageSize) / 2;
+        // const centerY = (canvasSize - imageSize) / 2;
+        // console.log(image, centerX, centerY, imageSize, imageSize);
+        // ctx.drawImage(image, centerX, centerY, imageSize, imageSize);
+        // // const qrContent = 'Your QR Code Content';
+        // alert("HE")
+        // // generateQRCodeWithImageAndCircle(imagePath, qrContent);
+    </script>
+</body>
+
+</html>

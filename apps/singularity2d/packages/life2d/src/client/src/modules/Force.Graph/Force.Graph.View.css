@@ -1,0 +1,71 @@
+#force-graph-view {
+    max-height: 60vh;
+    /* width: 100%; */
+    display: grid;
+    grid-template: " hud-dataview "
+                    " graph ";
+    grid-template-columns: 1fr;
+    /* grid-template-rows: 240px 1fr 120px 120px; */
+    text-align: center;
+    background-color: rgba(255,255,255,0.65);
+}
+
+#graphview {
+    background-image: linear-gradient(rgba(0, 255, 0, .7) .1em, transparent .1em), linear-gradient(90deg, rgba(0, 255, 0, .7) .1em, transparent .1em);
+    background-size: 2em 2em;
+    /* width: 100%; */
+    /* height: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 1rem; */
+}
+#force-graph-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+#hud-dataview {
+    /* height: 100%; */
+    /* width: 85%; */
+    /* margin: 0 auto; */
+    /* padding-top: 7.5%; */
+    display: grid;
+    grid-template: " hud dataview ";
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-rows: 360px; */
+}
+
+#hud,
+#dataview {
+    border: 1px solid rgba(0, 255, 0, .7);
+    padding: .5rem;
+}
+
+#options {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid yellow;
+}
+
+#inputs {
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+#options>button {
+    width: 100%;
+    height: 100%;
+}
+.card {
+    background-color: rgba(255,255,255,0.025);
+}

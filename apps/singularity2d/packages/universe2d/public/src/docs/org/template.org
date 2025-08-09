@@ -1,0 +1,113 @@
+```org
+#+TITLE: Org Mode Agent Definition
+#+AUTHOR: Brian Thorne
+#+DATE: 2025-02-04
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el :comments both
+#+PROPERTY: CHATBOT ollama :model deepseek-r1:7b
+#+PROPERTY: USER brian-thorne :address 0x3e2a7BE25f876190069d426aB086D185f1ECb246
+#+OPTIONS: toc:nil
+
+* Introduction
+This document structures a conversation with an Ollama chatbot inside an *Emacs Org Mode* literate programming environment creating an Org Mode Agent.
+
+- AI Model: DeepSeek
+- Conversation stored as versioned blocks.
+- Code can be tangled and executed dynamically.
+- Emacs Lisp functions automate interactions.
+
+* Initialization
+
+#+NAME: init-ollama-chat
+#+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
+(defun ollama-chat-send-input (input)
+  "Send INPUT to the Ollama chatbot and append the response in Org Mode."
+  (interactive "sEnter your message: ")
+  (let* ((url "http://127.0.0.1:11434/api/generate")
+         (model "deepseek")
+         (response-buffer "*Ollama Response*")
+         (post-data (json-encode `(("model" . ,model) ("prompt" . ,input)))))
+    (with-current-buffer (get-buffer-create response-buffer)
+      (erase-buffer))
+    (request url
+      :type "POST"
+      :headers '(("Content-Type" . "application/json"))
+      :data post-data
+      :parser 'json-read
+      :success (cl-function
+                (lambda (&key data &allow-other-keys)
+                  (let ((response (assoc-default 'response data)))
+                    (with-current-buffer (get-buffer-create response-buffer)
+                      (insert response))
+                    (ollama-chat-append-response response)))))
+    (switch-to-buffer response-buffer)))
+
+(defun ollama-chat-append-response (response)
+  "Append RESPONSE to the current Org Mode document as an AI response block."
+  (with-current-buffer (current-buffer)
+    (goto-char (point-max))
+    (insert (format "\n** AI Response\n#+NAME: ai-response-v%d\n#+BEGIN_SRC text :version %d :created <%s>\n%s\n#+END_SRC\n"
+                    (1+ (ollama-chat-latest-version "ai-response"))
+                    (1+ (ollama-chat-latest-version "ai-response"))
+                    (format-time-string "%Y-%m-%d")
+                    response))
+    (save-buffer)))
+
+(defun ollama-chat-latest-version (prefix)
+  "Find the latest version number of blocks with PREFIX in the current Org buffer."
+  (let ((max-version 0))
+    (org-element-map (org-element-parse-buffer 'greater-element) 'src-block
+      (lambda (el)
+        (when (string-prefix-p prefix (org-element-property :name el))
+          (setq max-version (max max-version (string-to-number (or (org-element-property :version el) "0")))))))
+    max-version))
+
+(defun ollama-register-tool (name function)
+  "Register a custom tool call with NAME and FUNCTION in Org Mode."
+  (org-link-set-parameters name
+                           :follow (lambda (_) (funcall function))
+                           :export (lambda (_) (format "Tool: %s" name))))
+
+#+END_SRC
+
+* Chat History
+
+** User Prompt
+#+NAME: user-input-v1
+#+BEGIN_SRC text :version 1 :created <2025-02-04>
+What is the best way to implement a hash table in TypeScript?
+#+END_SRC
+
+** AI Response
+#+NAME: ai-response-v1
+#+BEGIN_SRC text :var input=user-input-v1 :version 1 :created <2025-02-04>
+A hash table in TypeScript can be implemented using a JavaScript object or a Map(). The Map() structure provides better guarantees for key ordering and efficiency.
+#+END_SRC
+
+* Code Generation
+
+#+NAME: generated-code-v1
+#+BEGIN_SRC typescript :tangle hashtable.ts :var input=ai-response-v1 :version 1 :created <2025-02-04>
+class HashTable<K, V> {
+    private table: Map<K, V> = new Map();
+
+    set(key: K, value: V): void {
+        this.table.set(key, value);
+    }
+
+    get(key: K): V | undefined {
+        return this.table.get(key);
+    }
+}
+#+END_SRC
+
+* Execution Log
+
+#+RESULTS: generated-code-v1
+: Successfully defined HashTable class.
+
+* Changelog (Auto-Generated)
+- <2025-02-04> User asked about hash tables.
+- <2025-02-04> AI provided a response.
+- <2025-02-04> Generated TypeScript code for a hash table.
+```
+

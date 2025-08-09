@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="//unpkg.com/3d-force-graph"></script>
+</head>
+
+<body>
+
+    <div id="3d-graph"></div>
+    <button id="reset-graph-button">Reset</button>
+    <script type="importmap">{ "imports": { "three": "//unpkg.com/three/build/three.module.js" }}</script>
+    <script type="module">
+        import SpriteText from "//unpkg.com/three-spritetext/dist/three-spritetext.mjs";
+
+        async function getData() {
+            const url = '//0.0.0.0:8000/graph.json';
+            // const url = 'http://0.0.0.0:8000/graph.json';
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            json.nodes = json.nodes.map(node => node.attributes);
+            // Create a Set of node IDs (or publicKeys) for easy lookup
+            const nodeSet = new Set(json.nodes.map(node => node.publicKey));
+            // Filter edges where both source and target exist in the nodes set
+            json.links = json.edges.filter(edge => nodeSet.has(edge.source) && nodeSet.has(edge.target))
+            delete json.edges;
+            return json;
+        }
+        async function buildGraph(json) {
+            const rootId = json.nodes.find((node) => node.title === "client").publicKey;
+            console.log({ rootId })
+            const nodesById = Object.fromEntries(json.nodes.map(node => [node.publicKey, Object.assign(node, { collapsed: true, childLinks: [] })]));
+            json.links.forEach(link => {
+                nodesById[link.source].childLinks.push(link);
+            });
+            const getPrunedTree = () => {
+                const visibleNodes = [];
+                const visibleLinks = [];
+
+                (function traverseTree(node = nodesById[selectedNode ?? rootId]) {
+                    visibleNodes.push(node);
+                    if (node.collapsed) return;
+                    visibleLinks.push(...node.childLinks);
+                    node.childLinks
+                        .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+                        .forEach(traverseTree);
+                })(); // IIFE
+
+                return { nodes: visibleNodes, links: visibleLinks };
+            };
+            try {
+                const elem = document.getElementById('3d-graph');
+                const Graph = ForceGraph3D()
+                    (document.getElementById('3d-graph'))
+                    .graphData(json)
+                    // .graphData(getPrunedTree())
+                    .onNodeHover(node => elem.style.cursor = node && node.childLinks.length ? 'pointer' : null)
+                    .onNodeClick(node => {
+                        if (!selectedNode) {
+                            selectedNode = node.publicKey;
+                        }
+                        if (node.childLinks.length) {
+                            node.collapsed = !node.collapsed; // toggle collapse state
+                            Graph.graphData(getPrunedTree());
+                        }
+                    })
+                    .cooldownTicks(100)
+                    .nodeLabel('publicKey')
+                    .nodeId('publicKey')
+                    .nodeAutoColorBy('depth')
+                    .nodeThreeObject(node => {
+                        const sprite = new SpriteText(node.title ?? node.publicKey);
+                        sprite.material.depthWrite = false; // make sprite background transparent
+                        sprite.color = node.color;
+                        sprite.textHeight = 8;
+                        return sprite;
+                    });
+
+
+                Graph.d3Force('center', null);
+
+                // fit to canvas when engine stops
+                Graph.onEngineStop(() => Graph.zoomToFit(400));
+                return Graph;
+            } catch (error) {
+                console.error(error.message);
+                throw new Error(error);
+                
+            }
+        }
+        const json = await getData();
+        let selectedNode = null;
+        await buildGraph(json);
+        document.querySelector("#reset-graph-button").addEventListener("click", async () => {
+            selectedNode = null;
+            await buildGraph(await getData())
+        })
+    </script>
+</body>
+
+</html>
