@@ -1,5 +1,6 @@
 import { use, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './App.css';
+import './styles/QuantumEnhanced.css';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import { usePeer } from './hooks/broker/usePeer';
@@ -12,11 +13,15 @@ import QuantumCoordinationSystem from './components/QuantumCoordination';
 import QuantumProductionServer from './components/QuantumProductionServer';
 import QuantumMarketplace from './components/QuantumMarketplace';
 import QuantumAgentManager from './components/QuantumAgentManager';
+import QuantumUBHPCentroid from './components/QuantumUBHPCentroid';
+import QuantumShowcase from './components/QuantumShowcase';
 // import { SceneContext } from './hooks/useScene';
 function App() {
     const { wallet } = usePeer({});
     const { error, starting } = useContext(Libp2pContext);
-    const [activeQuantumTab, setActiveQuantumTab] = useState<'coordination' | 'marketplace' | 'agents' | 'server'>('coordination');
+    const [activeQuantumTab, setActiveQuantumTab] = useState<'coordination' | 'marketplace' | 'agents' | 'server' | 'ubhp' | 'showcase'>('showcase');
+    const [isQuantumActive, setIsQuantumActive] = useState(false);
+    const [particleCount, setParticleCount] = useState(0);
     
     // const { containerRef, add } = useContext(SceneContext);
     useLayoutEffect(() => {
@@ -26,6 +31,23 @@ function App() {
             }`
 
     }, [error, starting]);
+    
+    // Quantum activation effect
+    useEffect(() => {
+        setIsQuantumActive(true);
+        const interval = setInterval(() => {
+            setParticleCount(prev => (prev + 1) % 100);
+        }, 100);
+        
+        return () => clearInterval(interval);
+    }, []);
+    
+    // Tab change animation
+    const handleTabChange = (tab: typeof activeQuantumTab) => {
+        setActiveQuantumTab(tab);
+        // Add ripple effect
+        setParticleCount(prev => prev + 10);
+    };
     
     // useEffect(() => {
     //     add(wallet)
@@ -43,35 +65,73 @@ function App() {
             <div className="quantum-tabs">
                 <button 
                     className={`quantum-tab ${activeQuantumTab === 'coordination' ? 'active' : ''}`}
-                    onClick={() => setActiveQuantumTab('coordination')}
+                    onClick={() => handleTabChange('coordination')}
+                    data-tooltip="Universal Quantum Coordination System"
                 >
                     🌌 Coordination
                 </button>
                 <button 
                     className={`quantum-tab ${activeQuantumTab === 'marketplace' ? 'active' : ''}`}
-                    onClick={() => setActiveQuantumTab('marketplace')}
+                    onClick={() => handleTabChange('marketplace')}
+                    data-tooltip="Quantum-Entangled Decentralized Marketplace"
                 >
                     🛒 Marketplace
                 </button>
                 <button 
                     className={`quantum-tab ${activeQuantumTab === 'agents' ? 'active' : ''}`}
-                    onClick={() => setActiveQuantumTab('agents')}
+                    onClick={() => handleTabChange('agents')}
+                    data-tooltip="AI Agent Management & Communication"
                 >
                     🤖 Agents
                 </button>
                 <button 
                     className={`quantum-tab ${activeQuantumTab === 'server' ? 'active' : ''}`}
-                    onClick={() => setActiveQuantumTab('server')}
+                    onClick={() => handleTabChange('server')}
+                    data-tooltip="Quantum Production Server Interface"
                 >
                     🚀 Server
+                </button>
+                <button 
+                    className={`quantum-tab ${activeQuantumTab === 'ubhp' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('ubhp')}
+                    data-tooltip="UBHP Centroid Calculation & 3D Avatars"
+                >
+                    🎭 UBHP 3D
+                </button>
+                <button 
+                    className={`quantum-tab ${activeQuantumTab === 'showcase' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('showcase')}
+                    data-tooltip="Interactive Quantum Demo & Features Showcase"
+                >
+                    ✨ Showcase
                 </button>
             </div>
             
             <div className="quantum-content">
-                {activeQuantumTab === 'coordination' && <QuantumCoordinationSystem />}
-                {activeQuantumTab === 'marketplace' && <QuantumMarketplace />}
-                {activeQuantumTab === 'agents' && <QuantumAgentManager />}
-                {activeQuantumTab === 'server' && <QuantumProductionServer />}
+                {/* Quantum Particles Background */}
+                <div className="quantum-particles">
+                    {Array.from({ length: Math.min(particleCount, 20) }).map((_, i) => (
+                        <div 
+                            key={i} 
+                            className="quantum-particle"
+                            style={{
+                                animationDelay: `${i * 0.2}s`,
+                                top: `${Math.random() * 100}%`,
+                                left: `${Math.random() * 100}%`,
+                            }}
+                        />
+                    ))}
+                </div>
+
+                {/* Tab Content */}
+                <div className="quantum-tab-content">
+                    {activeQuantumTab === 'coordination' && <QuantumCoordinationSystem />}
+                    {activeQuantumTab === 'marketplace' && <QuantumMarketplace />}
+                    {activeQuantumTab === 'agents' && <QuantumAgentManager />}
+                    {activeQuantumTab === 'server' && <QuantumProductionServer />}
+                    {activeQuantumTab === 'ubhp' && <QuantumUBHPCentroid />}
+                    {activeQuantumTab === 'showcase' && <QuantumShowcase />}
+                </div>
             </div>
         </div>
         
