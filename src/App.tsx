@@ -10,10 +10,14 @@ import Home from './components/Home';
 import Wallet from './components/Wallet';
 import QuantumCoordinationSystem from './components/QuantumCoordination';
 import QuantumProductionServer from './components/QuantumProductionServer';
+import QuantumMarketplace from './components/QuantumMarketplace';
+import QuantumAgentManager from './components/QuantumAgentManager';
 // import { SceneContext } from './hooks/useScene';
 function App() {
     const { wallet } = usePeer({});
     const { error, starting } = useContext(Libp2pContext);
+    const [activeQuantumTab, setActiveQuantumTab] = useState<'coordination' | 'marketplace' | 'agents' | 'server'>('coordination');
+    
     // const { containerRef, add } = useContext(SceneContext);
     useLayoutEffect(() => {
         document.querySelector("html")!.style.border = `4px solid ${error
@@ -22,9 +26,11 @@ function App() {
             }`
 
     }, [error, starting]);
+    
     // useEffect(() => {
     //     add(wallet)
     // }, [wallet])
+    
     return (<div className='root'>
         <Header />
         <hr />
@@ -32,10 +38,91 @@ function App() {
         <Wallet />
         {/* <div ref={containerRef} ></div> */}
         
-        <QuantumProductionServer />
-        <QuantumCoordinationSystem />
+        {/* Quantum Interface Tabs */}
+        <div className="quantum-interface">
+            <div className="quantum-tabs">
+                <button 
+                    className={`quantum-tab ${activeQuantumTab === 'coordination' ? 'active' : ''}`}
+                    onClick={() => setActiveQuantumTab('coordination')}
+                >
+                    🌌 Coordination
+                </button>
+                <button 
+                    className={`quantum-tab ${activeQuantumTab === 'marketplace' ? 'active' : ''}`}
+                    onClick={() => setActiveQuantumTab('marketplace')}
+                >
+                    🛒 Marketplace
+                </button>
+                <button 
+                    className={`quantum-tab ${activeQuantumTab === 'agents' ? 'active' : ''}`}
+                    onClick={() => setActiveQuantumTab('agents')}
+                >
+                    🤖 Agents
+                </button>
+                <button 
+                    className={`quantum-tab ${activeQuantumTab === 'server' ? 'active' : ''}`}
+                    onClick={() => setActiveQuantumTab('server')}
+                >
+                    🚀 Server
+                </button>
+            </div>
+            
+            <div className="quantum-content">
+                {activeQuantumTab === 'coordination' && <QuantumCoordinationSystem />}
+                {activeQuantumTab === 'marketplace' && <QuantumMarketplace />}
+                {activeQuantumTab === 'agents' && <QuantumAgentManager />}
+                {activeQuantumTab === 'server' && <QuantumProductionServer />}
+            </div>
+        </div>
+        
         {wallet ? <ZeroGraph /> : <Home />}
         <Footer />
+        
+        <style jsx>{`
+            .quantum-interface {
+                margin: 20px 0;
+                background: rgba(0, 0, 20, 0.8);
+                border-radius: 10px;
+                padding: 20px;
+            }
+            
+            .quantum-tabs {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #333;
+                padding-bottom: 15px;
+            }
+            
+            .quantum-tab {
+                padding: 12px 24px;
+                border: none;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+            
+            .quantum-tab:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+            
+            .quantum-tab.active {
+                background: linear-gradient(45deg, #4CAF50, #2196F3);
+                box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+            }
+            
+            .quantum-content {
+                min-height: 400px;
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                padding: 0;
+                overflow: hidden;
+            }
+        `}</style>
     </div>);
 }
 
