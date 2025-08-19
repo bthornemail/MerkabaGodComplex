@@ -113,7 +113,6 @@ export const useMQTT = ({ host, port, address }) => {
                 return conections;
             }
             conections.set(topic, callback);
-            setConnections((connections)=>connections.set(topic, callback));
             return conections;
         })
     }
