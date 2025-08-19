@@ -8,8 +8,9 @@ import Footer from './components/Footer';
 import ZeroGraph, { NodeType } from './components/ZeroGraph';
 import Home from './components/Home';
 import Wallet from './components/Wallet';
+import QuantumCoordinationSystem from './components/QuantumCoordination';
+import QuantumProductionServer from './components/QuantumProductionServer';
 // import { SceneContext } from './hooks/useScene';
-import Universal42DModel from './Universal42DModel'
 function App() {
     const { wallet } = usePeer({});
     const { error, starting } = useContext(Libp2pContext);
@@ -31,7 +32,8 @@ function App() {
         <Wallet />
         {/* <div ref={containerRef} ></div> */}
         
-        <Universal42DModel/>
+        <QuantumProductionServer />
+        <QuantumCoordinationSystem />
         {wallet ? <ZeroGraph /> : <Home />}
         <Footer />
     </div>);
