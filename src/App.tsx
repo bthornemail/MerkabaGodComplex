@@ -15,15 +15,15 @@ import QuantumMarketplace from './components/QuantumMarketplace';
 import QuantumAgentManager from './components/QuantumAgentManager';
 import QuantumUBHPCentroid from './components/QuantumUBHPCentroid';
 import QuantumShowcase from './components/QuantumShowcase';
-// import { SceneContext } from './hooks/useScene';
+import { SceneContext } from './hooks/useScene';
 function App() {
     const { wallet } = usePeer({});
     const { error, starting } = useContext(Libp2pContext);
-    const [activeQuantumTab, setActiveQuantumTab] = useState<'coordination' | 'marketplace' | 'agents' | 'server' | 'ubhp' | 'showcase'>('showcase');
+    const [activeQuantumTab, setActiveQuantumTab] = useState<'coordination' | 'marketplace' | 'agents' | 'server' | 'ubhp' | 'showcase' | 'original-interface'>('showcase');
     const [isQuantumActive, setIsQuantumActive] = useState(false);
     const [particleCount, setParticleCount] = useState(0);
-    
-    // const { containerRef, add } = useContext(SceneContext);
+
+    const { containerRef, add } = useContext(SceneContext);
     useLayoutEffect(() => {
         document.querySelector("html")!.style.border = `4px solid ${error
             ? 'red'
@@ -31,88 +31,90 @@ function App() {
             }`
 
     }, [error, starting]);
-    
+
     // Quantum activation effect
     useEffect(() => {
         setIsQuantumActive(true);
         const interval = setInterval(() => {
             setParticleCount(prev => (prev + 1) % 100);
         }, 100);
-        
+
         return () => clearInterval(interval);
     }, []);
-    
+
     // Tab change animation
     const handleTabChange = (tab: typeof activeQuantumTab) => {
         setActiveQuantumTab(tab);
         // Add ripple effect
         setParticleCount(prev => prev + 10);
     };
-    
+
     // useEffect(() => {
     //     add(wallet)
     // }, [wallet])
-    
+
     return (<div className='root'>
-        <Header />
-        <hr />
-        <Nav />
-        <Wallet />
-        {/* <div ref={containerRef} ></div> */}
-        
+
         {/* Quantum Interface Tabs */}
         <div className="quantum-interface">
             <div className="quantum-tabs">
-                <button 
+                <button
                     className={`quantum-tab ${activeQuantumTab === 'coordination' ? 'active' : ''}`}
                     onClick={() => handleTabChange('coordination')}
                     data-tooltip="Universal Quantum Coordination System"
                 >
                     🌌 Coordination
                 </button>
-                <button 
+                <button
                     className={`quantum-tab ${activeQuantumTab === 'marketplace' ? 'active' : ''}`}
                     onClick={() => handleTabChange('marketplace')}
                     data-tooltip="Quantum-Entangled Decentralized Marketplace"
                 >
                     🛒 Marketplace
                 </button>
-                <button 
+                <button
                     className={`quantum-tab ${activeQuantumTab === 'agents' ? 'active' : ''}`}
                     onClick={() => handleTabChange('agents')}
                     data-tooltip="AI Agent Management & Communication"
                 >
                     🤖 Agents
                 </button>
-                <button 
+                <button
                     className={`quantum-tab ${activeQuantumTab === 'server' ? 'active' : ''}`}
                     onClick={() => handleTabChange('server')}
                     data-tooltip="Quantum Production Server Interface"
                 >
                     🚀 Server
                 </button>
-                <button 
+                <button
                     className={`quantum-tab ${activeQuantumTab === 'ubhp' ? 'active' : ''}`}
                     onClick={() => handleTabChange('ubhp')}
                     data-tooltip="UBHP Centroid Calculation & 3D Avatars"
                 >
                     🎭 UBHP 3D
                 </button>
-                <button 
+                <button
                     className={`quantum-tab ${activeQuantumTab === 'showcase' ? 'active' : ''}`}
                     onClick={() => handleTabChange('showcase')}
                     data-tooltip="Interactive Quantum Demo & Features Showcase"
                 >
                     ✨ Showcase
                 </button>
+                <button
+                    className={`quantum-tab ${activeQuantumTab === 'original-interface' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('original-interface')}
+                    data-tooltip="Original Interface befor Quantum Pairing"
+                >
+                    ✨ Original Interface
+                </button>
             </div>
-            
+
             <div className="quantum-content">
                 {/* Quantum Particles Background */}
                 <div className="quantum-particles">
                     {Array.from({ length: Math.min(particleCount, 20) }).map((_, i) => (
-                        <div 
-                            key={i} 
+                        <div
+                            key={i}
                             className="quantum-particle"
                             style={{
                                 animationDelay: `${i * 0.2}s`,
@@ -131,14 +133,22 @@ function App() {
                     {activeQuantumTab === 'server' && <QuantumProductionServer />}
                     {activeQuantumTab === 'ubhp' && <QuantumUBHPCentroid />}
                     {activeQuantumTab === 'showcase' && <QuantumShowcase />}
+                    {activeQuantumTab === 'original-interface' && <>
+                        <Header />
+                        <hr />
+                        <Nav />
+                        <Wallet />
+                        <div ref={containerRef} ></div>
+                        {wallet ? <ZeroGraph /> : <Home />}
+                        <Footer />
+                    </>}
+
                 </div>
             </div>
         </div>
-        
-        {wallet ? <ZeroGraph /> : <Home />}
-        <Footer />
-        
-        <style jsx>{`
+
+
+        <style>{`
             .quantum-interface {
                 margin: 20px 0;
                 background: rgba(0, 0, 20, 0.8);

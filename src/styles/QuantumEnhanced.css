@@ -103,7 +103,7 @@
   background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-secondary), var(--quantum-accent), var(--quantum-success));
   border-radius: 20px;
   z-index: -1;
-  animation: quantumRotate 4s linear infinite;
+  /* animation: quantumRotate 4s linear infinite; */
 }
 
 .quantum-interface::after {

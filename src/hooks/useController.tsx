@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
-import { NodeType } from "../components/ZeroGraph";
+// import { NodeType } from "../components/ZeroGraph";
 
 export const ControllerContext = createContext<any>(null);
 
@@ -14,7 +14,7 @@ export const ControllerProvider = ({ children }: any) => {
 };
 export const useController = () => {
   const [useContextualSearch, setUseContextualSearch] = useState(true);
-  const [selectedNode, setSelectedNode] = useState<NodeType>('tetrahedron');
+  const [selectedNode, setSelectedNode] = useState<any>('tetrahedron');
   const [searchResults, setSearchResults] = useState<Map<any, number>>(new Map());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");

@@ -230,7 +230,7 @@ export const QuantumShowcase: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .quantum-showcase {
           background: linear-gradient(135deg, 
             rgba(15, 15, 35, 0.95) 0%, 
@@ -255,7 +255,7 @@ export const QuantumShowcase: React.FC = () => {
           background: linear-gradient(45deg, #6366f1, #8b5cf6, #06b6d4, #10b981);
           border-radius: 20px;
           z-index: -1;
-          animation: quantumRotate 4s linear infinite;
+          // animation: quantumRotate 4s linear infinite;
         }
 
         .showcase-header {
