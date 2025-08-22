@@ -8,6 +8,6 @@ export default defineConfig({
     open: true
   },
   build: {
-    outDir: 'dist'
+    outDir: 'html/dist/merkaba-god-complex'
   }
 })
