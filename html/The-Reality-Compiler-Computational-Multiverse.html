@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Reality Compiler - Computational Multiverse</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050510; }
+        .glass-panel {
+            background: rgba(20, 20, 35, 0.7);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        canvas:hover { cursor: pointer; }
+    </style>
+    <!-- Importmap for Three.js modules -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.157.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body class="text-white overflow-hidden">
+    <canvas id="main-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+
+    <div class="controls-panel absolute bottom-5 left-1/2 -translate-x-1/2 z-10 p-4 rounded-xl glass-panel shadow-lg flex items-center flex-wrap justify-center gap-4 max-w-4xl">
+        <button id="add-system-btn" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+            Add System
+        </button>
+        <button id="rerun-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md">
+            Re-run Pipelines
+        </button>
+        <div id="info-display" class="bg-gray-900/50 p-2 rounded-lg text-xs md:text-sm flex flex-col gap-1 min-w-[200px]">
+             <div class="flex justify-between">
+                <span class="font-mono text-indigo-300">Systems:</span>
+                <span id="system-count" class="font-mono text-gray-300">0</span>
+             </div>
+             <div id="selected-info" class="hidden flex-col gap-1 mt-1 pt-1 border-t border-indigo-900">
+                 <div class="flex justify-between"><span class="font-mono text-yellow-300">Selected:</span><span id="selected-id" class="font-mono text-gray-300"></span></div>
+                 <div class="flex justify-between"><span class="font-mono text-yellow-300">Pipeline:</span><span id="selected-pipeline" class="font-mono text-gray-300"></span></div>
+                 <div class="flex justify-between"><span class="font-mono text-yellow-300">Result:</span><span id="selected-result" class="font-mono text-gray-300"></span></div>
+             </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // --- Core Logic from Recursive Execution Mapper ---
+        function harmonize(input) {
+            const jsonString = JSON.stringify(input);
+            let hash = 0;
+            for (let i = 0; i < jsonString.length; i++) {
+                hash = ((hash << 5) - hash) + jsonString.charCodeAt(i);
+                hash |= 0;
+            }
+            return { id: `hv-${hash.toString(16)}`, h: hash };
+        }
+
+        class ComputationalQuantumEngine {
+            bind(a, b) {
+                const bound = a.map((val, i) => val + (b[i] || 0));
+                return { bound };
+            }
+            unbind(bound, a) {
+                return bound.map((val, i) => val - (a[i] || 0));
+            }
+        }
+
+        class RecursiveEncoder {
+            constructor() { this.stack = []; }
+            async execute(pipeline, initialData) {
+                let data = initialData;
+                this.stack = [];
+                for (const step of pipeline) {
+                    this.stack.push({ lambda: step, args: [data] });
+                    data = await step.implementation(data);
+                    this.stack[this.stack.length - 1].result = data;
+                }
+                return data;
+            }
+            getExecutionTrace() { return this.stack.map(step => harmonize(step).h); }
+        }
+
+        class CQEExecutionMapper {
+            constructor() { this.cqe = new ComputationalQuantumEngine(); }
+            compare(trace1, trace2) {
+                const maxLen = Math.max(trace1.length, trace2.length);
+                const padded1 = [...trace1, ...new Array(maxLen - trace1.length).fill(0)];
+                const padded2 = [...trace2, ...new Array(maxLen - trace2.length).fill(0)];
+                const { bound } = this.cqe.bind(padded1, padded2);
+                const unbound = this.cqe.unbind(bound, padded1);
+                let sum = 0;
+                for (let i = 0; i < maxLen; i++) {
+                    sum += Math.pow((unbound[i] || 0) - (padded2[i] || 0), 2);
+                }
+                const rmse = Math.sqrt(sum / maxLen);
+                return { rmse, similarity: 1 / (1 + rmse) };
+            }
+        }
+        
+        const PIPELINES = {
+            growthPipeline: [
+                { description: 'Init', implementation: data => ({ ...data, value: 1 }) },
+                { description: 'Grow', implementation: data => ({ ...data, value: data.value * 2 }) },
+                { description: 'Finalize', implementation: data => ({ ...data, state: 'Grown' }) },
+            ],
+            oscillationPipeline: [
+                { description: 'Init', implementation: data => ({ ...data, phase: Math.random() * Math.PI }) },
+                { description: 'Oscillate', implementation: data => ({ ...data, value: Math.sin(data.phase + Date.now() / 1000).toFixed(2) }) },
+                { description: 'Finalize', implementation: data => ({ ...data, state: 'Oscillating' }) },
+            ],
+            decayPipeline: [
+                { description: 'Init', implementation: data => ({ ...data, energy: 100 }) },
+                { description: 'Decay', implementation: data => ({ ...data, energy: data.energy * 0.9 }) },
+                { description: 'Finalize', implementation: data => ({ ...data, state: 'Decayed' }) },
+            ]
+        };
+        const PIPELINE_NAMES = Object.keys(PIPELINES);
+
+        class ComputationalSystem {
+            constructor(id, initialPosition, scene) {
+                this.id = id;
+                this.scene = scene;
+                this.position = initialPosition.clone();
+                this.velocity = new THREE.Vector3();
+                this.acceleration = new THREE.Vector3();
+                this.encoder = new RecursiveEncoder();
+                this.pipelineName = PIPELINE_NAMES[Math.floor(Math.random() * PIPELINE_NAMES.length)];
+                this.pipeline = PIPELINES[this.pipelineName];
+                this.executionTrace = [];
+                this.latestResult = {};
+                this.createMesh();
+            }
+
+            async run() {
+                this.latestResult = await this.encoder.execute(this.pipeline, { id: this.id });
+                this.executionTrace = this.encoder.getExecutionTrace();
+            }
+
+            createMesh() {
+                const color = new THREE.Color().setHSL(Math.random(), 0.8, 0.6);
+                this.material = new THREE.MeshStandardMaterial({
+                    color, emissive: color, emissiveIntensity: 0.4, metalness: 0.3, roughness: 0.5,
+                    transparent: true, opacity: 0.9
+                });
+                const geometry = new THREE.TetrahedronGeometry(1.5, 0);
+                this.mesh = new THREE.Mesh(geometry, this.material);
+                this.mesh.userData.system = this;
+                this.scene.add(this.mesh);
+            }
+
+            update(deltaTime) {
+                this.velocity.add(this.acceleration.clone().multiplyScalar(deltaTime));
+                this.velocity.multiplyScalar(0.96);
+                this.position.add(this.velocity.clone().multiplyScalar(deltaTime));
+                this.acceleration.set(0, 0, 0);
+                this.mesh.position.copy(this.position);
+                this.mesh.rotation.x += this.velocity.y * 0.1;
+                this.mesh.rotation.y += this.velocity.x * 0.1;
+            }
+            
+            dispose() { this.scene.remove(this.mesh); }
+        }
+
+        class SimulationManager {
+            constructor() {
+                this.systems = [];
+                this.nextSystemId = 0;
+                this.selectedSystem = null;
+                this.mapper = new CQEExecutionMapper();
+                this.INTER_FORCE_STRENGTH = 25.0;
+                this.SIMILARITY_THRESHOLD = 0.9; // Threshold for drawing connection lines
+
+                this.initSceneAndSystems();
+                this.initUI();
+                this.animate();
+            }
+
+            async initSceneAndSystems() {
+                this.initScene();
+                for (let i = 0; i < 5; i++) {
+                    await this.addSystem();
+                }
+            }
+
+            initScene() {
+                this.scene = new THREE.Scene();
+                this.clock = new THREE.Clock();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+                this.camera.position.set(0, 15, 50);
+
+                const canvas = document.getElementById('main-canvas');
+                this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+
+                this.scene.add(new THREE.AmbientLight(0xcccccc, 1.5));
+                this.scene.add(new THREE.DirectionalLight(0xffffff, 2.0));
+                
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+
+                // Setup for interaction lines
+                this.lineGeometry = new THREE.BufferGeometry();
+                this.lineMaterial = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.7 });
+                this.lines = new THREE.LineSegments(this.lineGeometry, this.lineMaterial);
+                this.scene.add(this.lines);
+            }
+
+            initUI() {
+                document.getElementById('add-system-btn').addEventListener('click', () => this.addSystem());
+                document.getElementById('rerun-btn').addEventListener('click', () => this.rerunAll());
+                window.addEventListener('resize', () => this.onWindowResize(), false);
+                window.addEventListener('click', (event) => this.onMouseClick(event), false);
+            }
+
+            async addSystem() {
+                const spawnRadius = 30;
+                const position = new THREE.Vector3(
+                    (Math.random() - 0.5) * spawnRadius, (Math.random() - 0.5) * spawnRadius, (Math.random() - 0.5) * spawnRadius
+                );
+                const system = new ComputationalSystem(this.nextSystemId++, position, this.scene);
+                await system.run(); // IMPORTANT: Await initial run before adding to physics
+                this.systems.push(system);
+                document.getElementById('system-count').textContent = this.systems.length;
+            }
+            
+            async rerunAll() {
+                for (const system of this.systems) {
+                    await system.run();
+                }
+            }
+
+            updatePhysics(deltaTime) {
+                const linePoints = [];
+                const lineColors = [];
+                const attractiveColor = new THREE.Color(0x00ff00); // Green for attraction
+
+                for (let i = 0; i < this.systems.length; i++) {
+                    for (let j = i + 1; j < this.systems.length; j++) {
+                        const sysA = this.systems[i];
+                        const sysB = this.systems[j];
+
+                        const { similarity } = this.mapper.compare(sysA.executionTrace, sysB.executionTrace);
+                        
+                        const forceMagnitude = (similarity - 0.5) * this.INTER_FORCE_STRENGTH;
+
+                        const distanceVec = new THREE.Vector3().subVectors(sysB.position, sysA.position);
+                        const distanceSq = Math.max(distanceVec.lengthSq(), 4);
+                        const forceDirection = distanceVec.normalize();
+
+                        const finalForce = forceDirection.multiplyScalar(forceMagnitude / distanceSq);
+
+                        sysA.acceleration.add(finalForce);
+                        sysB.acceleration.sub(finalForce);
+
+                        // If systems are highly similar, draw an attractive line
+                        if (similarity > this.SIMILARITY_THRESHOLD) {
+                            linePoints.push(sysA.position, sysB.position);
+                            lineColors.push(attractiveColor.r, attractiveColor.g, attractiveColor.b);
+                            lineColors.push(attractiveColor.r, attractiveColor.g, attractiveColor.b);
+                        }
+                    }
+                }
+                
+                this.lineGeometry.setFromPoints(linePoints);
+                this.lineGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+
+                for (const system of this.systems) {
+                    system.update(deltaTime);
+                }
+            }
+
+            onMouseClick(event) {
+                this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+                const infoPanel = document.getElementById('selected-info');
+                if (intersects.length > 0 && intersects[0].object.userData.system) {
+                    this.selectedSystem = intersects[0].object.userData.system;
+                    infoPanel.classList.remove('hidden');
+                    infoPanel.classList.add('flex');
+                    document.getElementById('selected-id').textContent = `System ${this.selectedSystem.id}`;
+                    document.getElementById('selected-pipeline').textContent = this.selectedSystem.pipelineName;
+                    document.getElementById('selected-result').textContent = JSON.stringify(this.selectedSystem.latestResult.value ?? this.selectedSystem.latestResult.energy ?? "N/A");
+                } else {
+                    this.selectedSystem = null;
+                    infoPanel.classList.add('hidden');
+                    infoPanel.classList.remove('flex');
+                }
+            }
+
+            animate() {
+                requestAnimationFrame(this.animate.bind(this));
+                const deltaTime = this.clock.getDelta();
+                this.updatePhysics(deltaTime);
+                
+                // Update visual feedback for selection
+                for (const system of this.systems) {
+                    const isSelected = this.selectedSystem === system;
+                    system.material.emissiveIntensity = isSelected ? 1.0 : 0.4;
+                    system.material.opacity = isSelected ? 1.0 : 0.9;
+                }
+
+                this.controls.update();
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new SimulationManager());
+    </script>
+</body>
+</html>

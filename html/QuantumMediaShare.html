@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚛️ Quantum Media Share - Instant Audio/Video Transmission</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
+            color: #00ff88;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .quantum-logo {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 2em;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+        
+        .subtitle {
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .panel h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.3em;
+        }
+        
+        .media-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .quantum-btn {
+            background: linear-gradient(45deg, #ff0088, #8800ff);
+            animation: quantum-pulse 2s infinite;
+        }
+        
+        @keyframes quantum-pulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 0, 136, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 136, 0.9); }
+        }
+        
+        video, audio {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            margin: 10px 0;
+        }
+        
+        .status {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #00ff88;
+        }
+        
+        .quantum-status {
+            background: rgba(255, 0, 136, 0.1);
+            border-left-color: #ff0088;
+        }
+        
+        .peer-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .peer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        
+        .peer-item:last-child {
+            border-bottom: none;
+        }
+        
+        .entangled {
+            color: #ff0088;
+            font-weight: bold;
+        }
+        
+        .quantum-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .metric {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.5em;
+            color: #00ff88;
+            font-weight: bold;
+        }
+        
+        .metric-label {
+            font-size: 0.8em;
+            color: #888;
+        }
+        
+        .transmission-log {
+            height: 150px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 5px;
+        }
+        
+        .log-quantum {
+            color: #ff0088;
+        }
+        
+        .log-success {
+            color: #00ff88;
+        }
+        
+        .log-info {
+            color: #0088ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="quantum-logo">⚛️🎥🎵</div>
+            <h1 class="title">Quantum Media Share</h1>
+            <p class="subtitle">Instant Audio/Video Transmission via Quantum Entanglement</p>
+        </div>
+        
+        <div class="main-grid">
+            <!-- Local Media Panel -->
+            <div class="panel">
+                <h3>📹 Local Media Capture</h3>
+                <div class="media-controls">
+                    <div class="control-group">
+                        <button class="btn" id="startVideo">Start Video</button>
+                        <button class="btn" id="stopVideo" disabled>Stop Video</button>
+                    </div>
+                    <div class="control-group">
+                        <button class="btn" id="startAudio">Start Audio</button>
+                        <button class="btn" id="stopAudio" disabled>Stop Audio</button>
+                    </div>
+                    <div class="control-group">
+                        <button class="btn quantum-btn" id="quantumEntangle">⚛️ Quantum Entangle Media</button>
+                    </div>
+                </div>
+                
+                <video id="localVideo" autoplay muted playsinline></video>
+                <audio id="localAudio" controls style="display: none;"></audio>
+                
+                <div class="status" id="localStatus">
+                    Status: Ready for capture
+                </div>
+            </div>
+            
+            <!-- Remote Media Panel -->
+            <div class="panel">
+                <h3>📡 Remote Media Streams</h3>
+                <div class="media-controls">
+                    <div class="control-group">
+                        <button class="btn quantum-btn" id="quantumTunnel">🚇 Quantum Tunnel Receive</button>
+                        <button class="btn" id="clearRemote">Clear All</button>
+                    </div>
+                </div>
+                
+                <video id="remoteVideo" autoplay playsinline></video>
+                <audio id="remoteAudio" controls></audio>
+                
+                <div class="status quantum-status" id="remoteStatus">
+                    Status: Listening for quantum transmissions...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quantum Network Panel -->
+        <div class="panel">
+            <h3>🌐 Quantum Network</h3>
+            <div class="main-grid">
+                <div>
+                    <h4>Connected Peers</h4>
+                    <div class="peer-list" id="peerList">
+                        <div class="peer-item">
+                            <span>quantum_node_abc123</span>
+                            <span class="entangled">⚛️ ENTANGLED</span>
+                        </div>
+                        <div class="peer-item">
+                            <span>quantum_node_def456</span>
+                            <span>🔗 Connected</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4>Transmission Log</h4>
+                    <div class="transmission-log" id="transmissionLog">
+                        <div class="log-entry log-info">[00:00:01] Quantum hypergraph initialized</div>
+                        <div class="log-entry log-success">[00:00:02] WebRTC connection established</div>
+                        <div class="log-entry log-quantum">[00:00:03] ⚛️ Quantum entanglement active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quantum Metrics -->
+        <div class="panel">
+            <h3>📊 Quantum Transmission Metrics</h3>
+            <div class="quantum-metrics">
+                <div class="metric">
+                    <div class="metric-value" id="entanglementCount">2</div>
+                    <div class="metric-label">Entangled Pairs</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="tunnelCount">0</div>
+                    <div class="metric-label">Active Tunnels</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="transmissionSpeed">∞</div>
+                    <div class="metric-label">Speed (ms)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="coherenceLevel">98.7%</div>
+                    <div class="metric-label">Quantum Coherence</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="dataVolume">0 MB</div>
+                    <div class="metric-label">Data Transmitted</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="successRate">100%</div>
+                    <div class="metric-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="NetworkQuantumTransmission.js"></script>
+    <script src="QuantumMediaShare.js"></script>
+</body>
+</html>

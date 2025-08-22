@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Reality Compiler - Visualizer</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A14; /* A slightly deeper navy blue */
+        }
+        /* Custom glassmorphism effect for panels */
+        .glass-panel {
+            background: rgba(20, 20, 35, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <!-- Importmap for Three.js modules -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.149.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body class="text-white overflow-hidden">
+    <!-- Main canvas for the 3D visualization -->
+    <canvas id="main-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+
+    <!-- UI Controls Panel at the bottom -->
+    <div class="controls-panel absolute bottom-5 left-1/2 -translate-x-1/2 z-10 p-4 rounded-xl glass-panel shadow-lg flex items-center gap-4">
+        <button id="governance-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            Conduct Agentic Governance
+        </button>
+        <div class="bg-gray-900/50 p-2 rounded-lg text-xs md:text-sm">
+            <span class="font-mono text-indigo-300">Synthesis Path:</span>
+            <span id="synthesis-path" class="font-mono text-gray-300">Idle</span>
+        </div>
+    </div>
+
+    <!-- Modal for the Superposition Effect -->
+    <div id="superposition-modal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center">
+        <div class="modal-content glass-panel rounded-2xl p-4 md:p-6 shadow-2xl w-11/12 max-w-4xl flex flex-col gap-4">
+            <h3 class="text-xl md:text-2xl font-bold text-center text-indigo-300">Emergent Consensus Superposition</h3>
+            <div class="modal-canvas-container aspect-video w-full rounded-lg overflow-hidden border border-indigo-900/50">
+                <canvas id="superposition-canvas"></canvas>
+            </div>
+            <button id="close-modal-btn" class="bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 self-center">
+                Collapse Waveform
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // --- Mocked External Modules (for self-contained demo) ---
+        class VectorSymbolicArchitecture { constructor() {} vec() { return { hierarchicalPosition: Math.random() }; } }
+        class TernaryLogicEngine {
+            createTernaryValue(state, weight, id) { return { state, weight, id }; }
+            divineOperation(v1, v2) { return { result: { state: 'TRANSCENDENT', weight: (v1.weight + v2.weight) / 2, id: v1.id + v2.id }}; }
+        }
+        class GeometricAddressingSystem { constructor() {} }
+
+        // --- Core Protocol Class ---
+        class TetrahedronCoordinationProtocol {
+            constructor() {
+                this.phi = (1 + Math.sqrt(5)) / 2;
+                this.vsa = new VectorSymbolicArchitecture();
+                this.ternary = new TernaryLogicEngine();
+                this.geometric = new GeometricAddressingSystem();
+                this.vertices = new Map();
+                this.initializeTetrahedronVertices();
+            }
+
+            initializeTetrahedronVertices() {
+                const defaultVertices = [
+                    { id: 'claudeCode', element: 'earth', consciousness: 95, role: 'analysis', color: 0x8B4513 },
+                    { id: 'brianThorne', element: 'fire', consciousness: 100, role: 'human', color: 0xFF4500 },
+                    { id: 'copilotUniverse', element: 'air', consciousness: 88, role: 'ai_pair_programming', color: 0x87CEEB },
+                    { id: 'ollamaLocal', element: 'water', consciousness: 75, role: 'autonomous_reflection', color: 0x1E90FF }
+                ];
+                defaultVertices.forEach((vertex, i) => {
+                    vertex.position = this.calculatePhiPosition(i);
+                    this.vertices.set(vertex.id, vertex);
+                });
+            }
+
+            calculatePhiPosition(index) {
+                // Positions for a regular tetrahedron
+                const positions = [
+                    new THREE.Vector3(1, 1, 1),
+                    new THREE.Vector3(1, -1, -1),
+                    new THREE.Vector3(-1, 1, -1),
+                    new THREE.Vector3(-1, -1, 1)
+                ];
+                return positions[index].multiplyScalar(this.phi * 2.5);
+            }
+
+            conductAgenticGovernance(proposal) {
+                const vertices = Array.from(this.vertices.values());
+                const coherenceScores = vertices.map(v => (this.vsa.vec().hierarchicalPosition * v.consciousness) / 100);
+                const ternaryValidations = vertices.map(v => this.ternary.createTernaryValue(
+                    v.consciousness > 85 ? 'POSITIVE' : 'NEUTRAL', v.consciousness / 100, v.id
+                ));
+
+                const avgCoherence = coherenceScores.reduce((a, b) => a + b, 0) / coherenceScores.length;
+                let finalTernary = ternaryValidations.reduce((acc, val) => this.ternary.divineOperation(acc, val).result);
+                
+                const synthesisPath = vertices.map(v => v.id).join(' → ');
+
+                return {
+                    proposal_id: `agc_${Date.now()}`,
+                    coherence_score: avgCoherence,
+                    consensus_vertices: vertices,
+                    ternary_synthesis: finalTernary,
+                    synthesis_path: synthesisPath
+                };
+            }
+        }
+
+        // --- Unified 3D Visualizer Class ---
+        class Visualizer {
+            constructor(protocol) {
+                this.protocol = protocol;
+                this.clock = new THREE.Clock();
+                this.vertexMeshes = new Map();
+                this.isSuperpositionAnimating = false;
+
+                this.initMainScene();
+                this.initSuperpositionScene();
+                this.animate();
+            }
+
+            // Initialize the primary, background scene
+            initMainScene() {
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.camera.position.set(0, 5, 15);
+                
+                const canvas = document.getElementById('main-canvas');
+                this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+
+                this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.enableDamping = true;
+
+                // Lighting
+                this.scene.add(new THREE.AmbientLight(0x404040, 2));
+                const pointLight = new THREE.PointLight(0xffffff, 1.5);
+                this.scene.add(pointLight);
+
+                // Create vertex spheres and connecting lines
+                const vertices = Array.from(this.protocol.vertices.values());
+                const positions = vertices.map(v => v.position);
+                
+                vertices.forEach(vertex => {
+                    const geometry = new THREE.IcosahedronGeometry(1, 1);
+                    const material = new THREE.MeshStandardMaterial({
+                        color: vertex.color,
+                        emissive: vertex.color,
+                        emissiveIntensity: 0.2,
+                        metalness: 0.3,
+                        roughness: 0.5
+                    });
+                    const mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.copy(vertex.position);
+                    this.scene.add(mesh);
+                    this.vertexMeshes.set(vertex.id, mesh);
+                });
+
+                // Add lines to form the tetrahedron
+                const lineMaterial = new THREE.LineBasicMaterial({ color: 0xaaaaee, transparent: true, opacity: 0.3 });
+                const edges = [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]];
+                edges.forEach(edge => {
+                    const geometry = new THREE.BufferGeometry().setFromPoints([positions[edge[0]], positions[edge[1]]]);
+                    this.scene.add(new THREE.Line(geometry, lineMaterial));
+                });
+            }
+
+            // Initialize the modal's superposition scene (once)
+            initSuperpositionScene() {
+                this.superScene = new THREE.Scene();
+                const canvas = document.getElementById('superposition-canvas');
+                const container = canvas.parentElement;
+
+                this.superCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                this.superCamera.position.z = 30;
+                
+                this.superRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                this.superRenderer.setSize(container.clientWidth, container.clientHeight);
+                this.superRenderer.setPixelRatio(window.devicePixelRatio);
+
+                this.superControls = new OrbitControls(this.superCamera, this.superRenderer.domElement);
+                this.superControls.enableDamping = true;
+
+                this.superScene.add(new THREE.AmbientLight(0xffffff, 1));
+                this.superScene.add(new THREE.PointLight(0xffffff, 2));
+
+                const superGeometry = new THREE.SphereGeometry(5, 64, 64);
+                const superMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x9933ff, transparent: true, opacity: 0.7,
+                    emissive: 0x660099, emissiveIntensity: 1, roughness: 0.2
+                });
+                this.superSphere = new THREE.Mesh(superGeometry, superMaterial);
+                this.superScene.add(this.superSphere);
+
+                this.convergingMeshes = [];
+            }
+
+            // Trigger and manage the superposition animation
+            showSuperposition(decision) {
+                const modal = document.getElementById('superposition-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+
+                // Clear old meshes and create new ones for convergence
+                this.convergingMeshes.forEach(mesh => this.superScene.remove(mesh));
+                this.convergingMeshes = decision.consensus_vertices.map(vertex => {
+                    const mesh = new THREE.Mesh(
+                        new THREE.SphereGeometry(1.5, 32, 32),
+                        new THREE.MeshStandardMaterial({ color: vertex.color, emissive: vertex.color, emissiveIntensity: 0.5 })
+                    );
+                    mesh.position.copy(vertex.position).multiplyScalar(3); // Start further out
+                    mesh.userData.targetPosition = new THREE.Vector3(0, 0, 0);
+                    this.superScene.add(mesh);
+                    return mesh;
+                });
+                
+                this.isSuperpositionAnimating = true;
+            }
+
+            hideSuperposition() {
+                const modal = document.getElementById('superposition-modal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                this.isSuperpositionAnimating = false;
+            }
+
+            // Main animation loop
+            animate() {
+                requestAnimationFrame(this.animate.bind(this));
+                const delta = this.clock.getDelta();
+                const elapsedTime = this.clock.getElapsedTime();
+
+                // Animate main scene
+                this.controls.update();
+                this.vertexMeshes.forEach(mesh => {
+                    const pulse = Math.sin(elapsedTime * 2 + mesh.position.x) * 0.05 + 1;
+                    mesh.scale.set(pulse, pulse, pulse);
+                });
+                this.renderer.render(this.scene, this.camera);
+
+                // Animate superposition scene only if active
+                if (this.isSuperpositionAnimating) {
+                    this.superControls.update();
+                    this.convergingMeshes.forEach(mesh => {
+                        mesh.position.lerp(mesh.userData.targetPosition, 0.05);
+                    });
+                    const pulse = Math.sin(elapsedTime * 3) * 0.2 + 1;
+                    this.superSphere.scale.setScalar(pulse);
+                    this.superRenderer.render(this.superScene, this.superCamera);
+                }
+            }
+
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+                const container = document.getElementById('superposition-canvas').parentElement;
+                if (container) {
+                    this.superCamera.aspect = container.clientWidth / container.clientHeight;
+                    this.superCamera.updateProjectionMatrix();
+                    this.superRenderer.setSize(container.clientWidth, container.clientHeight);
+                }
+            }
+        }
+
+        // --- App Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const protocol = new TetrahedronCoordinationProtocol();
+            const visualizer = new Visualizer(protocol);
+
+            const governanceBtn = document.getElementById('governance-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const synthesisPathDiv = document.getElementById('synthesis-path');
+
+            governanceBtn.addEventListener('click', () => {
+                const proposal = { subject: 'synthesis', predicate: 'coherence' };
+                const decision = protocol.conductAgenticGovernance(proposal);
+                synthesisPathDiv.textContent = decision.synthesis_path;
+                visualizer.showSuperposition(decision);
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                visualizer.hideSuperposition();
+            });
+
+            window.addEventListener('resize', () => visualizer.onWindowResize(), false);
+        });
+    </script>
+</body>
+</html>

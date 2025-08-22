@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reality Compiler - HTML Examples Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #64ffda, #1de9b6, #00bcd4, #03a9f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(100, 255, 218, 0.1);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+
+        .project-preview {
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--preview-bg);
+            opacity: 0.6;
+        }
+
+        .project-preview .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            z-index: 2;
+        }
+
+        .project-info {
+            padding: 24px;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #64ffda;
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .project-features {
+            margin-bottom: 20px;
+        }
+
+        .project-features h4 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1de9b6;
+        }
+
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .feature-tag {
+            background: rgba(100, 255, 218, 0.15);
+            color: #64ffda;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #64ffda, #1de9b6);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .main-app-highlight {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(29, 233, 182, 0.1));
+            border: 2px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .main-app-highlight .project-preview {
+            height: 250px;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            z-index: 3;
+        }
+
+        .legacy-badge {
+            background: rgba(255, 152, 0, 0.9);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .project-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Custom preview backgrounds */
+        .solar-system { --preview-bg: radial-gradient(circle, #ff6b35 10%, #f7931e 30%, #ffcc02 50%, #1e3c72 80%); }
+        .quantum-media { --preview-bg: linear-gradient(45deg, #00ff88, #00d4aa); }
+        .spacetime { --preview-bg: radial-gradient(circle, #e74c3c 20%, #3498db 60%); }
+        .reality-compiler { --preview-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .multiverse { --preview-bg: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%); }
+        .visualizer { --preview-bg: linear-gradient(45deg, #fa709a 0%, #fee140 100%); }
+        .dashboard { --preview-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌌 Reality Compiler Examples</h1>
+        <p>Explore various computational multiverse implementations, from simple visualizations to complex pure function systems. Each example demonstrates different aspects of reality compilation and quantum computational modeling.</p>
+    </div>
+
+    <div class="container">
+        <div class="projects-grid">
+            <!-- Main React TypeScript App -->
+            <div class="project-card main-app-highlight">
+                <div class="project-preview reality-compiler">
+                    <div class="status-badge">Latest</div>
+                    <div class="icon">⚛️</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">React TypeScript Reality Compiler</h3>
+                    <p class="project-description">
+                        The main application - a modern React TypeScript implementation with comprehensive pure function computing, data injection capabilities, and real-time 3D visualization. Features persistent computation history and batch data processing.
+                    </p>
+                    <div class="project-features">
+                        <h4>Key Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">React 19</span>
+                            <span class="feature-tag">TypeScript</span>
+                            <span class="feature-tag">Pure Functions</span>
+                            <span class="feature-tag">Data Injection</span>
+                            <span class="feature-tag">3D Physics</span>
+                            <span class="feature-tag">Result History</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="../" class="btn btn-primary">Launch Main App</a>
+                        <a href="https://github.com/your-repo" class="btn btn-secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Multiverse (HTML Version) -->
+            <div class="project-card">
+                <div class="project-preview multiverse">
+                    <div class="status-badge legacy-badge">HTML Demo</div>
+                    <div class="icon">🌐</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Interactive Multiverse (HTML)</h3>
+                    <p class="project-description">
+                        The original HTML/JavaScript implementation showcasing pure function integration in a 3D multiverse. Systems appear as tetrahedrons that interact based on computational similarity.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">3D Visualization</span>
+                            <span class="feature-tag">Pure Functions</span>
+                            <span class="feature-tag">System Interaction</span>
+                            <span class="feature-tag">Three.js</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="The-Reality-Compiler-Interactive-Multiverse.html" class="btn btn-primary">Launch Demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Computational Multiverse -->
+            <div class="project-card">
+                <div class="project-preview reality-compiler">
+                    <div class="status-badge legacy-badge">Prototype</div>
+                    <div class="icon">🔬</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Computational Multiverse</h3>
+                    <p class="project-description">
+                        Early prototype demonstrating computational system creation with predefined function pipelines. Shows growth, oscillation, and decay patterns in 3D space.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">System Pipelines</span>
+                            <span class="feature-tag">Pattern Recognition</span>
+                            <span class="feature-tag">3D Physics</span>
+                            <span class="feature-tag">Tailwind UI</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="The-Reality-Compiler-Computational-Multiverse.html" class="btn btn-primary">View Demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantum SpaceTime -->
+            <div class="project-card">
+                <div class="project-preview spacetime">
+                    <div class="status-badge legacy-badge">Physics Demo</div>
+                    <div class="icon">⚛️</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Platonic Reality Simulation</h3>
+                    <p class="project-description">
+                        A dynamic field simulation where tetrahedrons generate forces based on scalar states. Demonstrates how universal constants (L-Value) affect the forces of nature in a Platonic reality.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Force Fields</span>
+                            <span class="feature-tag">Universal Constants</span>
+                            <span class="feature-tag">Real-time Physics</span>
+                            <span class="feature-tag">Interactive Controls</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="QuantumSpaceTime.html" class="btn btn-primary">Launch Simulation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Solar System -->
+            <div class="project-card">
+                <div class="project-preview solar-system">
+                    <div class="status-badge legacy-badge">Educational</div>
+                    <div class="icon">🪐</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">3D Solar System Simulation</h3>
+                    <p class="project-description">
+                        Interactive 3D solar system with realistic planetary orbits and scaling. Features orbital controls and dynamic lighting to demonstrate celestial mechanics.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Orbital Mechanics</span>
+                            <span class="feature-tag">Realistic Scaling</span>
+                            <span class="feature-tag">Dynamic Lighting</span>
+                            <span class="feature-tag">Educational</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="3D-Solar-System-Simulation.html" class="btn btn-primary">Explore System</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantum Media Share -->
+            <div class="project-card">
+                <div class="project-preview quantum-media">
+                    <div class="status-badge legacy-badge">Media Demo</div>
+                    <div class="icon">📡</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Quantum Media Share</h3>
+                    <p class="project-description">
+                        Instant audio/video transmission interface styled as a quantum entanglement communication system. Demonstrates WebRTC concepts with a quantum computing aesthetic.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">WebRTC Interface</span>
+                            <span class="feature-tag">Quantum Styling</span>
+                            <span class="feature-tag">Real-time Comms</span>
+                            <span class="feature-tag">Media Streaming</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="QuantumMediaShare.html" class="btn btn-primary">Launch Interface</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Universe Dashboard -->
+            <div class="project-card">
+                <div class="project-preview dashboard">
+                    <div class="status-badge legacy-badge">Control Panel</div>
+                    <div class="icon">🌌</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Quantum Universe Dashboard</h3>
+                    <p class="project-description">
+                        Universal coordination system dashboard with monitoring capabilities for quantum systems. Provides an overview interface for managing multiple reality compilation instances.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">System Monitoring</span>
+                            <span class="feature-tag">Coordination Panel</span>
+                            <span class="feature-tag">Status Overview</span>
+                            <span class="feature-tag">Management UI</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="universe-dashboard.html" class="btn btn-primary">Open Dashboard</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reality Compiler Visualizers -->
+            <div class="project-card">
+                <div class="project-preview visualizer">
+                    <div class="status-badge legacy-badge">Visualizer</div>
+                    <div class="icon">📊</div>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">Reality Compiler Visualizers</h3>
+                    <p class="project-description">
+                        Collection of visualization tools for reality compilation processes. Multiple versions exploring different approaches to representing computational multiverse data.
+                    </p>
+                    <div class="project-features">
+                        <h4>Features:</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Data Visualization</span>
+                            <span class="feature-tag">Multiple Views</span>
+                            <span class="feature-tag">Process Monitoring</span>
+                            <span class="feature-tag">Debug Tools</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="The-Reality-Compiler-Visualizer.html" class="btn btn-primary">Visualizer 1</a>
+                        <a href="The-Reality-Compiler-Visualizer-2.html" class="btn btn-secondary">Visualizer 2</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🚀 Built with passion for computational reality and quantum multiverse exploration</p>
+        <p>Each example demonstrates different aspects of reality compilation - from basic 3D visualization to advanced pure function computing</p>
+    </div>
+</body>
+</html>
